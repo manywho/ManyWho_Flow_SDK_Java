@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.utils;
+package manywho.flow.sdk.utils;
 
 import java.util.UUID;
 

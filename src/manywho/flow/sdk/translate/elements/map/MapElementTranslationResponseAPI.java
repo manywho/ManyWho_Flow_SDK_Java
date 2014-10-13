@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.translate.elements.map;
+package manywho.flow.sdk.translate.elements.map;
 
 import manywho.flow.sdk.translate.elements.*;
 

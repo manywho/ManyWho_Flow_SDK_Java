@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.run.elements.type;
+package manywho.flow.sdk.run.elements.type;
 
 import java.io.Serializable;
 

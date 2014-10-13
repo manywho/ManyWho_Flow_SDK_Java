@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.social;
+package manywho.flow.sdk.social;
 
 import java.io.Serializable;
 

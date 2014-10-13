@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.run.state;
+package manywho.flow.sdk.run.state;
 
 import java.io.Serializable;
 

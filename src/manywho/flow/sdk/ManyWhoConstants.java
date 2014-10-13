@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk;
+package manywho.flow.sdk;
 
 /*!
 

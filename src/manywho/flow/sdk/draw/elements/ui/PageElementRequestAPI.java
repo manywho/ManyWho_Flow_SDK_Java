@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.draw.elements.ui;
+package manywho.flow.sdk.draw.elements.ui;
 
 /*!
 

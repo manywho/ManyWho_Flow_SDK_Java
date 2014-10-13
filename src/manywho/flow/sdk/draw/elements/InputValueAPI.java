@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.draw.elements;
+package manywho.flow.sdk.draw.elements;
 
 import java.io.Serializable;
 

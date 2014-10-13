@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.translate.elements.ui;
+package manywho.flow.sdk.translate.elements.ui;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.describe;
+package manywho.flow.sdk.describe;
 
 import java.io.Serializable;
 

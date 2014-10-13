@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.run.elements.map;
+package manywho.flow.sdk.run.elements.map;
 
 import java.io.Serializable;
 

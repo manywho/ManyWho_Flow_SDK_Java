@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.draw.elements.value;
+package manywho.flow.sdk.draw.elements.value;
 
 import manywho.flow.sdk.run.elements.type.*;
 import manywho.flow.sdk.draw.elements.map.*;

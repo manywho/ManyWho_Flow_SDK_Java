@@ -1,4 +1,4 @@
-﻿package manywho.flow.sdk.draw.flow;
+package manywho.flow.sdk.draw.flow;
 
 import manywho.flow.sdk.security.*;
 
