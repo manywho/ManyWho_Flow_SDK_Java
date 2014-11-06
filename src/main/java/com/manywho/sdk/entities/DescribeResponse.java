@@ -1,6 +1,5 @@
-package com.manywho.sdk.entities.responses;
+package com.manywho.sdk.entities;
 
-import com.manywho.sdk.entities.*;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeValueCollection;
 import com.manywho.sdk.services.describe.actions.ActionCollection;

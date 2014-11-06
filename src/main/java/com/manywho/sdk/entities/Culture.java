@@ -24,6 +24,10 @@ public class Culture {
         this.variant = variant;
     }
 
+    public Culture() {
+
+    }
+
     public String getId() {
         return id;
     }
