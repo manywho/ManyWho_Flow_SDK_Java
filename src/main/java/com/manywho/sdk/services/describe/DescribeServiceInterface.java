@@ -8,7 +8,7 @@ import com.manywho.sdk.services.describe.actions.ActionCollection;
 
 public interface DescribeServiceInterface extends ResponseProviderInterface {
     public Culture createCulture();
-    public DescribeValueCollection createConfigurationValues() throws Exception;
+    public DescribeValueCollection createConfigurationValues();
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException;
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException;
     public boolean getProvidesDatabase();

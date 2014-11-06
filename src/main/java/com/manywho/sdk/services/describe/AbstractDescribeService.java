@@ -4,9 +4,12 @@ import com.manywho.sdk.entities.TypeElement;
 import com.manywho.sdk.entities.TypeElementCollection;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceRequest;
-import com.manywho.sdk.entities.responses.DescribeResponse;
-import com.manywho.sdk.entities.responses.ResponseInterface;
+import com.manywho.sdk.entities.DescribeResponse;
+import com.manywho.sdk.entities.ResponseInterface;
+import com.manywho.sdk.services.BaseApplication;
 import com.manywho.sdk.services.AbstractService;
+import com.manywho.sdk.services.BaseApplication;
+import com.manywho.sdk.services.BaseApplication;
 import com.manywho.sdk.services.annotations.DescribeAction;
 import com.manywho.sdk.services.annotations.DescribeType;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
@@ -58,8 +61,7 @@ public abstract class AbstractDescribeService extends AbstractService implements
 
     @Override
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
-        // @todo The package name shouldn't be hardcoded!
-        final Set<Class<?>> annotatedClasses = new Reflections("com.manywho.services").getTypesAnnotatedWith(DescribeAction.class);
+        final Set<Class<?>> annotatedClasses = BaseApplication.reflections.getTypesAnnotatedWith(DescribeAction.class);
 
         return new ActionCollection() {{
             for (Class<?> action : annotatedClasses) {
@@ -70,8 +72,7 @@ public abstract class AbstractDescribeService extends AbstractService implements
 
     @Override
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
-        // @todo The package name shouldn't be hardcoded!
-        final Set<Class<?>> annotatedClasses = new Reflections("com.manywho.services").getTypesAnnotatedWith(DescribeType.class);
+        final Set<Class<?>> annotatedClasses = BaseApplication.reflections.getTypesAnnotatedWith(DescribeType.class);
 
         if (!annotatedClasses.isEmpty()) {
             return new DescribeServiceInstall() {{
@@ -87,18 +88,23 @@ public abstract class AbstractDescribeService extends AbstractService implements
     }
 
     @Override
-    public ResponseInterface createResponse() throws Exception {
-        return new DescribeResponse() {{
-            setCulture(AbstractDescribeService.this.createCulture());
-            setConfigurationValues(AbstractDescribeService.this.createConfigurationValues());
-            setProvidesDatabase(AbstractDescribeService.this.getProvidesDatabase());
-            setProvidesLogic(AbstractDescribeService.this.getProvidesLogic());
-            setProvidesViews(AbstractDescribeService.this.getProvidesViews());
-            setProvidesIdentity(AbstractDescribeService.this.getProvidesIdentity());
-            setProvidesSocial(AbstractDescribeService.this.getProvidesSocial());
-            setProvidesFiles(AbstractDescribeService.this.getProvidesFiles());
-            setActions(AbstractDescribeService.this.createActions());
-            setInstall(AbstractDescribeService.this.createInstall());
-        }};
+    public ResponseInterface createResponse() {
+        try {
+            return new DescribeResponse() {{
+                setCulture(AbstractDescribeService.this.createCulture());
+                setConfigurationValues(AbstractDescribeService.this.createConfigurationValues());
+                setProvidesDatabase(AbstractDescribeService.this.getProvidesDatabase());
+                setProvidesLogic(AbstractDescribeService.this.getProvidesLogic());
+                setProvidesViews(AbstractDescribeService.this.getProvidesViews());
+                setProvidesIdentity(AbstractDescribeService.this.getProvidesIdentity());
+                setProvidesSocial(AbstractDescribeService.this.getProvidesSocial());
+                setProvidesFiles(AbstractDescribeService.this.getProvidesFiles());
+                setActions(AbstractDescribeService.this.createActions());
+                setInstall(AbstractDescribeService.this.createInstall());
+            }};
+        } catch (Exception e) {
+            // @todo Log something here
+            return null;
+        }
     }
 }
