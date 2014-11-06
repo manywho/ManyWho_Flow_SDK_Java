@@ -1,14 +1,7 @@
 package com.manywho.sdk.services;
 
-import com.manywho.sdk.entities.EngineValue;
-import com.manywho.sdk.entities.EngineValueCollection;
-import com.manywho.sdk.entities.ObjectCollection;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public abstract class AbstractService {
     private ObjectMapper objectMapper = new ObjectMapper().enable(DeserializationConfig.Feature.READ_ENUMS_USING_TO_STRING);
