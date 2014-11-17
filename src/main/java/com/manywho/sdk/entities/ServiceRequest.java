@@ -1,8 +1,10 @@
 package com.manywho.sdk.entities;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
 public class ServiceRequest {
+    @NotNull
     private String token;
     private String tenantId;
     private String callbackUri;
@@ -10,7 +12,9 @@ public class ServiceRequest {
     private String playerUri;
     private Culture culture;
     private String uri;
+    @NotNull
     private EngineValueCollection configurationValues;
+    @NotNull
     private EngineValueCollection inputs;
     private OutcomeAvailableCollection outcomes;
     private GroupAuthorization authorization;
