@@ -1,11 +1,17 @@
 package com.manywho.sdk.entities;
 
-public class ObjectDataResponse implements ResponseInterface {
+public class ObjectDataResponse implements Response {
     private Culture culture;
     private ObjectCollection objectData;
     private boolean hasMoreResults;
 
     public ObjectDataResponse() {
+    }
+
+    public ObjectDataResponse(Object object) {
+        this.objectData = new ObjectCollection() {{
+            add(object);
+        }};
     }
 
     public ObjectDataResponse(Culture culture, ObjectCollection objectData, boolean hasMoreResults) {

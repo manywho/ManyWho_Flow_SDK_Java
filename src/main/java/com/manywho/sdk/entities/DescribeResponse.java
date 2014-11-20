@@ -4,7 +4,7 @@ import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeValueCollection;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
 
-public class DescribeResponse implements ResponseInterface {
+public class DescribeResponse implements Response {
     private Culture culture;
     private String uri;
     private DescribeValueCollection configurationValues;

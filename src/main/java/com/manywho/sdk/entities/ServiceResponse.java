@@ -4,7 +4,7 @@ import com.manywho.sdk.enums.InvokeType;
 
 import java.util.Dictionary;
 
-public class ServiceResponse implements ResponseInterface {
+public class ServiceResponse implements Response {
     private String token;
     private String tenantId;
     private InvokeType invokeType;

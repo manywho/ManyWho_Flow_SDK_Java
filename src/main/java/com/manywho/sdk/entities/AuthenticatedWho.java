@@ -7,7 +7,7 @@ public class AuthenticatedWho {
     @NotNull
     private String manyWhoTenantId;
     private String manyWhoToken;
-    private GeolocationInterface geolocation;
+    private Geolocation geolocation;
     private String userId;
     private String username;
     private String email;
@@ -43,11 +43,11 @@ public class AuthenticatedWho {
         this.manyWhoToken = manyWhoToken;
     }
 
-    public GeolocationInterface getGeolocation() {
+    public Geolocation getGeolocation() {
         return geolocation;
     }
 
-    public void setGeolocation(GeolocationInterface geolocation) {
+    public void setGeolocation(Geolocation geolocation) {
         this.geolocation = geolocation;
     }
 

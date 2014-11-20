@@ -15,7 +15,7 @@ public class Culture {
     }
 
     public Culture(String id, String developerName, String developerSummary, String brand, String language, String country, String variant) {
-        this.id = id;
+        this.id = null;
         this.developerName = developerName;
         this.developerSummary = developerSummary;
         this.brand = brand;

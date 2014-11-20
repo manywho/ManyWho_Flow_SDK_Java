@@ -1,8 +1,11 @@
 package com.manywho.sdk.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequest {
     @NotNull
     private String token;
