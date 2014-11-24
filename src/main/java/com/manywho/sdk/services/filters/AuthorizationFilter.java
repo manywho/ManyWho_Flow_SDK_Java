@@ -1,4 +1,4 @@
-package com.manywho.sdk.services;
+package com.manywho.sdk.services.filters;
 
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.AuthenticatedWhoToken;

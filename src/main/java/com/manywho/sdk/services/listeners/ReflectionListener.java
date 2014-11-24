@@ -1,5 +1,6 @@
-package com.manywho.sdk.services;
+package com.manywho.sdk.services.listeners;
 
+import com.manywho.sdk.services.BaseApplication;
 import org.glassfish.jersey.server.monitoring.ApplicationEvent;
 import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
