@@ -1,6 +1,6 @@
 package com.manywho.sdk.entities.describe;
 
-import com.manywho.sdk.entities.TypeElementCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 
 // @todo Rename this class
 public class DescribeServiceInstall {

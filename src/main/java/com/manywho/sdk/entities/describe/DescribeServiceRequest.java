@@ -1,7 +1,7 @@
 package com.manywho.sdk.entities.describe;
 
-import com.manywho.sdk.entities.Culture;
-import com.manywho.sdk.entities.EngineValueCollection;
+import com.manywho.sdk.entities.translate.Culture;
+import com.manywho.sdk.entities.run.EngineValueCollection;
 
 public class DescribeServiceRequest {
     private Culture culture;

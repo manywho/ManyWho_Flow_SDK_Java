@@ -1,8 +1,9 @@
 package com.manywho.sdk.entities;
 
+import com.manywho.sdk.entities.run.elements.type.*;
 import com.manywho.sdk.enums.AuthorizationType;
 
-public class UserObject extends Object {
+public class UserObject extends com.manywho.sdk.entities.run.elements.type.Object {
     private String directoryName;
     private AuthorizationType authorizationType;
     private String loginUrl;

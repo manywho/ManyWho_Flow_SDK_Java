@@ -1,6 +1,6 @@
 package com.manywho.sdk.services;
 
-import com.manywho.sdk.entities.AuthenticatedWho;
+import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.AuthenticatedWhoToken;
 import com.manywho.sdk.services.annotations.AuthorizationRequired;
 import org.apache.commons.lang3.StringUtils;

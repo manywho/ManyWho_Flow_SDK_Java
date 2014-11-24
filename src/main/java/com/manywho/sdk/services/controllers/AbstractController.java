@@ -1,6 +1,6 @@
 package com.manywho.sdk.services.controllers;
 
-import com.manywho.sdk.entities.AuthenticatedWho;
+import com.manywho.sdk.entities.security.AuthenticatedWho;
 import org.glassfish.jersey.server.ContainerRequest;
 
 import javax.ws.rs.core.Context;

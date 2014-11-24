@@ -1,10 +1,9 @@
 package com.manywho.sdk.services.describe;
 
-import com.manywho.sdk.entities.TypeElement;
-import com.manywho.sdk.entities.TypeElementCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElement;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
-import com.manywho.sdk.entities.DescribeResponse;
-import com.manywho.sdk.entities.Response;
+import com.manywho.sdk.entities.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.BaseApplication;
 import com.manywho.sdk.services.annotations.DescribeAction;
 import com.manywho.sdk.services.annotations.DescribeType;
@@ -73,9 +72,9 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     @Override
-    public Response createResponse() {
+    public DescribeServiceResponse createResponse() {
         try {
-            return new DescribeResponse() {{
+            return new DescribeServiceResponse() {{
                 setCulture(AbstractDescribeService.this.createCulture());
                 setConfigurationValues(AbstractDescribeService.this.createConfigurationValues());
                 setProvidesDatabase(AbstractDescribeService.this.getProvidesDatabase());

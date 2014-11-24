@@ -1,6 +1,10 @@
 package com.manywho.sdk.services.controllers;
 
 import com.manywho.sdk.entities.*;
+import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
+import com.manywho.sdk.entities.run.elements.type.ObjectDataResponse;
+import com.manywho.sdk.entities.security.AuthenticatedWhoResult;
+import com.manywho.sdk.entities.security.AuthenticationCredentials;
 import com.manywho.sdk.enums.AuthorizationType;
 import com.manywho.sdk.services.oauth2.Oauth2Provider;
 import com.manywho.sdk.services.annotations.AuthorizationRequired;

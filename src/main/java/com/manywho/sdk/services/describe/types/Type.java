@@ -1,7 +1,7 @@
 package com.manywho.sdk.services.describe.types;
 
-import com.manywho.sdk.entities.TypeElementBindingCollection;
-import com.manywho.sdk.entities.TypeElementPropertyCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementBindingCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyCollection;
 
 public interface Type {
     public String getDeveloperName();
