@@ -5,10 +5,11 @@ import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.BaseApplication;
-import com.manywho.sdk.services.annotations.DescribeAction;
-import com.manywho.sdk.services.annotations.DescribeType;
+import com.manywho.sdk.services.describe.actions.AbstractAction;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.actions.Action;
+import com.manywho.sdk.services.describe.types.AbstractType;
+import com.manywho.sdk.services.describe.types.Type;
 
 import java.util.Set;
 
@@ -45,23 +46,23 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
-        final Set<Class<?>> annotatedClasses = BaseApplication.reflections.getTypesAnnotatedWith(DescribeAction.class);
+        final Set<Class<? extends AbstractAction>> annotatedClasses = BaseApplication.reflections.getSubTypesOf(AbstractAction.class);
 
         return new ActionCollection() {{
-            for (Class<?> action : annotatedClasses) {
-                add((Action) action.newInstance());
+            for (Class<? extends Action> action : annotatedClasses) {
+                add(action.newInstance());
             }
         }};
     }
 
     @Override
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
-        final Set<Class<?>> annotatedClasses = BaseApplication.reflections.getTypesAnnotatedWith(DescribeType.class);
+        final Set<Class<? extends AbstractType>> annotatedClasses = BaseApplication.reflections.getSubTypesOf(AbstractType.class);
 
         if (!annotatedClasses.isEmpty()) {
             return new DescribeServiceInstall() {{
                 setTypeElements(new TypeElementCollection() {{
-                    for (Class<?> type : annotatedClasses) {
+                    for (Class<? extends Type> type : annotatedClasses) {
                         add((TypeElement) type.newInstance());
                     }
                 }});

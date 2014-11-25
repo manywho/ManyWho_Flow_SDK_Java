@@ -6,7 +6,7 @@ import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
 import org.glassfish.jersey.server.monitoring.RequestEventListener;
 import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
+import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
@@ -23,7 +23,7 @@ public class ReflectionListener implements ApplicationEventListener {
             case INITIALIZATION_START:
                 BaseApplication.reflections = new Reflections(new ConfigurationBuilder()
                         .addUrls(ClasspathHelper.forWebInfClasses(this.servletContext))
-                        .addScanners(new MethodAnnotationsScanner())
+                        .addScanners(new SubTypesScanner())
                 );
                 break;
         }
