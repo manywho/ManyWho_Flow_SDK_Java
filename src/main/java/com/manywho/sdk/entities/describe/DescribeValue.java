@@ -19,6 +19,10 @@ public class DescribeValue {
         this.ordinal = ordinal;
     }
 
+    public DescribeValue(String developerName, ContentType contentType, boolean isRequired, String contentValue, String typeElementDeveloperName) {
+        this(developerName, contentType, isRequired, contentValue, typeElementDeveloperName, 0);
+    }
+
     public DescribeValue(String developerName, ContentType contentType, boolean isRequired, String contentValue) {
         this(developerName, contentType, isRequired, contentValue, null, 0);
     }
