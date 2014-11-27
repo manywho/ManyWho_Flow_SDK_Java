@@ -1,5 +1,7 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import java.util.UUID;
+
 public class Property {
     private String typeElementPropertyId;
     private String developerName;
@@ -13,6 +15,7 @@ public class Property {
     public Property(String developerName, String contentValue) {
         this.developerName = developerName;
         this.contentValue = contentValue;
+        this.typeElementPropertyId = UUID.randomUUID().toString();
     }
 
     public String getTypeElementPropertyId() {
