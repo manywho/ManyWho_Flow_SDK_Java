@@ -15,6 +15,11 @@ public class Property {
         this.contentValue = contentValue;
     }
 
+    public Property(String developerName, ObjectCollection objectData) {
+        this.developerName = developerName;
+        this.objectData = objectData;
+    }
+
     public String getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
