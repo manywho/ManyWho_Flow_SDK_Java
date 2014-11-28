@@ -27,6 +27,7 @@ public abstract class AbstractOAuthController extends AbstractController {
     @POST
     @AuthorizationRequired
     public ObjectDataResponse authorization(ObjectDataRequest objectDataRequest) throws Exception {
+        // @todo Check for configuration values, e.g. when install values aren't set
         String clientId = objectDataRequest.getConfigurationValues().getContentValue(this.getOauth2Provider().getClientIdValueName());
 
         String authorizationStatus = "401";

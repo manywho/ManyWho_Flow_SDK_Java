@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class EngineValueCollection extends ArrayList<EngineValue> {
     public String getContentValue(String name) {
-        return this.stream().filter(c -> c.getDeveloperName().equals(name)).findFirst().orElse(new EngineValue()).getContentValue();
+        if (!this.isEmpty()) {
+            return this.stream().filter(c -> c.getDeveloperName().equals(name)).findFirst().orElse(new EngineValue()).getContentValue();
+        }
+
+        return null;
     }
 }
