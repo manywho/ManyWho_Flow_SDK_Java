@@ -15,6 +15,16 @@ public class Property {
         this.contentValue = contentValue;
     }
 
+    public Property(String developerName, java.lang.Object contentValue) {
+        this.developerName = developerName;
+        this.contentValue = contentValue == null ? null : contentValue.toString();
+    }
+
+    public Property(String developerName, java.lang.Number contentValue) {
+        this.developerName = developerName;
+        this.contentValue = contentValue == null ? null : contentValue.toString();
+    }
+
     public Property(String developerName, ObjectCollection objectData) {
         this.developerName = developerName;
         this.objectData = objectData;
