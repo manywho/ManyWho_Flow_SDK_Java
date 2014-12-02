@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.config;
 
+import com.manywho.sdk.entities.run.EngineValue;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.enums.InvokeType;
@@ -18,6 +19,22 @@ public class ServiceResponse {
     private ValueFaultCollection valueFaults;
     private String mode;
     private Dictionary<String, String> annotations;
+
+    public ServiceResponse() {
+
+    }
+
+    public ServiceResponse(InvokeType invokeType, EngineValueCollection outputs, String token) {
+        this.invokeType = invokeType;
+        this.outputs = outputs;
+        this.token = token;
+    }
+
+    public ServiceResponse(InvokeType invokeType, EngineValue output, String token) {
+        this(invokeType, new EngineValueCollection() {{
+            add(output);
+        }}, token);
+    }
 
     public String getToken() {
         return token;
