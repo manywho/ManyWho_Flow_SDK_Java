@@ -21,7 +21,7 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public boolean getProvidesLogic() {
-        return true;
+        return false;
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public boolean getProvidesIdentity() {
-        return true;
+        return false;
     }
 
     @Override
