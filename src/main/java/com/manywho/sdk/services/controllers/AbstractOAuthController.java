@@ -55,5 +55,5 @@ public abstract class AbstractOAuthController extends AbstractController {
 
     @Path("/authentication")
     @POST
-    public abstract AuthenticatedWhoResult authorization(AuthenticationCredentials authenticationCredentials);
+    public abstract AuthenticatedWhoResult authentication(AuthenticationCredentials authenticationCredentials);
 }
