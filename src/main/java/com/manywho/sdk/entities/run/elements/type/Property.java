@@ -6,6 +6,10 @@ public class Property {
     private String contentValue;
     private ObjectCollection objectData;
 
+    public Property() {
+
+    }
+
     public Property(String developerName) {
         this.developerName = developerName;
     }
