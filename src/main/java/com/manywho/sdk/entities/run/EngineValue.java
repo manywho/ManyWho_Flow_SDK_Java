@@ -20,15 +20,18 @@ public class EngineValue {
 
     }
 
-    public EngineValue(String developerName, ContentType contentType, String contentValue) {
+    public EngineValue(String developerName, ContentType contentType) {
         this.developerName = developerName;
         this.contentType = contentType;
+    }
+
+    public EngineValue(String developerName, ContentType contentType, String contentValue) {
+        this(developerName, contentType);
         this.contentValue = contentValue;
     }
 
     public EngineValue(String developerName, ContentType contentType, ObjectCollection objectData) {
-        this.developerName = developerName;
-        this.contentType = contentType;
+        this(developerName, contentType);
         this.objectData = objectData;
     }
 
