@@ -1,24 +1,19 @@
 package com.manywho.sdk.entities.run.elements.config;
 
 import com.manywho.sdk.entities.run.EngineValue;
-import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.enums.InvokeType;
 
 import java.util.Dictionary;
 
-public class ServiceResponse {
-    private String token;
-    private String tenantId;
+public class ServiceResponse extends AbstractResponse {
     private InvokeType invokeType;
     private String waitMessage;
     private EngineValueCollection outputs;
     private String selectedOutcomeId;
-    private Culture culture;
     private Dictionary<String, String> rootFaults;
     private ValueFaultCollection valueFaults;
     private String mode;
-    private Dictionary<String, String> annotations;
 
     public ServiceResponse() {
 
@@ -34,22 +29,6 @@ public class ServiceResponse {
         this(invokeType, new EngineValueCollection() {{
             add(output);
         }}, token);
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
     }
 
     public InvokeType getInvokeType() {
@@ -84,14 +63,6 @@ public class ServiceResponse {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 
-    public Culture getCulture() {
-        return culture;
-    }
-
-    public void setCulture(Culture culture) {
-        this.culture = culture;
-    }
-
     public Dictionary<String, String> getRootFaults() {
         return rootFaults;
     }
@@ -114,13 +85,5 @@ public class ServiceResponse {
 
     public void setMode(String mode) {
         this.mode = mode;
-    }
-
-    public Dictionary<String, String> getAnnotations() {
-        return annotations;
-    }
-
-    public void setAnnotations(Dictionary<String, String> annotations) {
-        this.annotations = annotations;
     }
 }
