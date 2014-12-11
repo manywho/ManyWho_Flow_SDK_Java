@@ -4,7 +4,7 @@ import com.manywho.sdk.entities.translate.Culture;
 
 import java.util.HashMap;
 
-public abstract class AbstractResponse {
+public abstract class AbstractResponse implements Response {
     protected String token;
     protected String tenantId;
     protected Culture culture;

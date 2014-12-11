@@ -2,22 +2,40 @@ package com.manywho.sdk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceResponse;
+import com.manywho.sdk.entities.run.elements.config.Response;
+import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.InvokeType;
 import com.manywho.sdk.utils.AuthorizationUtils;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
+// @todo Add notifier stuff to these methods
 public class RunService {
 
-    public InvokeType sendEvent(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
-        HttpRequestWithBody request = Unirest.post(callbackUri);
-        request.header("Authorization", AuthorizationUtils.serialize(authenticatedWho));
-        request.header("ManyWhoTenant", tenantId);
-        request.header("Content-Type", "application/json");
+    // @todo Change this name, maybe?
+    public InvokeType sendListenerServiceResponse(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
+        return this.sendResponse(authenticatedWho, tenantId, callbackUri, listenerServiceResponse);
+    }
 
-        request.body(new ObjectMapper().writeValueAsString(listenerServiceResponse));
+    // @todo Change this name, maybe?
+    public InvokeType sendServiceResponse(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
+        return this.sendResponse(authenticatedWho, tenantId, callbackUri, serviceResponse);
+    }
 
-        return InvokeType.valueOf(request.asString().getBody());
+    protected HttpRequestWithBody createHttpClient(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri) {
+        return Unirest.post(callbackUri)
+                .header("Authorization", AuthorizationUtils.serialize(authenticatedWho))
+                .header("ManyWhoTenant", tenantId)
+                .header("Content-Type", "application/json");
+    }
+
+    protected InvokeType sendResponse(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Response response) throws Exception {
+        String responseBody = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
+                .body(new ObjectMapper().writeValueAsString(response))
+                .asString()
+                .getBody();
+
+        return InvokeType.valueOf(responseBody);
     }
 }
