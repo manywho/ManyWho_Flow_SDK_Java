@@ -13,12 +13,10 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 // @todo Add notifier stuff to these methods
 public class RunService {
 
-    // @todo Change this name, maybe?
     public InvokeType sendEvent(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, listenerServiceResponse);
     }
 
-    // @todo Change this name, maybe?
     public InvokeType sendResponse(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, serviceResponse);
     }
