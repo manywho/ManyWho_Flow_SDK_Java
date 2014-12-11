@@ -31,6 +31,11 @@ public class ServiceResponse extends AbstractResponse {
         }}, token);
     }
 
+    public ServiceResponse(InvokeType invokeType, String token) {
+        this.invokeType = invokeType;
+        this.token = token;
+    }
+
     public InvokeType getInvokeType() {
         return invokeType;
     }
