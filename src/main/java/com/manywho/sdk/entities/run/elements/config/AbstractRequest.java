@@ -2,11 +2,12 @@ package com.manywho.sdk.entities.run.elements.config;
 
 import com.manywho.sdk.entities.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.entities.run.EngineValueCollection;
+import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.translate.Culture;
 
 import java.util.HashMap;
 
-public abstract class AbstractRequest {
+public abstract class AbstractRequest implements Request {
     protected String token;
     protected String tenantId;
     protected String callbackUri;

@@ -2,7 +2,7 @@ package com.manywho.sdk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceResponse;
-import com.manywho.sdk.entities.run.elements.config.Response;
+import com.manywho.sdk.entities.run.Response;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.InvokeType;

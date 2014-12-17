@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.config;
 
+import com.manywho.sdk.entities.run.Response;
 import com.manywho.sdk.entities.translate.Culture;
 
 import java.util.HashMap;
