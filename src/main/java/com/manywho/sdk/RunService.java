@@ -1,6 +1,8 @@
 package com.manywho.sdk;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.manywho.sdk.entities.run.EngineInitializationRequest;
 import com.manywho.sdk.entities.run.EngineInitializationResponse;
 import com.manywho.sdk.entities.run.Request;
@@ -14,12 +16,19 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 // @todo Add notifier stuff to these methods
 public class RunService {
 
+    private String baseUrl = "https://flow.manywho.com";
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
     public EngineInitializationResponse initializeFlow(AuthenticatedWho authenticatedWho, String tenantId, EngineInitializationRequest engineInitializationRequest) throws Exception {
-        return this.execute(authenticatedWho, tenantId, "https://flow.manywho.com/api/run/1", engineInitializationRequest, EngineInitializationResponse.class);
+        return this.execute(authenticatedWho, tenantId, this.baseUrl + "/api/run/1", engineInitializationRequest, EngineInitializationResponse.class);
     }
 
     public InvokeType sendEvent(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
@@ -30,25 +39,30 @@ public class RunService {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, serviceResponse);
     }
 
-    protected HttpRequestWithBody createHttpClient(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri) {
+    protected HttpRequestWithBody createHttpClient(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri) throws Exception {
+        String authorizationHeader = null;
+        if (authenticatedWho != null) {
+            authorizationHeader = URLEncoder.encode(AuthorizationUtils.serialize(authenticatedWho), "UTF-8");
+        }
+
         return Unirest.post(callbackUri)
-                .header("Authorization", AuthorizationUtils.serialize(authenticatedWho))
+                .header("Authorization", authorizationHeader)
                 .header("ManyWhoTenant", tenantId)
                 .header("Content-Type", "application/json");
     }
 
     protected <T> T execute(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Request request, Class<T> responseClass) throws Exception {
         InputStream body = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
-                .body(new ObjectMapper().writeValueAsString(request))
+                .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(request))
                 .asJson()
                 .getRawBody();
 
-        return new ObjectMapper().readValue(body, responseClass);
+        return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(body, responseClass);
     }
 
     protected InvokeType executeCallback(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Response response) throws Exception {
         String responseBody = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
-                .body(new ObjectMapper().writeValueAsString(response))
+                .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(response))
                 .asString()
                 .getBody();
 

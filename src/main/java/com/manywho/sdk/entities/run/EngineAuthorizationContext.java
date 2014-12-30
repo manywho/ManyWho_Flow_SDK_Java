@@ -1,12 +1,12 @@
 package com.manywho.sdk.entities.run;
 
-import com.manywho.sdk.enums.AuthenticationType;
+import com.manywho.sdk.enums.AuthorizationType;
 
 public class EngineAuthorizationContext {
     private String directoryName;
     private String directoryId;
     private String loginUrl;
-    private AuthenticationType authenticationType;
+    private AuthorizationType authenticationType;
 
     public String getDirectoryName() {
         return directoryName;
@@ -32,11 +32,11 @@ public class EngineAuthorizationContext {
         this.loginUrl = loginUrl;
     }
 
-    public AuthenticationType getAuthenticationType() {
+    public AuthorizationType getAuthenticationType() {
         return authenticationType;
     }
 
-    public void setAuthenticationType(AuthenticationType authenticationType) {
+    public void setAuthenticationType(AuthorizationType authenticationType) {
         this.authenticationType = authenticationType;
     }
 }
