@@ -35,6 +35,11 @@ public class EngineValue {
         this.objectData = objectData;
     }
 
+    public EngineValue(String developerName, ContentType contentType, String typeElementDeveloperName, ObjectCollection objectData) {
+        this(developerName, contentType, objectData);
+        this.typeElementDeveloperName = typeElementDeveloperName;
+    }
+
     public String getValueElementId() {
         return valueElementId;
     }
