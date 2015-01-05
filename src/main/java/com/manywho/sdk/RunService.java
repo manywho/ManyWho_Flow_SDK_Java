@@ -3,11 +3,9 @@ package com.manywho.sdk;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.manywho.sdk.entities.run.EngineInitializationRequest;
-import com.manywho.sdk.entities.run.EngineInitializationResponse;
-import com.manywho.sdk.entities.run.Request;
+import com.manywho.sdk.services.notifications.Notifier;
+import com.manywho.sdk.entities.run.*;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceResponse;
-import com.manywho.sdk.entities.run.Response;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.InvokeType;
@@ -27,15 +25,19 @@ public class RunService {
         this.baseUrl = baseUrl;
     }
 
-    public EngineInitializationResponse initializeFlow(AuthenticatedWho authenticatedWho, String tenantId, EngineInitializationRequest engineInitializationRequest) throws Exception {
+    public EngineInitializationResponse initializeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInitializationRequest engineInitializationRequest) throws Exception {
         return this.execute(authenticatedWho, tenantId, this.baseUrl + "/api/run/1", engineInitializationRequest, EngineInitializationResponse.class);
     }
 
-    public InvokeType sendEvent(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
+    public EngineInvokeResponse executeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInvokeRequest engineInvokeRequest) throws Exception {
+        return this.execute(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(), engineInvokeRequest, EngineInvokeResponse.class);
+    }
+
+    public InvokeType sendEvent(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, listenerServiceResponse);
     }
 
-    public InvokeType sendResponse(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
+    public InvokeType sendResponse(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, serviceResponse);
     }
 
