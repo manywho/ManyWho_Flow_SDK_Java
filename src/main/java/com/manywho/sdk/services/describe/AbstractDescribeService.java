@@ -10,6 +10,7 @@ import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.actions.Action;
 import com.manywho.sdk.services.describe.types.AbstractType;
 import com.manywho.sdk.services.describe.types.Type;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public abstract class AbstractDescribeService implements DescribeService {
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
         final Set<Class<? extends AbstractType>> annotatedClasses = BaseApplication.reflections.getSubTypesOf(AbstractType.class);
 
-        if (!annotatedClasses.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(annotatedClasses)) {
             return new DescribeServiceInstall() {{
                 setTypeElements(new TypeElementCollection() {{
                     for (Class<? extends Type> type : annotatedClasses) {
