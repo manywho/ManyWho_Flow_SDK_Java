@@ -1,6 +1,6 @@
 package com.manywho.sdk.entities.security;
 
-import com.manywho.sdk.entities.security.Geolocation;
+import com.manywho.sdk.entities.run.state.Geolocation;
 
 import javax.validation.constraints.NotNull;
 

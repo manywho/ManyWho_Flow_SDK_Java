@@ -17,6 +17,10 @@ public class TypeElementBinding {
         this.propertyBindings = propertyBindings;
     }
 
+    public TypeElementBinding(String developerName, String developerSummary, String databaseTableName, TypeElementPropertyBindingCollection propertyBindings) {
+        this(null, developerName, developerSummary, databaseTableName, null, propertyBindings);
+    }
+
     public TypeElementBinding(String developerName, String developerSummary, String databaseTableName) {
         this(null, developerName, developerSummary, databaseTableName, null, null);
     }

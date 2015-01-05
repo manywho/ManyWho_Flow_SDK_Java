@@ -3,77 +3,36 @@ package com.manywho.sdk.entities.security;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Geolocation {
-    private BigDecimal latitude;
-    private BigDecimal longitude;
-    private BigDecimal accuracy;
-    private BigDecimal altitude;
-    private BigDecimal altitudeAccuracy;
-    private BigDecimal heading;
-    private BigDecimal speed;
-    private Date time;
+public interface Geolocation {
+    BigDecimal getLatitude();
 
-    public BigDecimal getLatitude() {
-        return latitude;
-    }
+    void setLatitude(BigDecimal latitude);
 
-    public void setLatitude(BigDecimal latitude) {
-        this.latitude = latitude;
-    }
+    BigDecimal getLongitude();
 
-    public BigDecimal getLongitude() {
-        return longitude;
-    }
+    void setLongitude(BigDecimal longitude);
 
-    public void setLongitude(BigDecimal longitude) {
-        this.longitude = longitude;
-    }
+    BigDecimal getAccuracy();
 
-    public BigDecimal getAccuracy() {
-        return accuracy;
-    }
+    void setAccuracy(BigDecimal accuracy);
 
-    public void setAccuracy(BigDecimal accuracy) {
-        this.accuracy = accuracy;
-    }
+    BigDecimal getAltitude();
 
-    public BigDecimal getAltitude() {
-        return altitude;
-    }
+    void setAltitude(BigDecimal altitude);
 
-    public void setAltitude(BigDecimal altitude) {
-        this.altitude = altitude;
-    }
+    BigDecimal getAltitudeAccuracy();
 
-    public BigDecimal getAltitudeAccuracy() {
-        return altitudeAccuracy;
-    }
+    void setAltitudeAccuracy(BigDecimal altitudeAccuracy);
 
-    public void setAltitudeAccuracy(BigDecimal altitudeAccuracy) {
-        this.altitudeAccuracy = altitudeAccuracy;
-    }
+    BigDecimal getHeading();
 
-    public BigDecimal getHeading() {
-        return heading;
-    }
+    void setHeading(BigDecimal heading);
 
-    public void setHeading(BigDecimal heading) {
-        this.heading = heading;
-    }
+    BigDecimal getSpeed();
 
-    public BigDecimal getSpeed() {
-        return speed;
-    }
+    void setSpeed(BigDecimal speed);
 
-    public void setSpeed(BigDecimal speed) {
-        this.speed = speed;
-    }
+    Date getTimestamp();
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
+    void setTimestamp(Date time);
 }

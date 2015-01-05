@@ -5,8 +5,8 @@ import com.manywho.sdk.entities.draw.elements.Element;
 public class TypeElement extends Element {
     private String id;
     private String serviceElementId;
-    private TypeElementPropertyCollection properties;
-    private TypeElementBindingCollection bindings;
+    protected TypeElementPropertyCollection properties = new TypeElementPropertyCollection();
+    protected TypeElementBindingCollection bindings = new TypeElementBindingCollection();
     private boolean updateByName;
 
     public String getId() {
