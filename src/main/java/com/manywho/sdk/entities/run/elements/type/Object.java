@@ -1,5 +1,7 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Object {
     private String internalId;
     private String externalId;
@@ -7,7 +9,8 @@ public class Object {
     private String typeElementId;
     private int order;
     private PropertyCollection properties;
-    private boolean isSelected;
+    @JsonProperty("isSelected")
+    private boolean selected;
 
     public String getInternalId() {
         return internalId;
@@ -58,10 +61,10 @@ public class Object {
     }
 
     public boolean isSelected() {
-        return isSelected;
+        return selected;
     }
 
-    public void setSelected(boolean isSelected) {
-        this.isSelected = isSelected;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

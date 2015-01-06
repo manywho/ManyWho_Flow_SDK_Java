@@ -20,7 +20,7 @@ public class ObjectDataRequest implements Request {
     private Culture culture;
     private ListFilter listFilter;
     private ObjectDataType objectDataType;
-    private Object objectData;
+    private ObjectCollection objectData;
 
     public String getStateId() {
         return stateId;
@@ -94,11 +94,11 @@ public class ObjectDataRequest implements Request {
         this.objectDataType = objectDataType;
     }
 
-    public Object getObjectData() {
+    public ObjectCollection getObjectData() {
         return objectData;
     }
 
-    public void setObjectData(Object objectData) {
+    public void setObjectData(ObjectCollection objectData) {
         this.objectData = objectData;
     }
 }
