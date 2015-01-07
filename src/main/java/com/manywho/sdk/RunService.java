@@ -68,6 +68,6 @@ public class RunService {
                 .asString()
                 .getBody();
 
-        return InvokeType.valueOf(responseBody);
+        return InvokeType.valueOf(responseBody.replace("\"", ""));
     }
 }
