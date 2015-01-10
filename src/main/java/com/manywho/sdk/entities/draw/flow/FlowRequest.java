@@ -4,13 +4,13 @@ import com.manywho.sdk.entities.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.entities.run.Request;
 
 public class FlowRequest implements Request {
-    private String editingToken;
-    private FlowId id;
-    private String developerName;
-    private String developerSummary;
-    private String startMapElementId;
-    private boolean allowJumping;
-    private GroupAuthorization authorization;
+    protected String editingToken;
+    protected FlowId id;
+    protected String developerName;
+    protected String developerSummary;
+    protected String startMapElementId;
+    protected boolean allowJumping;
+    protected GroupAuthorization authorization;
 
     public String getEditingToken() {
         return editingToken;
@@ -20,11 +20,11 @@ public class FlowRequest implements Request {
         this.editingToken = editingToken;
     }
 
-    public FlowId getFlowId() {
+    public FlowId getId() {
         return id;
     }
 
-    public void setFlowId(FlowId id) {
+    public void setId(FlowId id) {
         this.id = id;
     }
 
