@@ -4,6 +4,10 @@ public class FlowId {
     private String id;
     private String versionId;
 
+    public FlowId() {
+
+    }
+
     public FlowId(String id) {
         this(id, null);
     }
