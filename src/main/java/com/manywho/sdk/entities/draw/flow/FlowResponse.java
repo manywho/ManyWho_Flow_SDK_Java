@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.draw.flow;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.entities.run.Response;
 import com.manywho.sdk.entities.security.BuilderWho;
@@ -7,7 +8,9 @@ import com.manywho.sdk.entities.security.BuilderWho;
 import java.util.Date;
 
 public class FlowResponse extends FlowRequest implements Response {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSZ")
     private Date dateCreated;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSZ")
     private Date dateModified;
     private BuilderWho whoCreated;
     private BuilderWho whoModified;
