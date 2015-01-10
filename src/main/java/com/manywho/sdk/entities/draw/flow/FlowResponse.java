@@ -8,8 +8,9 @@ import com.manywho.sdk.entities.security.BuilderWho;
 import java.util.Date;
 
 public class FlowResponse extends FlowRequest implements Response {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date dateCreated;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSZ")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date dateModified;
     private BuilderWho whoCreated;
     private BuilderWho whoModified;
