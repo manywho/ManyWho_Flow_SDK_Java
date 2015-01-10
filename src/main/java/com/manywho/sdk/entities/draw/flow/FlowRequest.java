@@ -5,7 +5,7 @@ import com.manywho.sdk.entities.run.Request;
 
 public class FlowRequest implements Request {
     private String editingToken;
-    private FlowId flowId;
+    private FlowId id;
     private String developerName;
     private String developerSummary;
     private String startMapElementId;
@@ -21,11 +21,11 @@ public class FlowRequest implements Request {
     }
 
     public FlowId getFlowId() {
-        return flowId;
+        return id;
     }
 
-    public void setFlowId(FlowId flowId) {
-        this.flowId = flowId;
+    public void setFlowId(FlowId id) {
+        this.id = id;
     }
 
     public String getDeveloperName() {
