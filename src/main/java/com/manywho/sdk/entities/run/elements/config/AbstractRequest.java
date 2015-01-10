@@ -4,6 +4,8 @@ import com.manywho.sdk.entities.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.translate.Culture;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -15,9 +17,14 @@ public abstract class AbstractRequest implements Request {
     protected EngineValueCollection configurationValues;
     protected GroupAuthorization authorization;
     protected HashMap<String, String> annotations;
+    private HashMap<String, String> attributes;
 
     public HashMap<String, String> getAttributes() {
         return attributes;
+    }
+
+    public boolean hasAttributes() {
+        return MapUtils.isNotEmpty(attributes);
     }
 
     public void setAttributes(HashMap<String, String> attributes) {
@@ -60,6 +67,10 @@ public abstract class AbstractRequest implements Request {
         return configurationValues;
     }
 
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
+    }
+
     public void setConfigurationValues(EngineValueCollection configurationValues) {
         this.configurationValues = configurationValues;
     }
@@ -76,9 +87,11 @@ public abstract class AbstractRequest implements Request {
         return annotations;
     }
 
+    public boolean hasAnnotations() {
+        return MapUtils.isNotEmpty(annotations);
+    }
+
     public void setAnnotations(HashMap<String, String> annotations) {
         this.annotations = annotations;
     }
-
-    private HashMap<String, String> attributes;
 }

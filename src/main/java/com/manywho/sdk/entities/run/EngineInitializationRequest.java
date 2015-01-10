@@ -1,6 +1,8 @@
 package com.manywho.sdk.entities.run;
 
 import com.manywho.sdk.entities.draw.flow.FlowId;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -52,12 +54,20 @@ public class EngineInitializationRequest implements Request {
         return annotations;
     }
 
+    public boolean hasAnnotations() {
+        return MapUtils.isNotEmpty(annotations);
+    }
+
     public void setAnnotations(HashMap<String, String> annotations) {
         this.annotations = annotations;
     }
 
     public EngineValueCollection getInputs() {
         return inputs;
+    }
+
+    public boolean hasInputs() {
+        return CollectionUtils.isNotEmpty(inputs);
     }
 
     public void setInputs(EngineValueCollection inputs) {

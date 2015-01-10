@@ -2,6 +2,8 @@ package com.manywho.sdk.entities.run.elements.config;
 
 import com.manywho.sdk.entities.run.Response;
 import com.manywho.sdk.entities.translate.Culture;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -37,6 +39,10 @@ public abstract class AbstractResponse implements Response {
 
     public HashMap<String, String> getAnnotations() {
         return annotations;
+    }
+
+    public boolean hasAnnotations() {
+        return MapUtils.isNotEmpty(annotations);
     }
 
     public void setAnnotations(HashMap<String, String> annotations) {

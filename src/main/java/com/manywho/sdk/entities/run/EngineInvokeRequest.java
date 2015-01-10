@@ -4,6 +4,7 @@ import com.manywho.sdk.entities.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.entities.run.state.Geolocation;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.enums.InvokeType;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -87,6 +88,10 @@ public class EngineInvokeRequest implements Request {
 
     public HashMap<String, String> getAnnotations() {
         return annotations;
+    }
+
+    public boolean hasAnnotations() {
+        return MapUtils.isNotEmpty(annotations);
     }
 
     public void setAnnotations(HashMap<String, String> annotations) {

@@ -6,6 +6,8 @@ import com.manywho.sdk.entities.run.elements.ui.NavigationElementReferenceCollec
 import com.manywho.sdk.entities.run.state.StateLog;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.enums.InvokeType;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -117,12 +119,20 @@ public class EngineInvokeResponse implements Response {
         return annotations;
     }
 
+    public boolean hasAnnotations() {
+        return MapUtils.isNotEmpty(annotations);
+    }
+
     public void setAnnotations(HashMap<String, String> annotations) {
         this.annotations = annotations;
     }
 
     public MapElementInvokeResponseCollection getMapElementInvokeResponses() {
         return mapElementInvokeResponses;
+    }
+
+    public boolean hasMapElementInvokeResponses() {
+        return CollectionUtils.isNotEmpty(mapElementInvokeResponses);
     }
 
     public void setMapElementInvokeResponses(MapElementInvokeResponseCollection mapElementInvokeResponses) {
