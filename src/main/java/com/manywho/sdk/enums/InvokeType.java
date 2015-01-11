@@ -21,4 +21,16 @@ public enum InvokeType {
     public String toString() {
         return text;
     }
+
+    public static InvokeType fromString(String text) {
+        if (text != null) {
+            for (InvokeType invokeType : InvokeType.values()) {
+                if (text.equalsIgnoreCase(invokeType.text)) {
+                    return invokeType;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("No constant with text " + text + " found");
+    }
 }

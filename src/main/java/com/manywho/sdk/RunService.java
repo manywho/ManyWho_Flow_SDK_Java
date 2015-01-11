@@ -88,6 +88,6 @@ public class RunService {
                 .asString()
                 .getBody();
 
-        return InvokeType.valueOf(responseBody.replace("\"", ""));
+        return InvokeType.fromString(responseBody.replace("\"", ""));
     }
 }
