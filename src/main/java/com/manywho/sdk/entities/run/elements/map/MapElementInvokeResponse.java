@@ -1,6 +1,7 @@
 package com.manywho.sdk.entities.run.elements.map;
 
 import com.manywho.sdk.entities.run.elements.ui.PageResponse;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.HashMap;
 
@@ -37,6 +38,10 @@ public class MapElementInvokeResponse {
 
     public OutcomeResponseCollection getOutcomeResponses() {
         return outcomeResponses;
+    }
+
+    public boolean hasOutcomeResponses() {
+        return CollectionUtils.isNotEmpty(outcomeResponses);
     }
 
     public void setOutcomeResponses(OutcomeResponseCollection outcomeResponses) {

@@ -1,6 +1,7 @@
 package com.manywho.sdk.entities.run.elements.ui;
 
 import com.manywho.sdk.entities.run.EngineValueCollection;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.HashMap;
 
@@ -26,12 +27,20 @@ public class PageResponse {
         return pageContainerResponses;
     }
 
+    public boolean hasPageContainerResponses() {
+        return CollectionUtils.isNotEmpty(pageContainerResponses);
+    }
+
     public void setPageContainerResponses(PageContainerResponseCollection pageContainerResponses) {
         this.pageContainerResponses = pageContainerResponses;
     }
 
     public PageComponentResponseCollection getPageComponentResponses() {
         return pageComponentResponses;
+    }
+
+    public boolean hasPageComponentResponses() {
+        return CollectionUtils.isNotEmpty(pageComponentResponses);
     }
 
     public void setPageComponentResponses(PageComponentResponseCollection pageComponentResponses) {
@@ -42,12 +51,20 @@ public class PageResponse {
         return pageComponentDataResponses;
     }
 
+    public boolean hasPageComponentDataResponses() {
+        return CollectionUtils.isNotEmpty(pageComponentDataResponses);
+    }
+
     public void setPageComponentDataResponses(PageComponentDataResponseCollection pageComponentDataResponses) {
         this.pageComponentDataResponses = pageComponentDataResponses;
     }
 
     public PageContainerDataResponseCollection getPageContainerDataResponses() {
         return pageContainerDataResponses;
+    }
+
+    public boolean hasPageContainerDataResponses() {
+        return CollectionUtils.isNotEmpty(pageContainerDataResponses);
     }
 
     public void setPageContainerDataResponses(PageContainerDataResponseCollection pageContainerDataResponses) {

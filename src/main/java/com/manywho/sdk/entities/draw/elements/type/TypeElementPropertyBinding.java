@@ -11,6 +11,11 @@ public class TypeElementPropertyBinding {
         this.databaseFieldName = databaseFieldName;
     }
 
+    public TypeElementPropertyBinding(String typeElementPropertyDeveloperName, String databaseFieldName, String databaseContentType) {
+        this(typeElementPropertyDeveloperName, databaseFieldName);
+        this.databaseContentType = databaseContentType;
+    }
+
     public String getDatabaseFieldName() {
         return databaseFieldName;
     }

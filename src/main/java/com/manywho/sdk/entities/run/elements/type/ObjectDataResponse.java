@@ -16,6 +16,10 @@ public class ObjectDataResponse {
         }};
     }
 
+    public ObjectDataResponse(ObjectCollection objectData) {
+        this.objectData = objectData;
+    }
+
     public ObjectDataResponse(Culture culture, ObjectCollection objectData, boolean hasMoreResults) {
         this.culture = culture;
         this.objectData = objectData;
