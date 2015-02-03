@@ -25,9 +25,9 @@ public class EngineValue {
         this.contentType = contentType;
     }
 
-    public EngineValue(String developerName, ContentType contentType, String contentValue) {
+    public EngineValue(String developerName, ContentType contentType, Object contentValue) {
         this(developerName, contentType);
-        this.contentValue = contentValue;
+        this.contentValue = String.valueOf(contentValue);
     }
 
     public EngineValue(String developerName, ContentType contentType, ObjectCollection objectData) {
