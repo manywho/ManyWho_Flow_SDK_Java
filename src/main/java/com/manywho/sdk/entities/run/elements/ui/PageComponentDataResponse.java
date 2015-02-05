@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.ui;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.type.FileDataRequest;
 import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
@@ -7,17 +8,22 @@ import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
 
 public class PageComponentDataResponse {
     private String pageComponentId;
-    private boolean isEnabled;
-    private boolean isEditable;
-    private boolean isRequired;
-    private boolean isVisible;
+    @JsonProperty("isEnabled")
+    private boolean enabled;
+    @JsonProperty("isEditable")
+    private boolean editable;
+    @JsonProperty("isRequired")
+    private boolean required;
+    @JsonProperty("isVisible")
+    private boolean visible;
     private ObjectCollection objectData;
     private ObjectDataRequest objectDataRequest;
     private FileDataRequest fileDataRequest;
     private String contentValue;
     private String content;
     private String imageUri;
-    private boolean isValid;
+    @JsonProperty("isValid")
+    private boolean valid;
     private String validationMessage;
     private EngineValueCollection tags;
 
@@ -30,35 +36,35 @@ public class PageComponentDataResponse {
     }
 
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 
     public void setEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+        this.enabled = isEnabled;
     }
 
     public boolean isEditable() {
-        return isEditable;
+        return editable;
     }
 
     public void setEditable(boolean isEditable) {
-        this.isEditable = isEditable;
+        this.editable = isEditable;
     }
 
     public boolean isRequired() {
-        return isRequired;
+        return required;
     }
 
     public void setRequired(boolean isRequired) {
-        this.isRequired = isRequired;
+        this.required = isRequired;
     }
 
     public boolean isVisible() {
-        return isVisible;
+        return visible;
     }
 
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+        this.visible = isVisible;
     }
 
     public ObjectCollection getObjectData() {
@@ -110,11 +116,11 @@ public class PageComponentDataResponse {
     }
 
     public boolean isValid() {
-        return isValid;
+        return valid;
     }
 
     public void setValid(boolean isValid) {
-        this.isValid = isValid;
+        this.valid = isValid;
     }
 
     public String getValidationMessage() {

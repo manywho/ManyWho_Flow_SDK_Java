@@ -1,13 +1,16 @@
 package com.manywho.sdk.entities.run.elements.map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class VoteResponse extends VoteRequest {
-    private boolean isComplete;
+    @JsonProperty("isComplete")
+    private boolean complete;
 
     public boolean isComplete() {
-        return isComplete;
+        return complete;
     }
 
     public void setComplete(boolean isComplete) {
-        this.isComplete = isComplete;
+        this.complete = isComplete;
     }
 }

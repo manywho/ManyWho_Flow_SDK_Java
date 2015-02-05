@@ -1,11 +1,15 @@
 package com.manywho.sdk.entities.run.elements.map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class OutcomeResponse extends OutcomeAvailable {
     private String pageActionBindingType;
     private String pageActionType;
-    private boolean isBulkAction;
+    @JsonProperty("isBulkAction")
+    private boolean bulkAction;
     private String pageObjectBindingId;
-    private boolean isOut;
+    @JsonProperty("isOut")
+    private boolean out;
 
     public String getPageActionBindingType() {
         return pageActionBindingType;
@@ -24,11 +28,11 @@ public class OutcomeResponse extends OutcomeAvailable {
     }
 
     public boolean isBulkAction() {
-        return isBulkAction;
+        return bulkAction;
     }
 
     public void setBulkAction(boolean isBulkAction) {
-        this.isBulkAction = isBulkAction;
+        this.bulkAction = isBulkAction;
     }
 
     public String getPageObjectBindingId() {
@@ -40,10 +44,10 @@ public class OutcomeResponse extends OutcomeAvailable {
     }
 
     public boolean isOut() {
-        return isOut;
+        return out;
     }
 
     public void setOut(boolean isOut) {
-        this.isOut = isOut;
+        this.out = isOut;
     }
 }

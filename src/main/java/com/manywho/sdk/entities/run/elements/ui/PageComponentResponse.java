@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.ui;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.enums.ContentType;
 
 import java.util.HashMap;
@@ -20,8 +21,10 @@ public class PageComponentResponse {
     private String hintValue;
     private String helpInfo;
     private int order;
-    private boolean isMultiSelect;
-    private boolean isSearchable;
+    @JsonProperty("isMultiSelect")
+    private boolean multiSelect;
+    @JsonProperty("isSearchable")
+    private boolean searchable;
     private boolean hasEvents;
     private HashMap<String, String> attributes;
 
@@ -146,19 +149,19 @@ public class PageComponentResponse {
     }
 
     public boolean isMultiSelect() {
-        return isMultiSelect;
+        return multiSelect;
     }
 
     public void setMultiSelect(boolean isMultiSelect) {
-        this.isMultiSelect = isMultiSelect;
+        this.multiSelect = isMultiSelect;
     }
 
     public boolean isSearchable() {
-        return isSearchable;
+        return searchable;
     }
 
     public void setSearchable(boolean isSearchable) {
-        this.isSearchable = isSearchable;
+        this.searchable = isSearchable;
     }
 
     public boolean isHasEvents() {
