@@ -30,6 +30,10 @@ public class RunService {
         return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/flow/" + flowId, FlowResponse.class);
     }
 
+    public FlowResponse loadFlowByName(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String flowName) throws Exception {
+        return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/flow/name/" + flowName, FlowResponse.class);
+    }
+
     public EngineInitializationResponse initializeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInitializationRequest engineInitializationRequest) throws Exception {
         return this.executePost(authenticatedWho, tenantId, this.baseUrl + "/api/run/1", engineInitializationRequest, EngineInitializationResponse.class);
     }
