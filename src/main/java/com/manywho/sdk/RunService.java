@@ -11,14 +11,21 @@ import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.InvokeType;
 import com.manywho.sdk.utils.AuthorizationUtils;
+import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 // @todo Add notifier stuff to these methods
 public class RunService {
+    private static final Set<Integer> STATUSES_SUCCESS = new HashSet<Integer>(Arrays.asList(
+        new Integer[] {200, 201, 202, 203, 204, 205, 206, 207, 208, 226}
+    ));
 
     private String baseUrl = "https://flow.manywho.com";
 
@@ -68,22 +75,28 @@ public class RunService {
             authorizationHeader = URLEncoder.encode(AuthorizationUtils.serialize(authenticatedWho), "UTF-8");
         }
 
-        InputStream body = Unirest.get(uri)
+        HttpResponse response = Unirest.get(uri)
                 .header("Authorization", authorizationHeader)
                 .header("ManyWhoTenant", tenantId)
-                .asJson()
-                .getRawBody();
+                .asJson();
 
-        return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(body, responseClass);
+        if (!STATUSES_SUCCESS.contains(response.getStatus())) {
+            throw new Exception(response.getStatusText());
+        }
+
+        return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
     }
 
     protected <T> T executePost(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Request request, Class<T> responseClass) throws Exception {
-        InputStream body = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
+        HttpResponse response = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
                 .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(request))
-                .asJson()
-                .getRawBody();
+                .asJson();
 
-        return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(body, responseClass);
+        if (!STATUSES_SUCCESS.contains(response.getStatus())) {
+            throw new Exception(response.getStatusText());
+        }
+
+        return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
     }
 
     protected InvokeType executeCallback(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Response response) throws Exception {
