@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
+import com.manywho.sdk.entities.security.AuthenticationCredentials;
 import com.manywho.sdk.services.notifications.Notifier;
 import com.manywho.sdk.entities.run.*;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceResponse;
@@ -31,6 +32,12 @@ public class RunService {
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    public AuthenticatedWho login(Notifier notifier, String tenantId, String stateId, AuthenticationCredentials authenticationCredentials) throws Exception {
+        String authenticationToken = this.executePost(null, tenantId, this.baseUrl + "/api/run/1/authentication/" + stateId, authenticationCredentials);
+
+        return AuthorizationUtils.deserialize(authenticationToken);
     }
 
     public FlowResponse loadFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String flowId) throws Exception {
@@ -97,6 +104,18 @@ public class RunService {
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
+    }
+
+    protected String executePost(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Request request) throws Exception {
+        HttpResponse<String> response = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
+                .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(request))
+                .asString();
+
+        if (!STATUSES_SUCCESS.contains(response.getStatus())) {
+            throw new Exception(response.getStatusText());
+        }
+
+        return response.getBody();
     }
 
     protected InvokeType executeCallback(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Response response) throws Exception {

@@ -1,11 +1,12 @@
 package com.manywho.sdk.entities.security;
 
 import com.manywho.sdk.entities.run.EngineValueCollection;
+import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.enums.AuthorizationType;
 
 import javax.validation.constraints.NotNull;
 
-public class AuthenticationCredentials {
+public class AuthenticationCredentials implements Request {
     @NotNull
     private EngineValueCollection configurationValues;
     private AuthorizationType authenticationType;
