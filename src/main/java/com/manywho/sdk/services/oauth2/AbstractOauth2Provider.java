@@ -29,10 +29,8 @@ public abstract class AbstractOauth2Provider implements Oauth2Provider {
 
     @Override
     public String getAuthorizationUrl(String clientId, String responseType, String redirectUri) {
-        String parameters = String.format("client_id=%s&redirect_uri=%s&state=%s&scope=%s&response_type=%s&approval_prompt=%s",
+        String parameters = String.format("client_id=%s&scope=%s&response_type=%s&approval_prompt=%s",
                 clientId,
-                redirectUri,
-                UUID.randomUUID().toString(),
                 StringUtils.join(this.getScopes(), this.scopeSeparator),
                 responseType,
                 "auto"
