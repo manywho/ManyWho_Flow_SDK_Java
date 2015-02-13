@@ -20,6 +20,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     public static ObjectMapper getObjectMapper() {
         return new ObjectMapper()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     }
