@@ -17,6 +17,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,7 +38,9 @@ public class RunService {
     public AuthenticatedWho login(Notifier notifier, String tenantId, String stateId, AuthenticationCredentials authenticationCredentials) throws Exception {
         String authenticationToken = this.executePost(null, tenantId, this.baseUrl + "/api/run/1/authentication/" + stateId, authenticationCredentials);
 
-        return AuthorizationUtils.deserialize(authenticationToken);
+        String tokenToDeserialize = URLDecoder.decode(authenticationToken.substring(1, authenticationToken.length() - 1), "UTF-8");
+
+        return AuthorizationUtils.deserialize(tokenToDeserialize);
     }
 
     public FlowResponse loadFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String flowId) throws Exception {
