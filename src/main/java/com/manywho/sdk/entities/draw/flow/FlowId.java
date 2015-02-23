@@ -1,6 +1,9 @@
 package com.manywho.sdk.entities.draw.flow;
 
+import javax.validation.constraints.NotNull;
+
 public class FlowId {
+    @NotNull
     private String id;
     private String versionId;
 

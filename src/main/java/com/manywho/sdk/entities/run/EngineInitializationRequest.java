@@ -4,9 +4,11 @@ import com.manywho.sdk.entities.draw.flow.FlowId;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
 public class EngineInitializationRequest implements Request {
+    @NotNull
     private FlowId flowId;
     private String stateId;
     private String parentStateId;

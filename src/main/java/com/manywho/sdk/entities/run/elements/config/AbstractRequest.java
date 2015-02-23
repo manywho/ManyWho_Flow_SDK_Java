@@ -6,10 +6,12 @@ import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.translate.Culture;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.HashMap;
 
 public abstract class AbstractRequest implements Request {
+    @NotBlank
     protected String token;
     protected String tenantId;
     protected String callbackUri;
