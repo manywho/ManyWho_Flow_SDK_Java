@@ -49,7 +49,11 @@ public class AuthorizationUtils {
         }};
     }
 
-    public static String serialize(AuthenticatedWho authenticatedWho) {
+    public static String serialize(AuthenticatedWho authenticatedWho) throws Exception {
+        if (authenticatedWho == null) {
+            throw new Exception("AuthenticatedWho cannot be null");
+        }
+
         String token = "";
 
         token += AuthenticatedWhoToken.ManyWhoTenantId + "=" + authenticatedWho.getManyWhoTenantId() + "&";
