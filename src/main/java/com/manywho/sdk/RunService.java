@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
+import com.manywho.sdk.entities.draw.flow.FlowResponseCollection;
 import com.manywho.sdk.entities.run.*;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceResponse;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
@@ -18,9 +19,7 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 // @todo Add notifier stuff to these methods
 public class RunService {
@@ -48,6 +47,16 @@ public class RunService {
 
     public FlowResponse loadFlowByName(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String flowName) throws Exception {
         return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/flow/name/" + flowName, FlowResponse.class);
+    }
+
+    public FlowResponseCollection loadFlows(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId) throws Exception {
+        return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/flow", FlowResponseCollection.class);
+    }
+
+    public FlowResponseCollection loadFlows(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String filter) throws Exception {
+        return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/flow", new HashMap<String, Object>() {{
+            put("filter", filter);
+        }}, FlowResponseCollection.class);
     }
 
     public EngineInitializationResponse initializeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInitializationRequest engineInitializationRequest) throws Exception {
@@ -79,6 +88,10 @@ public class RunService {
     }
 
     protected <T> T executeGet(AuthenticatedWho authenticatedWho, String tenantId, String uri, Class<T> responseClass) throws Exception {
+        return executeGet(authenticatedWho, tenantId, uri, null, responseClass);
+    }
+
+    protected <T> T executeGet(AuthenticatedWho authenticatedWho, String tenantId, String uri, Map<String, Object> queryParameters, Class<T> responseClass) throws Exception {
         String authorizationHeader = null;
         if (authenticatedWho != null) {
             authorizationHeader = URLEncoder.encode(AuthorizationUtils.serialize(authenticatedWho), "UTF-8");
@@ -87,6 +100,7 @@ public class RunService {
         HttpResponse response = Unirest.get(uri)
                 .header("Authorization", authorizationHeader)
                 .header("ManyWhoTenant", tenantId)
+                .queryString(queryParameters)
                 .asJson();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
