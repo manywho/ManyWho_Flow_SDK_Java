@@ -14,6 +14,7 @@ public abstract class AbstractRequest implements Request {
     @NotBlank
     protected String token;
     protected String tenantId;
+    protected String stateId;
     protected String callbackUri;
     protected Culture culture;
     protected EngineValueCollection configurationValues;
@@ -47,6 +48,14 @@ public abstract class AbstractRequest implements Request {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(String stateId) {
+        this.stateId = stateId;
     }
 
     public String getCallbackUri() {
