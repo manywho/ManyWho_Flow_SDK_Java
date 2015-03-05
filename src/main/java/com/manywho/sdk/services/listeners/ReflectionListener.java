@@ -23,6 +23,7 @@ public class ReflectionListener implements ApplicationEventListener {
             case INITIALIZATION_START:
                 BaseApplication.reflections = new Reflections(new ConfigurationBuilder()
                         .addUrls(ClasspathHelper.forWebInfClasses(this.servletContext))
+                        .addUrls(ClasspathHelper.forPackage("com.manywho.services"))
                         .addScanners(new SubTypesScanner())
                 );
                 break;
