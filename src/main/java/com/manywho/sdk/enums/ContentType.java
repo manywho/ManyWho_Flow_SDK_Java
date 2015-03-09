@@ -21,7 +21,7 @@ public enum ContentType {
     @JsonCreator
     public static ContentType forValue(String value) {
         for (ContentType contentType : values()) {
-            if (value.equalsIgnoreCase(contentType.toString())) {
+            if (value.equalsIgnoreCase(contentType.text)) {
                 return contentType;
             }
         }
