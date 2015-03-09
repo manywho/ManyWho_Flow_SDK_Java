@@ -1,4 +1,4 @@
-package com.manywho.sdk.services;
+package com.manywho.sdk.services.providers;
 
 import com.fasterxml.jackson.databind.*;
 import org.glassfish.hk2.api.Factory;
