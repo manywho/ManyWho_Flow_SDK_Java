@@ -14,6 +14,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>manywho-release</id>
+            <name>ManyWho Release Repository</name>
+            <url>s3://manywho-maven-repository/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>manywho-snapshot</id>
+            <name>ManyWho Snapshot Repository</name>
+            <url>s3://manywho-maven-repository/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -80,7 +93,25 @@
     </dependencies>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
         <plugins>
+            <plugin>
+                <groupId>com.manywho.plugins</groupId>
+                <artifactId>cloudfront-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <files>
+                        <file>snapshot/com/manywho/sdk/maven-metadata.xml</file>
+                        <file>snapshot/com/manywho/sdk/1.0-SNAPSHOT/maven-metadata.xml</file>
+                    </files>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections-maven</artifactId>
