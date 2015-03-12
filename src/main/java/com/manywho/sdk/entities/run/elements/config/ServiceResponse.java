@@ -4,14 +4,14 @@ import com.manywho.sdk.entities.run.EngineValue;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.enums.InvokeType;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 public class ServiceResponse extends AbstractResponse {
     private InvokeType invokeType;
     private String waitMessage;
     private EngineValueCollection outputs;
     private String selectedOutcomeId;
-    private Dictionary<String, String> rootFaults;
+    private Map<String, String> rootFaults;
     private ValueFaultCollection valueFaults;
     private String mode;
 
@@ -68,11 +68,11 @@ public class ServiceResponse extends AbstractResponse {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 
-    public Dictionary<String, String> getRootFaults() {
+    public Map<String, String> getRootFaults() {
         return rootFaults;
     }
 
-    public void setRootFaults(Dictionary<String, String> rootFaults) {
+    public void setRootFaults(Map<String, String> rootFaults) {
         this.rootFaults = rootFaults;
     }
 
