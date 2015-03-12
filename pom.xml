@@ -14,6 +14,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>manywho-release</id>
+            <name>ManyWho Release Repository</name>
+            <url>s3://manywho-maven-repository/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>manywho-snapshot</id>
+            <name>ManyWho Snapshot Repository</name>
+            <url>s3://manywho-maven-repository/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -52,6 +65,12 @@
             <version>0.9.9</version>
         </dependency>
         <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+            <optional>false</optional>
+        </dependency>
+        <dependency>
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>
             <version>1.3.27</version>
@@ -66,5 +85,46 @@
             <artifactId>sql2o</artifactId>
             <version>1.5.4</version>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>com.manywho.plugins</groupId>
+                <artifactId>cloudfront-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <files>
+                        <file>snapshot/com/manywho/sdk/maven-metadata.xml</file>
+                        <file>snapshot/com/manywho/sdk/1.0-SNAPSHOT/maven-metadata.xml</file>
+                    </files>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections-maven</artifactId>
+                <version>0.9.9-RC2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>reflections</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

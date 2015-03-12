@@ -6,6 +6,7 @@ import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
 import org.glassfish.jersey.server.monitoring.RequestEventListener;
 import org.reflections.Reflections;
+import org.reflections.scanners.FieldAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
@@ -24,7 +25,7 @@ public class ReflectionListener implements ApplicationEventListener {
                 BaseApplication.reflections = new Reflections(new ConfigurationBuilder()
                         .addUrls(ClasspathHelper.forWebInfClasses(this.servletContext))
                         .addUrls(ClasspathHelper.forPackage("com.manywho.services"))
-                        .addScanners(new SubTypesScanner())
+                        .addScanners(new SubTypesScanner(), new FieldAnnotationsScanner())
                 );
                 break;
         }
