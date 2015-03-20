@@ -21,7 +21,12 @@ public class Property {
 
     public Property(String developerName, java.lang.Object contentValue) {
         this.developerName = developerName;
-        this.contentValue = contentValue == null ? null : contentValue.toString();
+
+        if (contentValue instanceof Object) {
+            this.objectData = new ObjectCollection() {{ add((Object) contentValue); }};
+        } else {
+            this.contentValue = contentValue == null ? null : contentValue.toString();
+        }
     }
 
     public Property(String developerName, java.lang.Number contentValue) {
