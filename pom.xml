@@ -193,17 +193,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.manywho.plugins</groupId>
-                <artifactId>cloudfront-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <configuration>
-                    <files>
-                        <file>snapshot/com/manywho/sdk/maven-metadata.xml</file>
-                        <file>snapshot/com/manywho/sdk/1.0-SNAPSHOT/maven-metadata.xml</file>
-                    </files>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections-maven</artifactId>
                 <version>0.9.9-RC2</version>
