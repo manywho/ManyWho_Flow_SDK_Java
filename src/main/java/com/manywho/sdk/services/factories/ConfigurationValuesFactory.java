@@ -30,13 +30,18 @@ public class ConfigurationValuesFactory<T> extends AbstractContainerRequestValue
 
     @Override
     public AbstractConfigurationValues provide() {
+
         try {
             JsonNode jsonBody = objectMapper.readTree(body);
             if (jsonBody.has("configurationValues")) {
                 EngineValueCollection configurationValues = objectMapper.treeToValue(jsonBody.findValue("configurationValues"), EngineValueCollection.class);
 
-                return this.classType.newInstance().populate(configurationValues);
+                if (configurationValues != null) {
+                    return this.classType.newInstance().populate(configurationValues);
+                }
             }
+
+            return this.classType.newInstance();
         } catch (Exception ignored) {}
 
         return null;
