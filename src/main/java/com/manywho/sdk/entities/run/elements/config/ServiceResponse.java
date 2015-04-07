@@ -19,21 +19,37 @@ public class ServiceResponse extends AbstractResponse {
 
     }
 
-    public ServiceResponse(InvokeType invokeType, EngineValueCollection outputs, String token) {
+    public ServiceResponse(InvokeType invokeType, EngineValueCollection outputs, String token, String waitMessage) {
         this.invokeType = invokeType;
         this.outputs = outputs;
         this.token = token;
+        this.waitMessage = waitMessage;
+    }
+
+    public ServiceResponse(InvokeType invokeType, EngineValueCollection outputs, String token) {
+        this(invokeType, outputs, token, null);
+    }
+
+    public ServiceResponse(InvokeType invokeType, EngineValue output, String token, String waitMessage) {
+        this(invokeType, new EngineValueCollection() {{
+            add(output);
+        }}, token, waitMessage);
     }
 
     public ServiceResponse(InvokeType invokeType, EngineValue output, String token) {
         this(invokeType, new EngineValueCollection() {{
             add(output);
-        }}, token);
+        }}, token, null);
+    }
+
+    public ServiceResponse(InvokeType invokeType, String token, String waitMessage) {
+        this.invokeType = invokeType;
+        this.token = token;
+        this.waitMessage = waitMessage;
     }
 
     public ServiceResponse(InvokeType invokeType, String token) {
-        this.invokeType = invokeType;
-        this.token = token;
+        this(invokeType, token, null);
     }
 
     public InvokeType getInvokeType() {
