@@ -60,6 +60,8 @@ public abstract class AbstractCollectionParser {
         Class fieldType = field.getType();
         if (fieldType.equals(long.class)) {
             field.set(entity, Long.parseLong(propertyValue));
+        } else if (fieldType.equals(boolean.class)) {
+            field.set(entity, Boolean.parseBoolean(propertyValue));
         } else if (fieldType.equals(int.class)) {
             field.set(entity, Integer.parseInt(propertyValue));
         } else if (fieldType.equals(float.class)) {
