@@ -16,9 +16,9 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
 
     @Override
     public <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception {
-        Set<Field> idFields = BaseApplication.reflections.getFieldsAnnotatedWith(Id.class);
+        Set<Field> idFields = CachedData.reflections.getFieldsAnnotatedWith(Id.class);
 
-        Set<Field> fields = BaseApplication.reflections.getFieldsAnnotatedWith(Property.class);
+        Set<Field> fields = CachedData.reflections.getFieldsAnnotatedWith(Property.class);
 
         T entity = tClass.newInstance();
 

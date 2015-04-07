@@ -10,7 +10,7 @@ import java.util.Set;
 
 public abstract class AbstractConfigurationValues {
     public AbstractConfigurationValues populate(EngineValueCollection configurationValues) throws IllegalAccessException {
-        Set<Field> fields = BaseApplication.reflections.getFieldsAnnotatedWith(ConfigurationValue.class);
+        Set<Field> fields = CachedData.reflections.getFieldsAnnotatedWith(ConfigurationValue.class);
 
         for (Field field : fields) {
             if (field.getDeclaringClass().equals(this.getClass())) {

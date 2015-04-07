@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Provider
-public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Exception> {
+public class ExceptionMapperProvider implements javax.ws.rs.ext.ExceptionMapper<Exception> {
     @Inject
     private ObjectMapper objectMapper;
 
@@ -31,6 +31,34 @@ public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Exceptio
             return Response.status(
                     new CustomReasonPhraseExceptionStatusType(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage())
             ).build();
+        }
+    }
+
+    public static class CustomReasonPhraseExceptionStatusType implements Response.StatusType {
+
+        private final Response.Status.Family family;
+        private final int statusCode;
+        private final String reasonPhrase;
+
+        public CustomReasonPhraseExceptionStatusType(Response.Status httpStatus, String message) {
+            this.family = httpStatus.getFamily();
+            this.statusCode = httpStatus.getStatusCode();
+            this.reasonPhrase = httpStatus.getReasonPhrase() + ": " + message;
+        }
+
+        @Override
+        public int getStatusCode() {
+            return statusCode;
+        }
+
+        @Override
+        public Response.Status.Family getFamily() {
+            return family;
+        }
+
+        @Override
+        public String getReasonPhrase() {
+            return reasonPhrase;
         }
     }
 }
