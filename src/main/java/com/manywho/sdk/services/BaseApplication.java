@@ -2,6 +2,7 @@ package com.manywho.sdk.services;
 
 import com.manywho.sdk.services.features.BodyReaderFeature;
 import com.manywho.sdk.services.listeners.ReflectionListener;
+import com.manywho.sdk.services.providers.ExceptionMapperProvider;
 import com.manywho.sdk.services.providers.ObjectMapperProvider;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -13,6 +14,7 @@ public class BaseApplication extends ResourceConfig {
                 .register(BodyReaderFeature.class)
                 .register(ReflectionListener.class)
                 .register(LoggingFilter.class)
+                .register(ExceptionMapperProvider.class)
                 .register(ObjectMapperProvider.class);
     }
 }

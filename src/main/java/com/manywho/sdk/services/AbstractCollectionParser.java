@@ -70,7 +70,7 @@ public abstract class AbstractCollectionParser {
             // TODO: Check if this date format is sent the same from everywhere
             field.set(entity, new SimpleDateFormat("MM/dd/yyyy H:m:s a").parse(propertyValue));
         } else {
-            field.set(entity, properties.getContentValue(annotationValue));
+            field.set(entity, propertyValue);
         }
     }
 }
