@@ -15,7 +15,13 @@ public class ConfigurationValuesFactory<T> extends AbstractContainerRequestValue
     @Inject
     private ObjectMapper objectMapper;
 
+    private byte[] bodyStream;
+
     private Class<? extends AbstractConfigurationValues> classType;
+
+    public void setBodyStream(byte[] bodyStream) {
+        this.bodyStream = bodyStream;
+    }
 
     public ConfigurationValuesFactory setClassType(Class<? extends AbstractConfigurationValues> classType) {
         this.classType = classType;
@@ -27,7 +33,7 @@ public class ConfigurationValuesFactory<T> extends AbstractContainerRequestValue
     public AbstractConfigurationValues provide() {
 
         try {
-            JsonNode jsonBody = objectMapper.readTree(CachedData.bodyStream);
+            JsonNode jsonBody = objectMapper.readTree(bodyStream);
             if (jsonBody.has("configurationValues")) {
                 EngineValueCollection configurationValues = objectMapper.treeToValue(jsonBody.findValue("configurationValues"), EngineValueCollection.class);
 
