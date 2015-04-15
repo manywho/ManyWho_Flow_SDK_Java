@@ -13,7 +13,10 @@ public class ServiceBinder extends AbstractBinder {
     @Override
     protected void configure() {
         bindFactory(ObjectMapperProvider.class).to(ObjectMapper.class);
+
         bind(ObjectBuilder.class).to(ObjectBuilder.class).in(Singleton.class);
+        bind(PropertyCollectionParser.class).to(PropertyCollectionParser.class).in(Singleton.class);
+
         bind(ConfigurationValuesFactoryProvider.class).to(ValueFactoryProvider.class).in(Singleton.class);
         bind(ConfigurationValuesFactory.class).to(ConfigurationValuesFactory.class).in(Singleton.class);
     }

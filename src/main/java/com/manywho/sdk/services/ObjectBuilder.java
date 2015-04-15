@@ -20,8 +20,6 @@ public class ObjectBuilder {
         for (Field field : mappedEntity.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Id.class)) {
                 id = (String) getFieldValue(field, mappedEntity);
-            } else {
-                throw new Exception(String.format("The entity %s does not have an @Id annotation denoting the External ID", mappedEntity.getClass().getName()));
             }
 
             if (field.isAnnotationPresent(Property.class)) {
@@ -37,6 +35,10 @@ public class ObjectBuilder {
                     }
                 }
             }
+        }
+
+        if (id == null) {
+            throw new Exception(String.format("The entity %s does not have an @Id annotation denoting the External ID", mappedEntity.getClass().getName()));
         }
 
         if (!mappedEntity.getClass().isAnnotationPresent(Type.class)) {
@@ -68,8 +70,8 @@ public class ObjectBuilder {
         return new com.manywho.sdk.entities.run.elements.type.Property(developerName, build(getFieldValue(field, entity), field.getType()));
     }
 
-    private com.manywho.sdk.entities.run.elements.type.Property buildListProperty(Field field, String developerName, java.lang.Object entity) {
-        return new com.manywho.sdk.entities.run.elements.type.Property();
+    private com.manywho.sdk.entities.run.elements.type.Property buildListProperty(Field field, String developerName, java.lang.Object entity) throws Exception {
+        throw new Exception("Building list properties is not supported yet");
 //        return new com.manywho.sdk.entities.run.elements.type.Property(developerName, build(entity, field.getType()));
     }
 
