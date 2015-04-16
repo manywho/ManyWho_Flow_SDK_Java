@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.ObjectDataAware;
 import com.manywho.sdk.entities.ValueAware;
 import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -68,7 +69,9 @@ public abstract class AbstractCollectionParser {
             field.set(entity, Float.parseFloat(propertyValue));
         } else if (fieldType.equals(Date.class)) {
             // TODO: Check if this date format is sent the same from everywhere
-            field.set(entity, new SimpleDateFormat("MM/dd/yyyy H:m:s a").parse(propertyValue));
+            if (StringUtils.isNotEmpty(propertyValue)) {
+                field.set(entity, new SimpleDateFormat("MM/dd/yyyy H:m:s a").parse(propertyValue));
+            }
         } else {
             field.set(entity, propertyValue);
         }
