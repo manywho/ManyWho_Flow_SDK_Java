@@ -18,18 +18,18 @@ public class ExceptionMapperProvider implements javax.ws.rs.ext.ExceptionMapper<
     @Override
     public Response toResponse(Exception e) {
         Map<String, String> rootFaults = new HashMap<>();
-        rootFaults.put("error", e.getMessage());
+        rootFaults.put("errorMessage", e.getMessage());
 
         ServiceResponse serviceResponse = new ServiceResponse();
         serviceResponse.setRootFaults(rootFaults);
 
         try {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(Response.Status.OK, e.getMessage())
             ).entity(objectMapper.writeValueAsString(serviceResponse)).build();
         } catch (JsonProcessingException e1) {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(Response.Status.OK, e.getMessage())
             ).build();
         }
     }
