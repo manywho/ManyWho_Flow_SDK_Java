@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.draw.content.Command;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.config.Authorization;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.lang.*;
@@ -56,6 +57,10 @@ public class ObjectDataRequest implements Request {
 
     public EngineValueCollection getConfigurationValues() {
         return configurationValues;
+    }
+
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
     }
 
     public void setConfigurationValues(EngineValueCollection configurationValues) {
