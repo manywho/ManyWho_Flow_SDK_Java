@@ -16,7 +16,7 @@ public class BaseApplication extends ResourceConfig {
                 .register(ReflectionListener.class)
                 .register(LoggingFilter.class)
                 .register(ExceptionMapperProvider.class, 1)
-                .register(ValidationExceptionMapperProvider.class)
+                .register(ValidationExceptionMapperProvider.class, 1)
                 .register(ObjectMapperProvider.class);
     }
 }
