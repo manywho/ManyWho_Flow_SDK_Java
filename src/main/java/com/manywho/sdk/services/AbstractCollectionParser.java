@@ -13,6 +13,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public abstract class AbstractCollectionParser {
     protected void setScalarField(Field field, String annotationValue, ContentValueAware properties, Object entity) throws IllegalAccessException, ParseException {
         String propertyValue = properties.getContentValue(annotationValue);
 
-        Class fieldType = field.getType();
+        Class<?> fieldType = field.getType();
         if (fieldType.equals(long.class)) {
             field.set(entity, Long.parseLong(propertyValue));
         } else if (fieldType.equals(boolean.class)) {
@@ -70,7 +71,14 @@ public abstract class AbstractCollectionParser {
         } else if (fieldType.equals(Date.class)) {
             // TODO: Check if this date format is sent the same from everywhere
             if (StringUtils.isNotEmpty(propertyValue)) {
-                field.set(entity, new SimpleDateFormat("MM/dd/yyyy H:m:s a").parse(propertyValue));
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:m:s a");
+                dateFormat.setLenient(false);
+
+                try {
+                    field.set(entity, dateFormat.parse(propertyValue));
+                } catch (ParseException exception) {
+                    field.set(entity, null);
+                }
             }
         } else {
             field.set(entity, propertyValue);
