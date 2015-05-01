@@ -22,11 +22,15 @@ public class ReflectionListener implements ApplicationEventListener {
     public void onEvent(ApplicationEvent applicationEvent) {
         switch (applicationEvent.getType()) {
             case INITIALIZATION_START:
-                CachedData.reflections = new Reflections(new ConfigurationBuilder()
-                        .addUrls(ClasspathHelper.forWebInfClasses(this.servletContext))
+                ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
                         .addUrls(ClasspathHelper.forPackage("com.manywho.services"))
-                        .addScanners(new SubTypesScanner(), new FieldAnnotationsScanner())
-                );
+                        .addScanners(new SubTypesScanner(), new FieldAnnotationsScanner());
+
+                if (this.servletContext != null) {
+                    configurationBuilder.addUrls(ClasspathHelper.forWebInfClasses(this.servletContext));
+                }
+
+                CachedData.reflections = new Reflections(configurationBuilder);
                 break;
         }
     }
