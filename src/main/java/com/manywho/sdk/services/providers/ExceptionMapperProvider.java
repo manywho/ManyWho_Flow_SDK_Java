@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 
 import javax.inject.Inject;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.util.HashMap;
@@ -23,13 +24,18 @@ public class ExceptionMapperProvider implements javax.ws.rs.ext.ExceptionMapper<
         ServiceResponse serviceResponse = new ServiceResponse();
         serviceResponse.setRootFaults(rootFaults);
 
+        Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
+        if (e instanceof ClientErrorException) {
+            status = Response.Status.BAD_REQUEST;
+        }
+
         try {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(status, e.getMessage())
             ).entity(objectMapper.writeValueAsString(serviceResponse)).build();
         } catch (JsonProcessingException e1) {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(status, e.getMessage())
             ).build();
         }
     }
