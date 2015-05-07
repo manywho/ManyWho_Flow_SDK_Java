@@ -2,6 +2,7 @@ package com.manywho.sdk.services.providers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.manywho.sdk.entities.run.ApiProblem;
 import com.manywho.sdk.entities.run.ApiProblemException;
 import com.manywho.sdk.entities.run.ServiceProblem;
 import com.manywho.sdk.entities.run.ServiceProblemException;
@@ -18,20 +19,20 @@ public class ApiProblemExceptionMapperProvider implements ExceptionMapper<ApiPro
 
     @Override
     public Response toResponse(ApiProblemException e) {
-        ServiceProblem serviceProblem;
+        ApiProblem apiProblem;
         if (e instanceof ServiceProblemException) {
-            serviceProblem = new ServiceProblem(e, ((ServiceProblemException) e).getInvokeType(), ((ServiceProblemException) e).getAction());
+            apiProblem = new ServiceProblem(e, ((ServiceProblemException) e).getInvokeType(), ((ServiceProblemException) e).getAction());
         } else {
-            serviceProblem = new ServiceProblem(e, null, null);
+            apiProblem = new ApiProblem(e);
         }
 
         try {
-            return Response.status(serviceProblem.getStatusCode())
-                    .entity(objectMapper.writeValueAsString(serviceProblem))
-                    .header("X-ManyWho-Service-Problem-Kind", serviceProblem.getKind())
+            return Response.status(apiProblem.getStatusCode())
+                    .entity(objectMapper.writeValueAsString(apiProblem))
+                    .header("X-ManyWho-Service-Problem-Kind", apiProblem.getKind())
                     .build();
         } catch (JsonProcessingException exception) {
-            return Response.status(serviceProblem.getStatusCode()).build();
+            return Response.status(apiProblem.getStatusCode()).build();
         }
     }
 }

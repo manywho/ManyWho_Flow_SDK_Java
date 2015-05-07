@@ -21,6 +21,15 @@ public class ApiProblem {
         this.message = apiProblemException.getMessage();
     }
 
+    public ApiProblem(ProblemKind problemKind, ApiProblemException apiProblemException) {
+        this.kind = problemKind;
+        this.uri = apiProblemException.getUri();
+        this.statusCode = apiProblemException.getStatusCode();
+        this.responseBody = apiProblemException.getResponseBody();
+        this.responseHeaders = apiProblemException.getResponseHeaders();
+        this.message = apiProblemException.getMessage();
+    }
+
     public ProblemKind getKind() {
         return kind;
     }

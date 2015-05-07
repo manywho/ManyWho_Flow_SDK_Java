@@ -1,6 +1,7 @@
 package com.manywho.sdk.entities.run;
 
 import com.manywho.sdk.enums.InvokeType;
+import com.manywho.sdk.enums.ProblemKind;
 
 public class ServiceProblem extends ApiProblem {
     private InvokeType invokeType;
@@ -11,7 +12,7 @@ public class ServiceProblem extends ApiProblem {
     }
 
     public ServiceProblem(ApiProblemException apiProblemException, InvokeType invokeType, String action) {
-        super(apiProblemException);
+        super(ProblemKind.Service, apiProblemException);
         this.invokeType = invokeType;
         this.action = action;
     }
