@@ -1,10 +1,10 @@
 package com.manywho.sdk.entities.run.elements.type;
 
-import com.manywho.sdk.entities.run.EngineValue;
+import com.manywho.sdk.entities.ValueAware;
 
 import java.util.ArrayList;
 
-public class PropertyCollection extends ArrayList<Property> {
+public class PropertyCollection extends ArrayList<Property> implements ValueAware {
     public String getContentValue(String name) {
         if (!this.isEmpty()) {
             return this.stream().filter(c -> c.getDeveloperName().equals(name)).findFirst().orElse(new Property()).getContentValue();

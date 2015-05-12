@@ -4,7 +4,7 @@ import com.manywho.sdk.entities.draw.elements.type.TypeElement;
 import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
-import com.manywho.sdk.services.BaseApplication;
+import com.manywho.sdk.services.CachedData;
 import com.manywho.sdk.services.describe.actions.AbstractAction;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.actions.Action;
@@ -47,7 +47,7 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
-        final Set<Class<? extends AbstractAction>> annotatedClasses = BaseApplication.reflections.getSubTypesOf(AbstractAction.class);
+        final Set<Class<? extends AbstractAction>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractAction.class);
 
         return new ActionCollection() {{
             for (Class<? extends Action> action : annotatedClasses) {
@@ -58,7 +58,7 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
-        final Set<Class<? extends AbstractType>> annotatedClasses = BaseApplication.reflections.getSubTypesOf(AbstractType.class);
+        final Set<Class<? extends AbstractType>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractType.class);
 
         if (CollectionUtils.isNotEmpty(annotatedClasses)) {
             return new DescribeServiceInstall() {{

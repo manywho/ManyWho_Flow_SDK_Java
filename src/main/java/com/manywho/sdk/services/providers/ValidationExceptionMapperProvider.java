@@ -1,4 +1,4 @@
-package com.manywho.sdk.services;
+package com.manywho.sdk.services.providers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Provider
-public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
+public class ValidationExceptionMapperProvider implements ExceptionMapper<ConstraintViolationException> {
     @Inject
     private ObjectMapper objectMapper;
 
