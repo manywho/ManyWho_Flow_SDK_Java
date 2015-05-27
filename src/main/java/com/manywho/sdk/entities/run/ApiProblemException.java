@@ -13,8 +13,16 @@ public class ApiProblemException extends Exception {
         this.uri = uri;
         this.statusCode = statusCode;
         this.responseBody = responseBody;
-        this.responseHeaders = responseHeaders;
         this.message = message;
+        this.responseHeaders = stripSecureHeaders(responseHeaders);
+    }
+
+    public ApiProblemException(String uri, int statusCode, String responseBody, String message) {
+        this(uri, statusCode, responseBody, null, message);
+    }
+
+    public ApiProblemException(String uri, int statusCode, String message) {
+        this(uri, statusCode, null, message);
     }
 
     public String getUri() {
@@ -36,5 +44,15 @@ public class ApiProblemException extends Exception {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    private MultivaluedMap<String, String> stripSecureHeaders(MultivaluedMap<String, String> headers) {
+        for (String secureHeader : new String[]{"Authorization", "X-Forwarded-For"}) {
+            if (headers.containsKey(secureHeader)) {
+                headers.remove(secureHeader);
+            }
+        }
+
+        return headers;
     }
 }
