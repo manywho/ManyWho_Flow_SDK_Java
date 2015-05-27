@@ -10,7 +10,7 @@ import javax.ws.rs.core.Context;
 
 public abstract class AbstractController {
     @Context
-    private ContainerRequest request;
+    protected ContainerRequest request;
 
     @Inject
     protected PropertyCollectionParser propertyCollectionParser;

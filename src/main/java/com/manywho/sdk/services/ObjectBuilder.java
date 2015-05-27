@@ -19,7 +19,7 @@ public class ObjectBuilder {
 
         for (Field field : mappedEntity.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Id.class)) {
-                id = (String) getFieldValue(field, mappedEntity);
+                id = String.valueOf(getFieldValue(field, mappedEntity));
             }
 
             if (field.isAnnotationPresent(Property.class)) {
