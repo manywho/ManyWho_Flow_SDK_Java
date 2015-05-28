@@ -25,6 +25,8 @@ public class TypeElementProperty {
         this(null, developerName, contentType, null, null);
     }
 
+    public TypeElementProperty() {}
+
     public String getId() {
         return id;
     }
