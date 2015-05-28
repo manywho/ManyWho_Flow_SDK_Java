@@ -35,6 +35,10 @@ public class DescribeValue {
         this(developerName, contentType, false, null, null, 0);
     }
 
+    public DescribeValue() {
+
+    }
+
     public String getDeveloperName() {
         return developerName;
     }
