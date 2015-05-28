@@ -16,6 +16,9 @@ public class TypeElementPropertyBinding {
         this.databaseContentType = databaseContentType;
     }
 
+    public TypeElementPropertyBinding() {
+    }
+
     public String getDatabaseFieldName() {
         return databaseFieldName;
     }

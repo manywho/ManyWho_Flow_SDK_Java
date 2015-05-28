@@ -25,6 +25,9 @@ public class TypeElementBinding {
         this(null, developerName, developerSummary, databaseTableName, null, null);
     }
 
+    public TypeElementBinding() {
+    }
+
     public String getId() {
         return id;
     }
