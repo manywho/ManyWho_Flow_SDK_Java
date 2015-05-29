@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.controllers;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.elements.config.ServiceRequest;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.services.PropertyCollectionParser;
@@ -17,6 +18,10 @@ public abstract class AbstractController {
 
     public AuthenticatedWho getAuthenticatedWho() {
         return (AuthenticatedWho) this.request.getProperty("AuthenticatedWho");
+    }
+
+    protected <T> T parseConfigurationValues(ConfigurationValuesAware configurationValuesAware, Class<T> tClass) throws Exception {
+        return propertyCollectionParser.parse(configurationValuesAware.getConfigurationValues(), tClass);
     }
 
     protected <T> T parseInputs(ServiceRequest serviceRequest, Class<T> tClass) throws Exception {

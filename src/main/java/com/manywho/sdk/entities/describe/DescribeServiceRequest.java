@@ -1,9 +1,10 @@
 package com.manywho.sdk.entities.describe;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 
-public class DescribeServiceRequest {
+public class DescribeServiceRequest implements ConfigurationValuesAware {
     private Culture culture;
     private String uri;
     private EngineValueCollection configurationValues;
