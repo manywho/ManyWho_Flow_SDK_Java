@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.draw.content.Command;
@@ -10,7 +11,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import javax.validation.constraints.NotNull;
 import java.lang.*;
 
-public class ObjectDataRequest implements Request {
+public class ObjectDataRequest implements Request, ConfigurationValuesAware {
     private String stateId;
     private String token;
     private String typeElementBindingId;

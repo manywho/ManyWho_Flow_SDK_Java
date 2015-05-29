@@ -1,11 +1,12 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.run.elements.config.Authorization;
 import com.manywho.sdk.entities.translate.Culture;
 
-public class FileDataRequest implements Request {
+public class FileDataRequest implements Request, ConfigurationValuesAware {
     private String stateId;
     private String serviceElementId;
     private String token;

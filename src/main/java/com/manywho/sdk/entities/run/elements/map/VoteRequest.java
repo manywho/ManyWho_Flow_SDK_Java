@@ -1,12 +1,13 @@
 package com.manywho.sdk.entities.run.elements.map;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.config.Authorization;
 import com.manywho.sdk.entities.run.state.UserVoteCollection;
 
 import java.util.HashMap;
 
-public class VoteRequest {
+public class VoteRequest implements ConfigurationValuesAware {
     private EngineValueCollection configurationValues;
     private Authorization authorization;
     private UserVoteCollection userVotes;

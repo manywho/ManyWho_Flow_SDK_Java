@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.config;
 
+import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
@@ -10,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.HashMap;
 
-public abstract class AbstractRequest implements Request {
+public abstract class AbstractRequest implements Request, ConfigurationValuesAware {
     @NotBlank
     protected String token;
     protected String tenantId;
