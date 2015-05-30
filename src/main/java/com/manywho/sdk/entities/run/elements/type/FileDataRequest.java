@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.run.elements.config.Authorization;
 import com.manywho.sdk.entities.translate.Culture;
+import org.apache.commons.collections4.CollectionUtils;
 
 public class FileDataRequest implements Request, ConfigurationValuesAware {
     private String stateId;
@@ -51,6 +52,11 @@ public class FileDataRequest implements Request, ConfigurationValuesAware {
 
     public EngineValueCollection getConfigurationValues() {
         return configurationValues;
+    }
+
+    @Override
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
     }
 
     public void setConfigurationValues(EngineValueCollection configurationValues) {
