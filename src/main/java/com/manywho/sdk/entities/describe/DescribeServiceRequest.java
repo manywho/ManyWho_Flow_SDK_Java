@@ -3,6 +3,7 @@ package com.manywho.sdk.entities.describe;
 import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.translate.Culture;
 import com.manywho.sdk.entities.run.EngineValueCollection;
+import org.apache.commons.collections4.CollectionUtils;
 
 public class DescribeServiceRequest implements ConfigurationValuesAware {
     private Culture culture;
@@ -27,6 +28,11 @@ public class DescribeServiceRequest implements ConfigurationValuesAware {
 
     public EngineValueCollection getConfigurationValues() {
         return configurationValues;
+    }
+
+    @Override
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
     }
 
     public void setConfigurationValues(EngineValueCollection configurationValues) {

@@ -4,6 +4,7 @@ import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.enums.AuthorizationType;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,11 @@ public class AuthenticationCredentials implements Request, ConfigurationValuesAw
 
     public EngineValueCollection getConfigurationValues() {
         return configurationValues;
+    }
+
+    @Override
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
     }
 
     public void setConfigurationValues(EngineValueCollection configurationValues) {

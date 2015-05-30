@@ -4,6 +4,7 @@ import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.config.Authorization;
 import com.manywho.sdk.entities.run.state.UserVoteCollection;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.HashMap;
 
@@ -19,6 +20,11 @@ public class VoteRequest implements ConfigurationValuesAware {
 
     public EngineValueCollection getConfigurationValues() {
         return configurationValues;
+    }
+
+    @Override
+    public boolean hasConfigurationValues() {
+        return CollectionUtils.isNotEmpty(configurationValues);
     }
 
     public void setConfigurationValues(EngineValueCollection configurationValues) {
