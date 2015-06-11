@@ -29,13 +29,18 @@ public class ExceptionMapperProvider implements javax.ws.rs.ext.ExceptionMapper<
             status = Response.Status.BAD_REQUEST;
         }
 
+        String message = e.getMessage();
+        if (message == null) {
+            message = "A null pointer was encountered";
+        }
+
         try {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(status, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(status, message)
             ).entity(objectMapper.writeValueAsString(serviceResponse)).build();
         } catch (JsonProcessingException e1) {
             return Response.status(
-                    new CustomReasonPhraseExceptionStatusType(status, e.getMessage())
+                    new CustomReasonPhraseExceptionStatusType(status, message)
             ).build();
         }
     }

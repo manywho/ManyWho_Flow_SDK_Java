@@ -1,5 +1,7 @@
 package com.manywho.sdk.entities.run;
 
+import org.apache.commons.collections4.MapUtils;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 public class ApiProblemException extends Exception {
@@ -47,9 +49,11 @@ public class ApiProblemException extends Exception {
     }
 
     private MultivaluedMap<String, String> stripSecureHeaders(MultivaluedMap<String, String> headers) {
-        for (String secureHeader : new String[]{"Authorization", "X-Forwarded-For"}) {
-            if (headers.containsKey(secureHeader)) {
-                headers.remove(secureHeader);
+        if (MapUtils.isNotEmpty(headers)) {
+            for (String secureHeader : new String[]{"Authorization", "X-Forwarded-For"}) {
+                if (headers.containsKey(secureHeader)) {
+                    headers.remove(secureHeader);
+                }
             }
         }
 
