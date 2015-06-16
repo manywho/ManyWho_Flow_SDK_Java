@@ -17,6 +17,10 @@ public class ServiceProblem extends ApiProblem {
         this.action = action;
     }
 
+    public ServiceProblem(String uri, int statusCode, String message) {
+        super(uri, statusCode, message);
+    }
+
     public InvokeType getInvokeType() {
         return invokeType;
     }

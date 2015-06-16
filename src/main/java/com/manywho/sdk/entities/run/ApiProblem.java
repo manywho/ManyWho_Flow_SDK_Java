@@ -12,6 +12,25 @@ public class ApiProblem {
     private MultivaluedMap<String, String> responseHeaders;
     private String message;
 
+    public ApiProblem() {
+    }
+
+    public ApiProblem(ProblemKind kind, String uri, int statusCode, String responseBody, MultivaluedMap<String, String> responseHeaders, String message) {
+        this.kind = kind;
+        this.uri = uri;
+        this.statusCode = statusCode;
+        this.responseBody = responseBody;
+        this.responseHeaders = responseHeaders;
+        this.message = message;
+    }
+
+    public ApiProblem(String uri, int statusCode, String message) {
+        this.kind = ProblemKind.Api;
+        this.uri = uri;
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
     public ApiProblem(ApiProblemException apiProblemException) {
         this.kind = ProblemKind.Api;
         this.uri = apiProblemException.getUri();
