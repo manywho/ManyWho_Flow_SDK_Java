@@ -18,7 +18,7 @@ public class ServiceProblem extends ApiProblem {
     }
 
     public ServiceProblem(String uri, int statusCode, String message) {
-        super(uri, statusCode, message);
+        super(ProblemKind.Service, uri, statusCode, message);
     }
 
     public InvokeType getInvokeType() {
