@@ -32,7 +32,11 @@ public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
             message = "A null pointer was encountered";
         }
 
-        ServiceProblem serviceProblem = new ServiceProblem(request.getRequestURI(), status.getStatusCode(), message.substring(0, 500));
+        if (message.length() > 500) {
+            message = message.substring(0, 500);
+        }
+
+        ServiceProblem serviceProblem = new ServiceProblem(request.getRequestURI(), status.getStatusCode(), message);
 
         try {
             return Response.status(status)

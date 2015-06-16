@@ -31,6 +31,13 @@ public class ApiProblem {
         this.message = message;
     }
 
+    public ApiProblem(ProblemKind kind, String uri, int statusCode, String message) {
+        this.kind = kind;
+        this.uri = uri;
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
     public ApiProblem(ApiProblemException apiProblemException) {
         this.kind = ProblemKind.Api;
         this.uri = apiProblemException.getUri();
