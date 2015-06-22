@@ -1,5 +1,6 @@
 package com.manywho.sdk.services;
 
+import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.ContentValueAware;
 import com.manywho.sdk.entities.ObjectDataAware;
 import com.manywho.sdk.entities.ValueAware;
@@ -40,10 +41,9 @@ public abstract class AbstractCollectionParser {
             Class fieldClass = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
             List<Object> list = new ArrayList<>();
 
-            for (com.manywho.sdk.entities.run.elements.type.Object object : nestedPropertyCollection) {
-                Object a = parse(object.getProperties(), object.getExternalId(), fieldClass);
-                list.add(a);
-            }
+            nestedPropertyCollection.forEach(Throwing.consumer(object -> {
+                list.add(parse(object.getProperties(), object.getExternalId(), fieldClass));
+            }));
 
             field.set(entity, list);
         }
