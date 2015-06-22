@@ -1,5 +1,6 @@
 package com.manywho.sdk.services;
 
+import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.ContentValueAware;
 import com.manywho.sdk.entities.ObjectDataAware;
 import com.manywho.sdk.entities.ValueAware;
@@ -40,10 +41,9 @@ public abstract class AbstractCollectionParser {
             Class fieldClass = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
             List<Object> list = new ArrayList<>();
 
-            for (com.manywho.sdk.entities.run.elements.type.Object object : nestedPropertyCollection) {
-                Object a = parse(object.getProperties(), object.getExternalId(), fieldClass);
-                list.add(a);
-            }
+            nestedPropertyCollection.forEach(Throwing.consumer(object -> {
+                list.add(parse(object.getProperties(), object.getExternalId(), fieldClass));
+            }));
 
             field.set(entity, list);
         }
@@ -72,7 +72,7 @@ public abstract class AbstractCollectionParser {
             // TODO: Check if this date format is sent the same from everywhere
             if (StringUtils.isNotEmpty(propertyValue)) {
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:m:s a");
-                dateFormat.setLenient(false);
+                dateFormat.setLenient(true);
 
                 try {
                     field.set(entity, dateFormat.parse(propertyValue));

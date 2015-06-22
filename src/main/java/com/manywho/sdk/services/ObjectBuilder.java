@@ -15,6 +15,10 @@ import java.util.Date;
 
 public class ObjectBuilder {
     public <T> Object build(java.lang.Object object, Class<T> tClass) throws Exception {
+        if (object == null) {
+            return null;
+        }
+
         T mappedEntity = new ModelMapper().map(object, tClass);
 
         PropertyCollection properties = new PropertyCollection();

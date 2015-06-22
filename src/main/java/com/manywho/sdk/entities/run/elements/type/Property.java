@@ -1,5 +1,8 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Property {
     private String typeElementPropertyId;
     private String developerName;
@@ -27,6 +30,11 @@ public class Property {
         } else {
             this.contentValue = contentValue == null ? null : contentValue.toString();
         }
+    }
+
+    public Property(String developerName, Date contentValue) {
+        this.developerName = developerName;
+        this.contentValue = contentValue == null ? "" : new SimpleDateFormat("MM/dd/yyyy H:m:s a").format(contentValue);
     }
 
     public Property(String developerName, java.lang.Number contentValue) {

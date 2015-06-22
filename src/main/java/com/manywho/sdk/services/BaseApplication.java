@@ -6,6 +6,7 @@ import com.manywho.sdk.services.providers.ExceptionMapperProvider;
 import com.manywho.sdk.services.providers.ObjectMapperProvider;
 import com.manywho.sdk.services.providers.ValidationExceptionMapperProvider;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class BaseApplication extends ResourceConfig {
@@ -14,6 +15,7 @@ public class BaseApplication extends ResourceConfig {
                 .register(new ServiceBinder())
                 .register(BodyReaderFeature.class)
                 .register(ReflectionListener.class)
+                .register(MultiPartFeature.class)
                 .register(LoggingFilter.class)
                 .register(ExceptionMapperProvider.class, 1)
                 .register(ValidationExceptionMapperProvider.class, 1)
