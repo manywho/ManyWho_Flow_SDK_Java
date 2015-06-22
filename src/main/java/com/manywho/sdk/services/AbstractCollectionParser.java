@@ -72,7 +72,7 @@ public abstract class AbstractCollectionParser {
             // TODO: Check if this date format is sent the same from everywhere
             if (StringUtils.isNotEmpty(propertyValue)) {
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:m:s a");
-                dateFormat.setLenient(false);
+                dateFormat.setLenient(true);
 
                 try {
                     field.set(entity, dateFormat.parse(propertyValue));
