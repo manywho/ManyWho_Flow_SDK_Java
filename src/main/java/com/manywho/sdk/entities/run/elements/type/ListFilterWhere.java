@@ -1,8 +1,10 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.enums.CriteriaType;
+
 public class ListFilterWhere {
     private String columnName;
-    private String criteriaType;
+    private CriteriaType criteriaType;
     /**
      * @deprecated use {@link #contentValue} instead
      */
@@ -19,11 +21,11 @@ public class ListFilterWhere {
         this.columnName = columnName;
     }
 
-    public String getCriteriaType() {
+    public CriteriaType getCriteriaType() {
         return criteriaType;
     }
 
-    public void setCriteriaType(String criteriaType) {
+    public void setCriteriaType(CriteriaType criteriaType) {
         this.criteriaType = criteriaType;
     }
 

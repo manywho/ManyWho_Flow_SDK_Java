@@ -14,7 +14,7 @@ public enum ContentType {
 
     private final String text;
 
-    private ContentType(final String text) {
+    ContentType(final String text) {
         this.text = text;
     }
 
@@ -26,7 +26,7 @@ public enum ContentType {
             }
         }
 
-        throw new IllegalArgumentException("No constant with text " + value + " found");
+        throw new IllegalArgumentException("No content type with text " + value + " found");
     }
 
     @Override
