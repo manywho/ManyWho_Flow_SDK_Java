@@ -31,7 +31,7 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
             setIdentifierValue(tClass, id, entity);
         }
 
-        if (this.propertyFields != null) {
+        if (properties != null && this.propertyFields != null) {
             setFieldValues(tClass, properties, entity);
         }
 
