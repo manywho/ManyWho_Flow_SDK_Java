@@ -57,6 +57,5 @@ public abstract class AbstractOauth2Controller extends AbstractOauthController {
             default:
                 return "401";
         }
-
     }
 }
