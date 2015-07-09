@@ -36,26 +36,27 @@ public abstract class AbstractOauth2Controller extends AbstractOauthController {
     @POST
     @AuthorizationRequired
     public ObjectDataResponse authorization(ObjectDataRequest objectDataRequest) throws Exception {
-        String authorizationStatus = "401";
-
-        switch (objectDataRequest.getAuthorization().getGlobalAuthenticationType()) {
-            case Public:
-                authorizationStatus = "200";
-                break;
-            case AllUsers:
-                // @todo Not really sure how to get the user from Box for an ID
-                if (!this.getAuthenticatedWho().getUserId().equalsIgnoreCase("PUBLIC_USER")) {
-                    authorizationStatus = "200";
-                }
-                break;
-            case Specified:
-                break;
-            default:
-                break;
-        }
-
+        String authorizationStatus = getAuthStatus(objectDataRequest);
         return new ObjectDataResponse(
                 new UserObject(this.getOauth2Provider().getName(), AuthorizationType.Oauth2, getOauthService().getAuthorizationUrl(null), authorizationStatus)
         );
+    }
+
+    protected String getAuthStatus(ObjectDataRequest objectDataRequest) {
+        switch (objectDataRequest.getAuthorization().getGlobalAuthenticationType()) {
+            case Public:
+                return "200";
+            case AllUsers:
+                // @todo Not really sure how to get the user from Box for an ID
+                if (!this.getAuthenticatedWho().getUserId().equalsIgnoreCase("PUBLIC_USER")) {
+                    return  "200";
+                }else {
+                    return "401";
+                }
+            case Specified:
+            default:
+                return "401";
+        }
+
     }
 }
