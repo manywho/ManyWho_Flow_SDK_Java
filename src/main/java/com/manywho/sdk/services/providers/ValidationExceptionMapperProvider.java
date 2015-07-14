@@ -3,15 +3,13 @@ package com.manywho.sdk.services.providers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.ServiceProblem;
-import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.util.HashMap;
@@ -23,7 +21,7 @@ public class ValidationExceptionMapperProvider implements ExceptionMapper<Constr
     private ObjectMapper objectMapper;
 
     @Context
-    private HttpServletRequest request;
+    private UriInfo uriInfo;
 
     @Override
     public Response toResponse(ConstraintViolationException exception) {
@@ -38,7 +36,7 @@ public class ValidationExceptionMapperProvider implements ExceptionMapper<Constr
             message = message.substring(0, 500);
         }
 
-        ServiceProblem serviceProblem = new ServiceProblem(request.getRequestURI(), 400, message);
+        ServiceProblem serviceProblem = new ServiceProblem("/" + uriInfo.getPath(), 400, message);
 
         try {
             return Response.status(400)
