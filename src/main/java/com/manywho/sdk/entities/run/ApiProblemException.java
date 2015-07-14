@@ -2,16 +2,16 @@ package com.manywho.sdk.entities.run;
 
 import org.apache.commons.collections4.MapUtils;
 
-import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.MultivaluedHashMap;
 
 public class ApiProblemException extends Exception {
     private String uri;
     private int statusCode;
     private String responseBody;
-    private MultivaluedMap<String, String> responseHeaders;
+    private MultivaluedHashMap<String, String> responseHeaders;
     private String message;
 
-    public ApiProblemException(String uri, int statusCode, String responseBody, MultivaluedMap<String, String> responseHeaders, String message) {
+    public ApiProblemException(String uri, int statusCode, String responseBody, MultivaluedHashMap<String, String> responseHeaders, String message) {
         this.uri = uri;
         this.statusCode = statusCode;
         this.responseBody = responseBody;
@@ -39,7 +39,7 @@ public class ApiProblemException extends Exception {
         return responseBody;
     }
 
-    public MultivaluedMap<String, String> getResponseHeaders() {
+    public MultivaluedHashMap<String, String> getResponseHeaders() {
         return responseHeaders;
     }
 
@@ -48,7 +48,7 @@ public class ApiProblemException extends Exception {
         return message;
     }
 
-    private MultivaluedMap<String, String> stripSecureHeaders(MultivaluedMap<String, String> headers) {
+    private MultivaluedHashMap<String, String> stripSecureHeaders(MultivaluedHashMap<String, String> headers) {
         if (MapUtils.isNotEmpty(headers)) {
             for (String secureHeader : new String[]{"Authorization", "X-Forwarded-For"}) {
                 if (headers.containsKey(secureHeader)) {

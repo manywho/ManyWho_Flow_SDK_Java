@@ -2,20 +2,20 @@ package com.manywho.sdk.entities.run;
 
 import com.manywho.sdk.enums.ProblemKind;
 
-import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.MultivaluedHashMap;
 
 public class ApiProblem {
     private ProblemKind kind;
     private String uri;
     private int statusCode;
     private String responseBody;
-    private MultivaluedMap<String, String> responseHeaders;
+    private MultivaluedHashMap<String, String> responseHeaders;
     private String message;
 
     public ApiProblem() {
     }
 
-    public ApiProblem(ProblemKind kind, String uri, int statusCode, String responseBody, MultivaluedMap<String, String> responseHeaders, String message) {
+    public ApiProblem(ProblemKind kind, String uri, int statusCode, String responseBody, MultivaluedHashMap<String, String> responseHeaders, String message) {
         this.kind = kind;
         this.uri = uri;
         this.statusCode = statusCode;
@@ -72,7 +72,7 @@ public class ApiProblem {
         return responseBody;
     }
 
-    public MultivaluedMap<String, String> getResponseHeaders() {
+    public MultivaluedHashMap<String, String> getResponseHeaders() {
         return responseHeaders;
     }
 

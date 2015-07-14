@@ -7,6 +7,9 @@ public class ServiceProblem extends ApiProblem {
     private InvokeType invokeType;
     private String action;
 
+    public ServiceProblem() {
+    }
+
     public ServiceProblem(ServiceProblemException serviceProblemException) {
         this(serviceProblemException, serviceProblemException.getInvokeType(), serviceProblemException.getAction());
     }
