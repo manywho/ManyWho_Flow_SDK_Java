@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.ServiceProblem;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -18,7 +18,7 @@ public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
     private ObjectMapper objectMapper;
 
     @Context
-    private HttpServletRequest request;
+    private UriInfo uriInfo;
 
     @Override
     public Response toResponse(Exception e) {
@@ -36,7 +36,7 @@ public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
             message = message.substring(0, 500);
         }
 
-        ServiceProblem serviceProblem = new ServiceProblem(request.getRequestURI(), status.getStatusCode(), message);
+        ServiceProblem serviceProblem = new ServiceProblem("/" + uriInfo.getPath(), status.getStatusCode(), message);
 
         try {
             return Response.status(status)
