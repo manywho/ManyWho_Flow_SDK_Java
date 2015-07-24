@@ -63,7 +63,7 @@ public abstract class AbstractCollectionParser {
         if (fieldType.equals(long.class)) {
             field.set(entity, Long.parseLong(propertyValue));
         } else if (fieldType.equals(boolean.class)) {
-            field.set(entity, Boolean.parseBoolean(propertyValue));
+            field.set(entity, parseBoolean(propertyValue));
         } else if (fieldType.equals(int.class)) {
             field.set(entity, Integer.parseInt(propertyValue));
         } else if (fieldType.equals(float.class)) {
@@ -83,5 +83,9 @@ public abstract class AbstractCollectionParser {
         } else {
             field.set(entity, propertyValue);
         }
+    }
+
+    private boolean parseBoolean(String value) {
+        return value.equalsIgnoreCase("1") || !value.equalsIgnoreCase("0") && Boolean.parseBoolean(value);
     }
 }
