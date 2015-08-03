@@ -22,7 +22,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper>, Fact
 
     public static ObjectMapper getObjectMapper() {
         return new ObjectMapper()
-                .setDateFormat(new SimpleDateFormat("MM/dd/yyyy H:m:s a"))
+                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssssss.SSS'Z'"))
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES)
                 .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
