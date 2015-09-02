@@ -60,17 +60,17 @@ public abstract class AbstractDescribeService implements DescribeService {
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
         final Set<Class<? extends AbstractType>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractType.class);
 
+        TypeElementCollection typeElements = new TypeElementCollection();
+
         if (CollectionUtils.isNotEmpty(annotatedClasses)) {
-            return new DescribeServiceInstall() {{
-                setTypeElements(new TypeElementCollection() {{
-                    for (Class<? extends Type> type : annotatedClasses) {
-                        add((TypeElement) type.newInstance());
-                    }
-                }});
-            }};
-        } else {
-            return null;
+            for (Class<? extends Type> type : annotatedClasses) {
+                typeElements.add((TypeElement) type.newInstance());
+            }
         }
+
+        return new DescribeServiceInstall() {{
+            setTypeElements(typeElements);
+        }};
     }
 
     @Override

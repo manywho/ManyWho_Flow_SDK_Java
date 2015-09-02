@@ -1,6 +1,8 @@
 package com.manywho.sdk.entities.run.state;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.entities.draw.flow.FlowId;
+import com.manywho.sdk.entities.draw.log.Log;
 
 import java.util.Date;
 import java.util.Map;
@@ -23,6 +25,9 @@ public class State {
     private StateEntry precommitStateEntry;
     private StateValueCollection values;
     private String authorizationHeader;
+    @JsonProperty("isDone")
+    private boolean done;
+    private Log log;
 
     public String getId() {
         return id;
@@ -158,5 +163,21 @@ public class State {
 
     public void setAuthorizationHeader(String authorizationHeader) {
         this.authorizationHeader = authorizationHeader;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public Log getLog() {
+        return log;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
     }
 }

@@ -1,7 +1,10 @@
 package com.manywho.sdk.services.describe;
 
+import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeValueCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 import com.manywho.sdk.entities.translate.Culture;
+import org.apache.commons.collections4.CollectionUtils;
 
 public class DescribeServiceBuilder {
     private boolean providesDatabase;
@@ -12,6 +15,7 @@ public class DescribeServiceBuilder {
     private boolean providesFiles;
     private Culture culture;
     private DescribeValueCollection configurationValues;
+    private TypeElementCollection types;
 
     public DescribeServiceBuilder setProvidesDatabase(boolean providesDatabase) {
         this.providesDatabase = providesDatabase;
@@ -50,6 +54,11 @@ public class DescribeServiceBuilder {
 
     public DescribeServiceBuilder setConfigurationValues(DescribeValueCollection configurationValues) {
         this.configurationValues = configurationValues;
+        return this;
+    }
+
+    public DescribeServiceBuilder setTypes(TypeElementCollection types) {
+        this.types = types;
         return this;
     }
 
@@ -93,6 +102,21 @@ public class DescribeServiceBuilder {
             @Override
             public DescribeValueCollection createConfigurationValues() {
                 return configurationValues;
+            }
+
+            @Override
+            public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
+                // Still auto-discover any types in the service
+                TypeElementCollection discoveredTypes = super.createInstall().getTypeElements();
+
+                // If any types were passed into the builder, add them to the collection
+                if (CollectionUtils.isNotEmpty(types)) {
+                    discoveredTypes.addAll(types);
+                }
+
+                return new DescribeServiceInstall() {{
+                    setTypeElements(discoveredTypes);
+                }};
             }
         };
     }

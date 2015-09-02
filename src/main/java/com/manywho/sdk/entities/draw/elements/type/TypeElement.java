@@ -9,6 +9,15 @@ public class TypeElement extends Element {
     protected TypeElementBindingCollection bindings = new TypeElementBindingCollection();
     private boolean updateByName;
 
+    public TypeElement() {
+    }
+
+    public TypeElement(String developerName, TypeElementPropertyCollection properties, TypeElementBindingCollection bindings) {
+        this.developerName = developerName;
+        this.properties = properties;
+        this.bindings = bindings;
+    }
+
     public String getId() {
         return id;
     }
