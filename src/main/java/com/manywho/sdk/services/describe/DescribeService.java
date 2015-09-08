@@ -17,5 +17,5 @@ public interface DescribeService {
     public boolean getProvidesIdentity();
     public boolean getProvidesSocial();
     public boolean getProvidesFiles();
-    public DescribeServiceResponse createResponse();
+    public DescribeServiceResponse createResponse() throws Exception;
 }
