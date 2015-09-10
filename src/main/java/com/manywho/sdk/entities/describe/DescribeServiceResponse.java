@@ -7,12 +7,17 @@ public class DescribeServiceResponse {
     private Culture culture;
     private String uri;
     private DescribeValueCollection configurationValues;
-    private boolean providesLogic;
-    private boolean providesViews;
     private boolean providesDatabase;
-    private boolean providesIdentity;
-    private boolean providesSocial;
     private boolean providesFiles;
+    private boolean providesIdentity;
+    private boolean providesListening;
+    private boolean providesLogic;
+    private boolean providesNotifications;
+    private boolean providesSmartSave;
+    private boolean providesSocial;
+    private boolean providesSharing;
+    private boolean providesViews;
+    private boolean providesVoting;
     private ActionCollection actions;
     private DescribeServiceInstall install;
 
@@ -40,28 +45,20 @@ public class DescribeServiceResponse {
         this.configurationValues = configurationValues;
     }
 
-    public boolean isProvidesLogic() {
-        return providesLogic;
-    }
-
-    public void setProvidesLogic(boolean providesLogic) {
-        this.providesLogic = providesLogic;
-    }
-
-    public boolean isProvidesViews() {
-        return providesViews;
-    }
-
-    public void setProvidesViews(boolean providesViews) {
-        this.providesViews = providesViews;
-    }
-
     public boolean isProvidesDatabase() {
         return providesDatabase;
     }
 
     public void setProvidesDatabase(boolean providesDatabase) {
         this.providesDatabase = providesDatabase;
+    }
+
+    public boolean isProvidesFiles() {
+        return providesFiles;
+    }
+
+    public void setProvidesFiles(boolean providesFiles) {
+        this.providesFiles = providesFiles;
     }
 
     public boolean isProvidesIdentity() {
@@ -72,6 +69,38 @@ public class DescribeServiceResponse {
         this.providesIdentity = providesIdentity;
     }
 
+    public boolean isProvidesListening() {
+        return providesListening;
+    }
+
+    public void setProvidesListening(boolean providesListening) {
+        this.providesListening = providesListening;
+    }
+
+    public boolean isProvidesLogic() {
+        return providesLogic;
+    }
+
+    public void setProvidesLogic(boolean providesLogic) {
+        this.providesLogic = providesLogic;
+    }
+
+    public boolean isProvidesNotifications() {
+        return providesNotifications;
+    }
+
+    public void setProvidesNotifications(boolean providesNotifications) {
+        this.providesNotifications = providesNotifications;
+    }
+
+    public boolean isProvidesSmartSave() {
+        return providesSmartSave;
+    }
+
+    public void setProvidesSmartSave(boolean providesSmartSave) {
+        this.providesSmartSave = providesSmartSave;
+    }
+
     public boolean isProvidesSocial() {
         return providesSocial;
     }
@@ -80,12 +109,28 @@ public class DescribeServiceResponse {
         this.providesSocial = providesSocial;
     }
 
-    public boolean isProvidesFiles() {
-        return providesFiles;
+    public boolean isProvidesSharing() {
+        return providesSharing;
     }
 
-    public void setProvidesFiles(boolean providesFiles) {
-        this.providesFiles = providesFiles;
+    public void setProvidesSharing(boolean providesSharing) {
+        this.providesSharing = providesSharing;
+    }
+
+    public boolean isProvidesViews() {
+        return providesViews;
+    }
+
+    public void setProvidesViews(boolean providesViews) {
+        this.providesViews = providesViews;
+    }
+
+    public boolean isProvidesVoting() {
+        return providesVoting;
+    }
+
+    public void setProvidesVoting(boolean providesVoting) {
+        this.providesVoting = providesVoting;
     }
 
     public ActionCollection getActions() {
