@@ -21,12 +21,7 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     @Override
-    public boolean getProvidesLogic() {
-        return false;
-    }
-
-    @Override
-    public boolean getProvidesViews() {
+    public boolean getProvidesFiles() {
         return false;
     }
 
@@ -36,12 +31,42 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     @Override
+    public boolean getProvidesListening() {
+        return false;
+    }
+
+    @Override
+    public boolean getProvidesLogic() {
+        return false;
+    }
+
+    @Override
+    public boolean getProvidesNotifications() {
+        return false;
+    }
+
+    @Override
+    public boolean getProvidesSmartSave() {
+        return false;
+    }
+
+    @Override
     public boolean getProvidesSocial() {
         return false;
     }
 
     @Override
-    public boolean getProvidesFiles() {
+    public boolean getProvidesSharing() {
+        return false;
+    }
+
+    @Override
+    public boolean getProvidesViews() {
+        return false;
+    }
+
+    @Override
+    public boolean getProvidesVoting() {
         return false;
     }
 
@@ -79,11 +104,16 @@ public abstract class AbstractDescribeService implements DescribeService {
             setCulture(AbstractDescribeService.this.createCulture());
             setConfigurationValues(AbstractDescribeService.this.createConfigurationValues());
             setProvidesDatabase(AbstractDescribeService.this.getProvidesDatabase());
-            setProvidesLogic(AbstractDescribeService.this.getProvidesLogic());
-            setProvidesViews(AbstractDescribeService.this.getProvidesViews());
-            setProvidesIdentity(AbstractDescribeService.this.getProvidesIdentity());
-            setProvidesSocial(AbstractDescribeService.this.getProvidesSocial());
             setProvidesFiles(AbstractDescribeService.this.getProvidesFiles());
+            setProvidesIdentity(AbstractDescribeService.this.getProvidesIdentity());
+            setProvidesListening(AbstractDescribeService.this.getProvidesListening());
+            setProvidesLogic(AbstractDescribeService.this.getProvidesLogic());
+            setProvidesNotifications(AbstractDescribeService.this.getProvidesNotifications());
+            setProvidesSmartSave(AbstractDescribeService.this.getProvidesSmartSave());
+            setProvidesSocial(AbstractDescribeService.this.getProvidesSocial());
+            setProvidesSharing(AbstractDescribeService.this.getProvidesSharing());
+            setProvidesViews(AbstractDescribeService.this.getProvidesViews());
+            setProvidesVoting(AbstractDescribeService.this.getProvidesVoting());
             setActions(AbstractDescribeService.this.createActions());
             setInstall(AbstractDescribeService.this.createInstall());
         }};

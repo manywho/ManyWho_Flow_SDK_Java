@@ -8,11 +8,16 @@ import org.apache.commons.collections4.CollectionUtils;
 
 public class DescribeServiceBuilder {
     private boolean providesDatabase;
-    private boolean providesLogic;
-    private boolean providesViews;
-    private boolean providesIdentity;
-    private boolean providesSocial;
     private boolean providesFiles;
+    private boolean providesIdentity;
+    private boolean providesListening;
+    private boolean providesLogic;
+    private boolean providesNotifications;
+    private boolean providesSmartSave;
+    private boolean providesSocial;
+    private boolean providesSharing;
+    private boolean providesViews;
+    private boolean providesVoting;
     private Culture culture;
     private DescribeValueCollection configurationValues;
     private TypeElementCollection types;
@@ -22,13 +27,8 @@ public class DescribeServiceBuilder {
         return this;
     }
 
-    public DescribeServiceBuilder setProvidesLogic(boolean providesLogic) {
-        this.providesLogic = providesLogic;
-        return this;
-    }
-
-    public DescribeServiceBuilder setProvidesViews(boolean providesViews) {
-        this.providesViews = providesViews;
+    public DescribeServiceBuilder setProvidesFiles(boolean providesFiles) {
+        this.providesFiles = providesFiles;
         return this;
     }
 
@@ -37,13 +37,43 @@ public class DescribeServiceBuilder {
         return this;
     }
 
+    public DescribeServiceBuilder setProvidesListening(boolean providesListening) {
+        this.providesListening = providesListening;
+        return this;
+    }
+
+    public DescribeServiceBuilder setProvidesLogic(boolean providesLogic) {
+        this.providesLogic = providesLogic;
+        return this;
+    }
+
+    public DescribeServiceBuilder setProvidesNotifications(boolean providesNotifications) {
+        this.providesNotifications = providesNotifications;
+        return this;
+    }
+
+    public DescribeServiceBuilder setProvidesSmartSave(boolean providesSmartSave) {
+        this.providesSmartSave = providesSmartSave;
+        return this;
+    }
+
     public DescribeServiceBuilder setProvidesSocial(boolean providesSocial) {
         this.providesSocial = providesSocial;
         return this;
     }
 
-    public DescribeServiceBuilder setProvidesFiles(boolean providesFiles) {
-        this.providesFiles = providesFiles;
+    public DescribeServiceBuilder setProvidesSharing(boolean providesSharing) {
+        this.providesSharing = providesSharing;
+        return this;
+    }
+
+    public DescribeServiceBuilder setProvidesViews(boolean providesViews) {
+        this.providesViews = providesViews;
+        return this;
+    }
+
+    public DescribeServiceBuilder setProvidesVoting(boolean providesVoting) {
+        this.providesVoting = providesVoting;
         return this;
     }
 
@@ -70,13 +100,8 @@ public class DescribeServiceBuilder {
             }
 
             @Override
-            public boolean getProvidesLogic() {
-                return providesLogic;
-            }
-
-            @Override
-            public boolean getProvidesViews() {
-                return providesViews;
+            public boolean getProvidesFiles() {
+                return providesFiles;
             }
 
             @Override
@@ -85,13 +110,43 @@ public class DescribeServiceBuilder {
             }
 
             @Override
+            public boolean getProvidesListening() {
+                return providesListening;
+            }
+
+            @Override
+            public boolean getProvidesLogic() {
+                return providesLogic;
+            }
+
+            @Override
+            public boolean getProvidesNotifications() {
+                return providesNotifications;
+            }
+
+            @Override
+            public boolean getProvidesSmartSave() {
+                return providesSmartSave;
+            }
+
+            @Override
             public boolean getProvidesSocial() {
                 return providesSocial;
             }
 
             @Override
-            public boolean getProvidesFiles() {
-                return providesFiles;
+            public boolean getProvidesSharing() {
+                return providesSharing;
+            }
+
+            @Override
+            public boolean getProvidesViews() {
+                return providesViews;
+            }
+
+            @Override
+            public boolean getProvidesVoting() {
+                return providesVoting;
             }
 
             @Override
