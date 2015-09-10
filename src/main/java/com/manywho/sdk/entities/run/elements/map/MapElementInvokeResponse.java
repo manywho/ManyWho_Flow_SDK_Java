@@ -2,6 +2,7 @@ package com.manywho.sdk.entities.run.elements.map;
 
 import com.manywho.sdk.entities.run.elements.ui.PageResponse;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 
@@ -50,6 +51,10 @@ public class MapElementInvokeResponse {
 
     public HashMap<String, String> getRootFaults() {
         return rootFaults;
+    }
+
+    public boolean hasRootFaults() {
+        return MapUtils.isNotEmpty(rootFaults);
     }
 
     public void setRootFaults(HashMap<String, String> rootFaults) {
