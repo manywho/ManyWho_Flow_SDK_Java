@@ -1,11 +1,14 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.enums.ContentType;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Property {
     private String typeElementPropertyId;
     private String developerName;
+    private ContentType contentType;
     private String contentValue;
     private ObjectCollection objectData;
 
@@ -42,6 +45,11 @@ public class Property {
         this.contentValue = contentValue == null ? null : contentValue.toString();
     }
 
+    public Property(String developerName, java.lang.Object contentValue, ContentType contentType) {
+        this(developerName, contentValue);
+        this.contentType = contentType;
+    }
+
     public Property(String developerName, ObjectCollection objectData) {
         this.developerName = developerName;
         this.objectData = objectData;
@@ -61,6 +69,14 @@ public class Property {
 
     public void setDeveloperName(String developerName) {
         this.developerName = developerName;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public String getContentValue() {
