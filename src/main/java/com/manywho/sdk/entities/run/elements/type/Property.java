@@ -26,7 +26,7 @@ public class Property {
         this.developerName = developerName;
 
         if (contentValue instanceof Object) {
-            this.objectData = new ObjectCollection() {{ add((Object) contentValue); }};
+            this.objectData = new ObjectCollection((Object) contentValue);
         } else {
             this.contentValue = contentValue == null ? null : contentValue.toString();
         }
