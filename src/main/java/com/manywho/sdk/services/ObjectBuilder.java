@@ -81,13 +81,13 @@ public class ObjectBuilder {
     private com.manywho.sdk.entities.run.elements.type.Property buildListProperty(Field field, String developerName, java.lang.Object entity) throws Exception {
         java.lang.Object fieldValue = getFieldValue(field, entity);
 
-        ObjectCollection objectCollection = new ObjectCollection() {{
-            if (fieldValue != null) {
-                for (java.lang.Object item : (Collection) fieldValue) {
-                    add(build(item, item.getClass()));
-                }
+        ObjectCollection objectCollection = new ObjectCollection();
+
+        if (fieldValue != null) {
+            for (java.lang.Object item : (Collection) fieldValue) {
+                objectCollection.add(build(item, item.getClass()));
             }
-        }};
+        }
 
         return new com.manywho.sdk.entities.run.elements.type.Property(developerName, objectCollection);
     }

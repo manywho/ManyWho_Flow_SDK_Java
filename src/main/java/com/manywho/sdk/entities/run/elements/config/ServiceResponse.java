@@ -31,15 +31,11 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public ServiceResponse(InvokeType invokeType, EngineValue output, String token, String waitMessage) {
-        this(invokeType, new EngineValueCollection() {{
-            add(output);
-        }}, token, waitMessage);
+        this(invokeType, new EngineValueCollection(output), token, waitMessage);
     }
 
     public ServiceResponse(InvokeType invokeType, EngineValue output, String token) {
-        this(invokeType, new EngineValueCollection() {{
-            add(output);
-        }}, token, null);
+        this(invokeType, new EngineValueCollection(output), token, null);
     }
 
     public ServiceResponse(InvokeType invokeType, String token, String waitMessage) {

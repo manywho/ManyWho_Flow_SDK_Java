@@ -1,11 +1,15 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.enums.ContentType;
+import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Property {
     private String typeElementPropertyId;
     private String developerName;
+    private ContentType contentType;
     private String contentValue;
     private ObjectCollection objectData;
 
@@ -26,7 +30,7 @@ public class Property {
         this.developerName = developerName;
 
         if (contentValue instanceof Object) {
-            this.objectData = new ObjectCollection() {{ add((Object) contentValue); }};
+            this.objectData = new ObjectCollection((Object) contentValue);
         } else {
             this.contentValue = contentValue == null ? null : contentValue.toString();
         }
@@ -34,12 +38,17 @@ public class Property {
 
     public Property(String developerName, Date contentValue) {
         this.developerName = developerName;
-        this.contentValue = contentValue == null ? "" : new SimpleDateFormat("MM/dd/yyyy H:m:s a").format(contentValue);
+        this.contentValue = contentValue == null ? "" : new DateTime(contentValue).toDateTimeISO().toString();
     }
 
     public Property(String developerName, java.lang.Number contentValue) {
         this.developerName = developerName;
         this.contentValue = contentValue == null ? null : contentValue.toString();
+    }
+
+    public Property(String developerName, java.lang.Object contentValue, ContentType contentType) {
+        this(developerName, contentValue);
+        this.contentType = contentType;
     }
 
     public Property(String developerName, ObjectCollection objectData) {
@@ -61,6 +70,14 @@ public class Property {
 
     public void setDeveloperName(String developerName) {
         this.developerName = developerName;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public String getContentValue() {

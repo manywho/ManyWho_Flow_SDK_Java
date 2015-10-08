@@ -11,9 +11,7 @@ public class ObjectDataResponse {
     }
 
     public ObjectDataResponse(Object object) {
-        this.objectData = new ObjectCollection() {{
-            add(object);
-        }};
+        this.objectData = new ObjectCollection(object);
     }
 
     public ObjectDataResponse(ObjectCollection objectData) {

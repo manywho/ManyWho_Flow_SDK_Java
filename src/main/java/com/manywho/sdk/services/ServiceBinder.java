@@ -6,6 +6,7 @@ import com.manywho.sdk.services.config.ServiceConfiguration;
 import com.manywho.sdk.services.config.ServiceConfigurationProperties;
 import com.manywho.sdk.services.factories.ConfigurationValuesFactory;
 import com.manywho.sdk.services.providers.ConfigurationValuesFactoryProvider;
+import com.manywho.sdk.services.providers.ExceptionMapperProvider;
 import com.manywho.sdk.services.providers.ObjectMapperProvider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.spi.internal.ValueFactoryProvider;
@@ -26,6 +27,8 @@ public class ServiceBinder extends AbstractBinder {
         bind(ConfigurationValuesFactory.class).to(ConfigurationValuesFactory.class).in(Singleton.class);
 
         bind(ServiceConfigurationProperties.class).to(ServiceConfiguration.class).ranked(1);
+
+        bind(ExceptionMapperProvider.class).to(ExceptionMapperProvider.class);
 
         bind(RunService.class).to(RunService.class);
     }
