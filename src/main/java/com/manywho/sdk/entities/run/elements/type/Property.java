@@ -1,6 +1,7 @@
 package com.manywho.sdk.entities.run.elements.type;
 
 import com.manywho.sdk.enums.ContentType;
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class Property {
 
     public Property(String developerName, Date contentValue) {
         this.developerName = developerName;
-        this.contentValue = contentValue == null ? "" : new SimpleDateFormat("MM/dd/yyyy H:m:s a").format(contentValue);
+        this.contentValue = contentValue == null ? "" : new DateTime(contentValue).toDateTimeISO().toString();
     }
 
     public Property(String developerName, java.lang.Number contentValue) {
