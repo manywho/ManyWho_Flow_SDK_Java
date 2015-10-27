@@ -42,7 +42,7 @@ public abstract class AbstractOauth2Controller extends AbstractOauthController {
         );
     }
 
-    protected String getAuthStatus(ObjectDataRequest objectDataRequest) {
+    protected String getAuthStatus(ObjectDataRequest objectDataRequest) throws Exception {
         switch (objectDataRequest.getAuthorization().getGlobalAuthenticationType()) {
             case Public:
                 return "200";
