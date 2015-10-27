@@ -1,7 +1,8 @@
 package com.manywho.sdk.entities.run;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
+import com.manywho.sdk.entities.run.elements.type.*;
+import com.manywho.sdk.entities.run.elements.type.Object;
 import com.manywho.sdk.enums.ContentType;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -25,7 +26,7 @@ public class EngineValue {
         this.contentType = contentType;
     }
 
-    public EngineValue(String developerName, ContentType contentType, Object contentValue) {
+    public EngineValue(String developerName, ContentType contentType, java.lang.Object contentValue) {
         this(developerName, contentType);
         this.contentValue = String.valueOf(contentValue);
     }
@@ -33,6 +34,10 @@ public class EngineValue {
     public EngineValue(String developerName, ContentType contentType, ObjectCollection objectData) {
         this(developerName, contentType);
         this.objectData = objectData;
+    }
+
+    public EngineValue(String developerName, ContentType contentType, String typeElementDeveloperName, Object object) {
+        this(developerName, contentType, typeElementDeveloperName, new ObjectCollection(object));
     }
 
     public EngineValue(String developerName, ContentType contentType, String typeElementDeveloperName, ObjectCollection objectData) {
