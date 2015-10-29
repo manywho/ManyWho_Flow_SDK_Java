@@ -9,15 +9,27 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 public abstract class AbstractOauthController extends AbstractController {
-    @Path("/authorization/user/attribute")
+    @Path("/authorization/group")
     @POST
-    public ObjectDataResponse userAttributes(ObjectDataRequest objectDataRequest) {
+    public ObjectDataResponse groups(ObjectDataRequest objectDataRequest) throws Exception {
         return new ObjectDataResponse();
     }
 
     @Path("/authorization/group/attribute")
     @POST
-    public ObjectDataResponse groupAttributes(ObjectDataRequest objectDataRequest) {
+    public ObjectDataResponse groupAttributes(ObjectDataRequest objectDataRequest) throws Exception {
+        return new ObjectDataResponse();
+    }
+
+    @Path("/authorization/user")
+    @POST
+    public ObjectDataResponse users(ObjectDataRequest objectDataRequest) throws Exception {
+        return new ObjectDataResponse();
+    }
+
+    @Path("/authorization/user/attribute")
+    @POST
+    public ObjectDataResponse userAttributes(ObjectDataRequest objectDataRequest) throws Exception {
         return new ObjectDataResponse();
     }
 

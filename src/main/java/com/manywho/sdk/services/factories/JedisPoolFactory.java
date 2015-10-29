@@ -15,7 +15,12 @@ public class JedisPoolFactory implements Factory<JedisPool> {
 
     @Override
     public JedisPool provide() {
-        return new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint());
+        JedisPool pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint());
+
+        // Initialize the maximum number of idle connections to Redis, instead of connecting lazily
+        pool.addObjects(JedisPoolConfig.DEFAULT_MAX_IDLE);
+
+        return pool;
     }
 
     @Override
