@@ -3,7 +3,7 @@ package com.manywho.sdk.services.describe.actions;
 import com.manywho.sdk.entities.describe.DescribeServiceActionOutcomeCollection;
 import com.manywho.sdk.entities.describe.DescribeValueCollection;
 
-public interface Action {
+public interface Action extends Comparable<Action> {
     public String getUriPart();
 
     public String getDeveloperName();

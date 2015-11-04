@@ -11,6 +11,7 @@ public class Property {
     private String developerName;
     private ContentType contentType;
     private String contentValue;
+    private String contentFormat;
     private ObjectCollection objectData;
 
     public Property() {
@@ -94,5 +95,13 @@ public class Property {
 
     public void setObjectData(ObjectCollection objectData) {
         this.objectData = objectData;
+    }
+
+    public String getContentFormat() {
+        return contentFormat;
+    }
+
+    public void setContentFormat(String contentFormat) {
+        this.contentFormat = contentFormat;
     }
 }

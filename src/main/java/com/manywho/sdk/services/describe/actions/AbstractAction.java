@@ -12,4 +12,9 @@ public abstract class AbstractAction implements Action {
     public boolean isViewMessageAction() {
         return false;
     }
+
+    @Override
+    public int compareTo(Action o) {
+        return this.getDeveloperName().compareTo(o.getDeveloperName());
+    }
 }
