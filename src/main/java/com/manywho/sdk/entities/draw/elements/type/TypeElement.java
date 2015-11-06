@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeElement extends Element {
+public class TypeElement extends Element implements Comparable<TypeElement>{
     private String id;
     private String serviceElementId;
     protected TypeElementPropertyCollection properties = new TypeElementPropertyCollection();
@@ -61,6 +61,11 @@ public class TypeElement extends Element {
 
     public void setUpdateByName(boolean updateByName) {
         this.updateByName = updateByName;
+    }
+
+    @Override
+    public int compareTo(TypeElement o) {
+        return this.getDeveloperName().compareTo(o.getDeveloperName());
     }
 
     public static class SimpleTypeBuilder {

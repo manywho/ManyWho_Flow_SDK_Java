@@ -9,7 +9,8 @@ public enum InvokeType {
     Success("SUCCESS"),
     Sync("SYNC"),
     TokenCompleted("TOKEN_COMPLETED"),
-    Wait("WAIT");
+    Wait("WAIT"),
+    Busy("BUSY");
 
     private final String text;
 

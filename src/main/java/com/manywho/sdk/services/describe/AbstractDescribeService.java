@@ -12,6 +12,8 @@ import com.manywho.sdk.services.describe.types.AbstractType;
 import com.manywho.sdk.services.describe.types.Type;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 
 public abstract class AbstractDescribeService implements DescribeService {
@@ -74,11 +76,14 @@ public abstract class AbstractDescribeService implements DescribeService {
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
         final Set<Class<? extends AbstractAction>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractAction.class);
 
-        return new ActionCollection() {{
+        ActionCollection actionCollection = new ActionCollection() {{
             for (Class<? extends Action> action : annotatedClasses) {
                 add(action.newInstance());
             }
         }};
+        Collections.sort(actionCollection);
+
+        return actionCollection;
     }
 
     @Override
@@ -92,6 +97,7 @@ public abstract class AbstractDescribeService implements DescribeService {
                 typeElements.add((TypeElement) type.newInstance());
             }
         }
+        Collections.sort(typeElements);
 
         return new DescribeServiceInstall() {{
             setTypeElements(typeElements);
