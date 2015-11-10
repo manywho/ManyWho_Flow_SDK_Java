@@ -1,20 +1,22 @@
 package com.manywho.sdk.services.describe;
 
-import com.manywho.sdk.entities.draw.elements.type.TypeElement;
-import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
+import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
+import com.manywho.sdk.entities.draw.elements.type.*;
 import com.manywho.sdk.services.CachedData;
+import com.manywho.sdk.services.annotations.Type;
+import com.manywho.sdk.services.annotations.TypeProperty;
 import com.manywho.sdk.services.describe.actions.AbstractAction;
-import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.actions.Action;
+import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.types.AbstractType;
-import com.manywho.sdk.services.describe.types.Type;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class AbstractDescribeService implements DescribeService {
     @Override
@@ -88,15 +90,10 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
-        final Set<Class<? extends AbstractType>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractType.class);
-
         TypeElementCollection typeElements = new TypeElementCollection();
+        typeElements.addAll(buildTypeElementsFromAbstractTypes());
+        typeElements.addAll(buildTypeElementsFromAnnotatedTypes());
 
-        if (CollectionUtils.isNotEmpty(annotatedClasses)) {
-            for (Class<? extends Type> type : annotatedClasses) {
-                typeElements.add((TypeElement) type.newInstance());
-            }
-        }
         Collections.sort(typeElements);
 
         return new DescribeServiceInstall() {{
@@ -123,5 +120,58 @@ public abstract class AbstractDescribeService implements DescribeService {
             setActions(AbstractDescribeService.this.createActions());
             setInstall(AbstractDescribeService.this.createInstall());
         }};
+    }
+
+    private TypeElementCollection buildTypeElementsFromAbstractTypes() {
+        final Set<Class<? extends AbstractType>> types = CachedData.reflections
+                .getSubTypesOf(AbstractType.class);
+
+        // Loop over all the classes that extend AbstractType, instantiate, then add them into a TypeElementCollection
+        if (CollectionUtils.isNotEmpty(types)) {
+            return types.stream()
+                    .map(Throwing.function(type -> (TypeElement) type.newInstance()))
+                    .collect(Collectors.toCollection(TypeElementCollection::new));
+        }
+
+        return new TypeElementCollection();
+    }
+
+    private TypeElementCollection buildTypeElementsFromAnnotatedTypes() {
+        final Set<Class<?>> types = CachedData.reflections.getTypesAnnotatedWith(Type.class);
+
+        if (CollectionUtils.isNotEmpty(types)) {
+            final Set<Field> annotatedProperties = CachedData.reflections.getFieldsAnnotatedWith(TypeProperty.class);
+
+            return types.stream()
+                    .map(type -> buildTypeElementFromAnnotatedType(type, annotatedProperties))
+                    .collect(Collectors.toCollection(TypeElementCollection::new));
+        }
+
+        return new TypeElementCollection();
+    }
+
+    private TypeElement buildTypeElementFromAnnotatedType(Class<?> annotatedType, Set<Field> annotatedProperties) {
+        Type type = annotatedType.getAnnotation(Type.class);
+
+        // Build a list of ManyWho Properties created from the annotated fields in the type passed in
+        TypeElementPropertyCollection properties = annotatedProperties.stream()
+                .filter(field -> field.getDeclaringClass().equals(annotatedType))
+                .map(field -> field.getAnnotation(TypeProperty.class))
+                .map(property -> new TypeElementProperty(property.name(), property.contentType()))
+                .sorted()
+                .collect(Collectors.toCollection(TypeElementPropertyCollection::new));
+
+        TypeElementPropertyBindingCollection propertyBindings = annotatedProperties.stream()
+                .filter(field -> field.getDeclaringClass().equals(annotatedType))
+                .map(field -> field.getAnnotation(TypeProperty.class))
+                .filter(TypeProperty::bound)
+                .map(property -> new TypeElementPropertyBinding(property.name(), property.name()))
+                .sorted()
+                .collect(Collectors.toCollection(TypeElementPropertyBindingCollection::new));
+
+        TypeElementBindingCollection bindings = new TypeElementBindingCollection();
+        bindings.add(new TypeElementBinding(type.name(), type.summary(), type.name(), propertyBindings));
+
+        return new TypeElement(type.name(), type.summary(), properties, bindings);
     }
 }
