@@ -5,7 +5,9 @@ import com.manywho.sdk.entities.ValueAware;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.Property;
 import org.apache.commons.lang3.StringUtils;
+import org.reflections.Reflections;
 
+import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.Set;
 
@@ -13,9 +15,10 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
     private Set<Field> idFields;
     private Set<Field> propertyFields;
 
-    public PropertyCollectionParser() {
-        this.idFields = CachedData.reflections.getFieldsAnnotatedWith(Id.class);
-        this.propertyFields = CachedData.reflections.getFieldsAnnotatedWith(Property.class);
+    @Inject
+    public PropertyCollectionParser(Reflections reflections) {
+        this.idFields = reflections.getFieldsAnnotatedWith(Id.class);
+        this.propertyFields = reflections.getFieldsAnnotatedWith(Property.class);
     }
 
     @Override
