@@ -4,7 +4,7 @@ import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.run.elements.type.*;
 import com.manywho.sdk.entities.run.elements.type.Object;
 import com.manywho.sdk.services.annotations.Id;
-import com.manywho.sdk.services.annotations.Type;
+import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import org.reflections.Reflections;
 
@@ -39,7 +39,7 @@ public class TypeBuilder {
     }
 
     private <T> Object createObjectFromTypeObject(T typeObject, Set<TypePropertyFieldTuple> propertyFieldTuples, Class<T> tClass) throws Exception {
-        Type type = tClass.getAnnotation(Type.class);
+        TypeElement typeElement = tClass.getAnnotation(TypeElement.class);
 
         // If a field with the Id annotation is present, set the external ID in the ManyWho Object
         Optional<Field> idField = reflections.getFieldsAnnotatedWith(Id.class).stream()
@@ -57,6 +57,6 @@ public class TypeBuilder {
                 .map(Throwing.function(tuple -> new Property(tuple.getTypeProperty().name(), tuple.getField().get(typeObject))))
                 .collect(Collectors.toCollection(PropertyCollection::new));
 
-        return new Object(type.name(), externalId, properties);
+        return new Object(typeElement.name(), externalId, properties);
     }
 }

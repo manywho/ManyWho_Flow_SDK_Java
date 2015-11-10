@@ -5,7 +5,7 @@ import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
 import com.manywho.sdk.entities.draw.elements.type.*;
 import com.manywho.sdk.services.CachedData;
-import com.manywho.sdk.services.annotations.Type;
+import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import com.manywho.sdk.services.describe.actions.AbstractAction;
 import com.manywho.sdk.services.describe.actions.Action;
@@ -129,7 +129,7 @@ public abstract class AbstractDescribeService implements DescribeService {
         // Loop over all the classes that extend AbstractType, instantiate, then add them into a TypeElementCollection
         if (CollectionUtils.isNotEmpty(types)) {
             return types.stream()
-                    .map(Throwing.function(type -> (TypeElement) type.newInstance()))
+                    .map(Throwing.function(type -> (com.manywho.sdk.entities.draw.elements.type.TypeElement) type.newInstance()))
                     .collect(Collectors.toCollection(TypeElementCollection::new));
         }
 
@@ -137,7 +137,7 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     private TypeElementCollection buildTypeElementsFromAnnotatedTypes() {
-        final Set<Class<?>> types = CachedData.reflections.getTypesAnnotatedWith(Type.class);
+        final Set<Class<?>> types = CachedData.reflections.getTypesAnnotatedWith(TypeElement.class);
 
         if (CollectionUtils.isNotEmpty(types)) {
             final Set<Field> annotatedProperties = CachedData.reflections.getFieldsAnnotatedWith(TypeProperty.class);
@@ -150,8 +150,8 @@ public abstract class AbstractDescribeService implements DescribeService {
         return new TypeElementCollection();
     }
 
-    private TypeElement buildTypeElementFromAnnotatedType(Class<?> annotatedType, Set<Field> annotatedProperties) {
-        Type type = annotatedType.getAnnotation(Type.class);
+    private com.manywho.sdk.entities.draw.elements.type.TypeElement buildTypeElementFromAnnotatedType(Class<?> annotatedType, Set<Field> annotatedProperties) {
+        TypeElement typeElement = annotatedType.getAnnotation(TypeElement.class);
 
         // Build a list of ManyWho Properties created from the annotated fields in the type passed in
         TypeElementPropertyCollection properties = annotatedProperties.stream()
@@ -170,8 +170,8 @@ public abstract class AbstractDescribeService implements DescribeService {
                 .collect(Collectors.toCollection(TypeElementPropertyBindingCollection::new));
 
         TypeElementBindingCollection bindings = new TypeElementBindingCollection();
-        bindings.add(new TypeElementBinding(type.name(), type.summary(), type.name(), propertyBindings));
+        bindings.add(new TypeElementBinding(typeElement.name(), typeElement.summary(), typeElement.name(), propertyBindings));
 
-        return new TypeElement(type.name(), type.summary(), properties, bindings);
+        return new com.manywho.sdk.entities.draw.elements.type.TypeElement(typeElement.name(), typeElement.summary(), properties, bindings);
     }
 }

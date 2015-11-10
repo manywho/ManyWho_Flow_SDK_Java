@@ -5,7 +5,7 @@ import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
 import com.manywho.sdk.entities.run.elements.type.PropertyCollection;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.Property;
-import com.manywho.sdk.services.annotations.Type;
+import com.manywho.sdk.services.annotations.TypeElement;
 import org.modelmapper.ModelMapper;
 
 import java.lang.reflect.Field;
@@ -49,11 +49,11 @@ public class ObjectBuilder {
             throw new Exception(String.format("The entity %s does not have an @Id annotation denoting the External ID", mappedEntity.getClass().getName()));
         }
 
-        if (!mappedEntity.getClass().isAnnotationPresent(Type.class)) {
+        if (!mappedEntity.getClass().isAnnotationPresent(TypeElement.class)) {
             throw new Exception(String.format("The entity %s does not have a @Type annotation", mappedEntity.getClass().getName()));
         }
 
-        return buildObject(mappedEntity.getClass().getAnnotation(Type.class).value(), id, properties);
+        return buildObject(mappedEntity.getClass().getAnnotation(TypeElement.class).value(), id, properties);
     }
 
     private java.lang.Object getFieldValue(Field field, java.lang.Object entity) {

@@ -5,7 +5,7 @@ import com.manywho.sdk.entities.run.elements.type.MObject;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataTypePropertyCollection;
 import com.manywho.sdk.services.annotations.Id;
-import com.manywho.sdk.services.annotations.Type;
+import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import org.apache.commons.collections4.CollectionUtils;
 import org.reflections.Reflections;
@@ -30,8 +30,8 @@ public class TypeParser {
         String objectDataType = objectDataRequest.getObjectDataType().getDeveloperName();
 
         // Find the type that was passed in
-        Optional<Class<?>> objectType = reflections.getTypesAnnotatedWith(Type.class).stream()
-                .filter(type -> type.getAnnotation(Type.class).name().equals(objectDataType))
+        Optional<Class<?>> objectType = reflections.getTypesAnnotatedWith(TypeElement.class).stream()
+                .filter(type -> type.getAnnotation(TypeElement.class).name().equals(objectDataType))
                 .findFirst();
 
         // Throw an error if an annotated type could not be found for the object type passed in
