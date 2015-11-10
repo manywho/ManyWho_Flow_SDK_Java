@@ -12,11 +12,15 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 
 public class ReflectionListener implements ApplicationEventListener {
     @Context
     private ServletContext servletContext;
+
+    @Context
+    private Application application;
 
     @Override
     public void onEvent(ApplicationEvent applicationEvent) {
@@ -28,6 +32,12 @@ public class ReflectionListener implements ApplicationEventListener {
 
                 if (this.servletContext != null) {
                     configurationBuilder.addUrls(ClasspathHelper.forWebInfClasses(this.servletContext));
+                }
+
+                if (application != null) {
+                    application.getClasses().forEach(aClass -> {
+                        configurationBuilder.addUrls(ClasspathHelper.forClass(aClass));
+                    });
                 }
 
                 CachedData.reflections = new Reflections(configurationBuilder);
