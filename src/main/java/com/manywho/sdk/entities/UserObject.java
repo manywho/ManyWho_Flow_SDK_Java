@@ -3,7 +3,7 @@ package com.manywho.sdk.entities;
 import com.manywho.sdk.entities.run.elements.type.*;
 import com.manywho.sdk.enums.AuthorizationType;
 
-public class UserObject extends com.manywho.sdk.entities.run.elements.type.Object {
+public class UserObject extends MObject {
     private String directoryId;
     private String directoryName;
     private AuthorizationType authorizationType;

@@ -1,6 +1,6 @@
 package com.manywho.sdk.services;
 
-import com.manywho.sdk.entities.run.elements.type.Object;
+import com.manywho.sdk.entities.run.elements.type.MObject;
 import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
 import com.manywho.sdk.entities.run.elements.type.PropertyCollection;
 import com.manywho.sdk.services.annotations.Id;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public class ObjectBuilder {
-    public <T> Object build(java.lang.Object object, Class<T> tClass) throws Exception {
+    public <T> MObject build(Object object, Class<T> tClass) throws Exception {
         if (object == null) {
             return null;
         }
@@ -66,12 +66,8 @@ public class ObjectBuilder {
         }
     }
 
-    private Object buildObject(String developerName, String externalId, PropertyCollection properties) {
-        return new Object() {{
-            setDeveloperName(developerName);
-            setExternalId(externalId);
-            setProperties(properties);
-        }};
+    private MObject buildObject(String developerName, String externalId, PropertyCollection properties) {
+        return new MObject(developerName, externalId, properties);
     }
 
     private com.manywho.sdk.entities.run.elements.type.Property buildObjectProperty(Field field, String developerName, java.lang.Object entity) throws Exception {

@@ -10,7 +10,7 @@ public class ObjectDataResponse {
     public ObjectDataResponse() {
     }
 
-    public ObjectDataResponse(Object object) {
+    public ObjectDataResponse(MObject object) {
         this.objectData = new ObjectCollection(object);
     }
 

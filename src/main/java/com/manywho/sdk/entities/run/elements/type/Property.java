@@ -3,7 +3,6 @@ package com.manywho.sdk.entities.run.elements.type;
 import com.manywho.sdk.enums.ContentType;
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Property {
@@ -30,8 +29,8 @@ public class Property {
     public Property(String developerName, java.lang.Object contentValue) {
         this.developerName = developerName;
 
-        if (contentValue instanceof Object) {
-            this.objectData = new ObjectCollection((Object) contentValue);
+        if (contentValue instanceof MObject) {
+            this.objectData = new ObjectCollection((MObject) contentValue);
         } else {
             this.contentValue = contentValue == null ? null : contentValue.toString();
         }
