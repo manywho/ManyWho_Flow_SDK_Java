@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeElement extends Element implements Comparable<TypeElement>{
+public class TypeElement extends Element implements Comparable<TypeElement> {
     private String id;
     private String serviceElementId;
     protected TypeElementPropertyCollection properties = new TypeElementPropertyCollection();
@@ -15,6 +15,11 @@ public class TypeElement extends Element implements Comparable<TypeElement>{
     private boolean updateByName;
 
     public TypeElement() {
+    }
+
+    public TypeElement(String developerName, String developerSummary, TypeElementPropertyCollection properties, TypeElementBindingCollection bindings) {
+        this(developerName, properties, bindings);
+        this.developerSummary = developerSummary;
     }
 
     public TypeElement(String developerName, TypeElementPropertyCollection properties, TypeElementBindingCollection bindings) {
