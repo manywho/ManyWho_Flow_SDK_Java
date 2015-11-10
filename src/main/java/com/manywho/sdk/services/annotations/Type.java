@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Type {
     String value() default "";
-    String name();
-    String summary();
+    String name() default "";
+    String summary() default "";
 }
