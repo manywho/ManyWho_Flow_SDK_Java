@@ -22,6 +22,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper>, Fact
 
     public static ObjectMapper getObjectMapper() {
         return new ObjectMapper()
+                .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
                 .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssssss.SSS'Z'"))
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES)
