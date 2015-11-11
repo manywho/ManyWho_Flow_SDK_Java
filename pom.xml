@@ -70,10 +70,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-
-    </dependencies>
-
     <profiles>
         <profile>
             <id>release</id>

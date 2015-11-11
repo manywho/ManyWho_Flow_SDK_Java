@@ -4,11 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>net.java</groupId>
+        <artifactId>jvnet-parent</artifactId>
+        <version>4</version>
+        <relativePath />
+    </parent>
+
     <groupId>com.manywho.sdk</groupId>
     <artifactId>sdk-bom</artifactId>
     <version>1.15.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>sdk-bom</name>
+
+    <description>ManyWho Java SDK Bill of Materials (BOM)</description>
 
     <dependencyManagement>
         <dependencies>
