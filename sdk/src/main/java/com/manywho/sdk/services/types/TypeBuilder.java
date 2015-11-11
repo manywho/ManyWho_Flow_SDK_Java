@@ -10,10 +10,9 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TypeBuilder {
     private Reflections reflections;
@@ -23,19 +22,39 @@ public class TypeBuilder {
         this.reflections = reflections;
     }
 
-    public <T> ObjectCollection build(ObjectDataRequest objectDataRequest, Collection<? extends T> objects, Class<T> tClass) throws Exception {
+    public <T> ObjectCollection buildList(ObjectDataRequest objectDataRequest, Collection<? extends T> objects, Class<T> tClass) throws Exception {
+        return this.build(objectDataRequest, objects, tClass)
+                .collect(Collectors.toCollection(ObjectCollection::new));
+    }
+
+    public <T> ObjectCollection buildObject(ObjectDataRequest objectDataRequest, T object, Class<T> tClass) throws Exception {
+        List<T> temporaryObjectList = new ArrayList<>();
+        temporaryObjectList.add(object);
+
+        Optional<MObject> typeObjectOptional = this.build(objectDataRequest, temporaryObjectList, tClass)
+                .limit(1)
+                .findFirst();
+
+        if (typeObjectOptional.isPresent()) {
+            return new ObjectCollection(typeObjectOptional.get());
+        }
+
+        return new ObjectCollection();
+    }
+
+    private <T> Stream<MObject> build(ObjectDataRequest objectDataRequest, Collection<? extends T> objects, Class<T> tClass) throws Exception {
         ObjectDataTypePropertyCollection incomingProperties = objectDataRequest.getObjectDataType().getProperties();
 
         // Find all the TypeProperties that are set to "bound" and are in the incoming object data
         Set<TypePropertyFieldTuple> boundProperties = reflections.getFieldsAnnotatedWith(TypeProperty.class).stream()
+                .filter(field -> field.getDeclaringClass().equals(tClass))
                 .map(field -> new TypePropertyFieldTuple(field.getAnnotation(TypeProperty.class), field))
                 .filter(tuple -> tuple.getTypeProperty().bound())
                 .filter(tuple -> incomingProperties.stream().anyMatch(p -> p.getDeveloperName().equals(tuple.getTypeProperty().name())))
                 .collect(Collectors.toSet());
 
         return objects.stream()
-                .map(Throwing.function(object -> createObjectFromTypeObject(object, boundProperties, tClass)))
-                .collect(Collectors.toCollection(ObjectCollection::new));
+                .map(Throwing.function(object -> createObjectFromTypeObject(object, boundProperties, tClass)));
     }
 
     private <T> Object createObjectFromTypeObject(T typeObject, Set<TypePropertyFieldTuple> propertyFieldTuples, Class<T> tClass) throws Exception {

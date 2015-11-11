@@ -7,16 +7,15 @@ import com.manywho.sdk.entities.run.elements.type.ObjectDataTypePropertyCollecti
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
-import org.apache.commons.collections4.CollectionUtils;
 import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TypeParser {
     private Reflections reflections;
@@ -26,7 +25,24 @@ public class TypeParser {
         this.reflections = reflections;
     }
 
-    public <T> List<T> parse(ObjectDataRequest objectDataRequest, Class<T> tClass) throws Exception {
+    public <T> List<T> parseList(ObjectDataRequest objectDataRequest, Class<T> tClass) throws Exception {
+        return this.parse(objectDataRequest, tClass)
+                .collect(Collectors.toList());
+    }
+
+    public <T> T parseObject(ObjectDataRequest objectDataRequest, Class<T> tClass) throws Exception {
+        Optional<T> typeObjectOptional = this.parse(objectDataRequest, tClass)
+                .limit(1)
+                .findFirst();
+
+        if (typeObjectOptional.isPresent()) {
+            return typeObjectOptional.get();
+        }
+
+        return null;
+    }
+
+    private <T> Stream<T> parse(ObjectDataRequest objectDataRequest, Class<T> tClass) throws Exception {
         String objectDataType = objectDataRequest.getObjectDataType().getDeveloperName();
 
         // Find the type that was passed in
@@ -39,28 +55,18 @@ public class TypeParser {
             throw new Exception("An annotated type could not be found with the name() " + objectDataType);
         }
 
-        // Return an empty list if the incoming request contains no data
-        if (CollectionUtils.isEmpty(objectDataRequest.getObjectData())) {
-            return new ArrayList<>();
-        }
-
         ObjectDataTypePropertyCollection incomingProperties = objectDataRequest.getObjectDataType().getProperties();
 
         // Find all the TypeProperties that are set to "bound" and are in the incoming object data
         Set<TypePropertyFieldTuple> boundProperties = reflections.getFieldsAnnotatedWith(TypeProperty.class).stream()
+                .filter(field -> field.getDeclaringClass().equals(tClass))
                 .map(field -> new TypePropertyFieldTuple(field.getAnnotation(TypeProperty.class), field))
                 .filter(tuple -> tuple.getTypeProperty().bound())
                 .filter(tuple -> incomingProperties.stream().anyMatch(p -> p.getDeveloperName().equals(tuple.getTypeProperty().name())))
                 .collect(Collectors.toSet());
 
-        // Return an empty list if no bound properties were found
-        if (CollectionUtils.isEmpty(boundProperties)) {
-            return new ArrayList<>();
-        }
-
         return objectDataRequest.getObjectData().stream()
-                .map(Throwing.function(object -> createTypeObjectFromObject(object, boundProperties, tClass)))
-                .collect(Collectors.toList());
+                .map(Throwing.function(object -> createTypeObjectFromObject(object, boundProperties, tClass)));
     }
 
     private <T> T createTypeObjectFromObject(MObject object, Set<TypePropertyFieldTuple> propertyFieldTuples, Class<T> tClass) throws Exception {
