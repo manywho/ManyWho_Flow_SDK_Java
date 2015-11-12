@@ -13,6 +13,7 @@
         <module>sdk</module>
         <module>sdk-test</module>
         <module>sdk-bom</module>
+        <module>sdk-core</module>
     </modules>
 
     <properties>
