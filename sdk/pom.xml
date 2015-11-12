@@ -15,8 +15,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.manywho</groupId>
+            <groupId>com.manywho.sdk</groupId>
             <artifactId>sdk-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.manywho.sdk</groupId>
+            <artifactId>sdk-test</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

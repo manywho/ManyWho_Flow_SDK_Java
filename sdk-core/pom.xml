@@ -10,7 +10,7 @@
         <version>1.15.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.manywho</groupId>
+    <groupId>com.manywho.sdk</groupId>
     <artifactId>sdk-core</artifactId>
 
     <dependencies>
