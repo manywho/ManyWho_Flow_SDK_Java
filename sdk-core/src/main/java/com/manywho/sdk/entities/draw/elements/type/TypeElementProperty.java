@@ -5,6 +5,7 @@ import com.manywho.sdk.enums.ContentType;
 public class TypeElementProperty implements Comparable<TypeElementProperty> {
     private String id;
     private String developerName;
+    private String contentFormat;
     private ContentType contentType;
     private String typeElementId;
     private String typeElementDeveloperName;
@@ -41,6 +42,14 @@ public class TypeElementProperty implements Comparable<TypeElementProperty> {
 
     public void setDeveloperName(String developerName) {
         this.developerName = developerName;
+    }
+
+    public String getContentFormat() {
+        return contentFormat;
+    }
+
+    public void setContentFormat(String contentFormat) {
+        this.contentFormat = contentFormat;
     }
 
     public ContentType getContentType() {
