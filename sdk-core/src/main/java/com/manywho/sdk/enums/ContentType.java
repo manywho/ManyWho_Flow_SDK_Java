@@ -10,7 +10,8 @@ public enum ContentType {
     Number("ContentNumber"),
     Object("ContentObject"),
     Password("ContentPassword"),
-    String("ContentString");
+    String("ContentString"),
+    Encrypted("ContentEncrypted");
 
     private final String text;
 
