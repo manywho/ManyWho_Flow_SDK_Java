@@ -5,26 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.manywho.sdk</groupId>
-    <artifactId>project</artifactId>
+    <artifactId>sdk-bom</artifactId>
     <version>1.15.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>sdk</module>
-        <module>sdk-test</module>
-        <module>sdk-bom</module>
-        <module>sdk-core</module>
-    </modules>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>ManyWho Java SDK Bill of Materials (BOM)</description>
+    <url>https://github.com/manywho/sdk-java</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <version.jersey>2.22.1</version.jersey>
     </properties>
-
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>Java SDK for building services to integrate with the ManyWho platform</description>
-    <url>https://github.com/manywho/sdk-java</url>
 
     <licenses>
         <license>
@@ -67,6 +60,16 @@
                 <version>${version.jersey}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.manywho</groupId>
+                <artifactId>sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.manywho.sdk</groupId>
+                <artifactId>sdk-test</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -118,19 +121,6 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-scm-publish-plugin</artifactId>
-                        <version>1.1</version>
-                        <configuration>
-                            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-                            <checkinComment>Publishing javadoc for ${project.artifactId}:${project.version}</checkinComment>
-                            <content>${project.reporting.outputDirectory}/apidocs</content>
-                            <skipDeletedFiles>true</skipDeletedFiles>
-                            <pubScmUrl>scm:git:git@github.com:manywho/sdk-java.git</pubScmUrl>
-                            <scmBranch>gh-pages</scmBranch>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
                         <executions>
@@ -147,22 +137,4 @@
             </build>
         </profile>
     </profiles>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections-maven</artifactId>
-                <version>0.9.9-RC2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>reflections</goal>
-                        </goals>
-                        <phase>process-classes</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
