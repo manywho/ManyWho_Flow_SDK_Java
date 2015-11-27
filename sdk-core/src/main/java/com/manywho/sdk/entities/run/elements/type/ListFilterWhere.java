@@ -31,6 +31,7 @@ public class ListFilterWhere {
 
     /**
      * @deprecated use {@link #getContentValue()} instead
+     * @return the value to use for lookups
      */
     @Deprecated
     public String getValue() {
@@ -39,6 +40,7 @@ public class ListFilterWhere {
 
     /**
      * @deprecated use {@link #setContentValue(String)} instead
+     * @param value the value to use for lookups
      */
     @Deprecated
     public void setValue(String value) {
