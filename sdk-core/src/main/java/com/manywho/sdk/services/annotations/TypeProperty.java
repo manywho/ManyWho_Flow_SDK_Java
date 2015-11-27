@@ -13,4 +13,5 @@ public @interface TypeProperty {
     String name();
     ContentType contentType();
     boolean bound() default true;
+    Class<?> referencedType() default void.class;
 }

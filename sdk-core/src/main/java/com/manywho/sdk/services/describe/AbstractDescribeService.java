@@ -3,12 +3,18 @@ package com.manywho.sdk.services.describe;
 import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
-import com.manywho.sdk.entities.draw.elements.type.*;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementBinding;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementBindingCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementProperty;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyBinding;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyBindingCollection;
+import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyCollection;
+import com.manywho.sdk.enums.ContentType;
 import com.manywho.sdk.services.CachedData;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import com.manywho.sdk.services.describe.actions.AbstractAction;
-import com.manywho.sdk.services.describe.actions.Action;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.types.AbstractType;
 import org.apache.commons.collections4.CollectionUtils;
@@ -76,16 +82,13 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
-        final Set<Class<? extends AbstractAction>> annotatedClasses = CachedData.reflections.getSubTypesOf(AbstractAction.class);
+        ActionCollection actions = CachedData.reflections.getSubTypesOf(AbstractAction.class).stream()
+                .map(Throwing.function(Class::newInstance))
+                .collect(Collectors.toCollection(ActionCollection::new));
 
-        ActionCollection actionCollection = new ActionCollection() {{
-            for (Class<? extends Action> action : annotatedClasses) {
-                add(action.newInstance());
-            }
-        }};
-        Collections.sort(actionCollection);
+        Collections.sort(actions);
 
-        return actionCollection;
+        return actions;
     }
 
     @Override
@@ -96,9 +99,7 @@ public abstract class AbstractDescribeService implements DescribeService {
 
         Collections.sort(typeElements);
 
-        return new DescribeServiceInstall() {{
-            setTypeElements(typeElements);
-        }};
+        return new DescribeServiceInstall(typeElements);
     }
 
     @Override
@@ -157,7 +158,7 @@ public abstract class AbstractDescribeService implements DescribeService {
         TypeElementPropertyCollection properties = annotatedProperties.stream()
                 .filter(field -> field.getDeclaringClass().equals(annotatedType))
                 .map(field -> field.getAnnotation(TypeProperty.class))
-                .map(property -> new TypeElementProperty(property.name(), property.contentType()))
+                .map(Throwing.function(this::createTypeElementProperty))
                 .sorted()
                 .collect(Collectors.toCollection(TypeElementPropertyCollection::new));
 
@@ -173,5 +174,35 @@ public abstract class AbstractDescribeService implements DescribeService {
         bindings.add(new TypeElementBinding(typeElement.name(), typeElement.summary(), typeElement.name(), propertyBindings));
 
         return new com.manywho.sdk.entities.draw.elements.type.TypeElement(typeElement.name(), typeElement.summary(), properties, bindings);
+    }
+
+    /**
+     * @param property the #{@link TypeProperty} to create a new #{@link TypeElementProperty} from
+     * @return a new property containing the values from the given annotations
+     * @throws Exception when a referenced type could not be found
+     */
+    private TypeElementProperty createTypeElementProperty(TypeProperty property) throws Exception {
+        String referencedTypeName = null;
+
+        // If the type property annotation is of Object or List, then we need to find the name of the referenced type
+        if (property.contentType().equals(ContentType.Object) || property.contentType().equals(ContentType.List)) {
+            referencedTypeName = this.getReferencedTypeName(property.referencedType());
+        }
+
+        // Return a new TypeElementProperty with the values from annotations
+        return new TypeElementProperty(property.name(), property.contentType(), referencedTypeName);
+    }
+
+    /**
+     * @param aClass the class on which to check for a #{@link TypeElement} annotation
+     * @return the developer name of the Type the property is referencing
+     * @throws Exception when a referenced type could not be found
+     */
+    private String getReferencedTypeName(Class<?> aClass) throws Exception {
+        if (!aClass.isAnnotationPresent(TypeElement.class)) {
+            throw new Exception("The referenced type " + aClass.getTypeName() + " is not annotated with @TypeElement");
+        }
+
+        return aClass.getAnnotation(TypeElement.class).name();
     }
 }

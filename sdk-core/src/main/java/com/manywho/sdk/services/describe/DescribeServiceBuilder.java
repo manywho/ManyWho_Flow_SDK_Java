@@ -169,9 +169,7 @@ public class DescribeServiceBuilder {
                     discoveredTypes.addAll(types);
                 }
 
-                return new DescribeServiceInstall() {{
-                    setTypeElements(discoveredTypes);
-                }};
+                return new DescribeServiceInstall(discoveredTypes);
             }
         };
     }

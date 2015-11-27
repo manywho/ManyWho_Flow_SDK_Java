@@ -6,6 +6,13 @@ import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 public class DescribeServiceInstall {
     private TypeElementCollection typeElements;
 
+    public DescribeServiceInstall() {
+    }
+
+    public DescribeServiceInstall(TypeElementCollection typeElements) {
+        this.typeElements = typeElements;
+    }
+
     public TypeElementCollection getTypeElements() {
         return typeElements;
     }
