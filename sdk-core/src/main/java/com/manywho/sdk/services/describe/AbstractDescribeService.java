@@ -26,6 +26,11 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractDescribeService implements DescribeService {
     @Override
+    public boolean getProvidesAutoBinding() {
+        return false;
+    }
+
+    @Override
     public boolean getProvidesDatabase() {
         return false;
     }
@@ -107,6 +112,7 @@ public abstract class AbstractDescribeService implements DescribeService {
         return new DescribeServiceResponse() {{
             setCulture(AbstractDescribeService.this.createCulture());
             setConfigurationValues(AbstractDescribeService.this.createConfigurationValues());
+            setProvidesAutoBinding(AbstractDescribeService.this.getProvidesAutoBinding());
             setProvidesDatabase(AbstractDescribeService.this.getProvidesDatabase());
             setProvidesFiles(AbstractDescribeService.this.getProvidesFiles());
             setProvidesIdentity(AbstractDescribeService.this.getProvidesIdentity());

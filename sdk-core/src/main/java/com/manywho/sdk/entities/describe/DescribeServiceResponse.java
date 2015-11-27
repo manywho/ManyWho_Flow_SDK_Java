@@ -7,6 +7,7 @@ public class DescribeServiceResponse {
     private Culture culture;
     private String uri;
     private DescribeValueCollection configurationValues;
+    private boolean providesAutoBinding;
     private boolean providesDatabase;
     private boolean providesFiles;
     private boolean providesIdentity;
@@ -43,6 +44,15 @@ public class DescribeServiceResponse {
 
     public void setConfigurationValues(DescribeValueCollection configurationValues) {
         this.configurationValues = configurationValues;
+    }
+
+    public boolean isProvidesAutoBinding() {
+        return providesAutoBinding;
+    }
+
+    public DescribeServiceResponse setProvidesAutoBinding(boolean providesAutoBinding) {
+        this.providesAutoBinding = providesAutoBinding;
+        return this;
     }
 
     public boolean isProvidesDatabase() {

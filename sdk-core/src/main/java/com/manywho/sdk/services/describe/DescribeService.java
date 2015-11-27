@@ -11,6 +11,7 @@ public interface DescribeService {
     DescribeValueCollection createConfigurationValues();
     ActionCollection createActions() throws IllegalAccessException, InstantiationException;
     DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException;
+    boolean getProvidesAutoBinding();
     boolean getProvidesDatabase();
     boolean getProvidesFiles();
     boolean getProvidesIdentity();

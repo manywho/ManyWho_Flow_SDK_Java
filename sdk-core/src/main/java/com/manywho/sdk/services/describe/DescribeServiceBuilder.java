@@ -7,6 +7,7 @@ import com.manywho.sdk.entities.translate.Culture;
 import org.apache.commons.collections4.CollectionUtils;
 
 public class DescribeServiceBuilder {
+    private boolean providesAutoBinding;
     private boolean providesDatabase;
     private boolean providesFiles;
     private boolean providesIdentity;
@@ -21,6 +22,11 @@ public class DescribeServiceBuilder {
     private Culture culture;
     private DescribeValueCollection configurationValues;
     private TypeElementCollection types;
+
+    public DescribeServiceBuilder setProvidesAutoBinding(boolean providesAutoBinding) {
+        this.providesAutoBinding = providesAutoBinding;
+        return this;
+    }
 
     public DescribeServiceBuilder setProvidesDatabase(boolean providesDatabase) {
         this.providesDatabase = providesDatabase;
@@ -94,6 +100,11 @@ public class DescribeServiceBuilder {
 
     public DescribeService createDescribeService() {
         return new AbstractDescribeService() {
+            @Override
+            public boolean getProvidesAutoBinding() {
+                return providesAutoBinding;
+            }
+
             @Override
             public boolean getProvidesDatabase() {
                 return providesDatabase;
