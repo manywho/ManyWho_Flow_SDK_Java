@@ -1,6 +1,5 @@
 package com.manywho.sdk.services;
 
-import com.manywho.sdk.services.features.BodyReaderFeature;
 import com.manywho.sdk.services.listeners.ReflectionListener;
 import com.manywho.sdk.services.providers.ExceptionMapperProvider;
 import com.manywho.sdk.services.providers.ObjectMapperProvider;
@@ -20,7 +19,6 @@ public class BaseApplication extends ResourceConfig {
     public ResourceConfig registerSdk() {
         return packages("com.manywho.sdk.services")
                 .register(new ServiceBinder())
-                .register(BodyReaderFeature.class)
                 .register(ReflectionListener.class)
                 .register(MultiPartFeature.class)
                 .register(LoggingFilter.class)
