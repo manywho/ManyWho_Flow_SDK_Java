@@ -19,4 +19,9 @@ public class ServiceConfigurationProperties implements ServiceConfiguration {
     public String get(String key) {
         return properties.getProperty(key);
     }
+
+    @Override
+    public boolean has(String key) {
+        return properties.containsKey(key);
+    }
 }

@@ -33,7 +33,10 @@ public class ServiceBinder extends AbstractBinder {
         bind(TypeBuilder.class).to(TypeBuilder.class).in(Singleton.class);
         bind(TypeParser.class).to(TypeParser.class).in(Singleton.class);
 
-        bind(ServiceConfigurationProperties.class).to(ServiceConfiguration.class).ranked(1);
+        bind(ServiceConfigurationDefault.class).to(ServiceConfigurationDefault.class);
+        bind(ServiceConfigurationEnvironmentVariables.class).to(ServiceConfigurationEnvironmentVariables.class);
+        bind(ServiceConfigurationProperties.class).to(ServiceConfigurationProperties.class).in(Singleton.class);
+        bind(ServiceConfigurationDefault.class).to(ServiceConfiguration.class).in(Singleton.class).ranked(1);
 
         bind(ExceptionMapperProvider.class).to(ExceptionMapperProvider.class);
 
