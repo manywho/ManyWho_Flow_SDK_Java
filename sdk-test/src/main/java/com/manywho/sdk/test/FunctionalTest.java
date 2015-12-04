@@ -41,7 +41,7 @@ public class FunctionalTest extends JerseyTest
     }
 
     protected void assertJsonSame(String expected, String actual) throws JSONException {
-        JSONAssert.assertEquals(expected, actual, true);
+        JSONAssert.assertEquals(expected, actual, false);
     }
 
     protected Entity<ServiceRequest> getServerRequestFromFile(String filePath) throws URISyntaxException, IOException {
