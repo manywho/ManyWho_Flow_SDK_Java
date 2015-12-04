@@ -21,6 +21,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -164,8 +167,7 @@ public abstract class AbstractDescribeService implements DescribeService {
         // Build a list of ManyWho Properties created from the annotated fields in the type passed in
         TypeElementPropertyCollection properties = annotatedProperties.stream()
                 .filter(field -> field.getDeclaringClass().equals(annotatedType))
-                .map(field -> field.getAnnotation(TypeProperty.class))
-                .map(Throwing.function(this::createTypeElementProperty))
+                .map(Throwing.function(field -> createTypeElementProperty(typeElement.name(), field)))
                 .sorted()
                 .collect(Collectors.toCollection(TypeElementPropertyCollection::new));
 
@@ -195,16 +197,19 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     /**
-     * @param property the #{@link TypeProperty} to create a new #{@link TypeElementProperty} from
+     * @param typeElementName the name of the type element the property is defined in
+     * @param propertyField the field that the property is defined as in the type
      * @return a new property containing the values from the given annotations
      * @throws Exception when a referenced type could not be found
      */
-    private TypeElementProperty createTypeElementProperty(TypeProperty property) throws Exception {
+    private TypeElementProperty createTypeElementProperty(String typeElementName, Field propertyField) throws Exception {
+        TypeProperty property = propertyField.getAnnotation(TypeProperty.class);
+
         String referencedTypeName = null;
 
-        // If the type property annotation is of Object or List, then we need to find the name of the referenced type
+        // If the type property annotation is of Object or List, then we need to find the typeElementName of the referenced type
         if (property.contentType().equals(ContentType.Object) || property.contentType().equals(ContentType.List)) {
-            referencedTypeName = this.getReferencedTypeName(property.referencedType());
+            referencedTypeName = this.getReferencedTypeName(typeElementName, propertyField, property);
         }
 
         // Return a new TypeElementProperty with the values from annotations
@@ -212,15 +217,51 @@ public abstract class AbstractDescribeService implements DescribeService {
     }
 
     /**
-     * @param aClass the class on which to check for a #{@link TypeElement} annotation
+     * @param typeElementName the name of the type element the property is defined in
+     * @param propertyField the field that the property is defined as in the type
+     * @param typeProperty the type property to find the referenced type for
      * @return the developer name of the Type the property is referencing
      * @throws Exception when a referenced type could not be found
      */
-    private String getReferencedTypeName(Class<?> aClass) throws Exception {
-        if (!aClass.isAnnotationPresent(TypeElement.class)) {
-            throw new Exception("The referenced type " + aClass.getTypeName() + " is not annotated with @TypeElement");
+    private String getReferencedTypeName(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
+        Class<?> referencedType = typeProperty.referencedType();
+
+        if (referencedType.equals(void.class)) {
+            if (typeProperty.contentType().equals(ContentType.List)) {
+                referencedType = this.getListPropertyGenericType(typeElementName, propertyField, typeProperty);
+            }
+
+            if (typeProperty.contentType().equals(ContentType.Object)) {
+                referencedType = propertyField.getType();
+            }
         }
 
-        return aClass.getAnnotation(TypeElement.class).name();
+        if (referencedType.equals(void.class)) {
+            throw new Exception("The referenced type for " + getPropertyFullName(typeElementName, typeProperty) + " cannot be null or void");
+        }
+
+        if (!referencedType.isAnnotationPresent(TypeElement.class)) {
+            throw new Exception("The referenced type " + referencedType.getTypeName() + " is not annotated with @TypeElement");
+        }
+
+        return referencedType.getAnnotation(TypeElement.class).name();
+    }
+
+    private Class<?> getListPropertyGenericType(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
+        Type type = propertyField.getGenericType();
+
+        if (type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType)type;
+
+            if (Collection.class.isAssignableFrom((Class<?>) parameterizedType.getRawType())) {
+                return (Class<?>) parameterizedType.getActualTypeArguments()[0];
+            }
+        }
+
+        throw new Exception("The ContentList property " + getPropertyFullName(typeElementName, typeProperty) + " does not have a Java type that inherits Collection<T>");
+    }
+
+    private static String getPropertyFullName(String typeElementName, TypeProperty typeProperty) {
+        return typeElementName + "->" + typeProperty.name();
     }
 }
