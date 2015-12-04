@@ -18,6 +18,7 @@ import com.manywho.sdk.services.describe.actions.AbstractAction;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
 import com.manywho.sdk.services.describe.types.AbstractType;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -176,10 +177,21 @@ public abstract class AbstractDescribeService implements DescribeService {
                 .sorted()
                 .collect(Collectors.toCollection(TypeElementPropertyBindingCollection::new));
 
-        TypeElementBindingCollection bindings = new TypeElementBindingCollection();
-        bindings.add(new TypeElementBinding(typeElement.name(), typeElement.summary(), typeElement.name(), propertyBindings));
+        // Create the default summary value, if one wasn't provided
+        String typeElementSummary = typeElement.summary();
+        if (StringUtils.isEmpty(typeElementSummary)) {
+            typeElementSummary = "The " + typeElement.name() + " object structure";
+        }
 
-        return new com.manywho.sdk.entities.draw.elements.type.TypeElement(typeElement.name(), typeElement.summary(), properties, bindings);
+        TypeElementBindingCollection bindings = null;
+
+        // Only add the binding if there are properties that are set to bound
+        if (CollectionUtils.isNotEmpty(propertyBindings)) {
+            bindings = new TypeElementBindingCollection();
+            bindings.add(new TypeElementBinding(typeElement.name(), typeElementSummary, typeElement.name(), propertyBindings));
+        }
+
+        return new com.manywho.sdk.entities.draw.elements.type.TypeElement(typeElement.name(), typeElementSummary, properties, bindings);
     }
 
     /**
