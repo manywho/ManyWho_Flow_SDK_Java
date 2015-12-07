@@ -4,6 +4,7 @@ import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.run.elements.type.MObject;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataTypePropertyCollection;
+import com.manywho.sdk.entities.run.elements.type.Property;
 import com.manywho.sdk.enums.ContentType;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
@@ -108,26 +109,7 @@ public class TypeParser {
         for (TypePropertyFieldTuple tuple : propertyFieldTuples) {
             object.getProperties().stream()
                     .filter(property -> property.getDeveloperName().equals(tuple.getTypeProperty().name()))
-                    .forEach(Throwing.consumer(property -> {
-                        Field field = tuple.getField();
-                        field.setAccessible(true);
-
-                        switch (tuple.getTypeProperty().contentType()) {
-                            case List:
-                                String typeElementName = tClass.getAnnotation(TypeElement.class).name();
-
-                                // Find the type of the list's generic
-                                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty());
-
-                                field.set(typeObject, this.parseList(property.getObjectData(), listType));
-                                break;
-                            case Object:
-                                field.set(typeObject, this.parseObject(property.getObjectData().get(0), field.getType()));
-                                break;
-                            default:
-                                field.set(typeObject, property.getContentValue());
-                        }
-                    }));
+                    .forEach(Throwing.consumer(property -> this.setFieldValue(tuple, typeObject, property, tClass)));
         }
 
         // If the field is an ID field, set the value as the External ID and continue
@@ -141,6 +123,27 @@ public class TypeParser {
         }
 
         return typeObject;
+    }
+
+    private <T> void setFieldValue(TypePropertyFieldTuple tuple, T typeObject, Property property, Class<T> tClass) throws Exception {
+        Field field = tuple.getField();
+        field.setAccessible(true);
+
+        switch (tuple.getTypeProperty().contentType()) {
+            case List:
+                String typeElementName = tClass.getAnnotation(TypeElement.class).name();
+
+                // Find the type of the list's generic
+                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty());
+
+                field.set(typeObject, this.parseList(property.getObjectData(), listType));
+                break;
+            case Object:
+                field.set(typeObject, this.parseObject(property.getObjectData().get(0), field.getType()));
+                break;
+            default:
+                field.set(typeObject, property.getContentValue());
+        }
     }
 
     /**
