@@ -32,15 +32,6 @@ public abstract class AbstractCollectionParser {
     public abstract <T> T parse(ValueAware properties, Class<T> tClass) throws Exception;
     public abstract <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception;
 
-    protected static void validate(Object entity) {
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
-        Set<ConstraintViolation<Object>> constraintViolations = validator.validate(entity);
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
-    }
-
     protected void setListField(Field field, String annotationValue, ObjectDataAware properties, Object entity) throws Exception {
         ObjectCollection nestedPropertyCollection = properties.getObjectData(annotationValue);
         if (CollectionUtils.isNotEmpty(nestedPropertyCollection)) {

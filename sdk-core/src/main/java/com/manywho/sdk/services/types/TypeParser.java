@@ -6,6 +6,8 @@ import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataTypePropertyCollection;
 import com.manywho.sdk.entities.run.elements.type.Property;
 import com.manywho.sdk.enums.ContentType;
+import com.manywho.sdk.services.annotations.ActionInput;
+import com.manywho.sdk.services.annotations.ActionOutput;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
@@ -134,7 +136,7 @@ public class TypeParser {
                 String typeElementName = tClass.getAnnotation(TypeElement.class).name();
 
                 // Find the type of the list's generic
-                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty());
+                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty().name());
 
                 field.set(typeObject, this.parseList(property.getObjectData(), listType));
                 break;
@@ -154,20 +156,22 @@ public class TypeParser {
      * @throws Exception when a referenced type could not be found
      */
     public static String getReferencedTypeName(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
-        Class<?> referencedType = typeProperty.referencedType();
+        return getReferencedTypeName(typeElementName, propertyField, typeProperty.referencedType(), typeProperty.name(), typeProperty.contentType());
+    }
 
+    public static String getReferencedTypeName(String typeElementName, Field propertyField, Class<?> referencedType, String propertyName, ContentType propertyContentType) throws Exception {
         if (referencedType.equals(void.class)) {
-            if (typeProperty.contentType().equals(ContentType.List)) {
-                referencedType = getListPropertyGenericType(typeElementName, propertyField, typeProperty);
+            if (propertyContentType.equals(ContentType.List)) {
+                referencedType = getListPropertyGenericType(typeElementName, propertyField, propertyName);
             }
 
-            if (typeProperty.contentType().equals(ContentType.Object)) {
+            if (propertyContentType.equals(ContentType.Object)) {
                 referencedType = propertyField.getType();
             }
         }
 
         if (referencedType.equals(void.class)) {
-            throw new Exception("The referenced type for " + getPropertyFullName(typeElementName, typeProperty) + " cannot be null or void");
+            throw new Exception("The referenced type for " + getPropertyFullName(typeElementName, propertyName) + " cannot be null or void");
         }
 
         if (!referencedType.isAnnotationPresent(TypeElement.class)) {
@@ -177,7 +181,7 @@ public class TypeParser {
         return referencedType.getAnnotation(TypeElement.class).name();
     }
 
-    private static Class<?> getListPropertyGenericType(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
+    public static Class<?> getListPropertyGenericType(String elementName, Field propertyField, String propertyName) throws Exception {
         Type type = propertyField.getGenericType();
 
         if (type instanceof ParameterizedType) {
@@ -188,10 +192,10 @@ public class TypeParser {
             }
         }
 
-        throw new Exception("The ContentList property " + getPropertyFullName(typeElementName, typeProperty) + " does not have a Java type that inherits Collection<T>");
+        throw new Exception("The ContentList property " + getPropertyFullName(elementName, propertyName) + " does not have a Java type that inherits Collection<T>");
     }
 
-    private static String getPropertyFullName(String typeElementName, TypeProperty typeProperty) {
-        return typeElementName + "->" + typeProperty.name();
+    private static String getPropertyFullName(String elementName, String typePropertyName) {
+        return elementName + "->" + typePropertyName;
     }
 }

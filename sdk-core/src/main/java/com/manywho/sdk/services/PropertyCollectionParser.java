@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.ValueAware;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.Property;
 import com.manywho.sdk.services.types.TypeParser;
+import com.manywho.sdk.utils.ValidationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 
@@ -40,7 +41,7 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
             setFieldValues(tClass, properties, entity);
         }
 
-        validate(entity);
+        ValidationUtils.validate(entity);
 
         return entity;
     }
