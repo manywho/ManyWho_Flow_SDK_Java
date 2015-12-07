@@ -4,7 +4,10 @@ import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.ContentValueAware;
 import com.manywho.sdk.entities.ObjectDataAware;
 import com.manywho.sdk.entities.ValueAware;
+import com.manywho.sdk.entities.run.elements.type.MObject;
 import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
+import com.manywho.sdk.services.annotations.TypeElement;
+import com.manywho.sdk.services.types.TypeParser;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -24,6 +27,8 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractCollectionParser {
+    protected TypeParser typeParser;
+
     public abstract <T> T parse(ValueAware properties, Class<T> tClass) throws Exception;
     public abstract <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception;
 
@@ -40,20 +45,31 @@ public abstract class AbstractCollectionParser {
         ObjectCollection nestedPropertyCollection = properties.getObjectData(annotationValue);
         if (CollectionUtils.isNotEmpty(nestedPropertyCollection)) {
             Class fieldClass = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
-            List<Object> list = new ArrayList<>();
+            if (fieldClass.isAnnotationPresent(TypeElement.class)) {
+                field.set(entity, typeParser.parseList(nestedPropertyCollection, fieldClass));
+            } else {
+                List<Object> list = new ArrayList<>();
 
-            nestedPropertyCollection.forEach(Throwing.consumer(object -> {
-                list.add(parse(object.getProperties(), object.getExternalId(), fieldClass));
-            }));
+                nestedPropertyCollection.forEach(Throwing.consumer(object -> {
+                    list.add(parse(object.getProperties(), object.getExternalId(), fieldClass));
+                }));
 
-            field.set(entity, list);
+                field.set(entity, list);
+            }
         }
     }
 
     protected void setObjectField(Field field, String annotationValue, ObjectDataAware properties, Object entity) throws Exception {
         ObjectCollection nestedPropertyCollection = properties.getObjectData(annotationValue);
         if (CollectionUtils.isNotEmpty(nestedPropertyCollection)) {
-            field.set(entity, parse(nestedPropertyCollection.get(0).getProperties(), nestedPropertyCollection.get(0).getExternalId(), field.getType()));
+            MObject object = nestedPropertyCollection.get(0);
+
+            // If the field is annotated with @TypeElement, parse the incoming data using TypeParser
+            if (field.getType().isAnnotationPresent(TypeElement.class)) {
+                field.set(entity, typeParser.parseObject(object, field.getType()));
+            } else {
+                field.set(entity, parse(object.getProperties(), object.getExternalId(), field.getType()));
+            }
         }
     }
 

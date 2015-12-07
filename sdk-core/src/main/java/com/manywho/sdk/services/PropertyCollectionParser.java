@@ -4,6 +4,7 @@ import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.ValueAware;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.Property;
+import com.manywho.sdk.services.types.TypeParser;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 
@@ -16,9 +17,10 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
     private Set<Field> propertyFields;
 
     @Inject
-    public PropertyCollectionParser(Reflections reflections) {
+    public PropertyCollectionParser(Reflections reflections, TypeParser typeParser) {
         this.idFields = reflections.getFieldsAnnotatedWith(Id.class);
         this.propertyFields = reflections.getFieldsAnnotatedWith(Property.class);
+        this.typeParser = typeParser;
     }
 
     @Override
