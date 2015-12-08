@@ -6,8 +6,6 @@ import com.manywho.sdk.entities.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataTypePropertyCollection;
 import com.manywho.sdk.entities.run.elements.type.Property;
 import com.manywho.sdk.enums.ContentType;
-import com.manywho.sdk.services.annotations.ActionInput;
-import com.manywho.sdk.services.annotations.ActionOutput;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
@@ -15,9 +13,6 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -182,14 +177,10 @@ public class TypeParser {
     }
 
     public static Class<?> getListPropertyGenericType(String elementName, Field propertyField, String propertyName) throws Exception {
-        Type type = propertyField.getGenericType();
+        Class<?> genericType = TypeUtils.getGenericType(propertyField.getGenericType());
 
-        if (type instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType)type;
-
-            if (Collection.class.isAssignableFrom((Class<?>) parameterizedType.getRawType())) {
-                return (Class<?>) parameterizedType.getActualTypeArguments()[0];
-            }
+        if (Collection.class.isAssignableFrom(genericType)) {
+            return genericType;
         }
 
         throw new Exception("The ContentList property " + getPropertyFullName(elementName, propertyName) + " does not have a Java type that inherits Collection<T>");

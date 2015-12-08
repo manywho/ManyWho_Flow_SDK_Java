@@ -30,10 +30,12 @@ public abstract class AbstractController {
     }
 
     protected <T> T parseInputs(ServiceRequest serviceRequest, Class<T> tClass) throws Exception {
+        // If the given class to populate is an @Action, then parse using ActionParser
         if (tClass.isAnnotationPresent(Action.class)) {
             return actionParser.parseInputs(serviceRequest.getInputs(), tClass);
         }
 
+        // Otherwise use the old style way
         return propertyCollectionParser.parse(serviceRequest.getInputs(), tClass);
     }
 }
