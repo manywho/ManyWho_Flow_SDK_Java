@@ -179,7 +179,7 @@ public class TypeParser {
     public static Class<?> getListPropertyGenericType(String elementName, Field propertyField, String propertyName) throws Exception {
         Class<?> genericType = TypeUtils.getGenericType(propertyField.getGenericType());
 
-        if (Collection.class.isAssignableFrom(genericType)) {
+        if (Collection.class.isAssignableFrom(propertyField.getType())) {
             return genericType;
         }
 
