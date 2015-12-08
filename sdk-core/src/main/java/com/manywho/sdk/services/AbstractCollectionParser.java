@@ -8,51 +8,54 @@ import com.manywho.sdk.entities.run.elements.type.MObject;
 import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.types.TypeParser;
+import com.manywho.sdk.services.types.TypeUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
+/**
+ * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+ * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+ */
+@Deprecated
 public abstract class AbstractCollectionParser {
     protected TypeParser typeParser;
 
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     public abstract <T> T parse(ValueAware properties, Class<T> tClass) throws Exception;
+
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     public abstract <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception;
-
-    protected static void validate(Object entity) {
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
-        Set<ConstraintViolation<Object>> constraintViolations = validator.validate(entity);
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
-    }
 
     protected void setListField(Field field, String annotationValue, ObjectDataAware properties, Object entity) throws Exception {
         ObjectCollection nestedPropertyCollection = properties.getObjectData(annotationValue);
         if (CollectionUtils.isNotEmpty(nestedPropertyCollection)) {
-            Class fieldClass = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
+            // Find the generic type of the field
+            Class<?> fieldClass = TypeUtils.getGenericType(field.getGenericType());
+
+            // If the field is annotated with @TypeElement, parse the incoming data using TypeParser
             if (fieldClass.isAnnotationPresent(TypeElement.class)) {
                 field.set(entity, typeParser.parseList(nestedPropertyCollection, fieldClass));
             } else {
-                List<Object> list = new ArrayList<>();
-
-                nestedPropertyCollection.forEach(Throwing.consumer(object -> {
-                    list.add(parse(object.getProperties(), object.getExternalId(), fieldClass));
-                }));
+                List<Object> list = nestedPropertyCollection.stream()
+                        .map(Throwing.function(object -> parse(object.getProperties(), object.getExternalId(), fieldClass)))
+                        .collect(Collectors.toList());
 
                 field.set(entity, list);
             }

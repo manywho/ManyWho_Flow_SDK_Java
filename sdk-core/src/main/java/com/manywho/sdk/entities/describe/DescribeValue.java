@@ -2,7 +2,7 @@ package com.manywho.sdk.entities.describe;
 
 import com.manywho.sdk.enums.ContentType;
 
-public class DescribeValue {
+public class DescribeValue implements Comparable<DescribeValue> {
     private String developerName;
     private String contentValue;
     private boolean isRequired;
@@ -85,5 +85,10 @@ public class DescribeValue {
 
     public void setOrdinal(int ordinal) {
         this.ordinal = ordinal;
+    }
+
+    @Override
+    public int compareTo(DescribeValue describeValue) {
+        return this.getDeveloperName().compareTo(describeValue.getDeveloperName());
     }
 }

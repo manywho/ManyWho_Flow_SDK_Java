@@ -3,6 +3,8 @@ package com.manywho.sdk.services.describe;
 import com.github.fge.lambdas.Throwing;
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
 import com.manywho.sdk.entities.describe.DescribeServiceResponse;
+import com.manywho.sdk.entities.describe.DescribeValue;
+import com.manywho.sdk.entities.describe.DescribeValueCollection;
 import com.manywho.sdk.entities.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.entities.draw.elements.type.TypeElementBindingCollection;
 import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
@@ -12,20 +14,22 @@ import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyBindingCol
 import com.manywho.sdk.entities.draw.elements.type.TypeElementPropertyCollection;
 import com.manywho.sdk.enums.ContentType;
 import com.manywho.sdk.services.CachedData;
+import com.manywho.sdk.services.annotations.Action;
+import com.manywho.sdk.services.annotations.ActionInput;
+import com.manywho.sdk.services.annotations.ActionOutput;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import com.manywho.sdk.services.describe.actions.AbstractAction;
 import com.manywho.sdk.services.describe.actions.ActionCollection;
+import com.manywho.sdk.services.describe.actions.DefaultAction;
 import com.manywho.sdk.services.describe.types.AbstractType;
 import com.manywho.sdk.services.types.TypeParser;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -92,9 +96,9 @@ public abstract class AbstractDescribeService implements DescribeService {
 
     @Override
     public ActionCollection createActions() throws IllegalAccessException, InstantiationException {
-        ActionCollection actions = CachedData.reflections.getSubTypesOf(AbstractAction.class).stream()
-                .map(Throwing.function(Class::newInstance))
-                .collect(Collectors.toCollection(ActionCollection::new));
+        ActionCollection actions = new ActionCollection();
+        actions.addAll(buildActionsFromAbstractActions());
+        actions.addAll(buildActionsFromAnnotatedActions());
 
         Collections.sort(actions);
 
@@ -132,6 +136,79 @@ public abstract class AbstractDescribeService implements DescribeService {
             setActions(AbstractDescribeService.this.createActions());
             setInstall(AbstractDescribeService.this.createInstall());
         }};
+    }
+
+    private ActionCollection buildActionsFromAbstractActions() {
+        final Set<Class<? extends AbstractAction>> actions = CachedData.reflections
+                .getSubTypesOf(AbstractAction.class);
+
+        if (CollectionUtils.isNotEmpty(actions)) {
+            return actions.stream()
+                    .map(Throwing.function(Class::newInstance))
+                    .collect(Collectors.toCollection(ActionCollection::new));
+        }
+
+        return new ActionCollection();
+    }
+
+    private ActionCollection buildActionsFromAnnotatedActions() {
+        final Set<Class<?>> actions = CachedData.reflections.getTypesAnnotatedWith(Action.class);
+
+        if (CollectionUtils.isNotEmpty(actions)) {
+            final Set<Field> annotatedInputs = CachedData.reflections.getFieldsAnnotatedWith(ActionInput.class);
+            final Set<Field> annotatedOutputs = CachedData.reflections.getFieldsAnnotatedWith(ActionOutput.class);
+
+            return actions.stream()
+                    .map(action -> buildActionFromAnnotatedAction(action, annotatedInputs, annotatedOutputs))
+                    .collect(Collectors.toCollection(ActionCollection::new));
+        }
+
+        return new ActionCollection();
+    }
+
+    private com.manywho.sdk.services.describe.actions.Action buildActionFromAnnotatedAction(Class<?> annotatedAction, Set<Field> annotatedInputs, Set<Field> annotatedOutputs) {
+        Action action = annotatedAction.getAnnotation(Action.class);
+
+        // Build the list of inputs for the action
+        DescribeValueCollection inputs = annotatedInputs.stream()
+                .filter(field -> field.getDeclaringClass().equals(annotatedAction))
+                .map(Throwing.function(field -> createActionInputFromField(action, field)))
+                .sorted()
+                .collect(Collectors.toCollection(DescribeValueCollection::new));
+
+        // Build the list of outputs for the action
+        DescribeValueCollection outputs = annotatedOutputs.stream()
+                .filter(field -> field.getDeclaringClass().equals(annotatedAction))
+                .map(Throwing.function(field -> createActionOutputFromField(action, field)))
+                .sorted()
+                .collect(Collectors.toCollection(DescribeValueCollection::new));
+
+        return new DefaultAction(action.uriPart(), action.name(), action.summary(), inputs, outputs);
+    }
+
+    private DescribeValue createActionInputFromField(Action action, Field field) throws Exception {
+        ActionInput input = field.getAnnotation(ActionInput.class);
+
+        return createActionValueFromField(action.name(), field, input.contentType(), input.name(), input.required(), input.referencedType());
+    }
+
+    private DescribeValue createActionOutputFromField(Action action, Field field) throws Exception {
+        ActionOutput output = field.getAnnotation(ActionOutput.class);
+
+        return createActionValueFromField(action.name(), field, output.contentType(), output.name(), output.required(), output.referencedType());
+    }
+
+    private DescribeValue createActionValueFromField(String actionName, Field field, ContentType contentType, String name, boolean required, Class<?> referencedType) throws Exception {
+        DescribeValue input = new DescribeValue();
+        input.setContentType(contentType);
+        input.setDeveloperName(name);
+        input.setRequired(required);
+
+        if (contentType.equals(ContentType.Object) || contentType.equals(ContentType.List)) {
+            input.setTypeElementDeveloperName(TypeParser.getReferencedTypeName(actionName, field, referencedType, name, contentType));
+        }
+
+        return input;
     }
 
     private TypeElementCollection buildTypeElementsFromAbstractTypes() {

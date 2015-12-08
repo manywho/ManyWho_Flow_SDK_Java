@@ -2,6 +2,7 @@ package com.manywho.sdk.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.RunService;
+import com.manywho.sdk.services.actions.ActionParser;
 import com.manywho.sdk.services.config.ServiceConfiguration;
 import com.manywho.sdk.services.config.ServiceConfigurationDefault;
 import com.manywho.sdk.services.config.ServiceConfigurationEnvironmentVariables;
@@ -30,6 +31,7 @@ public class ServiceBinder extends AbstractBinder {
 
         bind(DefaultServiceInformation.class).to(ServiceInformation.class).ranked(1);
 
+        bind(ActionParser.class).to(ActionParser.class).in(Singleton.class);
         bind(TypeBuilder.class).to(TypeBuilder.class).in(Singleton.class);
         bind(TypeParser.class).to(TypeParser.class).in(Singleton.class);
 

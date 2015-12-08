@@ -13,9 +13,6 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -134,7 +131,7 @@ public class TypeParser {
                 String typeElementName = tClass.getAnnotation(TypeElement.class).name();
 
                 // Find the type of the list's generic
-                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty());
+                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty().name());
 
                 field.set(typeObject, this.parseList(property.getObjectData(), listType));
                 break;
@@ -154,20 +151,22 @@ public class TypeParser {
      * @throws Exception when a referenced type could not be found
      */
     public static String getReferencedTypeName(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
-        Class<?> referencedType = typeProperty.referencedType();
+        return getReferencedTypeName(typeElementName, propertyField, typeProperty.referencedType(), typeProperty.name(), typeProperty.contentType());
+    }
 
+    public static String getReferencedTypeName(String typeElementName, Field propertyField, Class<?> referencedType, String propertyName, ContentType propertyContentType) throws Exception {
         if (referencedType.equals(void.class)) {
-            if (typeProperty.contentType().equals(ContentType.List)) {
-                referencedType = getListPropertyGenericType(typeElementName, propertyField, typeProperty);
+            if (propertyContentType.equals(ContentType.List)) {
+                referencedType = getListPropertyGenericType(typeElementName, propertyField, propertyName);
             }
 
-            if (typeProperty.contentType().equals(ContentType.Object)) {
+            if (propertyContentType.equals(ContentType.Object)) {
                 referencedType = propertyField.getType();
             }
         }
 
         if (referencedType.equals(void.class)) {
-            throw new Exception("The referenced type for " + getPropertyFullName(typeElementName, typeProperty) + " cannot be null or void");
+            throw new Exception("The referenced type for " + getPropertyFullName(typeElementName, propertyName) + " cannot be null or void");
         }
 
         if (!referencedType.isAnnotationPresent(TypeElement.class)) {
@@ -177,21 +176,17 @@ public class TypeParser {
         return referencedType.getAnnotation(TypeElement.class).name();
     }
 
-    private static Class<?> getListPropertyGenericType(String typeElementName, Field propertyField, TypeProperty typeProperty) throws Exception {
-        Type type = propertyField.getGenericType();
+    public static Class<?> getListPropertyGenericType(String elementName, Field propertyField, String propertyName) throws Exception {
+        Class<?> genericType = TypeUtils.getGenericType(propertyField.getGenericType());
 
-        if (type instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType)type;
-
-            if (Collection.class.isAssignableFrom((Class<?>) parameterizedType.getRawType())) {
-                return (Class<?>) parameterizedType.getActualTypeArguments()[0];
-            }
+        if (Collection.class.isAssignableFrom(propertyField.getType())) {
+            return genericType;
         }
 
-        throw new Exception("The ContentList property " + getPropertyFullName(typeElementName, typeProperty) + " does not have a Java type that inherits Collection<T>");
+        throw new Exception("The ContentList property " + getPropertyFullName(elementName, propertyName) + " does not have a Java type that inherits Collection<T>");
     }
 
-    private static String getPropertyFullName(String typeElementName, TypeProperty typeProperty) {
-        return typeElementName + "->" + typeProperty.name();
+    private static String getPropertyFullName(String elementName, String typePropertyName) {
+        return elementName + "->" + typePropertyName;
     }
 }

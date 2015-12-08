@@ -4,6 +4,8 @@ import com.manywho.sdk.entities.ConfigurationValuesAware;
 import com.manywho.sdk.entities.run.elements.config.ServiceRequest;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.services.PropertyCollectionParser;
+import com.manywho.sdk.services.actions.ActionParser;
+import com.manywho.sdk.services.annotations.Action;
 import org.glassfish.jersey.server.ContainerRequest;
 
 import javax.inject.Inject;
@@ -12,6 +14,9 @@ import javax.ws.rs.core.Context;
 public abstract class AbstractController {
     @Context
     protected ContainerRequest request;
+
+    @Inject
+    protected ActionParser actionParser;
 
     @Inject
     protected PropertyCollectionParser propertyCollectionParser;
@@ -25,6 +30,12 @@ public abstract class AbstractController {
     }
 
     protected <T> T parseInputs(ServiceRequest serviceRequest, Class<T> tClass) throws Exception {
+        // If the given class to populate is an @Action, then parse using ActionParser
+        if (tClass.isAnnotationPresent(Action.class)) {
+            return actionParser.parseInputs(serviceRequest.getInputs(), tClass);
+        }
+
+        // Otherwise use the old style way
         return propertyCollectionParser.parse(serviceRequest.getInputs(), tClass);
     }
 }
