@@ -21,10 +21,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+ * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+ */
+@Deprecated
 public abstract class AbstractCollectionParser {
     protected TypeParser typeParser;
 
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     public abstract <T> T parse(ValueAware properties, Class<T> tClass) throws Exception;
+
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     public abstract <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception;
 
     protected void setListField(Field field, String annotationValue, ObjectDataAware properties, Object entity) throws Exception {

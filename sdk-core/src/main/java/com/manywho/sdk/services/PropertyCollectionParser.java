@@ -24,11 +24,21 @@ public class PropertyCollectionParser extends AbstractCollectionParser {
         this.typeParser = typeParser;
     }
 
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     @Override
     public <T> T parse(ValueAware properties, Class<T> tClass) throws Exception {
         return parse(properties, null, tClass);
     }
 
+    /**
+     * @deprecated As of version 1.18.0, this way of parsing is deprecated and annotating actions
+     * with {@link com.manywho.sdk.services.annotations.Action} is the preferred way of parsing requests into beans
+     */
+    @Deprecated
     @Override
     public <T> T parse(ValueAware properties, String id, Class<T> tClass) throws Exception {
         T entity = tClass.newInstance();
