@@ -67,6 +67,10 @@ public class RunService {
         return this.executePost(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(), engineInvokeRequest, EngineInvokeResponse.class);
     }
 
+    public EngineInvokeResponse joinFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String stateId) throws Exception {
+        return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + stateId, EngineInvokeResponse.class);
+    }
+
     public InvokeType sendEvent(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
         return this.executeCallback(authenticatedWho, tenantId, callbackUri, listenerServiceResponse);
     }
