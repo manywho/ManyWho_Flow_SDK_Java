@@ -7,6 +7,14 @@ public class PageRequest {
         return pageComponentInputResponses;
     }
 
+    public void addPageComponentInputResponse(PageComponentInputResponseRequest pageComponentInputResponseRequest) {
+        if (this.pageComponentInputResponses == null) {
+            this.pageComponentInputResponses = new PageComponentInputResponseRequestCollection();
+        }
+
+        this.pageComponentInputResponses.add(pageComponentInputResponseRequest);
+    }
+
     public void setPageComponentInputResponses(PageComponentInputResponseRequestCollection pageComponentInputResponses) {
         this.pageComponentInputResponses = pageComponentInputResponses;
     }
