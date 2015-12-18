@@ -99,6 +99,13 @@ your services.
 </dependency>
 ```
 
+### sdk
+
+This module is a meta package that includes the `sdk-client`, `sdk-core` and `sdk-test` packages. It's mostly around for 
+backwards compatibility with old services and clients. 
+
+It's now recommended to use the `sdk-bom` package and to depend on the individual packages in your `pom.xml`.
+
 ## License
 
 This SDK is released under the [MIT License](http://opensource.org/licenses/mit-license.php).
