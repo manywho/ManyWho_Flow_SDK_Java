@@ -29,11 +29,11 @@ public class RunClientTest {
     @Test
     public void testInitializeFlow() throws Exception {
         EngineInitializationRequest initializationRequest = new EngineInitializationRequest();
-        initializationRequest.setFlowId(new FlowId("c6b211f0-b342-4f67-b7b1-b8b62868b2a4"));
+        initializationRequest.setFlowId(new FlowId("04b95e44-ab08-4011-8dc8-009a9c27c670"));
 
         EngineInitializationResponse initializationResponse = runClient.initializeFlow(
                 TestConfig.getTenantId(),
-                TestConfig.getAuthorizationToken(),
+                null,
                 initializationRequest
         );
 
@@ -46,13 +46,11 @@ public class RunClientTest {
         expectedException.expectMessage("Unauthorized");
 
         EngineInitializationRequest initializationRequest = new EngineInitializationRequest();
-        initializationRequest.setFlowId(new FlowId("c6b211f0-b342-4f67-b7b1-b8b62868b2a4"));
-        initializationRequest.setJoinPlayerUrl("https://flow.manywho.com/07f799a4-af7c-449b-ba7c-f1f526f7000a/play/default");
-        initializationRequest.setPlayerUrl("https://flow.manywho.com/07f799a4-af7c-449b-ba7c-f1f526f7000a/play/default");
+        initializationRequest.setFlowId(new FlowId("e10e493f-65ff-4a0b-b184-c451453e5c56"));
         initializationRequest.setMode("");
         initializationRequest.setReportingMode("");
 
-        runClient.initializeFlow(TestConfig.getTenantId(), null, initializationRequest);
+        runClient.initializeFlow(TestConfig.getTenantId(), TestConfig.getAuthorizationToken(), initializationRequest);
     }
 
     @Test
@@ -65,7 +63,7 @@ public class RunClientTest {
 
     @Test
     public void testLoadFlowById() throws Exception {
-        String flowId = "c6b211f0-b342-4f67-b7b1-b8b62868b2a4";
+        String flowId = "04b95e44-ab08-4011-8dc8-009a9c27c670";
 
         FlowResponse flow = runClient.loadFlowById(TestConfig.getTenantId(), flowId);
 
