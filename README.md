@@ -27,6 +27,78 @@ The latest version is always available to find on the [Releases tab](https://git
 Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is available on
 the [ManyWho Developers](https://developers.manywho.com/display/MA/Building+a+Service) site.
 
+## Modules
+
+### sdk-bom
+
+`sdk-bom` is a bill of materials that is used by Maven to make sure that related dependencies have the correct versions
+to work together. It should be placed in the `dependencyManagement` section in your `pom.xml` like so:
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.manywho.sdk</groupId>
+            <artifactId>sdk-bom</artifactId>
+            <version>${version.manywho.sdk}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<!-- No versions for the ManyWho SDK packages are needed, due to including the BOM above -->
+<dependencies>
+    <dependency>
+        <groupId>com.manywho</groupId>
+        <artifactId>sdk</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.manywho.sdk</groupId>
+        <artifactId>sdk-client</artifactId>
+    </dependency>
+</dependencies>
+```
+
+### sdk-client
+
+This module supplies some clients that help you integrate with the various ManyWho APIs. It currently supports parts of
+the Run API and is actively being improved to cover the other APIs.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-client</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
+### sdk-core
+
+This module is probably what you want - it includes the vast majority of the SDK's functionality and is currently being
+split out into separate modules bit-by-bit.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-core</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
+### sdk-test
+
+This module contains some handy test cases and utilities that can be used to write unit tests and integration tests for
+your services.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-test</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
 ## License
 
 This SDK is released under the [MIT License](http://opensource.org/licenses/mit-license.php).
