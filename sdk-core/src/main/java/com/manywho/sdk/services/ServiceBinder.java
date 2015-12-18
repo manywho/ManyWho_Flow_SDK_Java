@@ -3,6 +3,8 @@ package com.manywho.sdk.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.RunService;
 import com.manywho.sdk.services.actions.ActionParser;
+import com.manywho.sdk.services.config.RedisConfiguration;
+import com.manywho.sdk.services.config.RedisConfigurationDefault;
 import com.manywho.sdk.services.config.ServiceConfiguration;
 import com.manywho.sdk.services.config.ServiceConfigurationDefault;
 import com.manywho.sdk.services.config.ServiceConfigurationEnvironmentVariables;
@@ -35,6 +37,7 @@ public class ServiceBinder extends AbstractBinder {
         bind(TypeBuilder.class).to(TypeBuilder.class).in(Singleton.class);
         bind(TypeParser.class).to(TypeParser.class).in(Singleton.class);
 
+        bind(RedisConfigurationDefault.class).to(RedisConfiguration.class).in(Singleton.class).ranked(1);
         bind(ServiceConfigurationDefault.class).to(ServiceConfigurationDefault.class);
         bind(ServiceConfigurationEnvironmentVariables.class).to(ServiceConfigurationEnvironmentVariables.class);
         bind(ServiceConfigurationProperties.class).to(ServiceConfigurationProperties.class).in(Singleton.class);
