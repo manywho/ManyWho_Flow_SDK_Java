@@ -14,6 +14,7 @@
         <module>sdk-test</module>
         <module>sdk-bom</module>
         <module>sdk-core</module>
+        <module>sdk-client</module>
     </modules>
 
     <properties>
