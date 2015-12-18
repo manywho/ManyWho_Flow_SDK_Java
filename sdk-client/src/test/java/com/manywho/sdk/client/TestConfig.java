@@ -17,11 +17,7 @@ final class TestConfig {
         }
     }
 
-    public static String getAuthorizationToken() {
-        return properties.getProperty("authorizationToken");
-    }
-
     public static String getTenantId() {
-        return properties.getProperty("tenantId");
+        return "72236525-545d-4927-bb53-37a58a79178e";
     }
 }

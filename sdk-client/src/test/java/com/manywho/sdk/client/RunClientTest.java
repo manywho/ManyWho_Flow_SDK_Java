@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.draw.flow.FlowId;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
 import com.manywho.sdk.entities.run.EngineInitializationRequest;
 import com.manywho.sdk.entities.run.EngineInitializationResponse;
+import com.manywho.sdk.utils.AuthorizationUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,7 +13,9 @@ import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class RunClientTest {
 
@@ -41,7 +44,7 @@ public class RunClientTest {
     }
 
     @Test
-    public void testInitializeFlowWithoutAuthorization() throws Exception {
+    public void testInitializeFlowWithIncorrectAuthorization() throws Exception {
         expectedException.expect(ManyWhoException.class);
         expectedException.expectMessage("Unauthorized");
 
@@ -50,7 +53,11 @@ public class RunClientTest {
         initializationRequest.setMode("");
         initializationRequest.setReportingMode("");
 
-        runClient.initializeFlow(TestConfig.getTenantId(), TestConfig.getAuthorizationToken(), initializationRequest);
+        runClient.initializeFlow(
+                TestConfig.getTenantId(),
+                AuthorizationUtils.serialize(AuthorizationUtils.createPublicUserAuthenticatedWho(TestConfig.getTenantId())),
+                initializationRequest
+        );
     }
 
     @Test

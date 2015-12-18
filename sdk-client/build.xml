@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<project name="sdk-client" basedir="." default="generate-test-properties">
-    <target name="generate-test-properties" description="Generate the test properties file from the given system properties">
-        <propertyfile file="src/test/resources/config.properties">
-            <entry key="tenantId" value="${sdk.client.test.tenantId}"/>
-            <entry key="authorizationToken" value="${sdk.client.test.authorizationToken}"/>
-        </propertyfile>
-    </target>
-</project>
