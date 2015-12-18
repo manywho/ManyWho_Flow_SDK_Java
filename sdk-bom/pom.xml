@@ -68,6 +68,11 @@
             </dependency>
             <dependency>
                 <groupId>com.manywho.sdk</groupId>
+                <artifactId>sdk-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.manywho.sdk</groupId>
                 <artifactId>sdk-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
