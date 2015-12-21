@@ -62,6 +62,8 @@ to work together. It should be placed in the `dependencyManagement` section in y
 
 ### sdk-client
 
+**Warning:** This module is in flux, and the object structures/names/classes might change at any time!
+
 This module supplies some clients that help you integrate with the various ManyWho APIs. It currently supports parts of
 the Run API and is actively being improved to cover the other APIs.
 
