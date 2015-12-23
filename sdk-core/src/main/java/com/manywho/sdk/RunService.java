@@ -3,6 +3,10 @@ package com.manywho.sdk;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.rholder.retry.Retryer;
+import com.github.rholder.retry.RetryerBuilder;
+import com.github.rholder.retry.StopStrategies;
+import com.github.rholder.retry.WaitStrategies;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
 import com.manywho.sdk.entities.draw.flow.FlowResponseCollection;
 import com.manywho.sdk.entities.run.*;
@@ -20,6 +24,8 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 // @todo Add notifier stuff to these methods
 public class RunService {
@@ -64,7 +70,22 @@ public class RunService {
     }
 
     public EngineInvokeResponse executeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInvokeRequest engineInvokeRequest) throws Exception {
-        return this.executePost(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(), engineInvokeRequest, EngineInvokeResponse.class);
+        Callable<EngineInvokeResponse> executeCallable = () -> this.executePost(
+                authenticatedWho,
+                tenantId,
+                this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(),
+                engineInvokeRequest,
+                EngineInvokeResponse.class
+        );
+
+        // If the invoke type is BUSY, then retry 4 times, with an exponential backoff of 500ms and a 2x multiplier
+        Retryer<EngineInvokeResponse> executeRetryer = RetryerBuilder.<EngineInvokeResponse>newBuilder()
+                .retryIfResult(response -> response.getInvokeType().equals(InvokeType.Busy))
+                .withWaitStrategy(WaitStrategies.exponentialWait(2, 500, TimeUnit.MILLISECONDS))
+                .withStopStrategy(StopStrategies.stopAfterAttempt(4))
+                .build();
+
+        return executeRetryer.call(executeCallable);
     }
 
     public EngineInvokeResponse joinFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String stateId) throws Exception {
