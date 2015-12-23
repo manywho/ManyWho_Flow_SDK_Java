@@ -7,6 +7,7 @@ import com.github.rholder.retry.Retryer;
 import com.github.rholder.retry.RetryerBuilder;
 import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
+import com.google.common.base.Predicate;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
 import com.manywho.sdk.entities.draw.flow.FlowResponseCollection;
 import com.manywho.sdk.entities.run.*;
@@ -78,14 +79,8 @@ public class RunService {
                 EngineInvokeResponse.class
         );
 
-        // If the invoke type is BUSY, then retry 4 times, with an exponential backoff of 500ms and a 2x multiplier
-        Retryer<EngineInvokeResponse> executeRetryer = RetryerBuilder.<EngineInvokeResponse>newBuilder()
-                .retryIfResult(response -> response.getInvokeType().equals(InvokeType.Busy))
-                .withWaitStrategy(WaitStrategies.exponentialWait(2, 500, TimeUnit.MILLISECONDS))
-                .withStopStrategy(StopStrategies.stopAfterAttempt(4))
-                .build();
-
-        return executeRetryer.call(executeCallable);
+        return RunService.<EngineInvokeResponse>createRetry(response -> response.getInvokeType().equals(InvokeType.Busy))
+                .call(executeCallable);
     }
 
     public EngineInvokeResponse joinFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String stateId) throws Exception {
@@ -97,7 +92,15 @@ public class RunService {
     }
 
     public InvokeType sendResponse(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
-        return this.executeCallback(authenticatedWho, tenantId, callbackUri, serviceResponse);
+        Callable<InvokeType> executeCallable = () -> this.executeCallback(
+                authenticatedWho,
+                tenantId,
+                callbackUri,
+                serviceResponse
+        );
+
+        return RunService.<InvokeType>createRetry(invokeType -> invokeType.equals(InvokeType.Busy))
+                .call(executeCallable);
     }
 
     protected HttpRequestWithBody createHttpClient(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri) throws Exception {
@@ -166,5 +169,14 @@ public class RunService {
                 .getBody();
 
         return InvokeType.fromString(responseBody.replace("\"", ""));
+    }
+
+    public static <T> Retryer<T> createRetry(Predicate<T> predicate) {
+        // If the invoke type is BUSY, then retry 4 times, with an exponential backoff of 500ms and a 2x multiplier
+        return RetryerBuilder.<T>newBuilder()
+                .retryIfResult(predicate)
+                .withWaitStrategy(WaitStrategies.exponentialWait(2, 500, TimeUnit.MILLISECONDS))
+                .withStopStrategy(StopStrategies.stopAfterAttempt(4))
+                .build();
     }
 }
