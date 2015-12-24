@@ -129,10 +129,10 @@ public class RunService {
                 .header("Authorization", authorizationHeader)
                 .header("ManyWhoTenant", tenantId)
                 .queryString(queryParameters)
-                .asJson();
+                .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -141,10 +141,10 @@ public class RunService {
     protected <T> T executePost(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Request request, Class<T> responseClass) throws Exception {
         HttpResponse response = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
                 .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(request))
-                .asJson();
+                .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -156,7 +156,7 @@ public class RunService {
                 .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
         }
 
         return response.getBody();
