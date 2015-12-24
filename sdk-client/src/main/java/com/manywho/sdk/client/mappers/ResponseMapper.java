@@ -1,7 +1,7 @@
 package com.manywho.sdk.client.mappers;
 
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.manywho.sdk.client.exceptions.ManyWhoException;
+import com.manywho.sdk.exceptions.ManyWhoException;
 import org.apache.http.HttpResponse;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import static com.manywho.sdk.services.providers.ObjectMapperProvider.getObjectM
 public class ResponseMapper {
     public static <T> T parseResponse(HttpResponse response, Class<T> responseClass) throws IOException {
         if (!isSuccessStatusCode(response.getStatusLine().getStatusCode())) {
-            throw new ManyWhoException(response);
+            throw new ManyWhoException(response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
         }
 
         return mapResponse(response, responseClass);
@@ -20,7 +20,7 @@ public class ResponseMapper {
 
     public static <T> List<T> parseListResponse(HttpResponse response, Class<T> responseClass) throws IOException {
         if (!isSuccessStatusCode(response.getStatusLine().getStatusCode())) {
-            throw new ManyWhoException(response);
+            throw new ManyWhoException(response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
         }
 
         return mapListResponse(response, responseClass);

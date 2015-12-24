@@ -16,6 +16,7 @@ import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.entities.security.AuthenticationCredentials;
 import com.manywho.sdk.enums.InvokeType;
+import com.manywho.sdk.exceptions.ManyWhoException;
 import com.manywho.sdk.services.notifications.Notifier;
 import com.manywho.sdk.utils.AuthorizationUtils;
 import com.mashape.unirest.http.HttpResponse;
@@ -132,7 +133,7 @@ public class RunService {
                 .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -144,7 +145,7 @@ public class RunService {
                 .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -156,7 +157,7 @@ public class RunService {
                 .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception("There was a problem with the call to ManyWho: " + response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return response.getBody();

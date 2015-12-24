@@ -1,6 +1,6 @@
 package com.manywho.sdk.client;
 
-import com.manywho.sdk.client.exceptions.ManyWhoException;
+import com.manywho.sdk.exceptions.ManyWhoException;
 import com.manywho.sdk.entities.draw.flow.FlowId;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
 import com.manywho.sdk.entities.run.EngineInitializationRequest;
