@@ -19,9 +19,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FlowState {
+    private RunClient runClient;
     @JsonProperty
     private String tenantId;
-    private RunClient runClient;
     @JsonProperty
     private EngineInvokeResponse invokeResponse;
 
