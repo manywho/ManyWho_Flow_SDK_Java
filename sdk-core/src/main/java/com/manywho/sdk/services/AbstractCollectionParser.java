@@ -80,13 +80,13 @@ public abstract class AbstractCollectionParser {
         String propertyValue = properties.getContentValue(annotationValue);
 
         Class<?> fieldType = field.getType();
-        if (fieldType.equals(long.class)) {
+        if (fieldType.equals(long.class) || fieldType.equals(Long.class)) {
             field.set(entity, Long.parseLong(propertyValue));
-        } else if (fieldType.equals(boolean.class)) {
+        } else if (fieldType.equals(boolean.class) || fieldType.equals(Boolean.class)) {
             field.set(entity, parseBoolean(propertyValue));
-        } else if (fieldType.equals(int.class)) {
+        } else if (fieldType.equals(int.class) || fieldType.equals(Integer.class)) {
             field.set(entity, Integer.parseInt(propertyValue));
-        } else if (fieldType.equals(float.class)) {
+        } else if (fieldType.equals(float.class) || fieldType.equals(Float.class)) {
             field.set(entity, Float.parseFloat(propertyValue));
         } else if (fieldType.equals(DateTime.class)) {
             if (StringUtils.isNotEmpty(propertyValue)) {
