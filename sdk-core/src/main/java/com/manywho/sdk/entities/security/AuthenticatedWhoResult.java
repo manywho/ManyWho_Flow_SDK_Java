@@ -130,4 +130,18 @@ public class AuthenticatedWhoResult {
     public void setCulture(Culture culture) {
         this.culture = culture;
     }
+
+    public static AuthenticatedWhoResult createDeniedResult(String username) {
+        AuthenticatedWhoResult result = createDeniedResult();
+        result.setStatusMessage("The user with the username " + username + " could not be authenticated");
+
+        return result;
+    }
+
+    public static AuthenticatedWhoResult createDeniedResult() {
+        AuthenticatedWhoResult result = new AuthenticatedWhoResult();
+        result.setStatus(AuthenticationStatus.AccessDenied);
+
+        return result;
+    }
 }
