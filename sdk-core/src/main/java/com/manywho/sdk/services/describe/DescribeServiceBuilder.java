@@ -1,6 +1,7 @@
 package com.manywho.sdk.services.describe;
 
 import com.manywho.sdk.entities.describe.DescribeServiceInstall;
+import com.manywho.sdk.entities.describe.DescribeValue;
 import com.manywho.sdk.entities.describe.DescribeValueCollection;
 import com.manywho.sdk.entities.draw.elements.type.TypeElementCollection;
 import com.manywho.sdk.entities.translate.Culture;
@@ -20,7 +21,7 @@ public class DescribeServiceBuilder {
     private boolean providesViews;
     private boolean providesVoting;
     private Culture culture;
-    private DescribeValueCollection configurationValues;
+    private DescribeValueCollection configurationValues = new DescribeValueCollection();
     private TypeElementCollection types;
 
     public DescribeServiceBuilder setProvidesAutoBinding(boolean providesAutoBinding) {
@@ -85,6 +86,11 @@ public class DescribeServiceBuilder {
 
     public DescribeServiceBuilder setCulture(Culture culture) {
         this.culture = culture;
+        return this;
+    }
+
+    public DescribeServiceBuilder addConfigurationValue(DescribeValue configurationValue) {
+        this.configurationValues.add(configurationValue);
         return this;
     }
 

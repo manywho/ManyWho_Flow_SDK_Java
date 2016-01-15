@@ -4,6 +4,7 @@ import com.manywho.sdk.entities.run.EngineValue;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.enums.InvokeType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceResponse extends AbstractResponse {
@@ -82,6 +83,14 @@ public class ServiceResponse extends AbstractResponse {
 
     public Map<String, String> getRootFaults() {
         return rootFaults;
+    }
+
+    public void addRootFault(String key, String value) {
+        if (this.rootFaults == null) {
+            this.rootFaults = new HashMap<>();
+        }
+
+        this.rootFaults.put(key, value);
     }
 
     public void setRootFaults(Map<String, String> rootFaults) {

@@ -6,7 +6,7 @@
 
     <groupId>com.manywho.sdk</groupId>
     <artifactId>project</artifactId>
-    <version>1.18.0</version>
+    <version>1.19.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -14,6 +14,7 @@
         <module>sdk-test</module>
         <module>sdk-bom</module>
         <module>sdk-core</module>
+        <module>sdk-client</module>
     </modules>
 
     <properties>

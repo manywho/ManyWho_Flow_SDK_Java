@@ -3,6 +3,11 @@ package com.manywho.sdk;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.rholder.retry.Retryer;
+import com.github.rholder.retry.RetryerBuilder;
+import com.github.rholder.retry.StopStrategies;
+import com.github.rholder.retry.WaitStrategies;
+import com.google.common.base.Predicate;
 import com.manywho.sdk.entities.draw.flow.FlowResponse;
 import com.manywho.sdk.entities.draw.flow.FlowResponseCollection;
 import com.manywho.sdk.entities.run.*;
@@ -11,6 +16,7 @@ import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.entities.security.AuthenticationCredentials;
 import com.manywho.sdk.enums.InvokeType;
+import com.manywho.sdk.exceptions.ManyWhoException;
 import com.manywho.sdk.services.notifications.Notifier;
 import com.manywho.sdk.utils.AuthorizationUtils;
 import com.mashape.unirest.http.HttpResponse;
@@ -20,6 +26,8 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 // @todo Add notifier stuff to these methods
 public class RunService {
@@ -64,7 +72,20 @@ public class RunService {
     }
 
     public EngineInvokeResponse executeFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, EngineInvokeRequest engineInvokeRequest) throws Exception {
-        return this.executePost(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(), engineInvokeRequest, EngineInvokeResponse.class);
+        Callable<EngineInvokeResponse> executeCallable = () -> this.executePost(
+                authenticatedWho,
+                tenantId,
+                this.baseUrl + "/api/run/1/state/" + engineInvokeRequest.getStateId(),
+                engineInvokeRequest,
+                EngineInvokeResponse.class
+        );
+
+        return RunService.<EngineInvokeResponse>createRetry(response -> response.getInvokeType().equals(InvokeType.Busy))
+                .call(executeCallable);
+    }
+
+    public EngineInvokeResponse joinFlow(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String stateId) throws Exception {
+        return this.executeGet(authenticatedWho, tenantId, this.baseUrl + "/api/run/1/state/" + stateId, EngineInvokeResponse.class);
     }
 
     public InvokeType sendEvent(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ListenerServiceResponse listenerServiceResponse) throws Exception {
@@ -72,7 +93,15 @@ public class RunService {
     }
 
     public InvokeType sendResponse(Notifier notifier, AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, ServiceResponse serviceResponse) throws Exception {
-        return this.executeCallback(authenticatedWho, tenantId, callbackUri, serviceResponse);
+        Callable<InvokeType> executeCallable = () -> this.executeCallback(
+                authenticatedWho,
+                tenantId,
+                callbackUri,
+                serviceResponse
+        );
+
+        return RunService.<InvokeType>createRetry(invokeType -> invokeType.equals(InvokeType.Busy))
+                .call(executeCallable);
     }
 
     protected HttpRequestWithBody createHttpClient(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri) throws Exception {
@@ -101,10 +130,10 @@ public class RunService {
                 .header("Authorization", authorizationHeader)
                 .header("ManyWhoTenant", tenantId)
                 .queryString(queryParameters)
-                .asJson();
+                .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -113,10 +142,10 @@ public class RunService {
     protected <T> T executePost(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Request request, Class<T> responseClass) throws Exception {
         HttpResponse response = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
                 .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(request))
-                .asJson();
+                .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return new ObjectMapper().configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true).readValue(response.getRawBody(), responseClass);
@@ -128,7 +157,7 @@ public class RunService {
                 .asString();
 
         if (!STATUSES_SUCCESS.contains(response.getStatus())) {
-            throw new Exception(response.getStatusText());
+            throw new ManyWhoException(response.getStatus(), response.getStatusText());
         }
 
         return response.getBody();
@@ -141,5 +170,14 @@ public class RunService {
                 .getBody();
 
         return InvokeType.fromString(responseBody.replace("\"", ""));
+    }
+
+    public static <T> Retryer<T> createRetry(Predicate<T> predicate) {
+        // If the invoke type is BUSY, then retry 4 times, with an exponential backoff of 500ms and a 2x multiplier
+        return RetryerBuilder.<T>newBuilder()
+                .retryIfResult(predicate)
+                .withWaitStrategy(WaitStrategies.exponentialWait(2, 500, TimeUnit.MILLISECONDS))
+                .withStopStrategy(StopStrategies.stopAfterAttempt(4))
+                .build();
     }
 }

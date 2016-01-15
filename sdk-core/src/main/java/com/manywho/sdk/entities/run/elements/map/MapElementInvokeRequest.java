@@ -6,6 +6,22 @@ public class MapElementInvokeRequest {
     private String selectedOutcomeId;
     private PageRequest pageRequest;
 
+    public MapElementInvokeRequest() {
+    }
+
+    public MapElementInvokeRequest(String selectedOutcomeId) {
+        this.selectedOutcomeId = selectedOutcomeId;
+    }
+
+    public MapElementInvokeRequest(PageRequest pageRequest) {
+        this.pageRequest = pageRequest;
+    }
+
+    public MapElementInvokeRequest(String selectedOutcomeId, PageRequest pageRequest) {
+        this.selectedOutcomeId = selectedOutcomeId;
+        this.pageRequest = pageRequest;
+    }
+
     public String getSelectedOutcomeId() {
         return selectedOutcomeId;
     }
