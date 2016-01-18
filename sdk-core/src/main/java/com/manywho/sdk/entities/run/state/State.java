@@ -21,6 +21,7 @@ public class State {
     private String currentRunningUserId;
     private String currentRunningUserEmail;
     private String externalIdentifier;
+    @JsonProperty("manywhoTenantId")
     private String manyWhoTenantId;
     private Map<String, String> annotations;
     private StateEntryCollection stateEntries;
