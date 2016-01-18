@@ -29,7 +29,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper>, Fact
                 .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
                 .registerModule(new JodaModule())
-                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssssss.SSS'Z'"));
+                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"));
     }
 
     @Override
