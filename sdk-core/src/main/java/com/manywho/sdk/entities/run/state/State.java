@@ -19,6 +19,7 @@ public class State {
     private String currentMapElementDeveloperName;
     private String currentStreamId;
     private String currentRunningUserId;
+    private String currentRunningUserEmail;
     private String externalIdentifier;
     private String manyWhoTenantId;
     private Map<String, String> annotations;
@@ -108,6 +109,14 @@ public class State {
 
     public void setCurrentRunningUserId(String currentRunningUserId) {
         this.currentRunningUserId = currentRunningUserId;
+    }
+
+    public String getCurrentRunningUserEmail() {
+        return currentRunningUserEmail;
+    }
+
+    public void setCurrentRunningUserEmail(String currentRunningUserEmail) {
+        this.currentRunningUserEmail = currentRunningUserEmail;
     }
 
     public String getExternalIdentifier() {
