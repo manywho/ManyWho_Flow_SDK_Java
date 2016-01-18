@@ -1,6 +1,5 @@
 package com.manywho.sdk.services.config;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public class ServiceConfigurationProperties implements ServiceConfiguration {
@@ -10,7 +9,7 @@ public class ServiceConfigurationProperties implements ServiceConfiguration {
         try {
             properties = new Properties();
             properties.load(getClass().getClassLoader().getResourceAsStream("service.properties"));
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             properties = new Properties();
         }
     }
