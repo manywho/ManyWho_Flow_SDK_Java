@@ -3,6 +3,7 @@ package com.manywho.sdk.entities.run.state;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.entities.draw.flow.FlowId;
 import com.manywho.sdk.entities.draw.log.Log;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Date;
 import java.util.Map;
@@ -137,6 +138,10 @@ public class State {
         return stateEntries;
     }
 
+    public boolean hasStateEntries() {
+        return CollectionUtils.isNotEmpty(stateEntries);
+    }
+
     public void setStateEntries(StateEntryCollection stateEntries) {
         this.stateEntries = stateEntries;
     }
@@ -151,6 +156,10 @@ public class State {
 
     public StateValueCollection getValues() {
         return values;
+    }
+
+    public boolean hasValues() {
+        return CollectionUtils.isNotEmpty(values);
     }
 
     public void setValues(StateValueCollection values) {
