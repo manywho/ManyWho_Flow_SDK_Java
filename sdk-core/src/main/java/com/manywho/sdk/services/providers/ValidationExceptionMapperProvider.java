@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.ServiceProblem;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
@@ -14,6 +15,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Provider
 public class ValidationExceptionMapperProvider implements ExceptionMapper<ConstraintViolationException> {
@@ -26,9 +28,12 @@ public class ValidationExceptionMapperProvider implements ExceptionMapper<Constr
     @Override
     public Response toResponse(ConstraintViolationException exception) {
         String message = "Validation errors occurred: ";
-        Map<String, String> validationErrors = new HashMap<String, String>() {{
-            exception.getConstraintViolations().forEach(v -> put(v.getPropertyPath().toString(), v.getMessage()));
-        }};
+
+        Map<String, String> validationErrors = exception.getConstraintViolations().stream()
+            .collect(Collectors.toMap(
+                    error -> ((PathImpl)error.getPropertyPath()).getLeafNode().getName(),
+                    error -> error.getMessage()
+            ));
 
         message = message + StringUtils.join(validationErrors, ", ");
 
