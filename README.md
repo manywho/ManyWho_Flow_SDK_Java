@@ -108,6 +108,11 @@ backwards compatibility with old services and clients.
 
 It's now recommended to use the `sdk-bom` package and to depend on the individual packages in your `pom.xml`.
 
+## Contributing
+
+Contribution are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to 
+[CONTRIBUTING.md](CONTRIBUTING.md) for our contribution requirements.
+
 ## License
 
 This SDK is released under the [MIT License](http://opensource.org/licenses/mit-license.php).

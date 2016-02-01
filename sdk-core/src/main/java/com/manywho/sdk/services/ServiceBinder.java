@@ -16,6 +16,7 @@ import com.manywho.sdk.services.providers.ExceptionMapperProvider;
 import com.manywho.sdk.services.providers.ObjectMapperProvider;
 import com.manywho.sdk.services.types.TypeBuilder;
 import com.manywho.sdk.services.types.TypeParser;
+import com.manywho.sdk.validation.ServiceRequestValidator;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.reflections.Reflections;
 import redis.clients.jedis.JedisPool;
@@ -47,5 +48,7 @@ public class ServiceBinder extends AbstractBinder {
         bind(ExceptionMapperProvider.class).to(ExceptionMapperProvider.class);
 
         bind(RunService.class).to(RunService.class);
+
+        bind(ServiceRequestValidator.class).to(ServiceRequestValidator.class);
     }
 }

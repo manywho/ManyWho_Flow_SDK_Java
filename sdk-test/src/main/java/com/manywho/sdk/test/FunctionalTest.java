@@ -24,27 +24,23 @@ public class FunctionalTest extends JerseyTest
         config.register(ObjectMapperProvider.class);
     }
 
-    protected File getFile(String fileResourcePath) throws URISyntaxException {
+    protected static File getFile(String fileResourcePath) throws URISyntaxException {
         return new File(Resources.getResource(fileResourcePath).toURI());
     }
 
-    protected String getJsonFormatFileContent(String filePath) throws FileNotFoundException, URISyntaxException, JSONException {
-        return getJsonFormat(new Scanner(getFile(filePath)).useDelimiter("\\Z").next());
+    protected static String getJsonFormatFileContent(String filePath) throws FileNotFoundException, URISyntaxException, JSONException {
+        return new Scanner(getFile(filePath)).useDelimiter("\\Z").next();
     }
 
-    protected String getJsonFormatResponse(Response notFormatedJsonResponse) throws JSONException {
-        return getJsonFormat(notFormatedJsonResponse.readEntity(String.class));
+    protected static String getJsonFormatResponse(Response notFormatedJsonResponse) throws JSONException {
+        return notFormatedJsonResponse.readEntity(String.class);
     }
 
-    protected String getJsonFormat(String notFormatString) throws JSONException {
-        return new JSONObject(notFormatString).toString(4);
-    }
-
-    protected void assertJsonSame(String expected, String actual) throws JSONException {
+    protected static void assertJsonSame(String expected, String actual) throws JSONException {
         JSONAssert.assertEquals(expected, actual, false);
     }
 
-    protected Entity<ServiceRequest> getServerRequestFromFile(String filePath) throws URISyntaxException, IOException {
+    protected static Entity<ServiceRequest> getServerRequestFromFile(String filePath) throws URISyntaxException, IOException {
         ServiceRequest serviceRequest = ObjectMapperProvider
                 .getObjectMapper()
                 .readValue(
@@ -55,7 +51,7 @@ public class FunctionalTest extends JerseyTest
         return Entity.entity(serviceRequest, MediaType.APPLICATION_JSON_TYPE);
     }
 
-    protected AuthenticatedWho getDefaultAuthenticatedWho() {
+    protected static AuthenticatedWho getDefaultAuthenticatedWho() {
 
         AuthenticatedWho authenticatedWho = new AuthenticatedWho();
         authenticatedWho.setManyWhoTenantId("67204d5c-6022-474d-8f80-0d576b43d02d");
