@@ -9,6 +9,24 @@ public class Who {
     @JsonProperty("isFollower")
     private boolean follower;
 
+    public Who() {
+    }
+
+    public Who(String id, String fullName) {
+        this(id, null, fullName);
+    }
+
+    public Who(String id, String avatarUrl, String fullName) {
+        this(id, avatarUrl, fullName, false);
+    }
+
+    public Who(String id, String avatarUrl, String fullName, boolean follower) {
+        this.id = id;
+        this.avatarUrl = avatarUrl;
+        this.fullName = fullName;
+        this.follower = follower;
+    }
+
     public String getId() {
         return id;
     }
