@@ -25,6 +25,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             path.equals("authorization/group/attribute") ||
             path.equals("authorization/user") ||
             path.equals("authorization/user/attribute") ||
+            path.contains("callback") ||
             path.contains("webhook")) {
             return;
         }
