@@ -6,12 +6,12 @@ public enum ContentType {
     Boolean("ContentBoolean"),
     Content("ContentContent"),
     DateTime("ContentDateTime"),
+    Encrypted("ContentEncrypted"),
     List("ContentList"),
     Number("ContentNumber"),
     Object("ContentObject"),
     Password("ContentPassword"),
-    String("ContentString"),
-    Encrypted("ContentEncrypted");
+    String("ContentString");
 
     private final String text;
 

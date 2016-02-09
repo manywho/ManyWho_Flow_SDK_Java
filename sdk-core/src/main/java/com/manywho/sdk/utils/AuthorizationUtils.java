@@ -1,11 +1,13 @@
 package com.manywho.sdk.utils;
 
+import com.google.common.base.Charsets;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.AuthenticatedWhoToken;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,28 +27,31 @@ public class AuthorizationUtils {
         }};
     }
 
-    public static AuthenticatedWho deserialize(String token) {
-        List<NameValuePair> pairs = URLEncodedUtils.parse(token, Charset.forName("UTF-8"));
+    public static AuthenticatedWho deserialize(String token) throws UnsupportedEncodingException {
+        String decodedToken = URLDecoder.decode(token, "UTF-8");
+
+        List<NameValuePair> pairs = URLEncodedUtils.parse(decodedToken, Charsets.UTF_8, '&');
         Map<String, String> parameters = new HashMap<>();
         for (NameValuePair nameValuePair : pairs) {
             parameters.put(nameValuePair.getName(), nameValuePair.getValue());
         }
 
-        return new AuthenticatedWho() {{
-            setDirectoryId(parameters.get(AuthenticatedWhoToken.DirectoryId.toString()));
-            setDirectoryName(parameters.get(AuthenticatedWhoToken.DirectoryName.toString()));
-            setEmail(parameters.get(AuthenticatedWhoToken.Email.toString()));
-            setFirstName(parameters.get(AuthenticatedWhoToken.FirstName.toString()));
-            setIdentityProvider(parameters.get(AuthenticatedWhoToken.IdentityProvider.toString()));
-            setLastName(parameters.get(AuthenticatedWhoToken.LastName.toString()));
-            setManyWhoTenantId(parameters.get(AuthenticatedWhoToken.ManyWhoTenantId.toString()));
-            setManyWhoToken(parameters.get(AuthenticatedWhoToken.ManyWhoToken.toString()));
-            setManyWhoUserId(parameters.get(AuthenticatedWhoToken.ManyWhoUserId.toString()));
-            setTenantName(parameters.get(AuthenticatedWhoToken.TenantName.toString()));
-            setToken(parameters.get(AuthenticatedWhoToken.Token.toString()));
-            setUserId(parameters.get(AuthenticatedWhoToken.UserId.toString()));
-            setUsername(parameters.get(AuthenticatedWhoToken.Username.toString()));
-        }};
+        AuthenticatedWho authenticatedWho = new AuthenticatedWho();
+        authenticatedWho.setDirectoryId(parameters.get(AuthenticatedWhoToken.DirectoryId.toString()));
+        authenticatedWho.setDirectoryName(parameters.get(AuthenticatedWhoToken.DirectoryName.toString()));
+        authenticatedWho.setEmail(parameters.get(AuthenticatedWhoToken.Email.toString()));
+        authenticatedWho.setFirstName(parameters.get(AuthenticatedWhoToken.FirstName.toString()));
+        authenticatedWho.setIdentityProvider(parameters.get(AuthenticatedWhoToken.IdentityProvider.toString()));
+        authenticatedWho.setLastName(parameters.get(AuthenticatedWhoToken.LastName.toString()));
+        authenticatedWho.setManyWhoTenantId(parameters.get(AuthenticatedWhoToken.ManyWhoTenantId.toString()));
+        authenticatedWho.setManyWhoToken(parameters.get(AuthenticatedWhoToken.ManyWhoToken.toString()));
+        authenticatedWho.setManyWhoUserId(parameters.get(AuthenticatedWhoToken.ManyWhoUserId.toString()));
+        authenticatedWho.setTenantName(parameters.get(AuthenticatedWhoToken.TenantName.toString()));
+        authenticatedWho.setToken(parameters.get(AuthenticatedWhoToken.Token.toString()));
+        authenticatedWho.setUserId(parameters.get(AuthenticatedWhoToken.UserId.toString()));
+        authenticatedWho.setUsername(parameters.get(AuthenticatedWhoToken.Username.toString()));
+
+        return authenticatedWho;
     }
 
     public static String serialize(AuthenticatedWho authenticatedWho) throws Exception {

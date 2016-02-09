@@ -66,6 +66,11 @@ public class Message {
         return attachments;
     }
 
+    public Message addAttachment(Attachment attachment) {
+        this.attachments.add(attachment);
+        return this;
+    }
+
     public Message setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
         return this;
@@ -73,6 +78,11 @@ public class Message {
 
     public List<Message> getComments() {
         return comments;
+    }
+
+    public Message addComment(Message comment) {
+        this.comments.add(comment);
+        return this;
     }
 
     public Message setComments(List<Message> comments) {
