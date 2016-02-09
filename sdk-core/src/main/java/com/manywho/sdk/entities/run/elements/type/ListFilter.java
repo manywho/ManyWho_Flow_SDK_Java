@@ -1,5 +1,10 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListFilter {
     private String id;
     private String comparisonType;
@@ -10,6 +15,7 @@ public class ListFilter {
     private int limit;
     private int offset;
     private String search;
+    private List<SearchCriteria> searchCriteria = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -81,5 +87,42 @@ public class ListFilter {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public List<SearchCriteria> getSearchCriteria() {
+        return searchCriteria;
+    }
+
+    public boolean hasSearchCriteria() {
+        return CollectionUtils.isNotEmpty(searchCriteria);
+    }
+
+    public ListFilter addSearchCriteria(SearchCriteria searchCriteria) {
+        this.searchCriteria.add(searchCriteria);
+        return this;
+    }
+
+    public ListFilter removeSearchCriteria(SearchCriteria searchCriteria) {
+        this.searchCriteria.remove(searchCriteria);
+        return this;
+    }
+
+    public ListFilter setSearchCriteria(List<SearchCriteria> searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        return this;
+    }
+
+    public static class SearchCriteria {
+        private String columnName;
+
+        public SearchCriteria() {}
+
+        public SearchCriteria(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String getColumnName() {
+            return columnName;
+        }
     }
 }
