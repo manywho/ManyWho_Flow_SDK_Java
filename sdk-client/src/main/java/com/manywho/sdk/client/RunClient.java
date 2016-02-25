@@ -10,6 +10,7 @@ import com.manywho.sdk.entities.run.EngineInvokeRequest;
 import com.manywho.sdk.entities.run.EngineInvokeResponse;
 import com.manywho.sdk.entities.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.enums.InvokeType;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -25,6 +26,15 @@ import java.util.List;
 import static com.manywho.sdk.services.providers.ObjectMapperProvider.getObjectMapper;
 
 public class RunClient extends AbstractClient {
+
+    public RunClient() {
+        super();
+    }
+
+    public RunClient(HttpClient httpClient) {
+        super(httpClient);
+    }
+
     public FlowState startFlow(String tenantId, FlowId flowId, FlowInitializationOptions options) throws IOException, URISyntaxException {
         EngineInitializationRequest initializationRequest = new EngineInitializationRequest();
         initializationRequest.setFlowId(flowId);

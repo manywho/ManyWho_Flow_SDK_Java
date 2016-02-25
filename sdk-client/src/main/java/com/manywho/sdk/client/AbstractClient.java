@@ -18,6 +18,10 @@ abstract class AbstractClient {
         this.httpClient = HttpClients.createDefault();
     }
 
+    public AbstractClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
     public AbstractClient(String baseUri) {
         this();
         this.baseUri = URI.create(baseUri);
