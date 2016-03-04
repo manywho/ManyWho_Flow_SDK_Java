@@ -14,6 +14,7 @@ public class ListFilter extends ListFilterMinimal {
     private int offset;
     private String search;
     private List<SearchCriteria> searchCriteria = new ArrayList<>();
+    private List<OrderBy> orderBy = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -92,6 +93,50 @@ public class ListFilter extends ListFilterMinimal {
     public ListFilter setSearchCriteria(List<SearchCriteria> searchCriteria) {
         this.searchCriteria = searchCriteria;
         return this;
+    }
+
+    public List<OrderBy> getOrderBy() {
+        return orderBy;
+    }
+
+    public boolean hasOrderBy() {
+        return CollectionUtils.isNotEmpty(orderBy);
+    }
+
+    public ListFilter addOrderBy(OrderBy orderBy) {
+        this.orderBy.add(orderBy);
+        return this;
+    }
+
+    public ListFilter removeOrderBy(OrderBy orderBy) {
+        this.orderBy.remove(orderBy);
+        return this;
+    }
+
+    public ListFilter setOrderBy(List<OrderBy> orderBy) {
+        this.orderBy = orderBy;
+        return this;
+    }
+
+    public static class OrderBy {
+        private String columnName;
+        private String direction;
+
+        public OrderBy() {
+        }
+
+        public OrderBy(String columnName, String direction) {
+            this.columnName = columnName;
+            this.direction = direction;
+        }
+
+        public String getColumnName() {
+            return columnName;
+        }
+
+        public String getDirection() {
+            return direction;
+        }
     }
 
     public static class SearchCriteria {
