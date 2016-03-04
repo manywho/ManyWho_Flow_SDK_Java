@@ -1,5 +1,6 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import com.manywho.sdk.enums.ComparisonType;
 import com.manywho.sdk.enums.CriteriaType;
 
 public class ListFilterWhere {
@@ -12,6 +13,8 @@ public class ListFilterWhere {
     private String value;
     private String contentValue;
     private ObjectCollection objectData;
+    private int group;
+    private ComparisonType comparisonWithNext;
 
     public String getColumnName() {
         return columnName;
@@ -61,5 +64,21 @@ public class ListFilterWhere {
 
     public void setObjectData(ObjectCollection objectData) {
         this.objectData = objectData;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public ComparisonType getComparisonWithNext() {
+        return comparisonWithNext;
+    }
+
+    public void setComparisonWithNext(ComparisonType comparisonWithNext) {
+        this.comparisonWithNext = comparisonWithNext;
     }
 }

@@ -5,11 +5,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListFilter {
+public class ListFilter extends ListFilterMinimal {
     private String id;
-    private String comparisonType;
     private boolean filterByProvidedObjects;
-    private ListFilterWhereCollection where;
     private String orderByPropertyDeveloperName;
     private String orderByDirectionType;
     private int limit;
@@ -25,28 +23,12 @@ public class ListFilter {
         this.id = id;
     }
 
-    public String getComparisonType() {
-        return comparisonType;
-    }
-
-    public void setComparisonType(String comparisonType) {
-        this.comparisonType = comparisonType;
-    }
-
     public boolean isFilterByProvidedObjects() {
         return filterByProvidedObjects;
     }
 
     public void setFilterByProvidedObjects(boolean filterByProvidedObjects) {
         this.filterByProvidedObjects = filterByProvidedObjects;
-    }
-
-    public ListFilterWhereCollection getWhere() {
-        return where;
-    }
-
-    public void setWhere(ListFilterWhereCollection where) {
-        this.where = where;
     }
 
     public String getOrderByPropertyDeveloperName() {
