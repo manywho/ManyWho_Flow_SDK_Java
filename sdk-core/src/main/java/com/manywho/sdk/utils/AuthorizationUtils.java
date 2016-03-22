@@ -8,23 +8,26 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AuthorizationUtils {
     public static AuthenticatedWho createPublicUserAuthenticatedWho(String tenantId) {
-        return new AuthenticatedWho() {{
-            setDirectoryId("UNAUTHENTICATED");
-            setDirectoryName("UNKNOWN");
-            setIdentityProvider("NONE");
-            setEmail("admin@manywho.com");
-            setManyWhoTenantId(tenantId);
-            setManyWhoUserId("52DF1A90-3826-4508-B7C2-CDE8AA5B72CF");
-            setTenantName("UNKNOWN");
-            setToken("NONE");
-            setUserId("PUBLIC_USER");
-        }};
+        AuthenticatedWho authenticatedWho = new AuthenticatedWho();
+        authenticatedWho.setDirectoryId("UNAUTHENTICATED");
+        authenticatedWho.setDirectoryName("UNKNOWN");
+        authenticatedWho.setIdentityProvider("NONE");
+        authenticatedWho.setEmail("admin@manywho.com");
+        authenticatedWho.setManyWhoTenantId(tenantId);
+        authenticatedWho.setManyWhoUserId("52DF1A90-3826-4508-B7C2-CDE8AA5B72CF");
+        authenticatedWho.setTenantName("UNKNOWN");
+        authenticatedWho.setToken("NONE");
+        authenticatedWho.setUserId("PUBLIC_USER");
+
+        return authenticatedWho;
     }
 
     public static AuthenticatedWho deserialize(String token) throws UnsupportedEncodingException {
