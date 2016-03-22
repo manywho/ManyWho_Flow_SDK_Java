@@ -65,9 +65,9 @@ public class AuthorizationUtils {
         return authenticatedWho;
     }
 
-    public static String serialize(AuthenticatedWho authenticatedWho) throws Exception {
+    public static String serialize(AuthenticatedWho authenticatedWho) {
         if (authenticatedWho == null) {
-            throw new Exception("AuthenticatedWho cannot be null");
+            throw new RuntimeException("AuthenticatedWho cannot be null");
         }
 
         String token = "";
