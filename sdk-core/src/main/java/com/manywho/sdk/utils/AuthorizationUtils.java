@@ -30,6 +30,14 @@ public class AuthorizationUtils {
         return authenticatedWho;
     }
 
+    public static String createSerializedPublicUser(UUID tenant) {
+        try {
+            return URLEncoder.encode(AuthorizationUtils.serialize(createPublicUserAuthenticatedWho(tenant.toString())), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static AuthenticatedWho deserialize(String token) throws UnsupportedEncodingException {
         String decodedToken = URLDecoder.decode(token, "UTF-8");
 
