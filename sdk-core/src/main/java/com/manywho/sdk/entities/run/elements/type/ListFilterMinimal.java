@@ -1,5 +1,7 @@
 package com.manywho.sdk.entities.run.elements.type;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.List;
 
 public class ListFilterMinimal {
@@ -20,6 +22,10 @@ public class ListFilterMinimal {
         return where;
     }
 
+    public boolean hasWhere() {
+        return CollectionUtils.isNotEmpty(where);
+    }
+
     public ListFilterMinimal setWhere(ListFilterWhereCollection where) {
         this.where = where;
         return this;
@@ -27,6 +33,10 @@ public class ListFilterMinimal {
 
     public List<ListFilterMinimal> getListFilters() {
         return listFilters;
+    }
+
+    public boolean hasListFilters() {
+        return CollectionUtils.isNotEmpty(listFilters);
     }
 
     public ListFilterMinimal setListFilters(List<ListFilterMinimal> listFilters) {
