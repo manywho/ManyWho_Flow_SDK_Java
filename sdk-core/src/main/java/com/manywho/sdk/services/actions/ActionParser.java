@@ -3,7 +3,6 @@ package com.manywho.sdk.services.actions;
 import com.manywho.sdk.entities.run.EngineValue;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.services.annotations.ActionInput;
-import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.utils.ValidationUtils;
 import org.reflections.Reflections;
@@ -70,10 +69,8 @@ public class ActionParser {
     }
 
     private Object getListFieldValue(EngineValue engineValue, Field field, String name) throws Exception {
-        String typeElementName = field.getType().getAnnotation(TypeElement.class).name();
-
         // Find the type of the list's generic
-        Class<?> listType = TypeParser.getListPropertyGenericType(typeElementName, field, name);
+        Class<?> listType = TypeParser.getListPropertyGenericType(field, name);
 
         return typeParser.parseList(engineValue.getObjectData(), listType);
     }
