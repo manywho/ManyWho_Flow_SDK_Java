@@ -1,9 +1,11 @@
 package com.manywho.sdk.services.types.system;
 
 import com.manywho.sdk.enums.ContentType;
+import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
 import org.joda.time.DateTime;
 
+@TypeElement(name = "$File")
 public class $File {
     @TypeProperty(name = "Date Created", contentType = ContentType.DateTime)
     private DateTime dateCreated;
