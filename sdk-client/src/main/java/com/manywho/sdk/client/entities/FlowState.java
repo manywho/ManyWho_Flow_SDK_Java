@@ -1,7 +1,7 @@
 package com.manywho.sdk.client.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.manywho.sdk.client.RunClient;
+import com.manywho.sdk.client.raw.RawRunClient;
 import com.manywho.sdk.client.utils.PageComponentUtils;
 import com.manywho.sdk.entities.run.EngineInvokeRequest;
 import com.manywho.sdk.entities.run.EngineInvokeResponse;
@@ -12,25 +12,24 @@ import com.manywho.sdk.entities.run.elements.ui.PageResponse;
 import com.manywho.sdk.enums.InvokeType;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FlowState {
-    private RunClient runClient;
+    private RawRunClient rawRunClient;
     @JsonProperty
-    private String tenantId;
+    private UUID tenant;
     @JsonProperty
     private EngineInvokeResponse invokeResponse;
 
     public FlowState() {
     }
 
-    public FlowState(RunClient runClient, String tenantId, EngineInvokeResponse invokeResponse) {
-        this.tenantId = tenantId;
-        this.runClient = runClient;
+    public FlowState(RawRunClient rawRunClient, UUID tenant, EngineInvokeResponse invokeResponse) {
+        this.tenant = tenant;
+        this.rawRunClient = rawRunClient;
         this.invokeResponse = invokeResponse;
     }
 
@@ -57,8 +56,8 @@ public class FlowState {
      *
      * @return the State ID of the running Flow
      */
-    public String getStateId() {
-        return invokeResponse.getStateId();
+    public UUID getState() {
+        return UUID.fromString(invokeResponse.getStateId());
     }
 
     /**
@@ -66,8 +65,8 @@ public class FlowState {
      *
      * @return the Tenant ID of the running Flow
      */
-    public String getTenantId() {
-        return tenantId;
+    public UUID getTenant() {
+        return tenant;
     }
 
     /**
@@ -115,10 +114,8 @@ public class FlowState {
      *
      * @param name the name of the outcome to select
      * @return the updated state of the Flow, after selecting the desired outcome
-     * @throws IOException
-     * @throws URISyntaxException
      */
-    public FlowState selectOutcomeByName(String name) throws IOException, URISyntaxException {
+    public FlowState selectOutcomeByName(String name) {
         Optional<Outcome> outcomeOptional = this.getOutcomes().stream()
                 .filter(outcome -> outcome.getName().equals(name))
                 .findFirst();
@@ -136,10 +133,8 @@ public class FlowState {
      * @param outcome the outcome to select in the Flow
      * @param pageRequest an object that contains the inputs that you wish to send to the Flow
      * @return the updated state of the Flow, after selecting the outcome and sending any inputs
-     * @throws IOException
-     * @throws URISyntaxException
      */
-    public FlowState selectOutcome(Outcome outcome, PageRequest pageRequest) throws IOException, URISyntaxException {
+    public FlowState selectOutcome(Outcome outcome, PageRequest pageRequest) {
         EngineInvokeRequest invokeRequest = new EngineInvokeRequest();
         invokeRequest.setCurrentMapElementId(invokeResponse.getCurrentMapElementId());
         invokeRequest.setInvokeType(InvokeType.Forward);
@@ -147,7 +142,7 @@ public class FlowState {
         invokeRequest.setStateId(invokeResponse.getStateId());
         invokeRequest.setStateToken(invokeResponse.getStateToken());
 
-        invokeResponse = runClient.executeFlow(this.tenantId, null, invokeRequest);
+        invokeResponse = rawRunClient.execute(this.tenant, null, invokeRequest);
 
         return this;
     }
@@ -157,10 +152,8 @@ public class FlowState {
      *
      * @param outcome the outcome to select in the Flow
      * @return the updated state of the flow, after selecting the outcome
-     * @throws IOException
-     * @throws URISyntaxException
      */
-    public FlowState selectOutcome(Outcome outcome) throws IOException, URISyntaxException {
+    public FlowState selectOutcome(Outcome outcome) {
         return this.selectOutcome(outcome, null);
     }
 
@@ -168,10 +161,8 @@ public class FlowState {
      * Tell the running state to SYNC, which synchronises the page metadata and state with this object again
      *
      * @return the updated state of the flow, after SYNCing
-     * @throws IOException
-     * @throws URISyntaxException
      */
-    public FlowState sync() throws IOException, URISyntaxException {
+    public FlowState sync() {
         EngineInvokeRequest invokeRequest = new EngineInvokeRequest();
         invokeRequest.setCurrentMapElementId(invokeResponse.getCurrentMapElementId());
         invokeRequest.setInvokeType(InvokeType.Sync);
@@ -181,7 +172,7 @@ public class FlowState {
 
         PageResponse previousPageResponse = getPageResponse();
 
-        invokeResponse = runClient.executeFlow(this.tenantId, null, invokeRequest);
+        invokeResponse = rawRunClient.execute(this.tenant, null, invokeRequest);
 
         // When SYNCing, ManyWho won't return the scaffolding, so we need to get it from the previous response if they exist
         if (previousPageResponse != null) {
