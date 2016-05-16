@@ -9,24 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sdk-client</artifactId>
+    <artifactId>sdk-example</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-core</artifactId>
+            <artifactId>sdk-services</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.10</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,0 +1,39 @@
+{
+  "culture": null,
+  "uri": null,
+  "configurationValues": [
+
+  ],
+  "providesAutoBinding": false,
+  "providesDatabase": false,
+  "providesFiles": false,
+  "providesIdentity": false,
+  "providesListening": false,
+  "providesLogic": true,
+  "providesNotifications": false,
+  "providesSmartSave": false,
+  "providesSocial": false,
+  "providesSharing": false,
+  "providesViews": false,
+  "providesVoting": false,
+  "actions": [
+    {
+      "uriPart": "actions/testaction",
+      "serviceInputs": [
+
+      ],
+      "serviceOutputs": [
+
+      ],
+      "developerName": "Test Action",
+      "developerSummary": "A test action summary",
+      "serviceActionOutcomes": null,
+      "isViewMessageAction": false
+    }
+  ],
+  "install": {
+    "typeElements": [
+
+    ]
+  }
+}

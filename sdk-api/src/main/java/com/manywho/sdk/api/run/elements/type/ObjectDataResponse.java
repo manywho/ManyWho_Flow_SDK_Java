@@ -1,0 +1,58 @@
+package com.manywho.sdk.api.run.elements.type;
+
+import com.google.common.collect.Lists;
+import com.manywho.sdk.api.translate.Culture;
+
+import java.util.List;
+
+public class ObjectDataResponse {
+    private Culture culture;
+    private List<MObject> objectData;
+    private boolean hasMoreResults;
+
+    public ObjectDataResponse() {
+    }
+
+    public ObjectDataResponse(MObject object) {
+        this.objectData = Lists.newArrayList(object);
+    }
+
+    public ObjectDataResponse(List<MObject> objectData) {
+        this.objectData = objectData;
+    }
+
+    public ObjectDataResponse(List<MObject> objectData, boolean hasMoreResults) {
+        this.objectData = objectData;
+        this.hasMoreResults = hasMoreResults;
+    }
+
+    public ObjectDataResponse(Culture culture, List<MObject> objectData, boolean hasMoreResults) {
+        this.culture = culture;
+        this.objectData = objectData;
+        this.hasMoreResults = hasMoreResults;
+    }
+
+    public Culture getCulture() {
+        return culture;
+    }
+
+    public void setCulture(Culture culture) {
+        this.culture = culture;
+    }
+
+    public List<MObject> getObjectData() {
+        return objectData;
+    }
+
+    public void setObjectData(List<MObject> objectData) {
+        this.objectData = objectData;
+    }
+
+    public boolean isHasMoreResults() {
+        return hasMoreResults;
+    }
+
+    public void setHasMoreResults(boolean hasMoreResults) {
+        this.hasMoreResults = hasMoreResults;
+    }
+}
