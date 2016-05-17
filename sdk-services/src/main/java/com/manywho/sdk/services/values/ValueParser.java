@@ -23,12 +23,10 @@ import java.util.stream.Collectors;
 
 public class ValueParser {
     private final TypeRepository typeRepository;
-    private final ValueRepository valueRepository;
 
     @Inject
-    public ValueParser(TypeRepository typeRepository, ValueRepository valueRepository) {
+    public ValueParser(TypeRepository typeRepository) {
         this.typeRepository = typeRepository;
-        this.valueRepository = valueRepository;
     }
 
     public <T extends Type> Collection<T> fromList(List<MObject> objects, Class<T> type) {
@@ -64,7 +62,7 @@ public class ValueParser {
 
             identifierField.set(instance, object.getExternalId());
 
-            Map<String, Field> typeProperties = valueRepository.findTypeProperties(type);
+            Map<String, Field> typeProperties = typeRepository.findTypeProperties(type);
 
             object.getProperties().stream()
                     .filter(property -> typeProperties.containsKey(property.getDeveloperName()))

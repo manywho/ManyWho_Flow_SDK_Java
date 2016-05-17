@@ -4,16 +4,35 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TypeRepository {
     private final Reflections reflections;
 
     private Set<Field> typeIdentifiers;
+    private Set<Field> typeProperties;
 
     @Inject
     public TypeRepository(Reflections reflections) {
         this.reflections = reflections;
+    }
+
+    public Field findTypeIdentifier(Class<? extends Type> type) {
+        return getTypeIdentifiers().stream()
+                .filter(field -> field.getDeclaringClass().equals(type))
+                .findFirst()
+                .orElseThrow(() -> new TypeIdentifierMissingException(type));
+    }
+
+    public Map<String, Field> findTypeProperties(Class<?> type) {
+        return getTypeProperties().stream()
+                .filter(field -> field.getDeclaringClass().equals(type))
+                .collect(Collectors.toMap(
+                        field -> field.getAnnotation(Type.Property.class).name(),
+                        field -> field
+                ));
     }
 
     public Set<Field> getTypeIdentifiers() {
@@ -24,10 +43,11 @@ public class TypeRepository {
         return typeIdentifiers;
     }
 
-    public Field findTypeIdentifier(Class<? extends Type> type) {
-        return getTypeIdentifiers().stream()
-                .filter(field -> field.getDeclaringClass().equals(type))
-                .findFirst()
-                .orElseThrow(() -> new TypeIdentifierMissingException(type));
+    public Set<Field> getTypeProperties() {
+        if (typeProperties == null) {
+            typeProperties = reflections.getFieldsAnnotatedWith(Type.Property.class);
+        }
+
+        return typeProperties;
     }
 }

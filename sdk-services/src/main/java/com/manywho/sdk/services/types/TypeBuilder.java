@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
-import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -16,11 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeBuilder {
-    private final Reflections reflections;
+    private final TypeRepository typeRepository;
 
     @Inject
-    public TypeBuilder(Reflections reflections) {
-        this.reflections = reflections;
+    public TypeBuilder(TypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
     }
 
     public List<MObject> from(Type type) {
@@ -48,7 +47,7 @@ public class TypeBuilder {
 
         Type.Element annotation = type.getClass().getAnnotation(Type.Element.class);
 
-        List<Field> typeProperties = reflections.getFieldsAnnotatedWith(Type.Property.class).stream()
+        List<Field> typeProperties = typeRepository.getTypeProperties().stream()
                 .filter(field -> field.getDeclaringClass().equals(type.getClass()))
                 .collect(Collectors.toList());
 
@@ -58,12 +57,8 @@ public class TypeBuilder {
 
         MObject object = new MObject(annotation.name());
 
-        // TODO: Deduplicate this (and in DescribeTypeService)
         // Get the identifier field, if one exists
-        Field identifierField = reflections.getFieldsAnnotatedWith(Type.Identifier.class).stream()
-                .filter(field -> field.getDeclaringClass().equals(type.getClass()))
-                .findFirst()
-                .orElseThrow(() -> new TypeIdentifierMissingException(type.getClass()));
+        Field identifierField = typeRepository.findTypeIdentifier(type.getClass());
 
         identifierField.setAccessible(true);
 
