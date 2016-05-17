@@ -5,7 +5,6 @@ import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
 import com.manywho.sdk.services.describe.DescribeActionService;
-import com.manywho.sdk.services.values.Value;
 import com.manywho.sdk.services.values.ValueParser;
 
 import javax.inject.Inject;
@@ -32,30 +31,35 @@ public class ActionManager {
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
-        Class<? extends Action> action = actionRepository.getActions().stream()
+        Class<?> action = actionRepository.getActions().stream()
                 .filter(type -> type.isAnnotationPresent(Action.Metadata.class))
                 .filter(type -> type.getAnnotation(Action.Metadata.class).uri().equals(path))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("An action could not be found with the URI part " + path));
 
-        Type[] types = DescribeActionService.getTypeArguments(action);
+        Class<? extends ActionCommand> command = actionRepository.getActionCommands().stream()
+                .filter(a -> DescribeActionService.getTypeArguments(a)[0].equals(action))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No action command for the action " + action.getName() + " was found"));
+
+        Type[] types = DescribeActionService.getTypeArguments(command);
 
         try {
-            Object inputObject = Class.forName(types[0].getTypeName()).newInstance();
+            Object inputObject = Class.forName(types[1].getTypeName()).newInstance();
 
-            for (Field field : findInputFields(types[0])) {
-                Value.Property annotation = field.getAnnotation(Value.Property.class);
+            for (Field field : findInputFields(types[1])) {
+                Action.Input annotation = field.getAnnotation(Action.Input.class);
 
                 Optional<EngineValue> optional = serviceRequest.getInputs().stream()
                         .filter(i -> i.getDeveloperName().equals(annotation.name()))
                         .findFirst();
 
-                optional.ifPresent(input -> valueParser.populateObjectField(inputObject, field, input));
+                optional.ifPresent(input -> valueParser.populateObjectField(inputObject, field, annotation.contentType(), input));
             }
 
-            ActionResponse actionResponse = injector.getInstance(action).execute(inputObject);
+            ActionResponse actionResponse = injector.getInstance(command).execute(inputObject);
 
-            List<EngineValue> outputs = findOutputFields(types[1]).stream()
+            List<EngineValue> outputs = findOutputFields(types[2]).stream()
                     .map(output -> createOutputValue(actionResponse.getOutputs(), output))
                     .collect(Collectors.toList());
 
@@ -78,7 +82,7 @@ public class ActionManager {
     }
 
     static EngineValue createOutputValue(Object outputs, Field field) {
-        Value.Property property = field.getAnnotation(Value.Property.class);
+        Action.Output property = field.getAnnotation(Action.Output.class);
 
         AccessController.doPrivileged((PrivilegedAction) () -> {
             field.setAccessible(true);

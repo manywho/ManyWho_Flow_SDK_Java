@@ -11,7 +11,8 @@ import java.util.Set;
 public class ActionRepository {
     private final Reflections reflections;
 
-    private Set<Class<? extends Action>> actions;
+    private Set<Class<?>> actions;
+    private Set<Class<? extends ActionCommand>> actionCommands;
     private Set<Field> inputFields;
     private Set<Field> outputFields;
 
@@ -20,12 +21,20 @@ public class ActionRepository {
         this.reflections = reflections;
     }
 
-    public Set<Class<? extends Action>> getActions() {
+    public Set<Class<?>> getActions() {
         if (actions == null) {
-            actions = reflections.getSubTypesOf(Action.class);
+            actions = reflections.getTypesAnnotatedWith(Action.Metadata.class);
         }
 
         return actions;
+    }
+
+    public Set<Class<? extends ActionCommand>> getActionCommands() {
+        if (actionCommands == null) {
+            actionCommands = reflections.getSubTypesOf(ActionCommand.class);
+        }
+
+        return actionCommands;
     }
 
     public Set<Field> getInputFields() {

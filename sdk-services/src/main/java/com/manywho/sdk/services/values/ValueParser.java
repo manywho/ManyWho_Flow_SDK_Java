@@ -7,7 +7,7 @@ import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypeRepository;
-import com.manywho.sdk.services.types.ValuePropertyMismatchException;
+import com.manywho.sdk.services.types.TypePropertyMismatchException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
@@ -71,7 +71,9 @@ public class ValueParser {
                     .forEach(property -> {
                         Field field = typeProperties.get(property.getDeveloperName());
 
-                        populateObjectField(instance, field, property);
+                        Type.Property annotation = field.getAnnotation(Type.Property.class);
+
+                        populateObjectField(instance, field, annotation.contentType(), property);
                     });
 
             return instance;
@@ -87,7 +89,7 @@ public class ValueParser {
             return Boolean.valueOf(value);
         }
 
-        throw new ValuePropertyMismatchException(field, boolean.class, ContentType.Boolean);
+        throw new TypePropertyMismatchException(field, boolean.class, ContentType.Boolean);
     }
 
     public static String toContent(Field field, String value) {
@@ -95,7 +97,7 @@ public class ValueParser {
             return value;
         }
 
-        throw new ValuePropertyMismatchException(field, String.class, ContentType.Content);
+        throw new TypePropertyMismatchException(field, String.class, ContentType.Content);
     }
 
     public static TemporalAccessor toDateTime(Field field, String value) {
@@ -104,7 +106,7 @@ public class ValueParser {
             return OffsetDateTime.parse(value);
         }
 
-        throw new ValuePropertyMismatchException(field, TemporalAccessor.class, ContentType.DateTime);
+        throw new TypePropertyMismatchException(field, TemporalAccessor.class, ContentType.DateTime);
     }
 
     public static String toEncrypted(Field field, String value) {
@@ -112,7 +114,7 @@ public class ValueParser {
             return value;
         }
 
-        throw new ValuePropertyMismatchException(field, String.class, ContentType.Encrypted);
+        throw new TypePropertyMismatchException(field, String.class, ContentType.Encrypted);
     }
 
     @SuppressWarnings("unchecked")
@@ -123,7 +125,7 @@ public class ValueParser {
             return fromList(list, (Class<T>) genericType);
         }
 
-        throw new ValuePropertyMismatchException(field, Collection.class, ContentType.List);
+        throw new TypePropertyMismatchException(field, Collection.class, ContentType.List);
     }
 
     public static Number toNumber(Field field, String value) {
@@ -147,7 +149,7 @@ public class ValueParser {
             return Short.valueOf(value);
         }
 
-        throw new ValuePropertyMismatchException(field, Number.class, ContentType.Number);
+        throw new TypePropertyMismatchException(field, Number.class, ContentType.Number);
     }
 
     @SuppressWarnings("unchecked")
@@ -158,13 +160,13 @@ public class ValueParser {
             }
 
             if (objects.isEmpty()) {
-                throw new RuntimeException("Unable to find an object to parse into " + field.getAnnotation(Value.Property.class).name());
+                throw new RuntimeException("Unable to find an object to parse into " + field.getAnnotation(Type.Property.class).name());
             }
 
             return fromObject(objects.get(0), (Class<T>) field.getType());
         }
 
-        throw new ValuePropertyMismatchException(field, Type.class, ContentType.Object);
+        throw new TypePropertyMismatchException(field, Type.class, ContentType.Object);
     }
 
     public static String toPassword(Field field, String value) {
@@ -172,7 +174,7 @@ public class ValueParser {
             return value;
         }
 
-        throw new ValuePropertyMismatchException(field, String.class, ContentType.Password);
+        throw new TypePropertyMismatchException(field, String.class, ContentType.Password);
     }
 
     public static String toString(Field field, String value) {
@@ -180,19 +182,17 @@ public class ValueParser {
             return value;
         }
 
-        throw new ValuePropertyMismatchException(field, String.class, ContentType.String);
+        throw new TypePropertyMismatchException(field, String.class, ContentType.String);
     }
 
-    public void populateObjectField(Object object, Field field, PropertyAware property) {
-        Value.Property annotation = field.getAnnotation(Value.Property.class);
-
+    public void populateObjectField(Object object, Field field, ContentType contentType, PropertyAware property) {
         AccessController.doPrivileged((PrivilegedAction) () -> {
             field.setAccessible(true);
             return null;
         });
 
         try {
-            switch (annotation.contentType()) {
+            switch (contentType) {
                 case Boolean:
                     field.set(object, toBoolean(field, property.getContentValue()));
                     break;

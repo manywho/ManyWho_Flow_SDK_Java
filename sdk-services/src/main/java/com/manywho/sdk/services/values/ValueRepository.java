@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.values;
 
+import com.manywho.sdk.services.types.Type;
 import org.reflections.Reflections;
 
 import javax.inject.Inject;
@@ -18,19 +19,21 @@ public class ValueRepository {
         this.reflections = reflections;
     }
 
+    // TODO: Move to TypeRepository?
     public Set<Field> getTypeProperties() {
         if (typeProperties == null) {
-            typeProperties = reflections.getFieldsAnnotatedWith(Value.Property.class);
+            typeProperties = reflections.getFieldsAnnotatedWith(Type.Property.class);
         }
 
         return typeProperties;
     }
 
+    // TODO: Move to TypeRepository?
     public Map<String, Field> findTypeProperties(Class<?> type) {
         return getTypeProperties().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
                 .collect(Collectors.toMap(
-                        field -> field.getAnnotation(Value.Property.class).name(),
+                        field -> field.getAnnotation(Type.Property.class).name(),
                         field -> field
                 ));
     }

@@ -25,7 +25,7 @@ class DescribeService {
     }
 
     public boolean anyActionsDefined() {
-        return !reflections.getSubTypesOf(Action.class).isEmpty();
+        return !reflections.getTypesAnnotatedWith(Action.Metadata.class).isEmpty();
     }
 
     boolean anyConfigurationValuesExist() {

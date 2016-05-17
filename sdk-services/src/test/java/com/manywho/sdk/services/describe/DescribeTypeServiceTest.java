@@ -5,7 +5,6 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
-import com.manywho.sdk.services.values.Value;
 import org.junit.Test;
 
 import java.util.List;
@@ -97,7 +96,7 @@ public class DescribeTypeServiceTest extends BaseTest {
         @Type.Identifier
         private String id;
 
-        @Value.Property(name = "Valid Objects", contentType = ContentType.List)
+        @Type.Property(name = "Valid Objects", contentType = ContentType.List)
         private List<ValidObject> validObjects;
     }
 
@@ -108,7 +107,7 @@ public class DescribeTypeServiceTest extends BaseTest {
         @Type.Identifier
         private String id;
 
-        @Value.Property(name = "Name", contentType = ContentType.String)
+        @Type.Property(name = "Name", contentType = ContentType.String)
         private String name;
     }
 

@@ -2,7 +2,6 @@ package com.manywho.services.example.types;
 
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.types.Type;
-import com.manywho.sdk.services.values.Value;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -14,31 +13,31 @@ public class Person implements Type {
     @Type.Identifier
     private String id;
 
-    @Value.Property(name = "Name", contentType = ContentType.String)
+    @Type.Property(name = "Name", contentType = ContentType.String)
     private String name;
 
-    @Value.Property(name = "Biography", contentType = ContentType.Content)
+    @Type.Property(name = "Biography", contentType = ContentType.Content)
     private String biography;
 
-    @Value.Property(name = "Age", contentType = ContentType.Number)
+    @Type.Property(name = "Age", contentType = ContentType.Number)
     private Integer age;
 
-    @Value.Property(name = "Password", contentType = ContentType.Password)
+    @Type.Property(name = "Password", contentType = ContentType.Password)
     private String password;
 
-    @Value.Property(name = "Social Security Number", contentType = ContentType.Encrypted)
+    @Type.Property(name = "Social Security Number", contentType = ContentType.Encrypted)
     private String socialSecurityNumber;
 
-    @Value.Property(name = "Groups", contentType = ContentType.List)
+    @Type.Property(name = "Groups", contentType = ContentType.List)
     private List<Group> groups;
 
-    @Value.Property(name = "Manager", contentType = ContentType.Object)
+    @Type.Property(name = "Manager", contentType = ContentType.Object)
     private Person manager;
 
-    @Value.Property(name = "Is Active?", contentType = ContentType.Boolean)
+    @Type.Property(name = "Is Active?", contentType = ContentType.Boolean)
     private boolean active;
 
-    @Value.Property(name = "Created At", contentType = ContentType.DateTime)
+    @Type.Property(name = "Created At", contentType = ContentType.DateTime)
     private OffsetDateTime createdAt;
 
     public String getId() {

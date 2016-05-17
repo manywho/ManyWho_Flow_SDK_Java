@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
-import com.manywho.sdk.services.values.Value;
 import org.reflections.Reflections;
 
 import javax.inject.Inject;
@@ -49,7 +48,7 @@ public class TypeBuilder {
 
         Type.Element annotation = type.getClass().getAnnotation(Type.Element.class);
 
-        List<Field> typeProperties = reflections.getFieldsAnnotatedWith(Value.Property.class).stream()
+        List<Field> typeProperties = reflections.getFieldsAnnotatedWith(Type.Property.class).stream()
                 .filter(field -> field.getDeclaringClass().equals(type.getClass()))
                 .collect(Collectors.toList());
 
@@ -90,7 +89,7 @@ public class TypeBuilder {
     }
 
     private Property createProperty(Type type, Field field) {
-        Value.Property annotation = field.getAnnotation(Value.Property.class);
+        Type.Property annotation = field.getAnnotation(Type.Property.class);
 
         Property property = new Property(annotation.name());
 

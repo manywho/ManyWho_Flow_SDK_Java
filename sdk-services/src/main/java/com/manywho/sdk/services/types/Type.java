@@ -1,5 +1,7 @@
 package com.manywho.sdk.services.types;
 
+import com.manywho.sdk.api.ContentType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,5 +20,15 @@ public interface Type {
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     @interface Identifier {
+    }
+
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Property {
+        ContentType contentType();
+
+        String name();
+
+        boolean bound() default true;
     }
 }

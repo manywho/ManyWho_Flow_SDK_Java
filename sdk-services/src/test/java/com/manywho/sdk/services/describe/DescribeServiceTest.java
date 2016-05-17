@@ -14,7 +14,7 @@ import com.manywho.sdk.api.social.MentionedWho;
 import com.manywho.sdk.api.social.Message;
 import com.manywho.sdk.api.social.MessageList;
 import com.manywho.sdk.api.social.Who;
-import com.manywho.sdk.services.actions.Action;
+import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.configuration.ConfigurationValue;
 import com.manywho.sdk.services.controllers.AbstractDataController;
@@ -176,7 +176,7 @@ public class DescribeServiceTest extends BaseTest {
         assertFalse(describeService.anyTypesDefined());
     }
 
-    private class TestAction implements Action<TestAction, TestAction> {
+    private class TestAction implements ActionCommand<TestAction, TestAction, TestAction> {
 
         @Override
         public ActionResponse<TestAction> execute(TestAction input) {

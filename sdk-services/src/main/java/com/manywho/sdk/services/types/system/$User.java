@@ -2,81 +2,80 @@ package com.manywho.sdk.services.types.system;
 
 import com.manywho.sdk.api.AuthorizationType;
 import com.manywho.sdk.api.ContentType;
-import com.manywho.sdk.services.values.Value;
 import com.manywho.sdk.services.types.Type;
 
 import java.time.OffsetDateTime;
 
 @Type.Element(name = "$User")
 public class $User implements Type {
-    @Value.Property(name = "Altitude Accuracy", contentType = ContentType.Number)
+    @Type.Property(name = "Altitude Accuracy", contentType = ContentType.Number)
     private Integer altitudeAccuracy;
 
-    @Value.Property(name = "AuthenticationType", contentType = ContentType.String)
+    @Type.Property(name = "AuthenticationType", contentType = ContentType.String)
     private AuthorizationType authenticationType;
 
-    @Value.Property(name = "Brand", contentType = ContentType.String)
+    @Type.Property(name = "Brand", contentType = ContentType.String)
     private String brand;
 
-    @Value.Property(name = "Country", contentType = ContentType.String)
+    @Type.Property(name = "Country", contentType = ContentType.String)
     private String country;
 
-    @Value.Property(name = "Current Altitude", contentType = ContentType.Number)
+    @Type.Property(name = "Current Altitude", contentType = ContentType.Number)
     private Float currentAltitude;
 
-    @Value.Property(name = "Current Heading", contentType = ContentType.Number)
+    @Type.Property(name = "Current Heading", contentType = ContentType.Number)
     private Float currentHeading;
 
-    @Value.Property(name = "Current Latitude", contentType = ContentType.Number)
+    @Type.Property(name = "Current Latitude", contentType = ContentType.Number)
     private Float currentLatitude;
 
-    @Value.Property(name = "Current Longitude", contentType = ContentType.Number)
+    @Type.Property(name = "Current Longitude", contentType = ContentType.Number)
     private Float currentLongitude;
 
-    @Value.Property(name = "Current Speed", contentType = ContentType.Number)
+    @Type.Property(name = "Current Speed", contentType = ContentType.Number)
     private Float currentSpeed;
 
-    @Value.Property(name = "Directory Id", contentType = ContentType.String)
+    @Type.Property(name = "Directory Id", contentType = ContentType.String)
     private String directoryId;
 
-    @Value.Property(name = "Directory Name", contentType = ContentType.String)
+    @Type.Property(name = "Directory Name", contentType = ContentType.String)
     private String directoryName;
 
-    @Value.Property(name = "Email", contentType = ContentType.String)
+    @Type.Property(name = "Email", contentType = ContentType.String)
     private String email;
 
-    @Value.Property(name = "First Name", contentType = ContentType.String)
+    @Type.Property(name = "First Name", contentType = ContentType.String)
     private String firstName;
 
-    @Value.Property(name = "Language", contentType = ContentType.String)
+    @Type.Property(name = "Language", contentType = ContentType.String)
     private String language;
 
-    @Value.Property(name = "Last Name", contentType = ContentType.String)
+    @Type.Property(name = "Last Name", contentType = ContentType.String)
     private String lastName;
 
-    @Value.Property(name = "Location", contentType = ContentType.Object)
+    @Type.Property(name = "Location", contentType = ContentType.Object)
     private $Location location;
 
-    @Value.Property(name = "Location Accuracy", contentType = ContentType.Number)
+    @Type.Property(name = "Location Accuracy", contentType = ContentType.Number)
     private Float locationAccuracy;
 
-    @Value.Property(name = "Location Timestamp", contentType = ContentType.DateTime)
+    @Type.Property(name = "Location Timestamp", contentType = ContentType.DateTime)
     private OffsetDateTime locationTimestamp;
 
-    @Value.Property(name = "LoginUrl", contentType = ContentType.String)
+    @Type.Property(name = "LoginUrl", contentType = ContentType.String)
     private String loginUrl;
 
-    @Value.Property(name = "Status", contentType = ContentType.String)
+    @Type.Property(name = "Status", contentType = ContentType.String)
     private String status;
 
     @Type.Identifier
-    @Value.Property(name = "User ID", contentType = ContentType.String)
+    @Type.Property(name = "User ID", contentType = ContentType.String)
     private String userId;
 
-    @Value.Property(name = "Username", contentType = ContentType.String)
+    @Type.Property(name = "Username", contentType = ContentType.String)
     private String username;
 
-    @Value.Property(name = "Variant", contentType = ContentType.String)
+    @Type.Property(name = "Variant", contentType = ContentType.String)
     private String variant;
 
     public Integer getAltitudeAccuracy() {

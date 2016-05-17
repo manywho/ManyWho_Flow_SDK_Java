@@ -4,6 +4,7 @@ import com.google.common.io.Resources;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.actions.Action;
+import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class DescribeManagerTest extends BaseTest {
     }
 
     @Action.Metadata(name = TestAction.NAME, summary = "A test action summary", uri = TestAction.URI)
-    class TestAction implements Action<TestAction, TestAction> {
+    class TestAction implements ActionCommand<TestAction, TestAction, TestAction> {
         static final String NAME = "Test Action";
         static final String URI = "testaction";
 

@@ -2,7 +2,6 @@ package com.manywho.services.example.types;
 
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.types.Type;
-import com.manywho.sdk.services.values.Value;
 
 @Type.Element(name = "Group")
 public class Group implements Type {
@@ -10,7 +9,7 @@ public class Group implements Type {
     @Type.Identifier
     private String id;
 
-    @Value.Property(name = "Name", contentType = ContentType.String)
+    @Type.Property(name = "Name", contentType = ContentType.String)
     private String name;
 
     public Group(String id, String name) {

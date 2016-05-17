@@ -9,7 +9,6 @@ import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeParser;
-import com.manywho.sdk.services.values.Value;
 import org.apache.commons.collections4.CollectionUtils;
 import org.reflections.Reflections;
 
@@ -58,7 +57,7 @@ public class DescribeTypeService {
             throw new TypeIdentifierMissingException(type);
         }
 
-        Set<Field> annotatedProperties = reflections.getFieldsAnnotatedWith(Value.Property.class);
+        Set<Field> annotatedProperties = reflections.getFieldsAnnotatedWith(Type.Property.class);
 
         // Build the list of properties from the annotated type
         List<TypeElementProperty> properties = annotatedProperties.stream()
@@ -74,8 +73,8 @@ public class DescribeTypeService {
         // Build the property bindings
         List<TypeElementPropertyBinding> propertyBindings = annotatedProperties.stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
-                .map(field -> field.getAnnotation(Value.Property.class))
-                .filter(Value.Property::bound)
+                .map(field -> field.getAnnotation(Type.Property.class))
+                .filter(Type.Property::bound)
                 .map(this::createTypeElementPropertyBinding)
                 .sorted()
                 .collect(Collectors.toList());
@@ -96,7 +95,7 @@ public class DescribeTypeService {
     }
 
     private TypeElementProperty createTypeElementProperty(Field field) {
-        Value.Property annotation = field.getAnnotation(Value.Property.class);
+        Type.Property annotation = field.getAnnotation(Type.Property.class);
 
         String referencedTypeName = null;
 
@@ -108,7 +107,7 @@ public class DescribeTypeService {
         return new TypeElementProperty(annotation.name(), annotation.contentType(), referencedTypeName);
     }
 
-    private TypeElementPropertyBinding createTypeElementPropertyBinding(Value.Property property) {
+    private TypeElementPropertyBinding createTypeElementPropertyBinding(Type.Property property) {
         return new TypeElementPropertyBinding(property.name(), property.name());
     }
 }
