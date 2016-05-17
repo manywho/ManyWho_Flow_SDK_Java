@@ -1,7 +1,7 @@
 ManyWho Java SDK
 ================
 
-[![Build Status](https://travis-ci.org/manywho/sdk-java.svg)](https://travis-ci.org/manywho/sdk-java)
+[![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=master)](https://travis-ci.org/manywho/sdk-java)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk)
 
 An open source SDK that allows you to easily build plugins and services that integrate with Flows running on
