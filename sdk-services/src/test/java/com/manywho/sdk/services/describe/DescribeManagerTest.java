@@ -5,8 +5,10 @@ import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.actions.Action;
 import com.manywho.sdk.services.actions.ActionCommand;
+import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
+import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -29,10 +31,13 @@ public class DescribeManagerTest extends BaseTest {
 
         Reflections reflections = createReflections();
 
+        ActionRepository actionRepository = new ActionRepository(reflections);
+        TypeRepository typeRepository = new TypeRepository(reflections);
+
         DescribeManager manager = new DescribeManager(
-                new DescribeService(reflections),
-                new DescribeTypeService(reflections),
-                new DescribeActionService(reflections)
+                new DescribeService(actionRepository, new DescribeRepository(reflections), typeRepository),
+                new DescribeTypeService(typeRepository),
+                new DescribeActionService(actionRepository)
         );
 
         DescribeServiceResponse response = manager.describe(new DescribeServiceRequest());

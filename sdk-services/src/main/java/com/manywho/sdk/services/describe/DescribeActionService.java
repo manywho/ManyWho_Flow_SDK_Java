@@ -6,8 +6,8 @@ import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.Action;
 import com.manywho.sdk.services.actions.ActionCommand;
+import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.types.TypeParser;
-import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -18,15 +18,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DescribeActionService {
-    private final Reflections reflections;
+    private final ActionRepository actionRepository;
+
+    private static final int ACTION_COMMAND_TYPE_ACTION = 0;
+    private static final int ACTION_COMMAND_TYPE_INPUT = 1;
+    private static final int ACTION_COMMAND_TYPE_OUTPUT = 2;
 
     @Inject
-    public DescribeActionService(Reflections reflections) {
-        this.reflections = reflections;
+    public DescribeActionService(ActionRepository actionRepository) {
+        this.actionRepository = actionRepository;
     }
 
     public List<DescribeServiceActionResponse> createActions() {
-        final Set<Class<?>> actions = reflections.getTypesAnnotatedWith(Action.Metadata.class);
+        final Set<Class<?>> actions = actionRepository.getActions();
 
         if (actions.isEmpty()) {
             return Lists.newArrayList();
@@ -43,20 +47,20 @@ public class DescribeActionService {
             throw new RuntimeException("The action " + action.getName() + " must be annotated with " + Action.Metadata.class.getCanonicalName());
         }
 
-        Class<? extends ActionCommand> command = reflections.getSubTypesOf(ActionCommand.class).stream()
-                .filter(a -> getTypeArguments(a)[0].equals(action))
+        Class<? extends ActionCommand> command = actionRepository.getActionCommands().stream()
+                .filter(a -> getTypeArguments(a)[ACTION_COMMAND_TYPE_ACTION].equals(action))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No action command for the action " + action.getName() + " was found"));
 
         Type[] types = getTypeArguments(command);
 
-        List<DescribeValue> inputs = reflections.getFieldsAnnotatedWith(Action.Input.class).stream()
-                .filter(input -> input.getDeclaringClass().equals(types[1]))
+        List<DescribeValue> inputs = actionRepository.getInputFields().stream()
+                .filter(input -> input.getDeclaringClass().equals(types[ACTION_COMMAND_TYPE_INPUT]))
                 .map(this::createInput)
                 .collect(Collectors.toList());
 
-        List<DescribeValue> outputs = reflections.getFieldsAnnotatedWith(Action.Output.class).stream()
-                .filter(input -> input.getDeclaringClass().equals(types[2]))
+        List<DescribeValue> outputs = actionRepository.getOutputFields().stream()
+                .filter(input -> input.getDeclaringClass().equals(types[ACTION_COMMAND_TYPE_OUTPUT]))
                 .map(this::createOutput)
                 .collect(Collectors.toList());
 

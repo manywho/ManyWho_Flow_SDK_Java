@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public class TypeRepository {
     private final Reflections reflections;
 
+    private Set<Class<? extends Type>> typeElements;
     private Set<Field> typeIdentifiers;
     private Set<Field> typeProperties;
 
@@ -33,6 +34,14 @@ public class TypeRepository {
                         field -> field.getAnnotation(Type.Property.class).name(),
                         field -> field
                 ));
+    }
+
+    public Set<Class<? extends Type>> getTypeElements() {
+        if (typeElements == null) {
+            typeElements = reflections.getSubTypesOf(Type.class);
+        }
+
+        return typeElements;
     }
 
     public Set<Field> getTypeIdentifiers() {

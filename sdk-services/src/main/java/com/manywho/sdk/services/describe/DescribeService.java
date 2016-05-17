@@ -2,62 +2,65 @@ package com.manywho.sdk.services.describe;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.describe.DescribeValue;
-import com.manywho.sdk.services.actions.Action;
+import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.ConfigurationValue;
 import com.manywho.sdk.services.controllers.AbstractDataController;
 import com.manywho.sdk.services.controllers.AbstractFileController;
 import com.manywho.sdk.services.controllers.AbstractIdentityController;
 import com.manywho.sdk.services.controllers.AbstractListenerController;
 import com.manywho.sdk.services.controllers.AbstractSocialController;
-import com.manywho.sdk.services.types.Type;
-import org.reflections.Reflections;
+import com.manywho.sdk.services.types.TypeRepository;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
 class DescribeService {
-    private final Reflections reflections;
+    private final ActionRepository actionRepository;
+    private final DescribeRepository describeRepository;
+    private final TypeRepository typeRepository;
 
     @Inject
-    public DescribeService(Reflections reflections) {
-        this.reflections = reflections;
+    public DescribeService(ActionRepository actionRepository, DescribeRepository describeRepository, TypeRepository typeRepository) {
+        this.actionRepository = actionRepository;
+        this.describeRepository = describeRepository;
+        this.typeRepository = typeRepository;
     }
 
     public boolean anyActionsDefined() {
-        return !reflections.getTypesAnnotatedWith(Action.Metadata.class).isEmpty();
+        return !actionRepository.getActions().isEmpty();
     }
 
     boolean anyConfigurationValuesExist() {
-        return !reflections.getFieldsAnnotatedWith(ConfigurationValue.class).isEmpty();
+        return describeRepository.doFieldsAnnotatedWithExist(ConfigurationValue.class);
     }
 
     boolean anyDataControllersExist() {
-        return !reflections.getSubTypesOf(AbstractDataController.class).isEmpty();
+        return describeRepository.doSubtypesOfExist(AbstractDataController.class);
     }
 
     boolean anyFileControllersExist() {
-        return !reflections.getSubTypesOf(AbstractFileController.class).isEmpty();
+        return describeRepository.doSubtypesOfExist(AbstractFileController.class);
     }
 
     boolean anyIdentityControllersExist() {
-        return !reflections.getSubTypesOf(AbstractIdentityController.class).isEmpty();
+        return describeRepository.doSubtypesOfExist(AbstractIdentityController.class);
     }
 
     boolean anyListenerControllersExist() {
-        return !reflections.getSubTypesOf(AbstractListenerController.class).isEmpty();
+        return describeRepository.doSubtypesOfExist(AbstractListenerController.class);
     }
 
     boolean anySocialControllersExist() {
-        return !reflections.getSubTypesOf(AbstractSocialController.class).isEmpty();
+        return describeRepository.doSubtypesOfExist(AbstractSocialController.class);
     }
 
     boolean anyTypesDefined() {
-        return !reflections.getTypesAnnotatedWith(Type.Element.class).isEmpty();
+        return !typeRepository.getTypeElements().isEmpty();
     }
 
     List<DescribeValue> createConfigurationValues() {
-        List<DescribeValue> values = reflections.getFieldsAnnotatedWith(ConfigurationValue.class)
+        List<DescribeValue> values = describeRepository.getConfigurationValues()
                 .stream()
                 .map(klass -> klass.getAnnotation(ConfigurationValue.class))
                 .map(annotation -> new DescribeValue(annotation.name(), annotation.contentType(), annotation.required()))

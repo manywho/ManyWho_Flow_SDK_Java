@@ -15,6 +15,7 @@ import com.manywho.sdk.api.social.Message;
 import com.manywho.sdk.api.social.MessageList;
 import com.manywho.sdk.api.social.Who;
 import com.manywho.sdk.services.actions.ActionCommand;
+import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.configuration.ConfigurationValue;
 import com.manywho.sdk.services.controllers.AbstractDataController;
@@ -23,6 +24,7 @@ import com.manywho.sdk.services.controllers.AbstractIdentityController;
 import com.manywho.sdk.services.controllers.AbstractListenerController;
 import com.manywho.sdk.services.controllers.AbstractSocialController;
 import com.manywho.sdk.services.types.Type;
+import com.manywho.sdk.services.types.TypeRepository;
 import com.manywho.sdk.services.validation.social.CreateStream;
 import com.manywho.sdk.services.validation.social.DeleteMessage;
 import com.manywho.sdk.services.validation.social.FollowStream;
@@ -38,6 +40,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.junit.Test;
+import org.reflections.Reflections;
 
 import javax.ws.rs.PathParam;
 import java.io.InputStream;
@@ -50,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 public class DescribeServiceTest extends BaseTest {
     @Test
     public void testAnyActionsDefinedWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyActionsDefined());
     }
@@ -59,14 +62,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyActionsDefinedWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyActionsDefined());
     }
 
     @Test
     public void testAnyConfigurationValuesExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyConfigurationValuesExist());
     }
@@ -75,14 +78,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyConfigurationValuesExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyConfigurationValuesExist());
     }
 
     @Test
     public void testAnyDataControllersExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyDataControllersExist());
     }
@@ -91,14 +94,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyDataControllersExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyDataControllersExist());
     }
 
     @Test
     public void testAnyFileControllersExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyFileControllersExist());
     }
@@ -107,14 +110,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyFileControllersExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyFileControllersExist());
     }
 
     @Test
     public void testAnyIdentityControllersExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyIdentityControllersExist());
     }
@@ -123,14 +126,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyIdentityControllersExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyIdentityControllersExist());
     }
 
     @Test
     public void testAnyListenerControllersExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyListenerControllersExist());
     }
@@ -139,14 +142,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyListenerControllersExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyListenerControllersExist());
     }
 
     @Test
     public void testAnySocialControllersExistWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anySocialControllersExist());
     }
@@ -155,14 +158,14 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnySocialControllersExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anySocialControllersExist());
     }
 
     @Test
     public void testAnyTypedDefinedWithTestClass() {
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertTrue(describeService.anyTypesDefined());
     }
@@ -171,9 +174,15 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyTypesDefinedWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeService describeService = new DescribeService(createReflections());
+        DescribeService describeService = createDescribeService();
 
         assertFalse(describeService.anyTypesDefined());
+    }
+
+    private DescribeService createDescribeService() {
+        Reflections reflections = createReflections();
+
+        return new DescribeService(new ActionRepository(reflections), new DescribeRepository(reflections), new TypeRepository(reflections));
     }
 
     private class TestAction implements ActionCommand<TestAction, TestAction, TestAction> {

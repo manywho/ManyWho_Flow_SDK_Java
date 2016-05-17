@@ -9,8 +9,8 @@ import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeParser;
+import com.manywho.sdk.services.types.TypeRepository;
 import org.apache.commons.collections4.CollectionUtils;
-import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -19,15 +19,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DescribeTypeService {
-    private final Reflections reflections;
+    private final TypeRepository typeRepository;
 
     @Inject
-    public DescribeTypeService(Reflections reflections) {
-        this.reflections = reflections;
+    public DescribeTypeService(TypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
     }
 
     public List<TypeElement> createTypes() {
-        final Set<Class<? extends Type>> types = reflections.getSubTypesOf(Type.class);
+        final Set<Class<? extends Type>> types = typeRepository.getTypeElements();
 
         if (types.isEmpty()) {
             return Lists.newArrayList();
@@ -48,7 +48,7 @@ public class DescribeTypeService {
         Type.Element annotation = type.getAnnotation(Type.Element.class);
 
         // Check if we have an identifier property on the type
-        long identifierCount = reflections.getFieldsAnnotatedWith(Type.Identifier.class).stream()
+        long identifierCount = typeRepository.getTypeIdentifiers().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
                 .filter(field -> String.class.isAssignableFrom(field.getType()))
                 .count();
@@ -56,11 +56,9 @@ public class DescribeTypeService {
         if (identifierCount != 1) {
             throw new TypeIdentifierMissingException(type);
         }
-
-        Set<Field> annotatedProperties = reflections.getFieldsAnnotatedWith(Type.Property.class);
-
+        
         // Build the list of properties from the annotated type
-        List<TypeElementProperty> properties = annotatedProperties.stream()
+        List<TypeElementProperty> properties = typeRepository.getTypeProperties().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
                 .map(this::createTypeElementProperty)
                 .sorted()
@@ -71,7 +69,7 @@ public class DescribeTypeService {
         }
 
         // Build the property bindings
-        List<TypeElementPropertyBinding> propertyBindings = annotatedProperties.stream()
+        List<TypeElementPropertyBinding> propertyBindings = typeRepository.getTypeProperties().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
                 .map(field -> field.getAnnotation(Type.Property.class))
                 .filter(Type.Property::bound)

@@ -5,6 +5,7 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
+import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
 
 import java.util.List;
@@ -24,19 +25,7 @@ public class DescribeTypeServiceTest extends BaseTest {
     public void testCreateTypesWithNoAnnotatedTypes() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
-        DescribeTypeService describeTypeService = new DescribeTypeService(createReflections());
-
-        List<TypeElement> types = describeTypeService.createTypes();
-
-        assertNotNull(types);
-        assertEquals(0, types.size());
-    }
-
-    @Test
-    public void testCreateTypesWithoutTypeInterface() {
-        includeOnly(TypeWithoutTypeInterface.class);
-
-        DescribeTypeService describeTypeService = new DescribeTypeService(createReflections());
+        DescribeTypeService describeTypeService = createDescribeTypeService();
 
         List<TypeElement> types = describeTypeService.createTypes();
 
@@ -48,7 +37,7 @@ public class DescribeTypeServiceTest extends BaseTest {
     public void testCreateTypesWithNoIdentifier() {
         includeOnly(TypeWithoutIdentifier.class);
 
-        DescribeTypeService describeTypeService = new DescribeTypeService(createReflections());
+        DescribeTypeService describeTypeService = createDescribeTypeService();
 
         describeTypeService.createTypes();
     }
@@ -57,7 +46,7 @@ public class DescribeTypeServiceTest extends BaseTest {
     public void testCreateTypesWithValidList() {
         includeOnly(ValidList.class, ValidObject.class);
 
-        DescribeTypeService describeTypeService = new DescribeTypeService(createReflections());
+        DescribeTypeService describeTypeService = createDescribeTypeService();
 
         List<TypeElement> types = describeTypeService.createTypes();
 
@@ -76,7 +65,7 @@ public class DescribeTypeServiceTest extends BaseTest {
     public void testCreateTypesWithValidObjectAndDefaultSummary() {
         includeOnly(ValidObject.class);
 
-        DescribeTypeService describeTypeService = new DescribeTypeService(createReflections());
+        DescribeTypeService describeTypeService = createDescribeTypeService();
 
         List<TypeElement> types = describeTypeService.createTypes();
 
@@ -86,6 +75,22 @@ public class DescribeTypeServiceTest extends BaseTest {
         // Assert that the "Valid Object" type was created
         assertThat(types, hasItem(hasProperty("developerName", equalTo(ValidObject.NAME))));
         assertThat(types, hasItem(hasProperty("developerSummary", containsString("object structure"))));
+    }
+
+    @Test
+    public void testCreateTypesWithoutTypeInterface() {
+        includeOnly(TypeWithoutTypeInterface.class);
+
+        DescribeTypeService describeTypeService = createDescribeTypeService();
+
+        List<TypeElement> types = describeTypeService.createTypes();
+
+        assertNotNull(types);
+        assertEquals(0, types.size());
+    }
+
+    private DescribeTypeService createDescribeTypeService() {
+        return new DescribeTypeService(new TypeRepository(createReflections()));
     }
 
     @Type.Element(name = ValidList.NAME, summary = ValidList.SUMMARY)
