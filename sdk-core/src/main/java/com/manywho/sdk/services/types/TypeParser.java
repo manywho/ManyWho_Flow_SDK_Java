@@ -15,11 +15,7 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +33,10 @@ public class TypeParser {
     }
 
     public <T> List<T> parseList(List<MObject> objects, Class<T> tClass) throws Exception {
+        if (objects == null) {
+            return new ArrayList<>();
+        }
+
         return objects.stream().map(Throwing.function(object -> this.parseObject(object, tClass)))
                 .collect(Collectors.toList());
     }
