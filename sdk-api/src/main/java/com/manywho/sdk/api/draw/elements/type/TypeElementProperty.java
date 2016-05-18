@@ -2,7 +2,7 @@ package com.manywho.sdk.api.draw.elements.type;
 
 import com.manywho.sdk.api.ContentType;
 
-public class TypeElementProperty {
+public class TypeElementProperty implements Comparable<TypeElementProperty> {
     private String id;
     private String developerName;
     private String contentFormat;
@@ -74,5 +74,10 @@ public class TypeElementProperty {
 
     public void setTypeElementDeveloperName(String typeElementDeveloperName) {
         this.typeElementDeveloperName = typeElementDeveloperName;
+    }
+
+    @Override
+    public int compareTo(TypeElementProperty typeElementProperty) {
+        return getDeveloperName().compareTo(typeElementProperty.getDeveloperName());
     }
 }

@@ -1,6 +1,6 @@
 package com.manywho.sdk.api.draw.elements.type;
 
-public class TypeElementPropertyBinding {
+public class TypeElementPropertyBinding implements Comparable<TypeElementPropertyBinding> {
     private String databaseFieldName;
     private String typeElementPropertyId;
     private String typeElementPropertyDeveloperName;
@@ -49,5 +49,10 @@ public class TypeElementPropertyBinding {
 
     public void setDatabaseContentType(String databaseContentType) {
         this.databaseContentType = databaseContentType;
+    }
+
+    @Override
+    public int compareTo(TypeElementPropertyBinding propertyBinding) {
+        return getTypeElementPropertyDeveloperName().compareTo(propertyBinding.getTypeElementPropertyDeveloperName());
     }
 }
