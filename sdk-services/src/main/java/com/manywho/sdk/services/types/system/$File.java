@@ -38,6 +38,15 @@ public class $File implements Type {
     @Type.Property(name = "Name", contentType = ContentType.String)
     private String name;
 
+    public $File(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public $File() {
+
+    }
+
     public OffsetDateTime getDateCreated() {
         return dateCreated;
     }
