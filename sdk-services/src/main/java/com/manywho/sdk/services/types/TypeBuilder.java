@@ -135,14 +135,6 @@ public class TypeBuilder {
         return property;
     }
 
-    private List<MObject> convertObject(String property, Object object) {
-        if (object instanceof Type) {
-            return from((Type) object);
-        }
-
-        throw new RuntimeException("The value of property " + property + " is not a valid Object");
-    }
-
     private String convertBoolean(String property, Object object) {
         if (object instanceof Boolean) {
             return object.toString();
@@ -177,6 +169,7 @@ public class TypeBuilder {
         throw new RuntimeException("The value of property " + property + " is not a valid String");
     }
 
+    @SuppressWarnings("unchecked")
     private List<MObject> convertList(String property, Object object) {
         if (object instanceof Collection) {
             // TODO: Check that object is a collection of Type objects
@@ -192,6 +185,14 @@ public class TypeBuilder {
         }
 
         throw new RuntimeException("The value of property " + property + " is not a valid Number");
+    }
+
+    private List<MObject> convertObject(String property, Object object) {
+        if (object instanceof Type) {
+            return from((Type) object);
+        }
+
+        throw new RuntimeException("The value of property " + property + " is not a valid Object");
     }
 
     private String convertPassword(String property, Object object) {
