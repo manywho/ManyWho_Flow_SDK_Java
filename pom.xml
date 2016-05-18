@@ -149,22 +149,4 @@
             </build>
         </profile>
     </profiles>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections-maven</artifactId>
-                <version>0.9.9-RC2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>reflections</goal>
-                        </goals>
-                        <phase>process-classes</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
