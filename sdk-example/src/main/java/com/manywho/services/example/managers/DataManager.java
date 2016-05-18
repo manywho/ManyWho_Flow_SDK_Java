@@ -5,12 +5,14 @@ import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.types.TypeBuilder;
+import com.manywho.sdk.services.values.ValueProperty;
 import com.manywho.sdk.services.values.ValueParser;
 import com.manywho.services.example.repositories.PersonRepository;
 import com.manywho.services.example.types.Person;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 public class DataManager {
     private final PersonRepository personRepository;
@@ -46,9 +48,15 @@ public class DataManager {
     public ObjectDataResponse save(ObjectDataRequest objectDataRequest) {
         switch (objectDataRequest.getObjectDataType().getDeveloperName()) {
             case Person.NAME:
-                Person person = valueParser.fromObject(objectDataRequest.getObjectData(), Person.class);
+                Person person = valueParser.asObject(objectDataRequest.getObjectData(), Person.class);
 
                 int i = 0;
+
+                break;
+            default:
+                List<Map<String, ValueProperty>> objects = valueParser.asMap(objectDataRequest.getObjectData());
+                
+                int b = 0;
 
                 break;
         }
