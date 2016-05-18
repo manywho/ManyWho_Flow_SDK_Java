@@ -21,6 +21,7 @@ import com.palominolabs.http.server.HttpServerWrapperModule;
 import com.squarespace.jersey2.guice.JerseyGuiceModule;
 import com.squarespace.jersey2.guice.JerseyGuiceUtils;
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -55,6 +56,7 @@ public class BaseApplication extends ResourceConfig {
         packages(this.getClass().getPackage().getName());
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
         register(LoggingFilter.class);
+        register(MultiPartFeature.class);
         register(ValidationConfigurationContextResolver.class);
 
         registerClasses(DefaultExceptionMapper.class);

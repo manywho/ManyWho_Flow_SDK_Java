@@ -37,7 +37,6 @@ import com.manywho.sdk.services.validation.social.PostNewMessage;
 import com.manywho.sdk.services.validation.social.SearchUsersByName;
 import com.manywho.sdk.services.validation.social.ShareMessage;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.junit.Test;
 import org.reflections.Reflections;
@@ -227,7 +226,9 @@ public class DescribeServiceTest extends BaseTest {
         }
 
         @Override
-        public ObjectDataResponse uploadFile(@FormDataParam("FileDataRequest") FileDataRequest fileDataRequest, FormDataMultiPart file) throws Exception {
+        public ObjectDataResponse uploadFile(@FormDataParam("FileDataRequest") FileDataRequest fileDataRequest,
+                                             @FormDataParam("file") FormDataContentDisposition fileInformation,
+                                             @FormDataParam("file") InputStream file) throws Exception {
             return null;
         }
 
