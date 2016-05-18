@@ -1,9 +1,11 @@
 package com.manywho.sdk.services.values;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
+import com.manywho.sdk.api.run.elements.type.Property;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypeRepository;
@@ -29,27 +31,55 @@ public class ValueParser {
         this.typeRepository = typeRepository;
     }
 
-    public <T extends Type> Collection<T> fromList(List<MObject> objects, Class<T> type) {
+    public <T extends Type> Collection<T> asList(List<MObject> objects, Class<T> type) {
         if (objects == null) {
             return Lists.newArrayList();
         }
 
         return objects.stream()
-                .map(object -> fromObject(object, type))
+                .map(object -> asObject(object, type))
                 .collect(Collectors.toList());
     }
 
-    public <T extends Type> T fromObject(List<MObject> objects, Class<T> type) {
+    public List<Map<String, ValueProperty>> asMap(List<MObject> objects) {
+        if (objects == null) {
+            return Lists.newArrayList();
+        }
+
+        return objects.stream()
+                .map(this::asMap)
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, ValueProperty> asMap(MObject object) {
+        Map<String, ValueProperty> map = Maps.newHashMap();
+
+        for (Property property : object.getProperties()) {
+            ValueProperty valueProperty;
+
+            if (property.getContentType().equals(ContentType.List) || property.getContentType().equals(ContentType.Object)) {
+                valueProperty = new ValueProperty(property.getContentType(), asMap(property.getObjectData()));
+            } else {
+                valueProperty = new ValueProperty(property.getContentType(), property.getContentValue());
+            }
+
+            map.put(property.getDeveloperName(), valueProperty);
+        }
+
+        return map;
+    }
+
+    public <T extends Type> T asObject(List<MObject> objects, Class<T> type) {
         Type.Element typeAnnotation = type.getAnnotation(Type.Element.class);
 
         if (objects == null || objects.isEmpty()) {
             throw new RuntimeException("Unable to find an object to parse into " + typeAnnotation.name());
         }
 
-        return fromObject(objects.get(0), type);
+        return asObject(objects.get(0), type);
     }
 
-    public <T extends Type> T fromObject(MObject object, Class<T> type) {
+    public <T extends Type> T asObject(MObject object, Class<T> type) {
         try {
             T instance = type.newInstance();
 
@@ -120,7 +150,7 @@ public class ValueParser {
         Class<?> genericType = TypeParser.findGenericType(field.getGenericType());
 
         if (Type.class.isAssignableFrom(genericType)) {
-            return fromList(list, (Class<T>) genericType);
+            return asList(list, (Class<T>) genericType);
         }
 
         throw new TypePropertyMismatchException(field, Collection.class, ContentType.List);
@@ -161,7 +191,7 @@ public class ValueParser {
                 throw new RuntimeException("Unable to find an object to parse into " + field.getAnnotation(Type.Property.class).name());
             }
 
-            return fromObject(objects.get(0), (Class<T>) field.getType());
+            return asObject(objects.get(0), (Class<T>) field.getType());
         }
 
         throw new TypePropertyMismatchException(field, Type.class, ContentType.Object);
