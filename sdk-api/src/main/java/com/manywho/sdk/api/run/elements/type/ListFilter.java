@@ -11,8 +11,8 @@ public class ListFilter extends ListFilterMinimal {
     private boolean filterByProvidedObjects;
     private String orderByPropertyDeveloperName;
     private String orderByDirectionType;
-    private int limit;
-    private int offset;
+    private Integer limit;
+    private Integer offset;
     private String search;
     private List<SearchCriteria> searchCriteria = new ArrayList<>();
     private List<OrderBy> orderBy = new ArrayList<>();
@@ -23,6 +23,14 @@ public class ListFilter extends ListFilterMinimal {
 
     public boolean hasId() {
         return !Strings.isNullOrEmpty(id);
+    }
+
+    public boolean hasLimit() {
+        if (limit == null || limit == 0) {
+            return false;
+        }
+
+        return true;
     }
 
     public void setId(String id) {
