@@ -66,7 +66,7 @@ public class TypeBuilder {
             Object identifierValue = identifierField.get(type);
 
             if (identifierValue == null) {
-                throw new RuntimeException("The value of the identifier field on " + type.getClass().getName() + " is null");
+                throw new RuntimeException("The value of the identifier field on " + type.getClass().getName() + " cannot be null");
             }
 
             object.setExternalId(identifierValue.toString());
