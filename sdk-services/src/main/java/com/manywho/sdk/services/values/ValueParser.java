@@ -31,7 +31,7 @@ public class ValueParser {
         this.typeRepository = typeRepository;
     }
 
-    public <T extends Type> Collection<T> asList(List<MObject> objects, Class<T> type) {
+    public <T extends Type> List<T> asList(List<MObject> objects, Class<T> type) {
         if (objects == null) {
             return Lists.newArrayList();
         }

@@ -1,9 +1,8 @@
-package com.manywho.services.example.controllers;
+package com.manywho.sdk.services.controllers;
 
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
-import com.manywho.sdk.services.controllers.AbstractDataController;
-import com.manywho.services.example.managers.DataManager;
+import com.manywho.sdk.services.database.DatabaseManager;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -11,26 +10,26 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Path;
 
 @Path("/data")
-public class DataController extends AbstractDataController {
-    private final DataManager dataManager;
+public class DefaultDatabaseController extends AbstractDataController {
+    private final DatabaseManager databaseManager;
 
     @Inject
-    public DataController(DataManager dataManager) {
-        this.dataManager = dataManager;
+    public DefaultDatabaseController(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
     }
 
     @Override
     public ObjectDataResponse delete(ObjectDataRequest objectDataRequest) throws Exception {
-        return null;
+        return databaseManager.delete(objectDataRequest);
     }
 
     @Override
     public ObjectDataResponse load(@Valid @NotNull ObjectDataRequest objectDataRequest) throws Exception {
-        return dataManager.load(objectDataRequest);
+        return databaseManager.load(objectDataRequest);
     }
 
     @Override
     public ObjectDataResponse save(ObjectDataRequest objectDataRequest) throws Exception {
-        return dataManager.save(objectDataRequest);
+        return databaseManager.save(objectDataRequest);
     }
 }

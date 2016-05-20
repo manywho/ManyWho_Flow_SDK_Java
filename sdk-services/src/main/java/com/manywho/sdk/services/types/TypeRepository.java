@@ -20,6 +20,13 @@ public class TypeRepository {
         this.reflections = reflections;
     }
 
+    public Class<? extends Type> findTypeElement(String name) {
+        return getTypeElements().stream()
+                .filter(typeElement -> typeElement.getAnnotation(Type.Element.class).name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("A type element could not be found with the name " + name));
+    }
+
     public Field findTypeIdentifier(Class<? extends Type> type) {
         return getTypeIdentifiers().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
