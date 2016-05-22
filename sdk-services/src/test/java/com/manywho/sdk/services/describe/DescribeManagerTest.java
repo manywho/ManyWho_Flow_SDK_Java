@@ -8,6 +8,7 @@ import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
+import com.manywho.sdk.services.entities.TestType;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
 import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
@@ -28,7 +29,7 @@ import static org.junit.Assert.assertThat;
 public class DescribeManagerTest extends BaseTest {
     @Test
     public void testDescribe() throws Exception {
-        includeOnly(TestAction.class);
+        includeOnly(TestAction.class, TestType.class);
 
         Reflections reflections = createReflections();
 

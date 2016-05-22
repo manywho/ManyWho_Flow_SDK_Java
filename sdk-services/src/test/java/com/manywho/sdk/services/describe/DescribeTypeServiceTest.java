@@ -1,9 +1,11 @@
 package com.manywho.sdk.services.describe;
 
 import com.google.common.collect.Lists;
-import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
-import com.manywho.sdk.services.types.Type;
+import com.manywho.sdk.services.entities.TestTypeWithValidListProperty;
+import com.manywho.sdk.services.entities.TestTypeWithValidObjectProperty;
+import com.manywho.sdk.services.entities.TestTypeWithoutIdentifier;
+import com.manywho.sdk.services.entities.TestTypeWithoutTypeInterface;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class DescribeTypeServiceTest extends BaseTest {
 
     @Test(expected = TypeIdentifierMissingException.class)
     public void testCreateTypesWithNoIdentifier() {
-        includeOnly(TypeWithoutIdentifier.class);
+        includeOnly(TestTypeWithoutIdentifier.class);
 
         DescribeTypeService describeTypeService = createDescribeTypeService();
 
@@ -44,7 +46,7 @@ public class DescribeTypeServiceTest extends BaseTest {
 
     @Test
     public void testCreateTypesWithValidList() {
-        includeOnly(ValidList.class, ValidObject.class);
+        includeOnly(TestTypeWithValidListProperty.class, TestTypeWithValidObjectProperty.class);
 
         DescribeTypeService describeTypeService = createDescribeTypeService();
 
@@ -54,16 +56,16 @@ public class DescribeTypeServiceTest extends BaseTest {
         assertEquals(2, types.size());
 
         // Assert that the "Valid List" type was created
-        assertThat(types, hasItem(hasProperty("developerName", equalTo(ValidList.NAME))));
-        assertThat(types, hasItem(hasProperty("developerSummary", equalTo(ValidList.SUMMARY))));
+        assertThat(types, hasItem(hasProperty("developerName", equalTo(TestTypeWithValidListProperty.NAME))));
+        assertThat(types, hasItem(hasProperty("developerSummary", equalTo(TestTypeWithValidListProperty.SUMMARY))));
 
         // Assert that the "Valid List" type contains a property of type "Valid Object"
-        assertThat(types, hasItem(hasProperty("properties", hasItem(hasProperty("typeElementDeveloperName", equalTo(ValidObject.NAME))))));
+        assertThat(types, hasItem(hasProperty("properties", hasItem(hasProperty("typeElementDeveloperName", equalTo(TestTypeWithValidObjectProperty.NAME))))));
     }
 
     @Test
     public void testCreateTypesWithValidObjectAndDefaultSummary() {
-        includeOnly(ValidObject.class);
+        includeOnly(TestTypeWithValidObjectProperty.class);
 
         DescribeTypeService describeTypeService = createDescribeTypeService();
 
@@ -73,13 +75,13 @@ public class DescribeTypeServiceTest extends BaseTest {
         assertNotEquals(0, types.size());
 
         // Assert that the "Valid Object" type was created
-        assertThat(types, hasItem(hasProperty("developerName", equalTo(ValidObject.NAME))));
+        assertThat(types, hasItem(hasProperty("developerName", equalTo(TestTypeWithValidObjectProperty.NAME))));
         assertThat(types, hasItem(hasProperty("developerSummary", containsString("object structure"))));
     }
 
     @Test
     public void testCreateTypesWithoutTypeInterface() {
-        includeOnly(TypeWithoutTypeInterface.class);
+        includeOnly(TestTypeWithoutTypeInterface.class);
 
         DescribeTypeService describeTypeService = createDescribeTypeService();
 
@@ -91,38 +93,5 @@ public class DescribeTypeServiceTest extends BaseTest {
 
     private DescribeTypeService createDescribeTypeService() {
         return new DescribeTypeService(new TypeRepository(createReflections()));
-    }
-
-    @Type.Element(name = ValidList.NAME, summary = ValidList.SUMMARY)
-    class ValidList implements Type {
-        static final String NAME = "Valid List";
-        static final String SUMMARY = "A valid summary";
-
-        @Type.Identifier
-        private String id;
-
-        @Type.Property(name = "Valid Objects", contentType = ContentType.List)
-        private List<ValidObject> validObjects;
-    }
-
-    @Type.Element(name = ValidObject.NAME)
-    class ValidObject implements Type {
-        static final String NAME = "Valid Object";
-
-        @Type.Identifier
-        private String id;
-
-        @Type.Property(name = "Name", contentType = ContentType.String)
-        private String name;
-    }
-
-    @Type.Element(name = TypeWithoutTypeInterface.NAME)
-    class TypeWithoutTypeInterface {
-        static final String NAME = "Type Without Type Interface";
-    }
-
-    @Type.Element(name = TypeWithoutIdentifier.NAME)
-    class TypeWithoutIdentifier implements Type {
-        static final String NAME = "Type Without Identifier";
     }
 }
