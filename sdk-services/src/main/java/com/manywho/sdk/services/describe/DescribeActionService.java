@@ -6,6 +6,7 @@ import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.Action;
 import com.manywho.sdk.services.actions.ActionCommand;
+import com.manywho.sdk.services.actions.ActionCommandNotFoundException;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.types.TypeParser;
 
@@ -50,7 +51,7 @@ public class DescribeActionService {
         Class<? extends ActionCommand> command = actionRepository.getActionCommands().stream()
                 .filter(a -> getTypeArguments(a)[ACTION_COMMAND_TYPE_ACTION].equals(action))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("No action command for the action " + action.getName() + " was found"));
+                .orElseThrow(() -> new ActionCommandNotFoundException(action));
 
         Type[] types = getTypeArguments(command);
 
