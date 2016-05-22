@@ -1,11 +1,7 @@
 package com.manywho.sdk.services;
 
 import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.Scopes;
+import com.google.inject.*;
 import com.google.inject.servlet.ServletModule;
 import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;

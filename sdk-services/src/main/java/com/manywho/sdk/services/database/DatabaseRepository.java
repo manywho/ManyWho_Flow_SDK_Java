@@ -17,9 +17,9 @@ public class DatabaseRepository {
         this.reflections = reflections;
     }
 
-    public <T extends Type> Class<? extends Database<T>> findDatabase(Class<T> type) {
-        return (Class<? extends Database<T>>) getDatabases().stream()
-                .filter(database -> TypeParser.findGenericType(database.getGenericInterfaces()[0]).equals(type))
+    public <T extends Type> Class<? extends Database<?, T>> findDatabase(Class<T> type) {
+        return (Class<? extends Database<?, T>>) getDatabases().stream()
+                .filter(database -> TypeParser.findGenericType(database.getGenericInterfaces()[0], 1).equals(type))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Unable to find an implementation of Database<T> for the type " + type.getCanonicalName()));
     }

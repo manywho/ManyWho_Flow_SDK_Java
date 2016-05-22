@@ -17,7 +17,8 @@ import com.manywho.sdk.api.social.Who;
 import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.ActionResponse;
-import com.manywho.sdk.services.configuration.ConfigurationValue;
+import com.manywho.sdk.services.configuration.Configuration;
+import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.controllers.AbstractDataController;
 import com.manywho.sdk.services.controllers.AbstractFileController;
 import com.manywho.sdk.services.controllers.AbstractIdentityController;
@@ -181,7 +182,7 @@ public class DescribeServiceTest extends BaseTest {
     private DescribeService createDescribeService() {
         Reflections reflections = createReflections();
 
-        return new DescribeService(new ActionRepository(reflections), new DescribeRepository(reflections), new TypeRepository(reflections));
+        return new DescribeService(new ActionRepository(reflections), new ConfigurationRepository(reflections), new DescribeRepository(reflections), new TypeRepository(reflections));
     }
 
     private class TestAction implements ActionCommand<TestAction, TestAction, TestAction> {
@@ -193,10 +194,10 @@ public class DescribeServiceTest extends BaseTest {
     }
 
     private class TestConfigurationValues {
-        @ConfigurationValue(name = "Value One", contentType = ContentType.String)
+        @Configuration.Value(name = "Value One", contentType = ContentType.String)
         private String valueOne;
 
-        @ConfigurationValue(name = "Value Two", contentType = ContentType.String, required = false)
+        @Configuration.Value(name = "Value Two", contentType = ContentType.String, required = false)
         private String valueTwo;
     }
 

@@ -7,11 +7,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 
 public class TypeParser {
-    public static Class<?> findGenericType(java.lang.reflect.Type type) {
+    public static Class<?> findGenericType(java.lang.reflect.Type type, int index) {
         if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
 
-            return (Class<?>) parameterizedType.getActualTypeArguments()[0];
+            return (Class<?>) parameterizedType.getActualTypeArguments()[index];
         }
 
         throw new RuntimeException(String.format("The given type %s is not a generic type", type));
@@ -23,7 +23,7 @@ public class TypeParser {
         // If the property is a ContentList, then we need to find the generic type of the Collection
         if (contentType.equals(ContentType.List)) {
             if (Collection.class.isAssignableFrom(property.getType())) {
-                referencedType = findGenericType(property.getGenericType());
+                referencedType = findGenericType(property.getGenericType(), 0);
             } else {
                 throw new RuntimeException("The Element Property " + property + " is a ContentList but does not have a type that inherits " + Collection.class);
             }

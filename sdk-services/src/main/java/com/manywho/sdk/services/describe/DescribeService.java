@@ -3,7 +3,8 @@ package com.manywho.sdk.services.describe;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionRepository;
-import com.manywho.sdk.services.configuration.ConfigurationValue;
+import com.manywho.sdk.services.configuration.Configuration;
+import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.controllers.AbstractDataController;
 import com.manywho.sdk.services.controllers.AbstractFileController;
 import com.manywho.sdk.services.controllers.AbstractIdentityController;
@@ -18,12 +19,14 @@ import java.util.stream.Collectors;
 
 class DescribeService {
     private final ActionRepository actionRepository;
+    private final ConfigurationRepository configurationRepository;
     private final DescribeRepository describeRepository;
     private final TypeRepository typeRepository;
 
     @Inject
-    public DescribeService(ActionRepository actionRepository, DescribeRepository describeRepository, TypeRepository typeRepository) {
+    public DescribeService(ActionRepository actionRepository, ConfigurationRepository configurationRepository, DescribeRepository describeRepository, TypeRepository typeRepository) {
         this.actionRepository = actionRepository;
+        this.configurationRepository = configurationRepository;
         this.describeRepository = describeRepository;
         this.typeRepository = typeRepository;
     }
@@ -33,7 +36,7 @@ class DescribeService {
     }
 
     boolean anyConfigurationValuesExist() {
-        return describeRepository.doFieldsAnnotatedWithExist(ConfigurationValue.class);
+        return describeRepository.doFieldsAnnotatedWithExist(Configuration.Value.class);
     }
 
     boolean anyDataControllersExist() {
@@ -61,9 +64,9 @@ class DescribeService {
     }
 
     List<DescribeValue> createConfigurationValues() {
-        List<DescribeValue> values = describeRepository.getConfigurationValues()
+        List<DescribeValue> values = configurationRepository.getConfigurationValues()
                 .stream()
-                .map(klass -> klass.getAnnotation(ConfigurationValue.class))
+                .map(klass -> klass.getAnnotation(Configuration.Value.class))
                 .map(annotation -> new DescribeValue(annotation.name(), annotation.contentType(), annotation.required()))
                 .collect(Collectors.toList());
 

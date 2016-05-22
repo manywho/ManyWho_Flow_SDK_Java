@@ -7,6 +7,7 @@ import com.manywho.sdk.services.actions.Action;
 import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.ActionResponse;
+import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
 import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class DescribeManagerTest extends BaseTest {
         TypeRepository typeRepository = new TypeRepository(reflections);
 
         DescribeManager manager = new DescribeManager(
-                new DescribeService(actionRepository, new DescribeRepository(reflections), typeRepository),
+                new DescribeService(actionRepository, new ConfigurationRepository(reflections), new DescribeRepository(reflections), typeRepository),
                 new DescribeTypeService(typeRepository),
                 new DescribeActionService(actionRepository)
         );

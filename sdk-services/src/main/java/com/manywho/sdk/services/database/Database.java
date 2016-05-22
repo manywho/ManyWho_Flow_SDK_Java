@@ -1,24 +1,25 @@
 package com.manywho.sdk.services.database;
 
 import com.manywho.sdk.api.run.elements.type.ListFilter;
+import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.types.Type;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface Database<T extends Type> {
-    T create(T object);
+public interface Database<C extends Configuration, T extends Type> {
+    T create(C configuration, T object);
 
-    Collection<T> create(Collection<T> objects);
+    List<T> create(C configuration, List<T> objects);
 
-    void delete(T object);
+    void delete(C configuration, T object);
 
-    void delete(Collection<T> objects);
+    void delete(C configuration, List<T> objects);
 
-    T find(String id);
+    T find(C configuration, String id);
 
-    Collection<T> findAll(ListFilter filter);
+    List<T> findAll(C configuration, ListFilter filter);
 
-    T update(T object);
+    T update(C configuration, T object);
 
-    Collection<T> update(Collection<T> objects);
+    List<T> update(C configuration, List<T> objects);
 }

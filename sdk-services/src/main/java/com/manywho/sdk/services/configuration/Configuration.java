@@ -7,10 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ConfigurationValue {
-    String name();
-    ContentType contentType();
-    boolean required() default true;
+public interface Configuration {
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Value {
+        String name();
+        ContentType contentType();
+        boolean required() default true;
+    }
 }

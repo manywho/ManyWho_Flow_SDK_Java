@@ -147,7 +147,7 @@ public class ValueParser {
 
     @SuppressWarnings("unchecked")
     private <T extends Type> Collection<T> toList(Field field, List<MObject> list) {
-        Class<?> genericType = TypeParser.findGenericType(field.getGenericType());
+        Class<?> genericType = TypeParser.findGenericType(field.getGenericType(), 0);
 
         if (Type.class.isAssignableFrom(genericType)) {
             return asList(list, (Class<T>) genericType);
