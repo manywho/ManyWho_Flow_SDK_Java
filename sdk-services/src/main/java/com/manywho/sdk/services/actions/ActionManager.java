@@ -47,14 +47,16 @@ public class ActionManager {
         try {
             Object inputObject = Class.forName(types[1].getTypeName()).newInstance();
 
-            for (Field field : findInputFields(types[1])) {
-                Action.Input annotation = field.getAnnotation(Action.Input.class);
+            if (serviceRequest.hasInputs()) {
+                for (Field field : findInputFields(types[1])) {
+                    Action.Input annotation = field.getAnnotation(Action.Input.class);
 
-                Optional<EngineValue> optional = serviceRequest.getInputs().stream()
-                        .filter(i -> i.getDeveloperName().equals(annotation.name()))
-                        .findFirst();
+                    Optional<EngineValue> optional = serviceRequest.getInputs().stream()
+                            .filter(i -> i.getDeveloperName().equals(annotation.name()))
+                            .findFirst();
 
-                optional.ifPresent(input -> valueParser.populateObjectField(inputObject, field, annotation.contentType(), input));
+                    optional.ifPresent(input -> valueParser.populateObjectField(inputObject, field, annotation.contentType(), input));
+                }
             }
 
             ActionResponse actionResponse = injector.getInstance(command).execute(inputObject);

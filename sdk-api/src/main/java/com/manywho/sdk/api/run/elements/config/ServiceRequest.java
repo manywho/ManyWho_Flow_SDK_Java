@@ -3,6 +3,7 @@ package com.manywho.sdk.api.run.elements.config;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.map.OutcomeAvailable;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class ServiceRequest extends AbstractRequest {
 
     public List<EngineValue> getInputs() {
         return inputs;
+    }
+
+    public boolean hasInputs() {
+        return CollectionUtils.isNotEmpty(inputs);
     }
 
     public void setInputs(List<EngineValue> inputs) {
