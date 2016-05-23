@@ -1,16 +1,27 @@
-package com.manywho.sdk.services.describe;
+package com.manywho.sdk.services.unit.describe;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
-import com.manywho.sdk.services.actions.*;
-import com.manywho.sdk.services.entities.*;
+import com.manywho.sdk.services.actions.ActionCommandNotFoundException;
+import com.manywho.sdk.services.actions.ActionRepository;
+import com.manywho.sdk.services.describe.DescribeActionService;
+import com.manywho.sdk.services.unit.entities.TestAction;
+import com.manywho.sdk.services.unit.entities.TestActionCommand;
+import com.manywho.sdk.services.unit.entities.TestActionWithoutCommand;
+import com.manywho.sdk.services.unit.entities.TestActionWithoutMetadata;
+import com.manywho.sdk.services.unit.entities.TestType;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class DescribeActionServiceTest extends BaseTest {
     private DescribeActionService createDescribeActionService() {

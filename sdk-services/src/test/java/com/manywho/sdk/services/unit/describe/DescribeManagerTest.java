@@ -1,16 +1,26 @@
-package com.manywho.sdk.services.describe;
+package com.manywho.sdk.services.unit.describe;
 
 import com.google.common.io.Resources;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
-import com.manywho.sdk.services.actions.Action;
-import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionRepository;
-import com.manywho.sdk.services.actions.ActionResponse;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
-import com.manywho.sdk.services.entities.TestType;
+import com.manywho.sdk.services.describe.DescribeActionService;
+import com.manywho.sdk.services.describe.DescribeManager;
+import com.manywho.sdk.services.describe.DescribeRepository;
+import com.manywho.sdk.services.describe.DescribeService;
+import com.manywho.sdk.services.describe.DescribeTypeService;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
 import com.manywho.sdk.services.types.TypeRepository;
+import com.manywho.sdk.services.unit.entities.TestAction;
+import com.manywho.sdk.services.unit.entities.TestActionCommand;
+import com.manywho.sdk.services.unit.entities.TestConfigurationValues;
+import com.manywho.sdk.services.unit.entities.TestDataController;
+import com.manywho.sdk.services.unit.entities.TestFileController;
+import com.manywho.sdk.services.unit.entities.TestIdentityController;
+import com.manywho.sdk.services.unit.entities.TestListenerController;
+import com.manywho.sdk.services.unit.entities.TestSocialController;
+import com.manywho.sdk.services.unit.entities.TestType;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -29,7 +39,17 @@ import static org.junit.Assert.assertThat;
 public class DescribeManagerTest extends BaseTest {
     @Test
     public void testDescribe() throws Exception {
-        includeOnly(TestAction.class, TestType.class);
+        includeOnly(
+                TestConfigurationValues.class,
+                TestDataController.class,
+                TestFileController.class,
+                TestIdentityController.class,
+                TestListenerController.class,
+                TestSocialController.class,
+                TestAction.class,
+                TestActionCommand.class,
+                TestType.class
+        );
 
         Reflections reflections = createReflections();
 
@@ -50,17 +70,6 @@ public class DescribeManagerTest extends BaseTest {
         assertThat(response.getActions(), hasItem(hasProperty("uriPart", containsString(TestAction.URI))));
 
         JSONAssert.assertEquals(readResourceAsString("responses/metadata.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
-    }
-
-    @Action.Metadata(name = TestAction.NAME, summary = "A test action summary", uri = TestAction.URI)
-    class TestAction implements ActionCommand<TestAction, TestAction, TestAction> {
-        static final String NAME = "Test Action";
-        static final String URI = "testaction";
-
-        @Override
-        public ActionResponse<TestAction> execute(TestAction input) {
-            return null;
-        }
     }
 
     String readResourceAsString(String name) throws Exception {

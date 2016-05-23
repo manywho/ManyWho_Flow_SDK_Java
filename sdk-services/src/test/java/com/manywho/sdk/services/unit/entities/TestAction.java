@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.entities;
+package com.manywho.sdk.services.unit.entities;
 
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.actions.Action;
@@ -6,8 +6,12 @@ import com.manywho.sdk.services.actions.Action;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Action.Metadata(name = "Test Action", summary = "Test summary", uri = "testaction")
+@Action.Metadata(name = TestAction.NAME, summary = TestAction.SUMMARY, uri = TestAction.URI)
 public class TestAction {
+    public static final String NAME = "Test Action";
+    public static final String SUMMARY = "Test summary";
+    public static final String URI = "testaction";
+
     @Action.Input(name = "Name", contentType = ContentType.String)
     private String name;
 

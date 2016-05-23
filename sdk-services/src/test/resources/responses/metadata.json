@@ -2,17 +2,32 @@
   "culture": null,
   "uri": null,
   "configurationValues": [
-
+    {
+      "developerName": "Value One",
+      "contentValue": null,
+      "contentType": "ContentString",
+      "typeElementDeveloperName": null,
+      "ordinal": 0,
+      "required": true
+    },
+    {
+      "developerName": "Value Two",
+      "contentValue": null,
+      "contentType": "ContentString",
+      "typeElementDeveloperName": null,
+      "ordinal": 0,
+      "required": false
+    }
   ],
   "providesAutoBinding": false,
-  "providesDatabase": false,
-  "providesFiles": false,
-  "providesIdentity": false,
-  "providesListening": false,
+  "providesDatabase": true,
+  "providesFiles": true,
+  "providesIdentity": true,
+  "providesListening": true,
   "providesLogic": true,
   "providesNotifications": false,
   "providesSmartSave": false,
-  "providesSocial": false,
+  "providesSocial": true,
   "providesSharing": false,
   "providesViews": false,
   "providesVoting": false,
@@ -20,13 +35,43 @@
     {
       "uriPart": "actions/testaction",
       "serviceInputs": [
-
+        {
+          "developerName": "Type",
+          "contentValue": null,
+          "contentType": "ContentObject",
+          "typeElementDeveloperName": "Test Type",
+          "ordinal": 0,
+          "required": true
+        },
+        {
+          "developerName": "Name",
+          "contentValue": null,
+          "contentType": "ContentString",
+          "typeElementDeveloperName": null,
+          "ordinal": 0,
+          "required": true
+        },
+        {
+          "developerName": "Types",
+          "contentValue": null,
+          "contentType": "ContentList",
+          "typeElementDeveloperName": "Test Type",
+          "ordinal": 0,
+          "required": true
+        }
       ],
       "serviceOutputs": [
-
+        {
+          "developerName": "Created At",
+          "contentValue": null,
+          "contentType": "ContentDateTime",
+          "typeElementDeveloperName": null,
+          "ordinal": 0,
+          "required": true
+        }
       ],
       "developerName": "Test Action",
-      "developerSummary": "A test action summary",
+      "developerSummary": "Test summary",
       "serviceActionOutcomes": null,
       "isViewMessageAction": false
     }

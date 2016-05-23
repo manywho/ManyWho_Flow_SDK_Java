@@ -1,6 +1,5 @@
-package com.manywho.sdk.services.entities;
+package com.manywho.sdk.services.unit.entities;
 
-import com.manywho.sdk.services.describe.DescribeTypeServiceTest;
 import com.manywho.sdk.services.types.Type;
 
 @Type.Element(name = TestTypeWithoutIdentifier.NAME)

@@ -1,8 +1,10 @@
-package com.manywho.sdk.services.describe;
+package com.manywho.sdk.services.unit.describe;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
+import com.manywho.sdk.services.describe.DescribeRepository;
+import com.manywho.sdk.services.describe.DescribeService;
 import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
 import org.reflections.Reflections;

@@ -1,13 +1,16 @@
-package com.manywho.sdk.services.describe;
+package com.manywho.sdk.services.unit.describe;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
-import com.manywho.sdk.services.entities.TestTypeWithValidListProperty;
-import com.manywho.sdk.services.entities.TestTypeWithValidObjectProperty;
-import com.manywho.sdk.services.entities.TestTypeWithoutIdentifier;
-import com.manywho.sdk.services.entities.TestTypeWithoutTypeInterface;
+import com.manywho.sdk.services.describe.DescribeTypeService;
+import com.manywho.sdk.services.types.TypeHasNoPropertiesException;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeRepository;
+import com.manywho.sdk.services.unit.entities.TestTypeWithValidListProperty;
+import com.manywho.sdk.services.unit.entities.TestTypeWithValidObjectProperty;
+import com.manywho.sdk.services.unit.entities.TestTypeWithoutIdentifier;
+import com.manywho.sdk.services.unit.entities.TestTypeWithoutProperties;
+import com.manywho.sdk.services.unit.entities.TestTypeWithoutTypeInterface;
 import org.junit.Test;
 
 import java.util.List;
@@ -38,6 +41,15 @@ public class DescribeTypeServiceTest extends BaseTest {
     @Test(expected = TypeIdentifierMissingException.class)
     public void testCreateTypesWithNoIdentifier() {
         includeOnly(TestTypeWithoutIdentifier.class);
+
+        DescribeTypeService describeTypeService = createDescribeTypeService();
+
+        describeTypeService.createTypes();
+    }
+
+    @Test(expected = TypeHasNoPropertiesException.class)
+    public void testCreateTypesWithoutAnyProperties() {
+        includeOnly(TestTypeWithoutProperties.class);
 
         DescribeTypeService describeTypeService = createDescribeTypeService();
 

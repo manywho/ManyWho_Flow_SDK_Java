@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.describe;
+package com.manywho.sdk.services.unit.describe;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;

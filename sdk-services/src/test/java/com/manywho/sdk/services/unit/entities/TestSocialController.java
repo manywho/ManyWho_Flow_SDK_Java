@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.entities;
+package com.manywho.sdk.services.unit.entities;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.manywho.sdk.api.run.elements.config.SocialServiceRequest;
