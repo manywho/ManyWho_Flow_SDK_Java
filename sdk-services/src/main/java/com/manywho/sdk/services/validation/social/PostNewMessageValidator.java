@@ -1,24 +1,19 @@
 package com.manywho.sdk.services.validation.social;
 
 import com.manywho.sdk.api.run.elements.config.SocialServiceRequest;
+import com.manywho.sdk.services.validation.AbstractConstraintValidator;
 import com.manywho.sdk.services.validation.ServiceRequestValidator;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PostNewMessageValidator implements ConstraintValidator<PostNewMessage, SocialServiceRequest> {
+public class PostNewMessageValidator extends AbstractConstraintValidator<PostNewMessage, SocialServiceRequest> {
     private ServiceRequestValidator serviceRequestValidator;
 
     @Inject
     public PostNewMessageValidator(ServiceRequestValidator serviceRequestValidator) {
         this.serviceRequestValidator = serviceRequestValidator;
-    }
-
-    @Override
-    public void initialize(PostNewMessage annotation) {
-
     }
 
     @Override

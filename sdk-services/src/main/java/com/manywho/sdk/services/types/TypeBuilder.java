@@ -140,7 +140,7 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid Boolean");
+        throw new TypePropertyInvalidException(property , "Boolean");
     }
 
     private String convertContent(String property, Object object) {
@@ -148,7 +148,7 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid String");
+        throw new TypePropertyInvalidException(property, "String");
     }
 
     private String convertDateTime(String property, Object object) {
@@ -158,7 +158,7 @@ public class TypeBuilder {
             return ISO8601Utils.format((Date) object);
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid DateTime");
+        throw new TypePropertyInvalidException(property, "DateTime");
     }
 
     private String convertEncrypted(String property, Object object) {
@@ -166,7 +166,7 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid String");
+        throw new TypePropertyInvalidException(property, "String");
     }
 
     @SuppressWarnings("unchecked")
@@ -176,7 +176,7 @@ public class TypeBuilder {
             return from((Collection<? extends Type>) object);
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid Collection");
+        throw new TypePropertyInvalidException(property, "Collection");
     }
 
     private String convertNumber(String property, Object object) {
@@ -184,7 +184,7 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid Number");
+        throw new TypePropertyInvalidException(property, "Number");
     }
 
     private List<MObject> convertObject(String property, Object object) {
@@ -192,7 +192,7 @@ public class TypeBuilder {
             return from((Type) object);
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid Object");
+        throw new TypePropertyInvalidException(property, "Object");
     }
 
     private String convertPassword(String property, Object object) {
@@ -200,7 +200,7 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid String");
+        throw new TypePropertyInvalidException(property, "String");
     }
 
     private String convertString(String property, Object object) {
@@ -208,6 +208,6 @@ public class TypeBuilder {
             return object.toString();
         }
 
-        throw new RuntimeException("The value of property " + property + " is not a valid String or Enum");
+        throw new TypePropertyInvalidException(property, "String or Enum");
     }
 }

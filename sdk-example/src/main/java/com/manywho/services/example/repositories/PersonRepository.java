@@ -37,7 +37,7 @@ public class PersonRepository {
         return people;
     }
 
-    Person createPerson() {
+    private Person createPerson() {
         List<Group> groups = Lists.newArrayList();
         groups.add(new Group("1", "Developers"));
         groups.add(new Group("2", "TechOps"));

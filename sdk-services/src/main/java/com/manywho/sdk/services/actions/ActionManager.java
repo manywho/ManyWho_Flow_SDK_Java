@@ -71,19 +71,19 @@ public class ActionManager {
         }
     }
 
-    List<Field> findInputFields(Type type) {
+    private List<Field> findInputFields(Type type) {
         return actionRepository.getInputFields().stream()
                 .filter(input -> input.getDeclaringClass().equals(type))
                 .collect(Collectors.toList());
     }
 
-    List<Field> findOutputFields(Type type) {
+    private List<Field> findOutputFields(Type type) {
         return actionRepository.getOutputFields().stream()
                 .filter(output -> output.getDeclaringClass().equals(type))
                 .collect(Collectors.toList());
     }
 
-    static EngineValue createOutputValue(Object outputs, Field field) {
+    private static EngineValue createOutputValue(Object outputs, Field field) {
         Action.Output property = field.getAnnotation(Action.Output.class);
 
         AccessController.doPrivileged((PrivilegedAction) () -> {

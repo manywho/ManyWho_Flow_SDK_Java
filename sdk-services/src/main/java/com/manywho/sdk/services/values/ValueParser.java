@@ -256,6 +256,8 @@ public class ValueParser {
                 case String:
                     field.set(object, toString(field, property.getContentValue()));
                     break;
+                default:
+                    throw new RuntimeException("The content type " + contentType + " is not supported");
             }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

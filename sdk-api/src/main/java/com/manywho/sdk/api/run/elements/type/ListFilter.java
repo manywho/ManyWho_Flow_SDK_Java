@@ -26,11 +26,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public boolean hasLimit() {
-        if (limit == null || limit == 0) {
-            return false;
-        }
-
-        return true;
+        return !(limit == null || limit == 0);
     }
 
     public void setId(String id) {

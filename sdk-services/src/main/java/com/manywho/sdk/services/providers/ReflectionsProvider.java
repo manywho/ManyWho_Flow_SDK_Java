@@ -34,7 +34,7 @@ public class ReflectionsProvider implements Provider<Reflections> {
         return new Reflections(configurationBuilder);
     }
 
-    static Collection<URL> forSinglePackage(String name) {
+    private static Collection<URL> forSinglePackage(String name) {
         final List<URL> result = Lists.newArrayList();
 
         String resourceName = name.replace(".", "/").replace("\\", "/");

@@ -23,7 +23,7 @@ public class ValidationConfigurationContextResolver implements ContextResolver<V
 
             @Override
             public void releaseInstance(ConstraintValidator<?, ?> constraintValidator) {
-
+                // Not needed
             }
         });
 
