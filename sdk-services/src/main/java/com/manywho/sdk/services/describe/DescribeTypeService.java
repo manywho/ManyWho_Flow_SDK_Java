@@ -7,6 +7,7 @@ import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
 import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
 import com.manywho.sdk.services.types.Type;
+import com.manywho.sdk.services.types.TypeHasNoPropertiesException;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypeRepository;
@@ -65,7 +66,7 @@ public class DescribeTypeService {
                 .collect(Collectors.toList());
 
         if (properties.isEmpty()) {
-            throw new RuntimeException("The " + annotation.name() + " type must contain at least one property.");
+            throw new TypeHasNoPropertiesException(annotation);
         }
 
         // Build the property bindings
