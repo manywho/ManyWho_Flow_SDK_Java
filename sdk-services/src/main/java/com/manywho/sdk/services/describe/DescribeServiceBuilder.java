@@ -133,21 +133,5 @@ public class DescribeServiceBuilder {
         response.setProvidesVoting(providesVoting);
 
         return response;
-
-//        return new AbstractDescribeService() {
-//
-//            @Override
-//            public DescribeServiceInstall createInstall() throws IllegalAccessException, InstantiationException {
-//                // Still auto-discover any types in the service
-//                TypeElementCollection discoveredTypes = super.createInstall().getTypeElements();
-//
-//                // If any types were passed into the builder, add them to the collection
-//                if (CollectionUtils.isNotEmpty(types)) {
-//                    discoveredTypes.addAll(types);
-//                }
-//
-//                return new DescribeServiceInstall(discoveredTypes);
-//            }
-//        };
     }
 }

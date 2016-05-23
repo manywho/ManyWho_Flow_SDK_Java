@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class DescribeService {
+public class DescribeService {
     private final ActionRepository actionRepository;
     private final ConfigurationRepository configurationRepository;
     private final DescribeRepository describeRepository;
@@ -35,35 +35,35 @@ class DescribeService {
         return !actionRepository.getActions().isEmpty();
     }
 
-    boolean anyConfigurationValuesExist() {
+    public boolean anyConfigurationValuesExist() {
         return describeRepository.doFieldsAnnotatedWithExist(Configuration.Value.class);
     }
 
-    boolean anyDataControllersExist() {
+    public boolean anyDataControllersExist() {
         return describeRepository.doSubtypesOfExist(AbstractDataController.class) || describeRepository.doSubtypesOfExist(Database.class);
     }
 
-    boolean anyFileControllersExist() {
+    public boolean anyFileControllersExist() {
         return describeRepository.doSubtypesOfExist(AbstractFileController.class);
     }
 
-    boolean anyIdentityControllersExist() {
+    public boolean anyIdentityControllersExist() {
         return describeRepository.doSubtypesOfExist(AbstractIdentityController.class);
     }
 
-    boolean anyListenerControllersExist() {
+    public boolean anyListenerControllersExist() {
         return describeRepository.doSubtypesOfExist(AbstractListenerController.class);
     }
 
-    boolean anySocialControllersExist() {
+    public boolean anySocialControllersExist() {
         return describeRepository.doSubtypesOfExist(AbstractSocialController.class);
     }
 
-    boolean anyTypesDefined() {
+    public boolean anyTypesDefined() {
         return !typeRepository.getTypeElements().isEmpty();
     }
 
-    List<DescribeValue> createConfigurationValues() {
+    public List<DescribeValue> createConfigurationValues() {
         List<DescribeValue> values = configurationRepository.getConfigurationValues()
                 .stream()
                 .map(klass -> klass.getAnnotation(Configuration.Value.class))
