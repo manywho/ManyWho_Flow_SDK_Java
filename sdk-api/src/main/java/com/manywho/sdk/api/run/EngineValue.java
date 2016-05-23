@@ -30,7 +30,10 @@ public class EngineValue implements PropertyAware {
 
     public EngineValue(String developerName, ContentType contentType, java.lang.Object contentValue) {
         this(developerName, contentType);
-        this.contentValue = String.valueOf(contentValue);
+
+        if (contentValue != null) {
+            this.contentValue = String.valueOf(contentValue);
+        }
     }
 
     public EngineValue(String developerName, ContentType contentType, List<MObject> objectData) {
