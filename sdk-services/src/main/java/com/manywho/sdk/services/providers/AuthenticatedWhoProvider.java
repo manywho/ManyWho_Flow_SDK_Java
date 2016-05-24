@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Charsets;
 import com.google.inject.Provider;
+import com.google.inject.servlet.RequestScoped;
 import com.manywho.sdk.api.security.AuthenticatedWho;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RequestScoped
 public class AuthenticatedWhoProvider implements Provider<AuthenticatedWho> {
     private final HttpHeaders headers;
     private final ObjectMapper objectMapper;

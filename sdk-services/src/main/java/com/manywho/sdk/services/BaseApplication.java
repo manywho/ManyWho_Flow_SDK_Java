@@ -5,10 +5,15 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
+import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
 import com.manywho.sdk.services.jaxrs.mappers.DefaultExceptionMapper;
 import com.manywho.sdk.services.jaxrs.resolvers.ValidationConfigurationContextResolver;
+import com.manywho.sdk.services.providers.AuthenticatedWhoProvider;
+import com.manywho.sdk.services.providers.ReflectionsProvider;
+import com.manywho.sdk.services.providers.ServletContainerProvider;
 import com.palominolabs.http.server.HttpServerConnectorConfig;
 import com.palominolabs.http.server.HttpServerWrapperConfig;
 import com.palominolabs.http.server.HttpServerWrapperFactory;
@@ -21,6 +26,8 @@ import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
 
 import java.util.List;
@@ -44,7 +51,28 @@ public class BaseApplication extends ResourceConfig {
 
         final String applicationPackage = this.getClass().getPackage().getName();
 
-        injector = Guice.createInjector();
+        modules.add(new HttpServerWrapperModule());
+        modules.add(new ImplicitValidationModule());
+        modules.add(new ServletModule());
+        modules.add(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(Reflections.class).toProvider(ReflectionsProvider.class).asEagerSingleton();
+                bind(ServletContainer.class).toProvider(ServletContainerProvider.class).in(Scopes.SINGLETON);
+                bind(ResourceConfig.class).toInstance(BaseApplication.this);
+
+                bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
+
+                install(new ServletModule() {
+                    @Override
+                    protected void configureServlets() {
+                        serve("/*").with(ServletContainer.class);
+                    }
+                });
+            }
+        });
+
+        injector = Guice.createInjector(modules);
 
         JerseyGuiceUtils.install(new ServiceLocatorGenerator() {
             @Override
@@ -53,21 +81,12 @@ public class BaseApplication extends ResourceConfig {
                     return null;
                 }
 
-                modules.add(new ImplicitValidationModule());
-                modules.add(new HttpServerWrapperModule());
-                modules.add(new ServletModule());
+                List<Module> modules = Lists.newArrayList();
                 modules.add(new JerseyGuiceModule(name));
                 modules.add(new AbstractModule() {
                     @Override
                     protected void configure() {
-                        bind(ResourceConfig.class).toInstance(BaseApplication.this);
-
-                        bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration() {
-                            @Override
-                            public String getApplicationPackage() {
-                                return applicationPackage;
-                            }
-                        });
+                        bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class);
                     }
                 });
 
