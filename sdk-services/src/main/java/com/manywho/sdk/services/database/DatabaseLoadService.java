@@ -55,10 +55,10 @@ public class DatabaseLoadService implements DatabaseService {
 
         if (request.getListFilter().hasId()) {
             // If the request is to find a single item
-            result = Lists.newArrayList(database.find(configurationParser.from(request), request.getListFilter().getId()));
+            result = Lists.newArrayList(database.find(configurationParser.from(request), request.getObjectDataType(), request.getListFilter().getId()));
         } else {
             // Otherwise we default to finding multiple items using the provided list filter
-            result = database.findAll(configurationParser.from(request), request.getListFilter());
+            result = database.findAll(configurationParser.from(request), request.getObjectDataType(), request.getListFilter());
         }
 
         if (result == null) {
