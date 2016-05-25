@@ -60,7 +60,7 @@ public class DescribeManager {
         List<TypeElement> typeElements = Lists.newArrayList();
         typeElements.addAll(describeTypeService.createTypes());
 
-        List<TypeElement> customTypes = typeProvider.describeTypes();
+        List<TypeElement> customTypes = typeProvider.describeTypes(request);
         if (customTypes == null) {
             throw new RuntimeException("The configured implementation of " + TypeProvider.class.getCanonicalName() + " must return a valid List<TypeElement>");
         } else {
