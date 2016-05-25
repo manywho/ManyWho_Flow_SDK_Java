@@ -113,15 +113,6 @@ public class BaseApplication extends ResourceConfig {
      * Start the service using the built-in Grizzly container without a URL suffix
      */
     public void startServer() throws Exception {
-        startServer("");
-    }
-
-    /**
-     * Start the service using the built-in Grizzly container.
-     *
-     * @param suffix The URL suffix to append, e.g. "/api/name/1"
-     */
-    public void startServer(String suffix) throws Exception {
         if (injector == null) {
             initialize();
         }

@@ -18,6 +18,6 @@ public class Application extends BaseApplication {
                 bind(TypeProvider.class).to(RawTypeProvider.class);
             }
         });
-        application.startServer("api/example/1");
+        application.startServer();
     }
 }
