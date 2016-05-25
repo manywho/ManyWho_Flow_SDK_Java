@@ -1,20 +1,26 @@
 package com.manywho.sdk.services.describe;
 
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
+import com.manywho.sdk.api.draw.elements.type.TypeElement;
+import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class DescribeManager {
     private final DescribeService describeService;
     private final DescribeTypeService describeTypeService;
     private final DescribeActionService describeActionService;
+    private final TypeProvider typeProvider;
 
     @Inject
-    public DescribeManager(DescribeService describeService, DescribeTypeService describeTypeService, DescribeActionService describeActionService) {
+    public DescribeManager(DescribeService describeService, DescribeTypeService describeTypeService, DescribeActionService describeActionService, TypeProvider typeProvider) {
         this.describeService = describeService;
         this.describeTypeService = describeTypeService;
         this.describeActionService = describeActionService;
+        this.typeProvider = typeProvider;
     }
 
     public DescribeServiceResponse describe(DescribeServiceRequest request) {
@@ -51,9 +57,17 @@ public class DescribeManager {
             builder.setActions(describeActionService.createActions());
         }
 
-        if (describeService.anyTypesDefined()) {
-            builder.setTypes(describeTypeService.createTypes());
+        List<TypeElement> typeElements = Lists.newArrayList();
+        typeElements.addAll(describeTypeService.createTypes());
+
+        List<TypeElement> customTypes = typeProvider.describeTypes();
+        if (customTypes == null) {
+            throw new RuntimeException("The configured implementation of " + TypeProvider.class.getCanonicalName() + " must return a valid List<TypeElement>");
+        } else {
+            typeElements.addAll(customTypes);
         }
+
+        builder.setTypes(typeElements);
 
         if (describeService.anyConfigurationValuesExist()) {
             builder.setConfigurationValues(describeService.createConfigurationValues());

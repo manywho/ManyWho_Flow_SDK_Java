@@ -7,6 +7,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
+import com.google.inject.util.Modules;
 import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
 import com.manywho.sdk.services.jaxrs.mappers.DefaultExceptionMapper;
@@ -14,6 +15,8 @@ import com.manywho.sdk.services.jaxrs.resolvers.ValidationConfigurationContextRe
 import com.manywho.sdk.services.providers.AuthenticatedWhoProvider;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
 import com.manywho.sdk.services.providers.ServletContainerProvider;
+import com.manywho.sdk.services.types.DummyTypeProvider;
+import com.manywho.sdk.services.types.TypeProvider;
 import com.palominolabs.http.server.HttpServerConnectorConfig;
 import com.palominolabs.http.server.HttpServerWrapperConfig;
 import com.palominolabs.http.server.HttpServerWrapperFactory;
@@ -35,11 +38,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BaseApplication extends ResourceConfig {
-    private final List<Module> modules = Lists.newArrayList();
+    private Module module;
 
     private Injector injector;
 
-    public BaseApplication() {
+    public void initialize() {
         packages(this.getClass().getSuperclass().getPackage().getName());
         packages(this.getClass().getPackage().getName());
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
@@ -51,6 +54,7 @@ public class BaseApplication extends ResourceConfig {
 
         final String applicationPackage = this.getClass().getPackage().getName();
 
+        final List<Module> modules = Lists.newArrayList();
         modules.add(new HttpServerWrapperModule());
         modules.add(new ImplicitValidationModule());
         modules.add(new ServletModule());
@@ -60,6 +64,8 @@ public class BaseApplication extends ResourceConfig {
                 bind(Reflections.class).toProvider(ReflectionsProvider.class).asEagerSingleton();
                 bind(ServletContainer.class).toProvider(ServletContainerProvider.class).in(Scopes.SINGLETON);
                 bind(ResourceConfig.class).toInstance(BaseApplication.this);
+
+                bind(TypeProvider.class).to(DummyTypeProvider.class);
 
                 bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
 
@@ -72,7 +78,11 @@ public class BaseApplication extends ResourceConfig {
             }
         });
 
-        injector = Guice.createInjector(modules);
+        if (module == null) {
+            injector = Guice.createInjector(modules);
+        } else {
+            injector = Guice.createInjector(Modules.override(modules).with(module));
+        }
 
         JerseyGuiceUtils.install(new ServiceLocatorGenerator() {
             @Override
@@ -95,8 +105,8 @@ public class BaseApplication extends ResourceConfig {
         });
     }
 
-    public void addModule(Module module) {
-        modules.add(module);
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     /**
@@ -112,6 +122,10 @@ public class BaseApplication extends ResourceConfig {
      * @param suffix The URL suffix to append, e.g. "/api/name/1"
      */
     public void startServer(String suffix) throws Exception {
+        if (injector == null) {
+            initialize();
+        }
+
         try {
             // Load the desired port from a property, otherwise default to 8080
             final int port = System.getProperty("server.port") != null ? Integer.parseInt(System.getProperty("server.port")) : 8080;

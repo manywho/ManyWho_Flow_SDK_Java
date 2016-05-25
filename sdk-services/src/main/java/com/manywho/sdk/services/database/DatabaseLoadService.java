@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.database;
 
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
@@ -33,15 +34,44 @@ public class DatabaseLoadService implements DatabaseService {
 
         if (request.getListFilter().hasId()) {
             // If the request is to find a single item
-            result = handleFindSingle(request, database);
+            result = typeBuilder.from(database.find(configurationParser.from(request), request.getListFilter().getId()));
         } else {
             // Otherwise we default to finding multiple items using the provided list filter
-            result = handleMultiple(request, database);
+            result = typeBuilder.from(database.findAll(configurationParser.from(request), request.getListFilter()));
         }
 
+        return createResponse(result, providedListFilter.getLimit());
+    }
+
+    @Override
+    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
+        // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
+        ListFilter providedListFilter = request.getListFilter();
+        if (request.getListFilter().hasLimit()) {
+            request.getListFilter().setLimit(providedListFilter.getLimit() + 1);
+        }
+
+        List<MObject> result;
+
+        if (request.getListFilter().hasId()) {
+            // If the request is to find a single item
+            result = Lists.newArrayList(database.find(configurationParser.from(request), request.getListFilter().getId()));
+        } else {
+            // Otherwise we default to finding multiple items using the provided list filter
+            result = database.findAll(configurationParser.from(request), request.getListFilter());
+        }
+
+        if (result == null) {
+            throw new RuntimeException("The result from " + database.getClass().getCanonicalName() + "::findAll() cannot be null");
+        }
+
+        return createResponse(result, providedListFilter.getLimit());
+    }
+
+    private ObjectDataResponse createResponse(List<MObject> result, int providedLimit) {
         ObjectDataResponse response = new ObjectDataResponse();
 
-        if (result.size() > providedListFilter.getLimit()) {
+        if (result.size() > providedLimit) {
             response.setHasMoreResults(true);
             response.setObjectData(result.subList(0, result.size()));
         } else {
@@ -49,13 +79,5 @@ public class DatabaseLoadService implements DatabaseService {
         }
 
         return response;
-    }
-
-    private <T extends Type> List<MObject> handleMultiple(ObjectDataRequest request, Database<?, T> database) {
-        return typeBuilder.from(database.findAll(configurationParser.from(request), request.getListFilter()));
-    }
-
-    private <T extends Type> List<MObject> handleFindSingle(ObjectDataRequest request, Database<?, T> database) {
-        return typeBuilder.from(database.find(configurationParser.from(request), request.getListFilter().getId()));
     }
 }

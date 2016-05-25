@@ -62,4 +62,39 @@ public class DatabaseSaveService implements DatabaseService {
 
         return new ObjectDataResponse(objects);
     }
+
+    @Override
+    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
+        if (request.getObjectData() == null) {
+            return new ObjectDataResponse();
+        }
+
+        List<MObject> objects = Lists.newArrayList();
+
+        List<MObject> objectsToCreate = request.getObjectData().stream()
+                .filter(object -> StringUtils.isEmpty(object.getExternalId()))
+                .collect(Collectors.toList());
+
+        if (!objectsToCreate.isEmpty()) {
+            if (objectsToCreate.size() == 1) {
+                objects.add(database.create(configurationParser.from(request), objectsToCreate.get(0)));
+            } else {
+                objects.addAll(database.create(configurationParser.from(request), objectsToCreate));
+            }
+        }
+
+        List<MObject> objectsToUpdate = request.getObjectData().stream()
+                .filter(object -> StringUtils.isNotEmpty(object.getExternalId()))
+                .collect(Collectors.toList());
+
+        if (!objectsToUpdate.isEmpty()) {
+            if (objectsToUpdate.size() == 1) {
+                objects.add(database.update(configurationParser.from(request), objectsToUpdate.get(0)));
+            } else {
+                objects.addAll(database.update(configurationParser.from(request), objectsToUpdate));
+            }
+        }
+
+        return new ObjectDataResponse(objects);
+    }
 }

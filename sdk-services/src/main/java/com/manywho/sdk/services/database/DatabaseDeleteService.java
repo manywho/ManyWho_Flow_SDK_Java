@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.database;
 
+import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
@@ -27,6 +28,21 @@ public class DatabaseDeleteService implements DatabaseService {
             database.delete(configurationParser.from(request), valueParser.asObject(request.getObjectData(), type));
         } else {
             database.delete(configurationParser.from(request), valueParser.asList(request.getObjectData(), type));
+        }
+
+        return new ObjectDataResponse();
+    }
+
+    @Override
+    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
+        if (request.getObjectData() == null) {
+            return new ObjectDataResponse();
+        }
+
+        if (request.getObjectData().size() == 1) {
+            database.delete(configurationParser.from(request), request.getObjectData().get(0));
+        } else {
+            database.delete(configurationParser.from(request), request.getObjectData());
         }
 
         return new ObjectDataResponse();

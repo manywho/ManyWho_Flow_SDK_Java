@@ -9,7 +9,10 @@ import javax.ws.rs.core.Application;
 public abstract class BaseFunctionalTest extends JerseyTest {
     @Override
     protected Application configure() {
-        return new TestApplication();
+        TestApplication application = new TestApplication();
+        application.initialize();
+
+        return application;
     }
 
     @Override

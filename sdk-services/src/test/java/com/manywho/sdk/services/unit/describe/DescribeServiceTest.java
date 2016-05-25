@@ -5,7 +5,6 @@ import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.describe.DescribeRepository;
 import com.manywho.sdk.services.describe.DescribeService;
-import com.manywho.sdk.services.types.TypeRepository;
 import org.junit.Test;
 import org.reflections.Reflections;
 
@@ -125,25 +124,9 @@ public class DescribeServiceTest extends BaseTest {
         assertFalse(describeService.anySocialControllersExist());
     }
 
-    @Test
-    public void testAnyTypedDefinedWithTestClass() {
-        DescribeService describeService = createDescribeService();
-
-        assertTrue(describeService.anyTypesDefined());
-    }
-
-    @Test
-    public void testAnyTypesDefinedWithoutTestClass() {
-        reflectionsConfiguration.setUrls(Lists.newArrayList());
-
-        DescribeService describeService = createDescribeService();
-
-        assertFalse(describeService.anyTypesDefined());
-    }
-
     private DescribeService createDescribeService() {
         Reflections reflections = createReflections();
 
-        return new DescribeService(new ActionRepository(reflections), new ConfigurationRepository(reflections), new DescribeRepository(reflections), new TypeRepository(reflections));
+        return new DescribeService(new ActionRepository(reflections), new ConfigurationRepository(reflections), new DescribeRepository(reflections));
     }
 }

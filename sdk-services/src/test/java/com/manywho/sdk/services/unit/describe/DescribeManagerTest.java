@@ -11,6 +11,7 @@ import com.manywho.sdk.services.describe.DescribeRepository;
 import com.manywho.sdk.services.describe.DescribeService;
 import com.manywho.sdk.services.describe.DescribeTypeService;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
+import com.manywho.sdk.services.types.DummyTypeProvider;
 import com.manywho.sdk.services.types.TypeRepository;
 import com.manywho.sdk.services.unit.entities.TestAction;
 import com.manywho.sdk.services.unit.entities.TestActionCommand;
@@ -57,10 +58,10 @@ public class DescribeManagerTest extends BaseTest {
         TypeRepository typeRepository = new TypeRepository(reflections);
 
         DescribeManager manager = new DescribeManager(
-                new DescribeService(actionRepository, new ConfigurationRepository(reflections), new DescribeRepository(reflections), typeRepository),
+                new DescribeService(actionRepository, new ConfigurationRepository(reflections), new DescribeRepository(reflections)),
                 new DescribeTypeService(typeRepository),
-                new DescribeActionService(actionRepository)
-        );
+                new DescribeActionService(actionRepository),
+                new DummyTypeProvider());
 
         DescribeServiceResponse response = manager.describe(new DescribeServiceRequest());
 

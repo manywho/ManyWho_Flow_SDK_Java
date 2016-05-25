@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.database;
 
+import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import org.reflections.Reflections;
@@ -15,6 +16,12 @@ public class DatabaseRepository {
     @Inject
     public DatabaseRepository(Reflections reflections) {
         this.reflections = reflections;
+    }
+
+    public Class<? extends RawDatabase<?, MObject>> findRawDatabase() {
+        return (Class<? extends RawDatabase<?, MObject>>) reflections.getSubTypesOf(RawDatabase.class).stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Unable to find an implementation of " + RawDatabase.class.getCanonicalName()));
     }
 
     public <T extends Type> Class<? extends Database<?, T>> findDatabase(Class<T> type) {
