@@ -51,7 +51,7 @@ public class DescribeTypeService {
         // Check if we have an identifier property on the type
         long identifierCount = typeRepository.getTypeIdentifiers().stream()
                 .filter(field -> field.getDeclaringClass().equals(type))
-                .filter(field -> String.class.isAssignableFrom(field.getType()))
+                .filter(field -> String.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
                 .count();
 
         if (identifierCount != 1) {

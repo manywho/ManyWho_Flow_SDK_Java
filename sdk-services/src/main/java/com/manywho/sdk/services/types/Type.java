@@ -20,6 +20,11 @@ public interface Type {
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     @interface Identifier {
+
+        interface Custom {
+            void setIdentifier();
+            String getIdentifier();
+        }
     }
 
     @Target(ElementType.FIELD)
