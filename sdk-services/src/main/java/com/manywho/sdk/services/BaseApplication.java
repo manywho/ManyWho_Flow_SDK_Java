@@ -38,9 +38,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BaseApplication extends ResourceConfig {
-    private Module module;
-
     private Injector injector;
+    private Module module;
 
     public void initialize() {
         packages(this.getClass().getSuperclass().getPackage().getName());
@@ -110,17 +109,16 @@ public class BaseApplication extends ResourceConfig {
     }
 
     /**
-     * Start the service using the built-in Grizzly container without a URL suffix
+     * Start the service using the built-in Jetty container on a specified port
+     *
+     * @param port the port to run the service on
      */
-    public void startServer() throws Exception {
+    public void startServer(int port) {
         if (injector == null) {
             initialize();
         }
 
         try {
-            // Load the desired port from a property, otherwise default to 8080
-            final int port = System.getProperty("server.port") != null ? Integer.parseInt(System.getProperty("server.port")) : 8080;
-
             HttpServerWrapperConfig config = new HttpServerWrapperConfig()
                     .withHttpServerConnectorConfig(HttpServerConnectorConfig.forHttp("0.0.0.0", port));
 
@@ -132,8 +130,18 @@ public class BaseApplication extends ResourceConfig {
             System.out.println("Stop the service using CTRL+C");
 
             Thread.currentThread().join();
-        } catch (InterruptedException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Start the service using the built-in Jetty container
+     */
+    public void startServer() throws Exception {
+        // Load the desired port from a property, otherwise default to 8080
+        final int port = System.getProperty("server.port") != null ? Integer.parseInt(System.getProperty("server.port")) : 8080;
+
+        startServer(port);
     }
 }
