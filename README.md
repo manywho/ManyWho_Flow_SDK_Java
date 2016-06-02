@@ -1,71 +1,61 @@
-ManyWho Java SDK
+ManyWho Java SDK (v2)
 ================
 
-[![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=master)](https://travis-ci.org/manywho/sdk-java)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk)
+[![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=feature/2.0)](https://travis-ci.org/manywho/sdk-java)
+[![Maven Central](https://img.shields.io/badge/pre--release-2.0.0--SNAPSHOT-orange.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk)
+
+> **WARNING:** This version of the SDK is in development, and shouldn't yet be considered stable. The modules are in flux, and the object structures/names/classes might change at any time!
 
 An open source SDK that allows you to easily build plugins and services that integrate with Flows running on
 the [ManyWho](https://manywho.com) platform.
 
 ## Installation
 
-The SDK is available on Maven and is automatically published there on each release, so it's easy to integrate with your 
-Java application:
+The SDK is currently available from the Maven Snapshots repository and is automatically published there on each commit, so it's easy to integrate with your Java application:
 
 ```xml
-<dependency>
-    <groupId>com.manywho</groupId>
-    <artifactId>sdk</artifactId>
-    <version>${version.manywho.sdk}</version>
-</dependency>
-```
+<repositories>
+    <repository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
 
-The latest version is always available to find on the [Releases tab](https://github.com/manywho/sdk-java/releases).
-
-## Usage
-
-Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is available on
-the [ManyWho Developers](https://developers.manywho.com/display/MA/Building+a+Service) site.
-
-## Modules
-
-### sdk-bom
-
-`sdk-bom` is a bill of materials that is used by Maven to make sure that related dependencies have the correct versions
-to work together. It should be placed in the `dependencyManagement` section in your `pom.xml` like so:
-
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-bom</artifactId>
-            <version>${version.manywho.sdk}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-
-<!-- No versions for the ManyWho SDK packages are needed, due to including the BOM above -->
 <dependencies>
     <dependency>
-        <groupId>com.manywho</groupId>
-        <artifactId>sdk</artifactId>
-    </dependency>
-    <dependency>
         <groupId>com.manywho.sdk</groupId>
-        <artifactId>sdk-client</artifactId>
+        <artifactId>sdk-services</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
 
+## Usage
+
+Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is available in the [Wiki](https://github.com/manywho/sdk-java/wiki).
+
+## Modules
+
+**WARNING:** These modules are in flux, and the object structures/names/classes might change at any time!
+
+### sdk-api
+
+This module contains the ManyWho API objects, spanning across our [Draw](https://manywho.github.io/slate/#draw), [Run](https://manywho.github.io/slate/#run) and [Translate](https://manywho.github.io/slate/#translate) APIs. Our APIs aren't 100% covered (yet!) but the most commonly used objects are available. If there are objects missing that you need in your application, feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll include them as soon as possible.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-api</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
 ### sdk-client
 
-**Warning:** This module is in flux, and the object structures/names/classes might change at any time!
-
-This module supplies some clients that help you integrate with the various ManyWho APIs. It currently supports parts of
-the Run API and is actively being improved to cover the other APIs.
+This module supplies some clients that help you integrate with the various ManyWho APIs. It currently supports parts of the [Run API](https://manywho.github.io/slate/#run) and is actively being improved to cover the other APIs.
 
 ```xml
 <dependency>
@@ -75,43 +65,21 @@ the Run API and is actively being improved to cover the other APIs.
 </dependency>
 ```
 
-### sdk-core
+### sdk-services
 
-This module is probably what you want - it includes the vast majority of the SDK's functionality and is currently being
-split out into separate modules bit-by-bit.
-
-```xml
-<dependency>
-    <groupId>com.manywho.sdk</groupId>
-    <artifactId>sdk-core</artifactId>
-    <version>${version.manywho.sdk}</version>
-</dependency>
-```
-
-### sdk-test
-
-This module contains some handy test cases and utilities that can be used to write unit tests and integration tests for
-your services.
+This module is _probably_ what you want - it includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being actively written [on the Wiki](https://github.com/manywho/sdk-java/wiki), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
 
 ```xml
 <dependency>
     <groupId>com.manywho.sdk</groupId>
-    <artifactId>sdk-test</artifactId>
+    <artifactId>sdk-services</artifactId>
     <version>${version.manywho.sdk}</version>
 </dependency>
 ```
-
-### sdk
-
-This module is a meta package that includes the `sdk-client`, `sdk-core` and `sdk-test` packages. It's mostly around for 
-backwards compatibility with old services and clients. 
-
-It's now recommended to use the `sdk-bom` package and to depend on the individual packages in your `pom.xml`.
 
 ## Contributing
 
-Contribution are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to 
-[CONTRIBUTING.md](CONTRIBUTING.md) for our contribution requirements.
+Contribution are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for our contribution requirements.
 
 ## License
 
