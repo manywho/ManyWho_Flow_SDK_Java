@@ -1,7 +1,6 @@
 package com.manywho.sdk.services.database;
 
 import com.google.common.collect.Lists;
-import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
@@ -25,9 +24,9 @@ public class DatabaseLoadService implements DatabaseService {
     @Override
     public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, Class<T> type, Database<?, T> database) {
         // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
-        ListFilter providedListFilter = request.getListFilter();
+        int providedLimit = request.getListFilter().getLimit();
         if (request.getListFilter().hasLimit()) {
-            request.getListFilter().setLimit(providedListFilter.getLimit() + 1);
+            request.getListFilter().setLimit(providedLimit + 1);
         }
 
         List<MObject> result;
@@ -40,15 +39,15 @@ public class DatabaseLoadService implements DatabaseService {
             result = typeBuilder.from(database.findAll(configurationParser.from(request), request.getListFilter()));
         }
 
-        return createResponse(result, providedListFilter.getLimit());
+        return createResponse(result, providedLimit);
     }
 
     @Override
     public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
         // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
-        ListFilter providedListFilter = request.getListFilter();
+        int providedLimit = request.getListFilter().getLimit();
         if (request.getListFilter().hasLimit()) {
-            request.getListFilter().setLimit(providedListFilter.getLimit() + 1);
+            request.getListFilter().setLimit(providedLimit + 1);
         }
 
         List<MObject> result;
@@ -65,7 +64,7 @@ public class DatabaseLoadService implements DatabaseService {
             throw new RuntimeException("The result from " + database.getClass().getCanonicalName() + "::findAll() cannot be null");
         }
 
-        return createResponse(result, providedListFilter.getLimit());
+        return createResponse(result, providedLimit);
     }
 
     private ObjectDataResponse createResponse(List<MObject> result, int providedLimit) {
