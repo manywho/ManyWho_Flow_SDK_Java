@@ -6,11 +6,7 @@ import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
 import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
-import com.manywho.sdk.services.types.Type;
-import com.manywho.sdk.services.types.TypeHasNoPropertiesException;
-import com.manywho.sdk.services.types.TypeIdentifierMissingException;
-import com.manywho.sdk.services.types.TypeParser;
-import com.manywho.sdk.services.types.TypeRepository;
+import com.manywho.sdk.services.types.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.inject.Inject;
@@ -47,16 +43,6 @@ public class DescribeTypeService {
         }
 
         Type.Element annotation = type.getAnnotation(Type.Element.class);
-
-        // Check if we have an identifier property on the type
-        long identifierCount = typeRepository.getTypeIdentifiers().stream()
-                .filter(field -> field.getDeclaringClass().equals(type))
-                .filter(field -> String.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
-                .count();
-
-        if (identifierCount != 1) {
-            throw new TypeIdentifierMissingException(type);
-        }
         
         // Build the list of properties from the annotated type
         List<TypeElementProperty> properties = typeRepository.getTypeProperties().stream()
@@ -87,6 +73,16 @@ public class DescribeTypeService {
         // Create the binding list, and add a single binding if we have any bound properties
         List<TypeElementBinding> bindings = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(propertyBindings)) {
+            // Check if we have an identifier property on the type
+            long identifierCount = typeRepository.getTypeIdentifiers().stream()
+                    .filter(field -> field.getDeclaringClass().equals(type))
+                    .filter(field -> String.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
+                    .count();
+
+            if (identifierCount != 1) {
+                throw new TypeIdentifierMissingException(type);
+            }
+
             bindings.add(new TypeElementBinding(annotation.name(), summary, annotation.name(), propertyBindings));
         }
 
