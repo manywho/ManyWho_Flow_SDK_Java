@@ -72,7 +72,7 @@ public class DatabaseLoadService implements DatabaseService {
 
         if (result.size() > providedLimit) {
             response.setHasMoreResults(true);
-            response.setObjectData(result.subList(0, result.size()));
+            response.setObjectData(result.subList(0, providedLimit));
         } else {
             response.setObjectData(result);
         }
