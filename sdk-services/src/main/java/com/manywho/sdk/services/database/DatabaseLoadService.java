@@ -70,7 +70,7 @@ public class DatabaseLoadService implements DatabaseService {
     private ObjectDataResponse createResponse(List<MObject> result, int providedLimit) {
         ObjectDataResponse response = new ObjectDataResponse();
 
-        if (result.size() > providedLimit) {
+        if (providedLimit != 0 && result.size() > providedLimit) {
             response.setHasMoreResults(true);
             response.setObjectData(result.subList(0, providedLimit));
         } else {
