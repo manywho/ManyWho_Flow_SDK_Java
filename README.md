@@ -1,8 +1,7 @@
 ManyWho Java SDK (v2)
 ================
 
-[![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=feature/2.0)](https://travis-ci.org/manywho/sdk-java)
-[![Maven Central](https://img.shields.io/badge/pre--release-2.0.0--SNAPSHOT-orange.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk)
+[![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=feature/2.0)](https://travis-ci.org/manywho/sdk-java) [![Maven Central](https://img.shields.io/badge/pre--release-2.0.0--SNAPSHOT-orange.svg?style=flat)](https://oss.sonatype.org/#nexus-search;gav~com.manywho.sdk~~2.0.0-SNAPSHOT~~)
 
 > **WARNING:** This version of the SDK is in development, and shouldn't yet be considered stable. The modules are in flux, and the object structures/names/classes might change at any time!
 
