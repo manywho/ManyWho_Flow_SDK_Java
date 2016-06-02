@@ -1,5 +1,7 @@
 package com.manywho.sdk.services.actions;
 
-public interface ActionCommand<A, I, O> {
-    ActionResponse<O> execute(I input);
+import com.manywho.sdk.api.run.elements.config.ServiceRequest;
+
+public interface ActionCommand<A, I, O, C> {
+    ActionResponse<O> execute(C configuration, ServiceRequest request, I input);
 }

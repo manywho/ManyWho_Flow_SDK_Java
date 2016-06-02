@@ -100,8 +100,8 @@ public class DescribeActionService {
 
         ParameterizedType pType = (ParameterizedType)type.getGenericInterfaces()[0];
 
-        if (pType.getActualTypeArguments().length != 3) {
-            throw new RuntimeException("The generic type argument for " + type.getName() + " must have three type arguments");
+        if (pType.getActualTypeArguments().length != 4) {
+            throw new RuntimeException("The generic type argument for " + type.getName() + " must have four type arguments");
         }
 
         return pType.getActualTypeArguments();

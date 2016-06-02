@@ -1,13 +1,18 @@
 package com.manywho.services.example.actions;
 
+import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionResponse;
+import com.manywho.services.example.ServiceConfiguration;
+import com.manywho.services.example.actions.AddAnnotation.Input;
+import com.manywho.services.example.actions.AddAnnotation.Output;
 
 import java.time.OffsetDateTime;
 
-public class AddAnnotationCommand implements ActionCommand<AddAnnotation, AddAnnotation.Input, AddAnnotation.Output> {
+public class AddAnnotationCommand implements ActionCommand<AddAnnotation, Input, Output, ServiceConfiguration> {
+
     @Override
-    public ActionResponse<AddAnnotation.Output> execute(AddAnnotation.Input input) {
-        return new ActionResponse<>(new AddAnnotation.Output(OffsetDateTime.now()));
+    public ActionResponse<Output> execute(ServiceConfiguration configuration, ServiceRequest request, Input input) {
+        return new ActionResponse<>(new Output(OffsetDateTime.now()));
     }
 }

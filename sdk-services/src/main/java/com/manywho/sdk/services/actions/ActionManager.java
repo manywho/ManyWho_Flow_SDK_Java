@@ -4,6 +4,7 @@ import com.google.inject.Injector;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
+import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.describe.DescribeActionService;
 import com.manywho.sdk.services.values.ValueParser;
 
@@ -22,12 +23,19 @@ public class ActionManager {
     private final Injector injector;
     private final ActionRepository actionRepository;
     private final ValueParser valueParser;
+    private final ConfigurationParser configurationParser;
 
     @Inject
-    public ActionManager(Injector injector, ActionRepository actionRepository, ValueParser valueParser) {
+    public ActionManager(
+            Injector injector,
+            ActionRepository actionRepository,
+            ValueParser valueParser,
+            ConfigurationParser configurationParser
+    ) {
         this.injector = injector;
         this.actionRepository = actionRepository;
         this.valueParser = valueParser;
+        this.configurationParser = configurationParser;
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
@@ -59,9 +67,19 @@ public class ActionManager {
                 }
             }
 
-            ActionResponse actionResponse = injector.getInstance(command).execute(inputObject);
+            ActionResponse actionResponse = injector.getInstance(command).execute(
+                    configurationParser.from(serviceRequest),
+                    serviceRequest,
+                    inputObject
+            );
 
-            List<EngineValue> outputs = findOutputFields(types[2]).stream()
+            List<Field> outputFields = findOutputFields(types[2]);
+
+            if (!outputFields.isEmpty() && actionResponse.getOutputs() == null) {
+                throw new RuntimeException("The action response must contain one or more outputs");
+            }
+
+            List<EngineValue> outputs = outputFields.stream()
                     .map(output -> createOutputValue(actionResponse.getOutputs(), output))
                     .collect(Collectors.toList());
 
