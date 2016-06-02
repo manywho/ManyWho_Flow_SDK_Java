@@ -23,7 +23,7 @@ public class DefaultActionController {
         this.actionManager = actionManager;
     }
 
-    @Path("/{name}")
+    @Path("/{name: .+}")
     @POST
     public ServiceResponse executeAction(@PathParam("name") String name, ServiceRequest serviceRequest) {
         return actionManager.executeAction(name, serviceRequest);
