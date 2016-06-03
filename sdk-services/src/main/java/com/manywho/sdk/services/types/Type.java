@@ -22,7 +22,7 @@ public interface Type {
     @interface Identifier {
 
         interface Custom {
-            void setIdentifier();
+            void setIdentifier(String identifier);
             String getIdentifier();
         }
     }
