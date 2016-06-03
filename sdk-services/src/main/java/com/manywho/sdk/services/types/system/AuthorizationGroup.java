@@ -16,6 +16,20 @@ public class AuthorizationGroup implements Type {
     @Type.Property(name = "DeveloperSummary", contentType = ContentType.String)
     private String description;
 
+    public AuthorizationGroup() {
+    }
+
+    public AuthorizationGroup(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public AuthorizationGroup(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }
