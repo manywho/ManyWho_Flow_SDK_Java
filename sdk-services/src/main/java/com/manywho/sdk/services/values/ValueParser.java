@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.values;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.ContentType;
@@ -8,17 +9,21 @@ import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
-import com.manywho.sdk.services.types.TypeRepository;
 import com.manywho.sdk.services.types.TypePropertyMismatchException;
+import com.manywho.sdk.services.types.TypeRepository;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.time.OffsetDateTime;
 import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -128,13 +133,29 @@ public class ValueParser {
         throw new TypePropertyMismatchException(field, String.class, ContentType.Content);
     }
 
-    public static TemporalAccessor toDateTime(Field field, String value) {
+    public static Object toDateTime(Field field, String value) {
         // TODO: Implement support for non-OffsetDateTime field types
         if (TemporalAccessor.class.isAssignableFrom(field.getType())) {
             return OffsetDateTime.parse(value);
         }
 
-        throw new TypePropertyMismatchException(field, TemporalAccessor.class, ContentType.DateTime);
+        try {
+            if (Timestamp.class.isAssignableFrom(field.getType())) {
+                return Timestamp.from(new ISO8601DateFormat().parse(value).toInstant());
+            }
+
+            if (Time.class.isAssignableFrom(field.getType())) {
+                return Time.from(new ISO8601DateFormat().parse(value).toInstant());
+            }
+
+            if (Date.class.isAssignableFrom(field.getType())) {
+                return new ISO8601DateFormat().parse(value);
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException("Unable to parse into " + ContentType.DateTime, e);
+        }
+
+        throw new TypePropertyMismatchException(field, TemporalAccessor.class.getName() + " or " + Date.class.getName(), ContentType.DateTime);
     }
 
     public static String toEncrypted(Field field, String value) {
