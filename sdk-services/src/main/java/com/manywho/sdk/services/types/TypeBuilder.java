@@ -58,20 +58,27 @@ public class TypeBuilder {
         MObject object = new MObject(annotation.name());
 
         // Get the identifier field, if one exists
-        Field identifierField = typeRepository.findTypeIdentifier(type.getClass());
+        boolean boundPropertiesExist = typeRepository.getTypeProperties().stream()
+                .filter(field -> field.getDeclaringClass().equals(type.getClass()))
+                .map(field -> field.getAnnotation(Type.Property.class))
+                .anyMatch(Type.Property::bound);
 
-        identifierField.setAccessible(true);
+        if (boundPropertiesExist) {
+            Field identifierField = typeRepository.findTypeIdentifier(type.getClass());
 
-        try {
-            Object identifierValue = identifierField.get(type);
+            identifierField.setAccessible(true);
 
-            if (identifierValue == null) {
-                throw new RuntimeException("The value of the identifier field on " + type.getClass().getName() + " cannot be null");
+            try {
+                Object identifierValue = identifierField.get(type);
+
+                if (identifierValue == null) {
+                    throw new RuntimeException("The value of the identifier field on " + type.getClass().getName() + " cannot be null");
+                }
+
+                object.setExternalId(identifierValue.toString());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Unable to get the value of the identifier field on " + type.getClass().getName(), e);
             }
-
-            object.setExternalId(identifierValue.toString());
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to get the value of the identifier field on " + type.getClass().getName(), e);
         }
 
         List<Property> properties = typeProperties.stream()
