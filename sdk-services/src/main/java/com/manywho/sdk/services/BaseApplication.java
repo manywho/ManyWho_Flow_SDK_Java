@@ -95,7 +95,9 @@ public class BaseApplication extends ResourceConfig {
                 modules.add(new AbstractModule() {
                     @Override
                     protected void configure() {
-                        bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class);
+                        if (injector.getBinding(AuthenticatedWho.class) == null) {
+                            bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class);
+                        }
                     }
                 });
 

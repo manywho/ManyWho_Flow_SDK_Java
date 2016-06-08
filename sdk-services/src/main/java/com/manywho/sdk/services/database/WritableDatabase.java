@@ -4,7 +4,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 
 import java.util.List;
 
-public interface DatabaseBase<C extends Configuration, T> {
+public interface WritableDatabase<C extends Configuration, T> {
     T create(C configuration, T object);
 
     List<T> create(C configuration, List<T> objects);
