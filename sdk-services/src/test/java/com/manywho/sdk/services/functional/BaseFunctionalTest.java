@@ -22,7 +22,7 @@ public abstract class BaseFunctionalTest {
         Injector injector = Guice.createInjector();
 
         TestApplication application = new TestApplication(injector);
-        application.initialize("com.manywho.sdk.services");
+        application.initialize("com.manywho.sdk.services.functional");
 
         objectMapper = new ObjectMapperContextResolver().getContext(null);
 
@@ -36,6 +36,8 @@ public abstract class BaseFunctionalTest {
 
         for (Object singleton : application.getSingletons()) {
             if (singleton.getClass().isAnnotationPresent(Path.class)) {
+                dispatcher.getRegistry().addSingletonResource(singleton);
+            } else if (singleton.getClass().getSuperclass().isAnnotationPresent(Path.class)) {
                 dispatcher.getRegistry().addSingletonResource(singleton);
             }
         }

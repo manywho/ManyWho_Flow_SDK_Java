@@ -1,15 +1,13 @@
 package com.manywho.sdk.services;
 
 import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
-import com.manywho.sdk.services.types.DummyTypeProvider;
-import com.manywho.sdk.services.types.TypeProvider;
+import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
 import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
 
@@ -42,15 +40,8 @@ public class ServiceApplication extends Application {
         final List<Module> modules = Lists.newArrayList();
 
         modules.add(new ImplicitValidationModule());
-        modules.add(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(Reflections.class).toProvider(ReflectionsProvider.class).asEagerSingleton();
-
-                bind(TypeProvider.class).to(DummyTypeProvider.class);
-                bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
-            }
-        });
+        modules.add(new RequestScopeModule());
+        modules.add(new ServiceApplicationModule(applicationPackage));
 
         if (module == null) {
             injector = Guice.createInjector(modules);
