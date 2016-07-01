@@ -22,7 +22,7 @@ public abstract class BaseFunctionalTest {
         Injector injector = Guice.createInjector();
 
         TestApplication application = new TestApplication(injector);
-        application.initialize("com.manywho.sdk.services.functional");
+        application.initialize();
 
         objectMapper = new ObjectMapperContextResolver().getContext(null);
 

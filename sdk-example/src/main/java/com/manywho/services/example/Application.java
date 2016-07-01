@@ -10,7 +10,7 @@ import javax.ws.rs.ApplicationPath;
 public class Application extends ServiceApplication {
     public Application() {
         this.setModule(new ApplicationModule());
-        this.initialize(this.getClass().getPackage().getName());
+        this.initialize();
     }
 
     public static void main(String[] args) {

@@ -5,8 +5,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
-import com.manywho.sdk.services.configuration.ApplicationConfiguration;
-import com.manywho.sdk.services.providers.ReflectionsProvider;
 import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
 import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
@@ -36,12 +34,12 @@ public class ServiceApplication extends Application {
         this.module = module;
     }
 
-    public void initialize(String applicationPackage) {
+    public void initialize() {
         final List<Module> modules = Lists.newArrayList();
 
         modules.add(new ImplicitValidationModule());
         modules.add(new RequestScopeModule());
-        modules.add(new ServiceApplicationModule(applicationPackage));
+        modules.add(new ServiceApplicationModule(this.getClass().getPackage().getName()));
 
         if (module == null) {
             injector = Guice.createInjector(modules);
