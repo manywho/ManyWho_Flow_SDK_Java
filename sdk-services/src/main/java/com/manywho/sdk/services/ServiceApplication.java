@@ -51,25 +51,18 @@ public class ServiceApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         final Set<Object> objects = new HashSet<>();
-        Reflections reflections = getReflections(this.getClass().getPackage().getName());
-        Reflections reflections2 = getReflections("com.manywho.sdk.services");
 
-        addToObjects(objects, reflections.getTypesAnnotatedWith(Path.class));
-        addToObjects(objects, reflections.getTypesAnnotatedWith(Provider.class));
-        addToObjects(objects, reflections2.getTypesAnnotatedWith(Path.class));
-        addToObjects(objects, reflections2.getTypesAnnotatedWith(Provider.class));
+        Reflections reflections = injector.getInstance(Reflections.class);
+
+        objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Path.class)));
+        objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Provider.class)));
 
         return objects;
     }
 
-    protected void addToObjects(Set<Object> objects, Set<Class<?>> classes) {
-        objects.addAll(classes.stream().map(c -> injector.getInstance(c)).collect(Collectors.toSet()));
+    private Set<Object> createInstances(Set<Class<?>> classes) {
+        return classes.stream()
+                .map(c -> injector.getInstance(c))
+                .collect(Collectors.toSet());
     }
-
-    protected Reflections getReflections(String packageName) {
-        ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration(packageName);
-        ReflectionsProvider reflectionsProvider = new ReflectionsProvider(applicationConfiguration);
-        return reflectionsProvider.get();
-    }
-
 }
