@@ -6,9 +6,9 @@ import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
+import org.jboss.resteasy.mock.MockHttpRequest;
 import org.junit.Test;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -23,14 +23,16 @@ import static org.junit.Assert.assertThat;
 public class DescribeFunctionalTest extends BaseFunctionalTest {
     @Test
     public void testDescribe() throws Exception {
-        DescribeServiceResponse response = target("/metadata").request()
-                .post(Entity.entity(new DescribeServiceRequest(), MediaType.APPLICATION_JSON))
-                .readEntity(DescribeServiceResponse.class);
+        MockHttpRequest request = MockHttpRequest.post("/metadata")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(new DescribeServiceRequest()));
+
+        DescribeServiceResponse response = getResponseContent(request, DescribeServiceResponse.class);
 
         assertNotNull(response);
         assertNotNull(response.getInstall());
 
-        List<DescribeServiceActionResponse> actions = response.getActions();        
+        List<DescribeServiceActionResponse> actions = response.getActions();
         assertNotNull(actions);
         assertEquals(1, actions.size());
         assertThat(actions, hasItem(hasProperty("developerName", equalTo("Test Action"))));
@@ -42,7 +44,7 @@ public class DescribeFunctionalTest extends BaseFunctionalTest {
         assertThat(actions, hasItem(hasProperty("serviceOutputs", hasItem(hasProperty("developerName", equalTo("Created At"))))));
         assertThat(actions, hasItem(hasProperty("serviceOutputs", hasItem(hasProperty("contentType", equalTo(ContentType.DateTime))))));
         assertThat(actions, hasItem(hasProperty("serviceOutputs", hasItem(hasProperty("required", equalTo(false))))));
-        
+
         List<TypeElement> types = response.getInstall().getTypeElements();
         assertNotNull(types);
         assertEquals(2, types.size());

@@ -6,10 +6,12 @@ import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
+import org.jboss.resteasy.mock.MockHttpRequest;
 import org.junit.Test;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,21 +24,23 @@ import static org.junit.Assert.assertThat;
 
 public class ActionFunctionalTest extends BaseFunctionalTest {
     @Test
-    public void testTestAction() {
+    public void testTestAction() throws IOException, URISyntaxException {
         List<EngineValue> inputs = Lists.newArrayList();
         inputs.add(new EngineValue("Name", ContentType.String, "Jonjo"));
 
-        ServiceRequest request = new ServiceRequest();
-        request.setInputs(inputs);
-        request.setToken(UUID.randomUUID().toString());
+        ServiceRequest serviceRequest = new ServiceRequest();
+        serviceRequest.setInputs(inputs);
+        serviceRequest.setToken(UUID.randomUUID().toString());
 
-        ServiceResponse response = target("/actions/testaction").request()
-                .post(Entity.entity(request, MediaType.APPLICATION_JSON))
-                .readEntity(ServiceResponse.class);
+        MockHttpRequest request = MockHttpRequest.post("/actions/testaction")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(serviceRequest));
+
+        ServiceResponse response = getResponseContent(request, ServiceResponse.class);
 
         assertNotNull(response);
         assertEquals(InvokeType.Forward, response.getInvokeType());
-        assertEquals(request.getToken(), response.getToken());
+        assertEquals(serviceRequest.getToken(), response.getToken());
         assertNotNull(response.getOutputs());
         assertEquals(1, response.getOutputs().size());
         assertThat(response.getOutputs(), hasItem(hasProperty("developerName", equalTo("Created At"))));
