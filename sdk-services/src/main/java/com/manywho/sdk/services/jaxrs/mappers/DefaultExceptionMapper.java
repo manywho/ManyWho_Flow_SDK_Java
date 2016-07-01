@@ -7,6 +7,7 @@ import org.apache.logging.log4j.message.ParameterizedMessageFactory;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -41,6 +42,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Throwable> {
 
         return Response.status(status)
                 .entity(serviceProblem)
+                .type(MediaType.APPLICATION_JSON)
                 .header("X-ManyWho-Service-Problem-Kind", serviceProblem.getKind())
                 .build();
     }
