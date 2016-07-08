@@ -77,6 +77,10 @@ public class ListFilter extends ListFilterMinimal {
         return search;
     }
 
+    public boolean hasSearch() {
+        return search != null;
+    }
+
     public void setSearch(String search) {
         this.search = search;
     }
