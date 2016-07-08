@@ -54,12 +54,20 @@ public class ListFilterWhere implements PropertyAware {
         return contentValue;
     }
 
+    public boolean hasContentValue() {
+        return contentValue != null;
+    }
+
     public void setContentValue(String contentValue) {
         this.contentValue = contentValue;
     }
 
     public List<MObject> getObjectData() {
         return objectData;
+    }
+
+    public boolean hasObjectData() {
+        return objectData != null;
     }
 
     public void setObjectData(List<MObject> objectData) {
