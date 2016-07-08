@@ -5,7 +5,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
+import io.undertow.Undertow;
 import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
 
@@ -15,6 +17,8 @@ import javax.ws.rs.ext.Provider;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ServiceApplication extends Application {
@@ -58,6 +62,41 @@ public class ServiceApplication extends Application {
         objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Provider.class)));
 
         return objects;
+    }
+
+    /**
+     * Start the service using the built-in Jetty container on a specified port
+     *
+     * @param port the port to run the service on
+     */
+    public void startServer(int port) {
+        if (injector == null) {
+            initialize();
+        }
+
+        try {
+            UndertowJaxrsServer server = new UndertowJaxrsServer();
+            Undertow.Builder serverBuilder = Undertow.builder()
+                    .addHttpListener(port, "0.0.0.0");
+
+            server.start(serverBuilder);
+            server.deploy(this, "/");
+
+            System.out.println(String.format("Service started on 0.0.0.0:%d.", port));
+            System.out.println("Stop the service using CTRL+C");
+        } catch (Exception ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Start the service using the built-in Jetty container
+     */
+    public void startServer() throws Exception {
+        // Load the desired port from a property, otherwise default to 8080
+        final int port = System.getProperty("server.port") != null ? Integer.parseInt(System.getProperty("server.port")) : 8080;
+
+        startServer(port);
     }
 
     private Set<Object> createInstances(Set<Class<?>> classes) {
