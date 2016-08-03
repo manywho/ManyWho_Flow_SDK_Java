@@ -21,7 +21,7 @@
   ],
   "providesAutoBinding": false,
   "providesDatabase": true,
-  "providesFiles": false,
+  "providesFiles": true,
   "providesIdentity": true,
   "providesListening": true,
   "providesLogic": true,

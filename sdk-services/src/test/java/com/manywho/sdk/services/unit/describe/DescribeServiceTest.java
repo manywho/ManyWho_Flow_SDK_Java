@@ -64,7 +64,7 @@ public class DescribeServiceTest extends BaseTest {
     public void testAnyFileControllersExistWithTestClass() {
         DescribeService describeService = createDescribeService();
 
-        assertFalse(describeService.anyFileControllersExist());
+        assertTrue(describeService.anyFileControllersExist());
     }
 
     @Test

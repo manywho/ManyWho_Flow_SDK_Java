@@ -7,6 +7,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.controllers.AbstractDataController;
 //import com.manywho.sdk.services.controllers.AbstractFileController;
+import com.manywho.sdk.services.controllers.AbstractFileController;
 import com.manywho.sdk.services.controllers.AbstractIdentityController;
 import com.manywho.sdk.services.controllers.AbstractListenerController;
 //import com.manywho.sdk.services.controllers.AbstractSocialController;
@@ -41,8 +42,7 @@ public class DescribeService {
     }
 
     public boolean anyFileControllersExist() {
-        return false;
-//        return describeRepository.doSubtypesOfExist(AbstractFileController.class);
+        return describeRepository.doSubtypesOfExist(AbstractFileController.class);
     }
 
     public boolean anyIdentityControllersExist() {
