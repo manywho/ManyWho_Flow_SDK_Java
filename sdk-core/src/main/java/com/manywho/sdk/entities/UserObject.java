@@ -1,6 +1,8 @@
 package com.manywho.sdk.entities;
 
-import com.manywho.sdk.entities.run.elements.type.*;
+import com.manywho.sdk.entities.run.elements.type.MObject;
+import com.manywho.sdk.entities.run.elements.type.Property;
+import com.manywho.sdk.entities.run.elements.type.PropertyCollection;
 import com.manywho.sdk.enums.AuthorizationType;
 
 public class UserObject extends MObject {
@@ -49,20 +51,21 @@ public class UserObject extends MObject {
 
     @Override
     public PropertyCollection getProperties() {
-        return new PropertyCollection() {{
-            add(new Property("Country"));
-            add(new Property("Language"));
-            add(new Property("Location"));
-            add(new Property("Directory Id", UserObject.this.directoryId));
-            add(new Property("Directory Name", UserObject.this.directoryName));
-            add(new Property("AuthenticationType", UserObject.this.authorizationType.toString()));
-            add(new Property("User ID", UserObject.this.userId));
-            add(new Property("Username", UserObject.this.username));
-            add(new Property("Email", UserObject.this.email));
-            add(new Property("First Name", UserObject.this.firstName));
-            add(new Property("Last Name", UserObject.this.lastName));
-            add(new Property("LoginUrl", UserObject.this.loginUrl));
-            add(new Property("Status", UserObject.this.authorizationStatus));
-        }};
+        PropertyCollection properties = new PropertyCollection();
+        properties.add(new Property("Country"));
+        properties.add(new Property("Language"));
+        properties.add(new Property("Location"));
+        properties.add(new Property("Directory Id", this.directoryId));
+        properties.add(new Property("Directory Name", this.directoryName));
+        properties.add(new Property("AuthenticationType", this.authorizationType.toString()));
+        properties.add(new Property("User ID", this.userId));
+        properties.add(new Property("Username", this.username));
+        properties.add(new Property("Email", this.email));
+        properties.add(new Property("First Name", this.firstName));
+        properties.add(new Property("Last Name", this.lastName));
+        properties.add(new Property("LoginUrl", this.loginUrl));
+        properties.add(new Property("Status", this.authorizationStatus));
+
+        return properties;
     }
 }

@@ -9,14 +9,13 @@ import com.manywho.sdk.enums.ContentType;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,6 +33,10 @@ public class TypeParser {
     }
 
     public <T> List<T> parseList(List<MObject> objects, Class<T> tClass) throws Exception {
+        if (objects == null) {
+            return new ArrayList<>();
+        }
+
         return objects.stream().map(Throwing.function(object -> this.parseObject(object, tClass)))
                 .collect(Collectors.toList());
     }
@@ -126,12 +129,12 @@ public class TypeParser {
         Field field = tuple.getField();
         field.setAccessible(true);
 
+        String propertyFullName = getPropertyFullName(field.getDeclaringClass().getSimpleName(), property.getDeveloperName());
+
         switch (tuple.getTypeProperty().contentType()) {
             case List:
-                String typeElementName = tClass.getAnnotation(TypeElement.class).name();
-
                 // Find the type of the list's generic
-                Class<?> listType = getListPropertyGenericType(typeElementName, field, tuple.getTypeProperty().name());
+                Class<?> listType = getListPropertyGenericType(field, tuple.getTypeProperty().name());
 
                 field.set(typeObject, this.parseList(property.getObjectData(), listType));
                 break;
@@ -139,7 +142,7 @@ public class TypeParser {
                 field.set(typeObject, this.parseObject(property.getObjectData().get(0), field.getType()));
                 break;
             default:
-                field.set(typeObject, property.getContentValue());
+                field.set(typeObject, convertContentValueToTypedValue(propertyFullName, property.getContentValue(), property.getContentType(), field.getType()));
         }
     }
 
@@ -157,7 +160,7 @@ public class TypeParser {
     public static String getReferencedTypeName(String typeElementName, Field propertyField, Class<?> referencedType, String propertyName, ContentType propertyContentType) throws Exception {
         if (referencedType.equals(void.class)) {
             if (propertyContentType.equals(ContentType.List)) {
-                referencedType = getListPropertyGenericType(typeElementName, propertyField, propertyName);
+                referencedType = getListPropertyGenericType(propertyField, propertyName);
             }
 
             if (propertyContentType.equals(ContentType.Object)) {
@@ -176,8 +179,10 @@ public class TypeParser {
         return referencedType.getAnnotation(TypeElement.class).name();
     }
 
-    public static Class<?> getListPropertyGenericType(String elementName, Field propertyField, String propertyName) throws Exception {
+    public static Class<?> getListPropertyGenericType(Field propertyField, String propertyName) throws Exception {
         Class<?> genericType = TypeUtils.getGenericType(propertyField.getGenericType());
+
+        String elementName = genericType.getAnnotation(TypeElement.class).name();
 
         if (Collection.class.isAssignableFrom(propertyField.getType())) {
             return genericType;
@@ -188,5 +193,55 @@ public class TypeParser {
 
     private static String getPropertyFullName(String elementName, String typePropertyName) {
         return elementName + "->" + typePropertyName;
+    }
+
+    private static <T> T convertContentValueToTypedValue(String property, String value, ContentType contentType, Class<T> type) {
+        try {
+            if (type.equals(long.class) || type.equals(Long.class)) {
+                return (T) Long.decode(value);
+            } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
+                return (T) parseBoolean(value);
+            } else if (type.equals(int.class) || type.equals(Integer.class)) {
+                return (T) Integer.decode(value);
+            } else if (type.equals(float.class) || type.equals(Float.class)) {
+                return (T) Float.valueOf(value);
+            } else if (type.equals(DateTime.class)) {
+                return (T) DateTime.parse(value);
+            } else if (type.equals(UUID.class)) {
+                if (StringUtils.isNotBlank(value)) {
+                    return (T) UUID.fromString(value);
+                }
+
+                return null;
+            } else {
+                return (T) value;
+            }
+        } catch (Exception exception) {
+            throw new RuntimeException("Unable to populate the type property " + property + " as it is the wrong Java type. The correct type for the property should be " + getExpectedJavaType(contentType) + ".");
+        }
+    }
+
+    private static String getExpectedJavaType(ContentType contentType) {
+        switch (contentType) {
+            case Boolean:
+                return Boolean.class.getName();
+            case DateTime:
+                return DateTime.class.getName();
+            case Number:
+                return Integer.class.getName();
+            case List:
+            case Object:
+                return "a custom type annotated with " + TypeElement.class.getName();
+            case Content:
+            case Encrypted:
+            case Password:
+            case String:
+            default:
+                return String.class.getName();
+        }
+    }
+
+    private static Boolean parseBoolean(String value) {
+        return value.equalsIgnoreCase("1") || !value.equalsIgnoreCase("0") && Boolean.parseBoolean(value);
     }
 }

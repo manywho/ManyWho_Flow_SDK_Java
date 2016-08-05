@@ -3,7 +3,7 @@ package com.manywho.sdk.client.options;
 import com.manywho.sdk.enums.FlowMode;
 
 public class FlowInitializationOptions {
-    private FlowMode mode;
+    private FlowMode mode = FlowMode.Default;
 
     /**
      * Gets the desired mode to run the Flow as

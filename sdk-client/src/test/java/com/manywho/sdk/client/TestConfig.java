@@ -1,7 +1,9 @@
 package com.manywho.sdk.client;
 
-final class TestConfig {
-    public static String getTenantId() {
-        return "72236525-545d-4927-bb53-37a58a79178e";
+import java.util.UUID;
+
+final public class TestConfig {
+    public static UUID getTenantId() {
+        return UUID.fromString("72236525-545d-4927-bb53-37a58a79178e");
     }
 }

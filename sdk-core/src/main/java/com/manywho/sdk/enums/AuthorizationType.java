@@ -2,7 +2,8 @@ package com.manywho.sdk.enums;
 
 public enum AuthorizationType {
     UsernamePassword("USERNAME_PASSWORD"),
-    Oauth2("OAUTH2");
+    Oauth2("OAUTH2"),
+    SAML("SAML");
 
     private final String text;
 

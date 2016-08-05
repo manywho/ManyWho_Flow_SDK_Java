@@ -29,7 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -231,7 +230,9 @@ public abstract class AbstractDescribeService implements DescribeService {
         if (CollectionUtils.isNotEmpty(types)) {
             final Set<Field> annotatedProperties = CachedData.reflections.getFieldsAnnotatedWith(TypeProperty.class);
 
+            // Build type elements for all the detected types that aren't in the SDK
             return types.stream()
+                    .filter(type -> !type.getPackage().getName().startsWith("com.manywho.sdk"))
                     .map(type -> buildTypeElementFromAnnotatedType(type, annotatedProperties))
                     .collect(Collectors.toCollection(TypeElementCollection::new));
         }
