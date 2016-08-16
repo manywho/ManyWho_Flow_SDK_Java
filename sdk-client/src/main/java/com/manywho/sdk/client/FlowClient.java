@@ -8,11 +8,14 @@ import com.manywho.sdk.entities.run.EngineInitializationRequest;
 import com.manywho.sdk.entities.run.EngineInitializationResponse;
 import com.manywho.sdk.entities.run.EngineInvokeRequest;
 import com.manywho.sdk.entities.run.EngineInvokeResponse;
+import com.manywho.sdk.entities.run.EngineValue;
+import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.enums.InvokeType;
 import com.manywho.sdk.utils.AuthorizationUtils;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class FlowClient {
     private final RawRunClient rawRunClient;
@@ -74,8 +77,19 @@ public class FlowClient {
             options = new FlowInitializationOptions();
         }
 
+        EngineValueCollection inputs = options.getInputs().stream()
+                .map(input -> {
+                    if (input.hasObjectData()) {
+                        return new EngineValue(input.getName(), input.getContentType(), input.getObjectData());
+                    } else {
+                        return new EngineValue(input.getName(), input.getContentType(), input.getContentValue());
+                    }
+                })
+                .collect(Collectors.toCollection(EngineValueCollection::new));
+
         EngineInitializationRequest initializationRequest = new EngineInitializationRequest();
         initializationRequest.setFlowId(id);
+        initializationRequest.setInputs(inputs);
         initializationRequest.setMode(options.getMode().toString());
 
         EngineInitializationResponse response = rawRunClient.initialize(tenant, null, initializationRequest);
