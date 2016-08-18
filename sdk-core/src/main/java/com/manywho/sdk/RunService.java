@@ -164,12 +164,15 @@ public class RunService {
     }
 
     protected InvokeType executeCallback(AuthenticatedWho authenticatedWho, String tenantId, String callbackUri, Response response) throws Exception {
-        String responseBody = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
+        HttpResponse<String> httpResponse = this.createHttpClient(authenticatedWho, tenantId, callbackUri)
                 .body(new ObjectMapper().configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true).writeValueAsString(response))
-                .asString()
-                .getBody();
+                .asString();
 
-        return InvokeType.fromString(responseBody.replace("\"", ""));
+        if (!STATUSES_SUCCESS.contains(httpResponse.getStatus())) {
+            throw new ManyWhoException(httpResponse.getStatus(), httpResponse.getStatusText());
+        }
+
+        return InvokeType.fromString(httpResponse.getBody().replace("\"", ""));
     }
 
     public static <T> Retryer<T> createRetry(Predicate<T> predicate) {
