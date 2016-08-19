@@ -3,6 +3,7 @@ package com.manywho.sdk.api;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum ComparisonType {
+    None(""),
     And("AND"),
     Or("OR");
 
@@ -20,7 +21,7 @@ public enum ComparisonType {
             }
         }
 
-        throw new IllegalArgumentException("No comparison type with text " + value + " found");
+        return None;
     }
 
     @Override
