@@ -69,7 +69,7 @@ public class ServiceApplication extends Application {
      *
      * @param port the port to run the service on
      */
-    public void startServer(int port) {
+    public void startServer(String path, int port) {
         if (injector == null) {
             initialize();
         }
@@ -80,7 +80,7 @@ public class ServiceApplication extends Application {
                     .addHttpListener(port, "0.0.0.0");
 
             server.start(serverBuilder);
-            server.deploy(this, "/");
+            server.deploy(this, path);
 
             System.out.println(String.format("Service started on 0.0.0.0:%d.", port));
             System.out.println("Stop the service using CTRL+C");
@@ -90,13 +90,23 @@ public class ServiceApplication extends Application {
     }
 
     /**
-     * Start the service using the built-in Jetty container
+     * Start the service using the build-in Jetty container from a specified path
+     *
+     * @param path the path to run the service from
+     * @throws Exception
      */
-    public void startServer() throws Exception {
+    public void startServer(String path) throws Exception {
         // Load the desired port from a property, otherwise default to 8080
         final int port = System.getProperty("server.port") != null ? Integer.parseInt(System.getProperty("server.port")) : 8080;
 
-        startServer(port);
+        startServer(path, port);
+    }
+
+    /**
+     * Start the service using the built-in Jetty container
+     */
+    public void startServer() throws Exception {
+        startServer("/");
     }
 
     private Set<Object> createInstances(Set<Class<?>> classes) {
