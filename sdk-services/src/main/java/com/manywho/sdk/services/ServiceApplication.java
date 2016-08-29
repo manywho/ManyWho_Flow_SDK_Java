@@ -100,7 +100,11 @@ public class ServiceApplication extends Application {
     }
 
     private Set<Object> createInstances(Set<Class<?>> classes) {
+        String servicePackage = getClass().getPackage().getName();
+
+        // Only create instances of classes that are in the service or in the SDK
         return classes.stream()
+                .filter(c -> c.getPackage().getName().startsWith(servicePackage) || c.getPackage().getName().startsWith("com.manywho.sdk.services"))
                 .map(c -> injector.getInstance(c))
                 .collect(Collectors.toSet());
     }
