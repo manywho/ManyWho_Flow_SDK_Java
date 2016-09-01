@@ -1,6 +1,8 @@
 ManyWho Java SDK
 ================
 
+[![Join the chat at https://gitter.im/manywho/sdk-java](https://badges.gitter.im/manywho/sdk-java.svg)](https://gitter.im/manywho/sdk-java?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/manywho/sdk-java.svg?branch=master)](https://travis-ci.org/manywho/sdk-java)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.manywho/sdk)
 
