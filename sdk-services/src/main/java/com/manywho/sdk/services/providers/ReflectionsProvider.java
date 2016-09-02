@@ -29,7 +29,7 @@ public class ReflectionsProvider implements Provider<Reflections> {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
                 .addUrls(forSinglePackage(applicationConfiguration.getApplicationPackage()))
                 .addUrls(forSinglePackage(this.getClass().getPackage().getName()))
-                .addUrls(forSinglePackage("com.manywho.sdk.services.controllers"))
+                .addUrls(forSinglePackage("com.manywho.sdk.services"))
                 .addScanners(new SubTypesScanner(), new FieldAnnotationsScanner());
 
         return new Reflections(configurationBuilder);
