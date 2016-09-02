@@ -8,26 +8,25 @@ import com.manywho.sdk.api.translate.Culture;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ObjectDataRequest implements ConfigurationValuesAware {
-    private String stateId;
+    private UUID stateId;
     private String token;
-    private String typeElementBindingId;
+    private UUID typeElementBindingId;
     private Authorization authorization;
     private List<EngineValue> configurationValues;
     private Command command;
     private Culture culture;
-
-//    @NotNull
     private ListFilter listFilter;
     private ObjectDataType objectDataType;
     private List<MObject> objectData;
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
@@ -39,11 +38,11 @@ public class ObjectDataRequest implements ConfigurationValuesAware {
         this.token = token;
     }
 
-    public String getTypeElementBindingId() {
+    public UUID getTypeElementBindingId() {
         return typeElementBindingId;
     }
 
-    public void setTypeElementBindingId(String typeElementBindingId) {
+    public void setTypeElementBindingId(UUID typeElementBindingId) {
         this.typeElementBindingId = typeElementBindingId;
     }
 

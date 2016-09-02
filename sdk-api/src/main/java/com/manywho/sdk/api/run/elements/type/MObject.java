@@ -3,12 +3,13 @@ package com.manywho.sdk.api.run.elements.type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MObject {
-    private String internalId;
+    private UUID internalId;
     private String externalId;
     private String developerName;
-    private String typeElementId;
+    private UUID typeElementId;
     private int order;
     private List<Property> properties;
     @JsonProperty("isSelected")
@@ -28,11 +29,11 @@ public class MObject {
         this.properties = properties;
     }
 
-    public String getInternalId() {
+    public UUID getInternalId() {
         return internalId;
     }
 
-    public void setInternalId(String internalId) {
+    public void setInternalId(UUID internalId) {
         this.internalId = internalId;
     }
 
@@ -52,11 +53,11 @@ public class MObject {
         this.developerName = developerName;
     }
 
-    public String getTypeElementId() {
+    public UUID getTypeElementId() {
         return typeElementId;
     }
 
-    public void setTypeElementId(String typeElementId) {
+    public void setTypeElementId(UUID typeElementId) {
         this.typeElementId = typeElementId;
     }
 

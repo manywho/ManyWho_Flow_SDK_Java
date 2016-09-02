@@ -7,12 +7,13 @@ import org.apache.commons.collections4.MapUtils;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class EngineInitializationRequest {
     @NotNull
     private FlowId flowId;
-    private String stateId;
-    private String parentStateId;
+    private UUID stateId;
+    private UUID parentStateId;
     private String externalIdentifier;
     private HashMap<String, String> annotations;
     private List<EngineValue> inputs;
@@ -29,19 +30,19 @@ public class EngineInitializationRequest {
         this.flowId = flowId;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getParentStateId() {
+    public UUID getParentStateId() {
         return parentStateId;
     }
 
-    public void setParentStateId(String parentStateId) {
+    public void setParentStateId(UUID parentStateId) {
         this.parentStateId = parentStateId;
     }
 

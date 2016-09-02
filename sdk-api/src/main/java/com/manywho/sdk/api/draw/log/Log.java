@@ -3,26 +3,27 @@ package com.manywho.sdk.api.draw.log;
 import com.manywho.sdk.api.draw.elements.Element;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class Log extends Element {
-    private String stateId;
-    private String flowId;
+    private UUID stateId;
+    private UUID flowId;
     private String flowDeveloperName;
     private Map<String, LogEntry> entries;
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getFlowId() {
+    public UUID getFlowId() {
         return flowId;
     }
 
-    public void setFlowId(String flowId) {
+    public void setFlowId(UUID flowId) {
         this.flowId = flowId;
     }
 

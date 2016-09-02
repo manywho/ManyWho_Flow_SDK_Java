@@ -2,14 +2,16 @@ package com.manywho.sdk.api.run.elements.map;
 
 import com.manywho.sdk.api.run.elements.ui.PageRequest;
 
+import java.util.UUID;
+
 public class MapElementInvokeRequest {
-    private String selectedOutcomeId;
+    private UUID selectedOutcomeId;
     private PageRequest pageRequest;
 
     public MapElementInvokeRequest() {
     }
 
-    public MapElementInvokeRequest(String selectedOutcomeId) {
+    public MapElementInvokeRequest(UUID selectedOutcomeId) {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 
@@ -17,16 +19,16 @@ public class MapElementInvokeRequest {
         this.pageRequest = pageRequest;
     }
 
-    public MapElementInvokeRequest(String selectedOutcomeId, PageRequest pageRequest) {
+    public MapElementInvokeRequest(UUID selectedOutcomeId, PageRequest pageRequest) {
         this.selectedOutcomeId = selectedOutcomeId;
         this.pageRequest = pageRequest;
     }
 
-    public String getSelectedOutcomeId() {
+    public UUID getSelectedOutcomeId() {
         return selectedOutcomeId;
     }
 
-    public void setSelectedOutcomeId(String selectedOutcomeId) {
+    public void setSelectedOutcomeId(UUID selectedOutcomeId) {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 

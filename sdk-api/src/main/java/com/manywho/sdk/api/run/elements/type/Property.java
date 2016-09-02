@@ -5,9 +5,10 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Property implements PropertyAware {
-    private String typeElementPropertyId;
+    private UUID typeElementPropertyId;
     private String developerName;
     private ContentType contentType;
     private String contentValue;
@@ -52,11 +53,11 @@ public class Property implements PropertyAware {
         this.objectData = objectData;
     }
 
-    public String getTypeElementPropertyId() {
+    public UUID getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
 
-    public void setTypeElementPropertyId(String typeElementPropertyId) {
+    public void setTypeElementPropertyId(UUID typeElementPropertyId) {
         this.typeElementPropertyId = typeElementPropertyId;
     }
 

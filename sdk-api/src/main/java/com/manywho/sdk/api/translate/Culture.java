@@ -1,8 +1,10 @@
 package com.manywho.sdk.api.translate;
 
+import java.util.UUID;
+
 public class Culture {
 
-    private String id;
+    private UUID id;
     private String developerName;
     private String developerSummary;
     private String brand;
@@ -14,7 +16,7 @@ public class Culture {
         this(null, null, null, null, language, country, null);
     }
 
-    public Culture(String id, String developerName, String developerSummary, String brand, String language, String country, String variant) {
+    public Culture(UUID id, String developerName, String developerSummary, String brand, String language, String country, String variant) {
         this.id = id;
         this.developerName = developerName;
         this.developerSummary = developerSummary;
@@ -28,11 +30,11 @@ public class Culture {
 
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

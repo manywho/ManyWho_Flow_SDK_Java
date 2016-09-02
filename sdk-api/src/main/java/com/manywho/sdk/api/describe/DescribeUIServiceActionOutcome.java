@@ -1,15 +1,17 @@
 package com.manywho.sdk.api.describe;
 
+import java.util.UUID;
+
 public class DescribeUIServiceActionOutcome {
-    private String id;
+    private UUID id;
     private String developerName;
     private String developerSummary;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

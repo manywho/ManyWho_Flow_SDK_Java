@@ -4,22 +4,23 @@ import com.manywho.sdk.api.draw.flow.FlowId;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class StateEntry {
-    private String id;
+    private UUID id;
     private FlowId flowId;
     private String flowDeveloperName;
-    private String mapElementId;
+    private UUID mapElementId;
     private String mapElementDeveloperName;
     private LocalDateTime dateCommitted;
     private List<StateValue> values;
     private List<UserInteraction> userInteractions;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -39,11 +40,11 @@ public class StateEntry {
         this.flowDeveloperName = flowDeveloperName;
     }
 
-    public String getMapElementId() {
+    public UUID getMapElementId() {
         return mapElementId;
     }
 
-    public void setMapElementId(String mapElementId) {
+    public void setMapElementId(UUID mapElementId) {
         this.mapElementId = mapElementId;
     }
 

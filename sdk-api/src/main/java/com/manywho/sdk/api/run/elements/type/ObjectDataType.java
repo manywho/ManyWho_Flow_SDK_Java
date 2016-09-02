@@ -1,17 +1,18 @@
 package com.manywho.sdk.api.run.elements.type;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ObjectDataType {
-    private String typeElementId;
+    private UUID typeElementId;
     private String developerName;
     private List<ObjectDataTypeProperty> properties;
 
-    public String getTypeElementId() {
+    public UUID getTypeElementId() {
         return typeElementId;
     }
 
-    public void setTypeElementId(String typeElementId) {
+    public void setTypeElementId(UUID typeElementId) {
         this.typeElementId = typeElementId;
     }
 

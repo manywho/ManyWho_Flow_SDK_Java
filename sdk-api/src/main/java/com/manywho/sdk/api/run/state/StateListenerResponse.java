@@ -1,13 +1,15 @@
 package com.manywho.sdk.api.run.state;
 
-public class StateListenerResponse extends StateListenerRequest {
-    private String id;
+import java.util.UUID;
 
-    public String getId() {
+public class StateListenerResponse extends StateListenerRequest {
+    private UUID id;
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 }

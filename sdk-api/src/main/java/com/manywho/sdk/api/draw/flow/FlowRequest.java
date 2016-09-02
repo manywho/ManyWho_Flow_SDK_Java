@@ -2,12 +2,14 @@ package com.manywho.sdk.api.draw.flow;
 
 import com.manywho.sdk.api.draw.elements.group.GroupAuthorization;
 
+import java.util.UUID;
+
 public class FlowRequest {
     protected String editingToken;
     protected FlowId id;
     protected String developerName;
     protected String developerSummary;
-    protected String startMapElementId;
+    protected UUID startMapElementId;
     protected boolean allowJumping;
     protected GroupAuthorization authorization;
 
@@ -43,11 +45,11 @@ public class FlowRequest {
         this.developerSummary = developerSummary;
     }
 
-    public String getStartMapElementId() {
+    public UUID getStartMapElementId() {
         return startMapElementId;
     }
 
-    public void setStartMapElementId(String startMapElementId) {
+    public void setStartMapElementId(UUID startMapElementId) {
         this.startMapElementId = startMapElementId;
     }
 

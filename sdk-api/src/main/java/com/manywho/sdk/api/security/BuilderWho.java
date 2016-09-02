@@ -1,17 +1,19 @@
 package com.manywho.sdk.api.security;
 
+import java.util.UUID;
+
 public class BuilderWho {
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
     private String username;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

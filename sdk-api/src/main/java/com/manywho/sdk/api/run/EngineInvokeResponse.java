@@ -11,16 +11,17 @@ import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class EngineInvokeResponse {
     private Culture culture;
-    private String stateId;
-    private String parentStateId;
-    private String stateToken;
+    private UUID stateId;
+    private UUID parentStateId;
+    private UUID stateToken;
     private String alertEmail;
     private String waitMessage;
     private String notAuthorizedMessage;
-    private String currentMapElementId;
+    private UUID currentMapElementId;
     private String currentStreamId;
     private InvokeType invokeType;
     private HashMap<String, String> annotations;
@@ -44,27 +45,27 @@ public class EngineInvokeResponse {
         this.culture = culture;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getParentStateId() {
+    public UUID getParentStateId() {
         return parentStateId;
     }
 
-    public void setParentStateId(String parentStateId) {
+    public void setParentStateId(UUID parentStateId) {
         this.parentStateId = parentStateId;
     }
 
-    public String getStateToken() {
+    public UUID getStateToken() {
         return stateToken;
     }
 
-    public void setStateToken(String stateToken) {
+    public void setStateToken(UUID stateToken) {
         this.stateToken = stateToken;
     }
 
@@ -92,11 +93,11 @@ public class EngineInvokeResponse {
         this.notAuthorizedMessage = notAuthorizedMessage;
     }
 
-    public String getCurrentMapElementId() {
+    public UUID getCurrentMapElementId() {
         return currentMapElementId;
     }
 
-    public void setCurrentMapElementId(String currentMapElementId) {
+    public void setCurrentMapElementId(UUID currentMapElementId) {
         this.currentMapElementId = currentMapElementId;
     }
 

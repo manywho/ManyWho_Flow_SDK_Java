@@ -1,16 +1,17 @@
 package com.manywho.sdk.api.draw.elements.type;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TypeElementBinding {
-    private String id;
+    private UUID id;
     private String developerName;
     private String developerSummary;
     private String databaseTableName;
-    private String serviceElementId;
+    private UUID serviceElementId;
     private List<TypeElementPropertyBinding> propertyBindings;
 
-    public TypeElementBinding(String id, String developerName, String developerSummary, String databaseTableName, String serviceElementId, List<TypeElementPropertyBinding> propertyBindings) {
+    public TypeElementBinding(UUID id, String developerName, String developerSummary, String databaseTableName, UUID serviceElementId, List<TypeElementPropertyBinding> propertyBindings) {
         this.id = id;
         this.developerName = developerName;
         this.developerSummary = developerSummary;
@@ -30,11 +31,11 @@ public class TypeElementBinding {
     public TypeElementBinding() {
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -62,11 +63,11 @@ public class TypeElementBinding {
         this.databaseTableName = databaseTableName;
     }
 
-    public String getServiceElementId() {
+    public UUID getServiceElementId() {
         return serviceElementId;
     }
 
-    public void setServiceElementId(String serviceElementId) {
+    public void setServiceElementId(UUID serviceElementId) {
         this.serviceElementId = serviceElementId;
     }
 

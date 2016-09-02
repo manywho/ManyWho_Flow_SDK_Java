@@ -1,10 +1,11 @@
 package com.manywho.sdk.api.run.state;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class StateListenerRequest {
     private String listenType;
-    private String stateId;
+    private UUID stateId;
     private String callbackUri;
     private Map<String, String> annotations;
 
@@ -16,11 +17,11 @@ public class StateListenerRequest {
         this.listenType = listenType;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 

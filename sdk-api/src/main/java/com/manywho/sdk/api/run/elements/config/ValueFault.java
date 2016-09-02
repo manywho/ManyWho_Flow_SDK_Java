@@ -1,24 +1,26 @@
 package com.manywho.sdk.api.run.elements.config;
 
+import java.util.UUID;
+
 public class ValueFault {
-    private String valueElementToReferenceId;
-    private String valueElementTypeElementPropertyToReferenceId;
+    private UUID valueElementToReferenceId;
+    private UUID valueElementTypeElementPropertyToReferenceId;
     private String faultCode;
     private String faultMessage;
 
-    public String getValueElementToReferenceId() {
+    public UUID getValueElementToReferenceId() {
         return valueElementToReferenceId;
     }
 
-    public void setValueElementToReferenceId(String valueElementToReferenceId) {
+    public void setValueElementToReferenceId(UUID valueElementToReferenceId) {
         this.valueElementToReferenceId = valueElementToReferenceId;
     }
 
-    public String getValueElementTypeElementPropertyToReferenceId() {
+    public UUID getValueElementTypeElementPropertyToReferenceId() {
         return valueElementTypeElementPropertyToReferenceId;
     }
 
-    public void setValueElementTypeElementPropertyToReferenceId(String valueElementTypeElementPropertyToReferenceId) {
+    public void setValueElementTypeElementPropertyToReferenceId(UUID valueElementTypeElementPropertyToReferenceId) {
         this.valueElementTypeElementPropertyToReferenceId = valueElementTypeElementPropertyToReferenceId;
     }
 

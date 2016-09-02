@@ -1,8 +1,10 @@
 package com.manywho.sdk.api.draw.elements.type;
 
+import java.util.UUID;
+
 public class TypeElementPropertyBinding implements Comparable<TypeElementPropertyBinding> {
     private String databaseFieldName;
-    private String typeElementPropertyId;
+    private UUID typeElementPropertyId;
     private String typeElementPropertyDeveloperName;
     private String databaseContentType;
 
@@ -27,11 +29,11 @@ public class TypeElementPropertyBinding implements Comparable<TypeElementPropert
         this.databaseFieldName = databaseFieldName;
     }
 
-    public String getTypeElementPropertyId() {
+    public UUID getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
 
-    public void setTypeElementPropertyId(String typeElementPropertyId) {
+    public void setTypeElementPropertyId(UUID typeElementPropertyId) {
         this.typeElementPropertyId = typeElementPropertyId;
     }
 

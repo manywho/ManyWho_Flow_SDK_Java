@@ -8,22 +8,23 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class State {
-    private String id;
-    private String parentId;
+    private UUID id;
+    private UUID parentId;
     private LocalDateTime dateCreated;
     private LocalDateTime dateModified;
     private FlowId currentFlowId;
     private String currentFlowDeveloperName;
-    private String currentMapElementId;
+    private UUID currentMapElementId;
     private String currentMapElementDeveloperName;
     private String currentStreamId;
-    private String currentRunningUserId;
+    private UUID currentRunningUserId;
     private String currentRunningUserEmail;
     private String externalIdentifier;
     @JsonProperty("manywhoTenantId")
-    private String manyWhoTenantId;
+    private UUID manyWhoTenantId;
     private Map<String, String> annotations;
     private List<StateEntry> stateEntries;
     private StateEntry precommitStateEntry;
@@ -33,19 +34,19 @@ public class State {
     private boolean done;
     private Log log;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getParentId() {
+    public UUID getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(UUID parentId) {
         this.parentId = parentId;
     }
 
@@ -81,11 +82,11 @@ public class State {
         this.currentFlowDeveloperName = currentFlowDeveloperName;
     }
 
-    public String getCurrentMapElementId() {
+    public UUID getCurrentMapElementId() {
         return currentMapElementId;
     }
 
-    public void setCurrentMapElementId(String currentMapElementId) {
+    public void setCurrentMapElementId(UUID currentMapElementId) {
         this.currentMapElementId = currentMapElementId;
     }
 
@@ -105,11 +106,11 @@ public class State {
         this.currentStreamId = currentStreamId;
     }
 
-    public String getCurrentRunningUserId() {
+    public UUID getCurrentRunningUserId() {
         return currentRunningUserId;
     }
 
-    public void setCurrentRunningUserId(String currentRunningUserId) {
+    public void setCurrentRunningUserId(UUID currentRunningUserId) {
         this.currentRunningUserId = currentRunningUserId;
     }
 
@@ -129,11 +130,11 @@ public class State {
         this.externalIdentifier = externalIdentifier;
     }
 
-    public String getManyWhoTenantId() {
+    public UUID getManyWhoTenantId() {
         return manyWhoTenantId;
     }
 
-    public void setManyWhoTenantId(String manyWhoTenantId) {
+    public void setManyWhoTenantId(UUID manyWhoTenantId) {
         this.manyWhoTenantId = manyWhoTenantId;
     }
 

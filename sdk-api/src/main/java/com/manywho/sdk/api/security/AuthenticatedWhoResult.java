@@ -2,6 +2,8 @@ package com.manywho.sdk.api.security;
 
 import com.manywho.sdk.api.translate.Culture;
 
+import java.util.UUID;
+
 public class AuthenticatedWhoResult {
     private String userId;
     private String email;
@@ -11,7 +13,7 @@ public class AuthenticatedWhoResult {
     private String directoryId;
     private String directoryName;
     private String tenantName;
-    private String tenantId;
+    private UUID tenantId;
     private String identityProvider;
     private String token;
     private AuthenticationStatus status;
@@ -82,11 +84,11 @@ public class AuthenticatedWhoResult {
         this.tenantName = tenantName;
     }
 
-    public String getTenantId() {
+    public UUID getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(UUID tenantId) {
         this.tenantId = tenantId;
     }
 
@@ -130,18 +132,16 @@ public class AuthenticatedWhoResult {
         this.culture = culture;
     }
 
-    public static AuthenticatedWhoResult createDeniedResult(String username) {
-        AuthenticatedWhoResult result = createDeniedResult();
-        result.setStatusMessage("The user with the username " + username + " could not be authenticated");
+    public static AuthenticatedWhoResult createDeniedResult(String message) {
+        AuthenticatedWhoResult result = new AuthenticatedWhoResult();
+        result.setStatus(AuthenticationStatus.AccessDenied);
+        result.setStatusMessage(message);
 
         return result;
     }
 
     public static AuthenticatedWhoResult createDeniedResult() {
-        AuthenticatedWhoResult result = new AuthenticatedWhoResult();
-        result.setStatus(AuthenticationStatus.AccessDenied);
-
-        return result;
+        return createDeniedResult("Unable to login with the provided credentials");
     }
 
     public enum AuthenticationStatus {

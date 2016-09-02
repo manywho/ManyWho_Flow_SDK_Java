@@ -4,10 +4,11 @@ import com.manywho.sdk.api.translate.Culture;
 import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public abstract class AbstractResponse {
     protected String token;
-    protected String tenantId;
+    protected UUID tenantId;
     protected Culture culture;
     protected HashMap<String, String> annotations;
 
@@ -19,11 +20,11 @@ public abstract class AbstractResponse {
         this.token = token;
     }
 
-    public String getTenantId() {
+    public UUID getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(UUID tenantId) {
         this.tenantId = tenantId;
     }
 

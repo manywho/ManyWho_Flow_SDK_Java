@@ -1,22 +1,24 @@
 package com.manywho.sdk.api.draw.elements.value;
 
-public class ValueElementId {
-    private String id;
-    private String typeElementPropertyId;
+import java.util.UUID;
 
-    public String getId() {
+public class ValueElementId {
+    private UUID id;
+    private UUID typeElementPropertyId;
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getTypeElementPropertyId() {
+    public UUID getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
 
-    public void setTypeElementPropertyId(String typeElementPropertyId) {
+    public void setTypeElementPropertyId(UUID typeElementPropertyId) {
         this.typeElementPropertyId = typeElementPropertyId;
     }
 }

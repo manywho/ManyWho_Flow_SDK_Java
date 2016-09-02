@@ -3,11 +3,12 @@ package com.manywho.sdk.api.security;
 import com.manywho.sdk.api.run.state.Geolocation;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class AuthenticatedWho {
-    private String manyWhoUserId;
+    private UUID manyWhoUserId;
     @NotNull
-    private String manyWhoTenantId;
+    private UUID manyWhoTenantId;
     private String manyWhoToken;
     private Geolocation geolocation;
     private String userId;
@@ -21,19 +22,19 @@ public class AuthenticatedWho {
     private String firstName;
     private String lastName;
 
-    public String getManyWhoUserId() {
+    public UUID getManyWhoUserId() {
         return manyWhoUserId;
     }
 
-    public void setManyWhoUserId(String manyWhoUserId) {
+    public void setManyWhoUserId(UUID manyWhoUserId) {
         this.manyWhoUserId = manyWhoUserId;
     }
 
-    public String getManyWhoTenantId() {
+    public UUID getManyWhoTenantId() {
         return manyWhoTenantId;
     }
 
-    public void setManyWhoTenantId(String manyWhoTenantId) {
+    public void setManyWhoTenantId(UUID manyWhoTenantId) {
         this.manyWhoTenantId = manyWhoTenantId;
     }
 
@@ -133,14 +134,14 @@ public class AuthenticatedWho {
         this.lastName = lastName;
     }
 
-    public static AuthenticatedWho createPublicUser(String tenant) {
+    public static AuthenticatedWho createPublicUser(UUID tenant) {
         AuthenticatedWho authenticatedWho = new AuthenticatedWho();
         authenticatedWho.setDirectoryId("UNAUTHENTICATED");
         authenticatedWho.setDirectoryName("UNKNOWN");
         authenticatedWho.setIdentityProvider("NONE");
         authenticatedWho.setEmail("admin@manywho.com");
         authenticatedWho.setManyWhoTenantId(tenant);
-        authenticatedWho.setManyWhoUserId("52DF1A90-3826-4508-B7C2-CDE8AA5B72CF");
+        authenticatedWho.setManyWhoUserId(UUID.fromString("52DF1A90-3826-4508-B7C2-CDE8AA5B72CF"));
         authenticatedWho.setTenantName("UNKNOWN");
         authenticatedWho.setToken("NONE");
         authenticatedWho.setUserId("PUBLIC_USER");

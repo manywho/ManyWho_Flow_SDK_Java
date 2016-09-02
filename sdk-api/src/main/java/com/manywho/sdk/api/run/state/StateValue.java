@@ -5,19 +5,20 @@ import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
 import java.util.List;
+import java.util.UUID;
 
 public class StateValue implements PropertyAware {
-    private String valueElementId;
+    private UUID valueElementId;
     private String valueElementDeveloperName;
     private List<MObject> objectData;
     private String contentValue;
     private ContentType contentType;
 
-    public String getValueElementId() {
+    public UUID getValueElementId() {
         return valueElementId;
     }
 
-    public void setValueElementId(String valueElementId) {
+    public void setValueElementId(UUID valueElementId) {
         this.valueElementId = valueElementId;
     }
 

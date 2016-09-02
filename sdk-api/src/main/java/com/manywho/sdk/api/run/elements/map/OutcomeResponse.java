@@ -2,12 +2,14 @@ package com.manywho.sdk.api.run.elements.map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 public class OutcomeResponse extends OutcomeAvailable {
     private String pageActionBindingType;
     private String pageActionType;
     @JsonProperty("isBulkAction")
     private boolean bulkAction;
-    private String pageObjectBindingId;
+    private UUID pageObjectBindingId;
     @JsonProperty("isOut")
     private boolean out;
 
@@ -35,11 +37,11 @@ public class OutcomeResponse extends OutcomeAvailable {
         this.bulkAction = isBulkAction;
     }
 
-    public String getPageObjectBindingId() {
+    public UUID getPageObjectBindingId() {
         return pageObjectBindingId;
     }
 
-    public void setPageObjectBindingId(String pageObjectBindingId) {
+    public void setPageObjectBindingId(UUID pageObjectBindingId) {
         this.pageObjectBindingId = pageObjectBindingId;
     }
 

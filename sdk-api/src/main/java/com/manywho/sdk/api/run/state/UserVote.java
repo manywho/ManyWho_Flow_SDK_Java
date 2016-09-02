@@ -2,17 +2,19 @@ package com.manywho.sdk.api.run.state;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 public class UserVote extends Geolocation {
-    private String selectedOutcomeId;
+    private UUID selectedOutcomeId;
     private String directoryUserId;
     @JsonProperty("manywhoUserId")
-    private String manyWhoUserId;
+    private UUID manyWhoUserId;
 
-    public String getSelectedOutcomeId() {
+    public UUID getSelectedOutcomeId() {
         return selectedOutcomeId;
     }
 
-    public void setSelectedOutcomeId(String selectedOutcomeId) {
+    public void setSelectedOutcomeId(UUID selectedOutcomeId) {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 
@@ -24,11 +26,11 @@ public class UserVote extends Geolocation {
         this.directoryUserId = directoryUserId;
     }
 
-    public String getManyWhoUserId() {
+    public UUID getManyWhoUserId() {
         return manyWhoUserId;
     }
 
-    public void setManyWhoUserId(String manyWhoUserId) {
+    public void setManyWhoUserId(UUID manyWhoUserId) {
         this.manyWhoUserId = manyWhoUserId;
     }
 }

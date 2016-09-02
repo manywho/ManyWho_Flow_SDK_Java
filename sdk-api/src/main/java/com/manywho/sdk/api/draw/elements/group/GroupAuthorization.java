@@ -1,20 +1,21 @@
 package com.manywho.sdk.api.draw.elements.group;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GroupAuthorization {
-    private String serviceElementId;
+    private UUID serviceElementId;
     private String globalAuthenticationType;
     private String streamBehaviourType;
     private List<GroupAuthorizationGroup> groups;
     private List<GroupAuthorizationUser> users;
     private List<GroupAuthorizationLocation> locations;
 
-    public String getServiceElementId() {
+    public UUID getServiceElementId() {
         return serviceElementId;
     }
 
-    public void setServiceElementId(String serviceElementId) {
+    public void setServiceElementId(UUID serviceElementId) {
         this.serviceElementId = serviceElementId;
     }
 

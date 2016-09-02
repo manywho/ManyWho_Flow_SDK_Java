@@ -7,12 +7,13 @@ import com.manywho.sdk.api.run.EngineValue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ServiceResponse extends AbstractResponse {
     private InvokeType invokeType;
     private String waitMessage;
     private List<EngineValue> outputs;
-    private String selectedOutcomeId;
+    private UUID selectedOutcomeId;
     private Map<String, String> rootFaults;
     private List<ValueFault> valueFaults;
     private String mode;
@@ -74,11 +75,11 @@ public class ServiceResponse extends AbstractResponse {
         this.outputs = outputs;
     }
 
-    public String getSelectedOutcomeId() {
+    public UUID getSelectedOutcomeId() {
         return selectedOutcomeId;
     }
 
-    public void setSelectedOutcomeId(String selectedOutcomeId) {
+    public void setSelectedOutcomeId(UUID selectedOutcomeId) {
         this.selectedOutcomeId = selectedOutcomeId;
     }
 

@@ -5,11 +5,12 @@ import com.manywho.sdk.api.ContentType;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class PageComponentResponse {
     private String pageContainerDeveloperName;
-    private String pageContainerId;
-    private String id;
+    private UUID pageContainerId;
+    private UUID id;
     private String developerName;
     private String componentType;
     private ContentType contentType;
@@ -37,19 +38,19 @@ public class PageComponentResponse {
         this.pageContainerDeveloperName = pageContainerDeveloperName;
     }
 
-    public String getPageContainerId() {
+    public UUID getPageContainerId() {
         return pageContainerId;
     }
 
-    public void setPageContainerId(String pageContainerId) {
+    public void setPageContainerId(UUID pageContainerId) {
         this.pageContainerId = pageContainerId;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

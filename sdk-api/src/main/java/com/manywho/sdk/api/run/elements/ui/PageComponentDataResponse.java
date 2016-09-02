@@ -8,9 +8,10 @@ import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PageComponentDataResponse implements PropertyAware {
-    private String pageComponentId;
+    private UUID pageComponentId;
     @JsonProperty("isEnabled")
     private boolean enabled;
     @JsonProperty("isEditable")
@@ -30,11 +31,11 @@ public class PageComponentDataResponse implements PropertyAware {
     private String validationMessage;
     private List<EngineValue> tags;
 
-    public String getPageComponentId() {
+    public UUID getPageComponentId() {
         return pageComponentId;
     }
 
-    public void setPageComponentId(String pageComponentId) {
+    public void setPageComponentId(UUID pageComponentId) {
         this.pageComponentId = pageComponentId;
     }
 

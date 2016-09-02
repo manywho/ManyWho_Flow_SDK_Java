@@ -4,9 +4,10 @@ import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PageComponentInputResponseRequest implements PropertyAware {
-    private String pageComponentId;
+    private UUID pageComponentId;
     private String contentValue;
     private List<MObject> objectData;
 
@@ -14,26 +15,26 @@ public class PageComponentInputResponseRequest implements PropertyAware {
 
     }
 
-    public PageComponentInputResponseRequest(String pageComponentId) {
+    public PageComponentInputResponseRequest(UUID pageComponentId) {
         this.pageComponentId = pageComponentId;
     }
 
-    public PageComponentInputResponseRequest(String pageComponentId, List<MObject> objectData) {
+    public PageComponentInputResponseRequest(UUID pageComponentId, List<MObject> objectData) {
         this.pageComponentId = pageComponentId;
         this.objectData = objectData;
     }
 
-    public PageComponentInputResponseRequest(String pageComponentId, String contentValue) {
+    public PageComponentInputResponseRequest(UUID pageComponentId, String contentValue) {
 
         this.pageComponentId = pageComponentId;
         this.contentValue = contentValue;
     }
 
-    public String getPageComponentId() {
+    public UUID getPageComponentId() {
         return pageComponentId;
     }
 
-    public void setPageComponentId(String pageComponentId) {
+    public void setPageComponentId(UUID pageComponentId) {
         this.pageComponentId = pageComponentId;
     }
 

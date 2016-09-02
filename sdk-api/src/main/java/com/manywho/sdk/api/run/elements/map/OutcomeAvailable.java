@@ -1,16 +1,18 @@
 package com.manywho.sdk.api.run.elements.map;
 
+import java.util.UUID;
+
 public class OutcomeAvailable {
-    private String id;
+    private UUID id;
     private String developerName;
     private String label;
     private int order;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

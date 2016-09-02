@@ -7,10 +7,11 @@ import com.manywho.sdk.api.translate.Culture;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 public class FileDataRequest implements ConfigurationValuesAware {
-    private String stateId;
-    private String serviceElementId;
+    private UUID stateId;
+    private UUID serviceElementId;
     private String token;
     private Authorization authorization;
     private List<EngineValue> configurationValues;
@@ -19,19 +20,19 @@ public class FileDataRequest implements ConfigurationValuesAware {
     private String resourceFile;
     private FileListFilter listFilter;
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getServiceElementId() {
+    public UUID getServiceElementId() {
         return serviceElementId;
     }
 
-    public void setServiceElementId(String serviceElementId) {
+    public void setServiceElementId(UUID serviceElementId) {
         this.serviceElementId = serviceElementId;
     }
 

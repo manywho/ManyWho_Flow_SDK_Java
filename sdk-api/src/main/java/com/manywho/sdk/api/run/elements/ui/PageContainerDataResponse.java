@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.api.run.EngineValue;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PageContainerDataResponse {
-    private String pageContainerId;
+    private UUID pageContainerId;
     @JsonProperty("isEnabled")
     private boolean enabled;
     @JsonProperty("isEditable")
@@ -15,11 +16,11 @@ public class PageContainerDataResponse {
     private boolean visible;
     private List<EngineValue> tags;
 
-    public String getPageContainerId() {
+    public UUID getPageContainerId() {
         return pageContainerId;
     }
 
-    public void setPageContainerId(String pageContainerId) {
+    public void setPageContainerId(UUID pageContainerId) {
         this.pageContainerId = pageContainerId;
     }
 

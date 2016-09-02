@@ -9,11 +9,12 @@ import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractRequest implements ConfigurationValuesAware {
     protected String token;
-    protected String tenantId;
-    protected String stateId;
+    protected UUID tenantId;
+    protected UUID stateId;
     protected String callbackUri;
     protected Culture culture;
     protected List<EngineValue> configurationValues;
@@ -41,19 +42,19 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
         this.token = token;
     }
 
-    public String getTenantId() {
+    public UUID getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(UUID tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 

@@ -2,9 +2,10 @@ package com.manywho.sdk.api.run.elements.ui;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class PageContainerResponse {
-    private String id;
+    private UUID id;
     private String containerType;
     private String developerName;
     private String label;
@@ -12,11 +13,11 @@ public class PageContainerResponse {
     private int order;
     private HashMap<String, String> attributes;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

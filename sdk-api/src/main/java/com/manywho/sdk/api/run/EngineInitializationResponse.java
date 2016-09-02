@@ -4,12 +4,13 @@ import com.manywho.sdk.api.run.elements.ui.NavigationElementReference;
 import com.manywho.sdk.api.translate.Culture;
 
 import java.util.List;
+import java.util.UUID;
 
 public class EngineInitializationResponse {
     private Culture culture;
-    private String stateId;
-    private String stateToken;
-    private String currentMapElementId;
+    private UUID stateId;
+    private UUID stateToken;
+    private UUID currentMapElementId;
     private String currentStreamId;
     private String statusCode;
     private EngineAuthorizationContext authorizationContext;
@@ -23,27 +24,27 @@ public class EngineInitializationResponse {
         this.culture = culture;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getStateToken() {
+    public UUID getStateToken() {
         return stateToken;
     }
 
-    public void setStateToken(String stateToken) {
+    public void setStateToken(UUID stateToken) {
         this.stateToken = stateToken;
     }
 
-    public String getCurrentMapElementId() {
+    public UUID getCurrentMapElementId() {
         return currentMapElementId;
     }
 
-    public void setCurrentMapElementId(String currentMapElementId) {
+    public void setCurrentMapElementId(UUID currentMapElementId) {
         this.currentMapElementId = currentMapElementId;
     }
 

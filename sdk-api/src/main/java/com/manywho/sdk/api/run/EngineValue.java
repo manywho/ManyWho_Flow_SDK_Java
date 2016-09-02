@@ -6,12 +6,13 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
 import java.util.List;
+import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EngineValue implements PropertyAware {
-    private String valueElementId;
-    private String typeElementId;
-    private String typeElementPropertyId;
+    private UUID valueElementId;
+    private UUID typeElementId;
+    private UUID typeElementPropertyId;
     private String developerName;
     private String typeElementDeveloperName;
     private String typeElementPropertyDeveloperName;
@@ -50,27 +51,27 @@ public class EngineValue implements PropertyAware {
         this.typeElementDeveloperName = typeElementDeveloperName;
     }
 
-    public String getValueElementId() {
+    public UUID getValueElementId() {
         return valueElementId;
     }
 
-    public void setValueElementId(String valueElementId) {
+    public void setValueElementId(UUID valueElementId) {
         this.valueElementId = valueElementId;
     }
 
-    public String getTypeElementId() {
+    public UUID getTypeElementId() {
         return typeElementId;
     }
 
-    public void setTypeElementId(String typeElementId) {
+    public void setTypeElementId(UUID typeElementId) {
         this.typeElementId = typeElementId;
     }
 
-    public String getTypeElementPropertyId() {
+    public UUID getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
 
-    public void setTypeElementPropertyId(String typeElementPropertyId) {
+    public void setTypeElementPropertyId(UUID typeElementPropertyId) {
         this.typeElementPropertyId = typeElementPropertyId;
     }
 

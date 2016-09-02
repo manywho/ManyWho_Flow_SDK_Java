@@ -2,15 +2,17 @@ package com.manywho.sdk.api.draw.elements.type;
 
 import com.manywho.sdk.api.ContentType;
 
+import java.util.UUID;
+
 public class TypeElementProperty implements Comparable<TypeElementProperty> {
-    private String id;
+    private UUID id;
     private String developerName;
     private String contentFormat;
     private ContentType contentType;
-    private String typeElementId;
+    private UUID typeElementId;
     private String typeElementDeveloperName;
 
-    public TypeElementProperty(String id, String developerName, ContentType contentType, String typeElementId, String typeElementDeveloperName) {
+    public TypeElementProperty(UUID id, String developerName, ContentType contentType, UUID typeElementId, String typeElementDeveloperName) {
         this.id = id;
         this.developerName = developerName;
         this.contentType = contentType;
@@ -28,11 +30,11 @@ public class TypeElementProperty implements Comparable<TypeElementProperty> {
 
     public TypeElementProperty() {}
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -60,11 +62,11 @@ public class TypeElementProperty implements Comparable<TypeElementProperty> {
         this.contentType = contentType;
     }
 
-    public String getTypeElementId() {
+    public UUID getTypeElementId() {
         return typeElementId;
     }
 
-    public void setTypeElementId(String typeElementId) {
+    public void setTypeElementId(UUID typeElementId) {
         this.typeElementId = typeElementId;
     }
 

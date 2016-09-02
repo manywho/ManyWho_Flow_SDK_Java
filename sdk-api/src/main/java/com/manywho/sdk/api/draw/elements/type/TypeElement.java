@@ -5,11 +5,12 @@ import com.manywho.sdk.api.draw.elements.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TypeElement extends Element {
-    private String id;
-    private String serviceElementId;
+    private UUID id;
+    private UUID serviceElementId;
     protected List<TypeElementProperty> properties = new ArrayList<>();
     protected List<TypeElementBinding> bindings = new ArrayList<>();
     private boolean updateByName;
@@ -28,19 +29,19 @@ public class TypeElement extends Element {
         this.bindings = bindings;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getServiceElementId() {
+    public UUID getServiceElementId() {
         return serviceElementId;
     }
 
-    public void setServiceElementId(String serviceElementId) {
+    public void setServiceElementId(UUID serviceElementId) {
         this.serviceElementId = serviceElementId;
     }
 

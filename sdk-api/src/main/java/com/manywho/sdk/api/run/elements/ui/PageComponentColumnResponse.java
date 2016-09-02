@@ -1,8 +1,10 @@
 package com.manywho.sdk.api.run.elements.ui;
 
+import java.util.UUID;
+
 public class PageComponentColumnResponse {
     private String developerName;
-    private String typeElementPropertyId;
+    private UUID typeElementPropertyId;
     private String label;
     private boolean isDisplayValue;
     private int order;
@@ -15,11 +17,11 @@ public class PageComponentColumnResponse {
         this.developerName = developerName;
     }
 
-    public String getTypeElementPropertyId() {
+    public UUID getTypeElementPropertyId() {
         return typeElementPropertyId;
     }
 
-    public void setTypeElementPropertyId(String typeElementPropertyId) {
+    public void setTypeElementPropertyId(UUID typeElementPropertyId) {
         this.typeElementPropertyId = typeElementPropertyId;
     }
 

@@ -6,19 +6,20 @@ import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class MapElementInvokeResponse {
-    private String mapElementId;
+    private UUID mapElementId;
     private String developerName;
     private PageResponse pageResponse;
     private List<OutcomeResponse> outcomeResponses;
     private HashMap<String, String> rootFaults;
 
-    public String getMapElementId() {
+    public UUID getMapElementId() {
         return mapElementId;
     }
 
-    public void setMapElementId(String mapElementId) {
+    public void setMapElementId(UUID mapElementId) {
         this.mapElementId = mapElementId;
     }
 

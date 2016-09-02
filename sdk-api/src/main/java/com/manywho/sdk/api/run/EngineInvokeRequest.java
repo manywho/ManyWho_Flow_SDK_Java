@@ -7,15 +7,16 @@ import com.manywho.sdk.api.translate.Culture;
 import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class EngineInvokeRequest {
     private Culture culture;
-    private String stateId;
-    private String stateToken;
-    private String currentMapElementId;
-    private String navigationElementId;
-    private String selectedNavigationItemId;
-    private String selectedMapElementId;
+    private UUID stateId;
+    private UUID stateToken;
+    private UUID currentMapElementId;
+    private UUID navigationElementId;
+    private UUID selectedNavigationItemId;
+    private UUID selectedMapElementId;
     private InvokeType invokeType;
     private HashMap<String, String> annotations;
     private Geolocation geolocation;
@@ -30,51 +31,51 @@ public class EngineInvokeRequest {
         this.culture = culture;
     }
 
-    public String getStateId() {
+    public UUID getStateId() {
         return stateId;
     }
 
-    public void setStateId(String stateId) {
+    public void setStateId(UUID stateId) {
         this.stateId = stateId;
     }
 
-    public String getStateToken() {
+    public UUID getStateToken() {
         return stateToken;
     }
 
-    public void setStateToken(String stateToken) {
+    public void setStateToken(UUID stateToken) {
         this.stateToken = stateToken;
     }
 
-    public String getCurrentMapElementId() {
+    public UUID getCurrentMapElementId() {
         return currentMapElementId;
     }
 
-    public void setCurrentMapElementId(String currentMapElementId) {
+    public void setCurrentMapElementId(UUID currentMapElementId) {
         this.currentMapElementId = currentMapElementId;
     }
 
-    public String getNavigationElementId() {
+    public UUID getNavigationElementId() {
         return navigationElementId;
     }
 
-    public void setNavigationElementId(String navigationElementId) {
+    public void setNavigationElementId(UUID navigationElementId) {
         this.navigationElementId = navigationElementId;
     }
 
-    public String getSelectedNavigationItemId() {
+    public UUID getSelectedNavigationItemId() {
         return selectedNavigationItemId;
     }
 
-    public void setSelectedNavigationItemId(String selectedNavigationItemId) {
+    public void setSelectedNavigationItemId(UUID selectedNavigationItemId) {
         this.selectedNavigationItemId = selectedNavigationItemId;
     }
 
-    public String getSelectedMapElementId() {
+    public UUID getSelectedMapElementId() {
         return selectedMapElementId;
     }
 
-    public void setSelectedMapElementId(String selectedMapElementId) {
+    public void setSelectedMapElementId(UUID selectedMapElementId) {
         this.selectedMapElementId = selectedMapElementId;
     }
 
