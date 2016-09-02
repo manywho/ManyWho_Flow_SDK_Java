@@ -25,18 +25,10 @@ public class ServiceRequestValidator {
                     .addConstraintViolation();
         }
 
-        if (StringUtils.isEmpty(serviceRequest.getTenantId())) {
+        if (serviceRequest.getTenantId() == null) {
             valid = false;
 
-            constraintValidatorContext.buildConstraintViolationWithTemplate("{org.hibernate.validator.constraints.NotBlank.message}")
-                    .addPropertyNode("serviceRequest.tenantId")
-                    .addConstraintViolation();
-        }
-
-        if (!serviceRequest.getTenantId().matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")) {
-            valid = false;
-
-            constraintValidatorContext.buildConstraintViolationWithTemplate("is not a valid UUID")
+            constraintValidatorContext.buildConstraintViolationWithTemplate("{javax.validation.constraints.NotNull.message}")
                     .addPropertyNode("serviceRequest.tenantId")
                     .addConstraintViolation();
         }
