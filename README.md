@@ -64,6 +64,11 @@ This module supplies some clients that help you integrate with the various ManyW
 </dependency>
 ```
 
+### sdk-example
+
+This module is an example Service written using the SDK. It is meant to be used as a reference for building other 
+services, and should contain examples of each major aspect of the SDK (e.g. Identity, Files, Social, etc.).
+
 ### sdk-server-servlet3
 
 This module enables support for running services using a Servlet 3 compatible container (e.g. Tomcat) and 
