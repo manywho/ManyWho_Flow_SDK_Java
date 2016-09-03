@@ -19,12 +19,12 @@ public class DefaultFileController extends AbstractFileController {
 
     @Override
     public ObjectDataResponse deleteFile(FileDataRequest fileDataRequest) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Deleting files is not yet supported in the SDK");
     }
 
     @Override
     public ObjectDataResponse loadFiles(FileDataRequest fileDataRequest) throws Exception {
-        return null;
+        return fileManager.loadFiles(fileDataRequest);
     }
 
     @Override

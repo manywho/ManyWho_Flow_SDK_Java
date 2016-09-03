@@ -9,6 +9,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 
 public class FileManager {
     private final ConfigurationParser configurationParser;
@@ -20,6 +21,17 @@ public class FileManager {
         this.configurationParser = configurationParser;
         this.fileRepository = fileRepository;
         this.fileService = fileService;
+    }
+
+    public ObjectDataResponse loadFiles(FileDataRequest request) {
+        // Create the configuration values from the request
+        Configuration configuration = configurationParser.from(request);
+
+        // Load the list of files from the service
+        List<$File> files = fileService.createFileHandler(fileRepository.getFileHandler())
+                .findAll(configuration, request.getListFilter(), request.getResourcePath());
+
+        return new ObjectDataResponse(fileService.createFileObjects(files));
     }
 
     public ObjectDataResponse uploadFile(MultipartFormDataInput multipartInput) throws IOException {

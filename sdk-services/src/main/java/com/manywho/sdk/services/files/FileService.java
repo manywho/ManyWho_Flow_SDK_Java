@@ -18,11 +18,15 @@ public class FileService {
         this.injector = injector;
     }
 
-    public FileHandler createFileHandler(Class<? extends FileHandler> handlerClass) {
+    FileHandler createFileHandler(Class<? extends FileHandler> handlerClass) {
         return injector.getInstance(handlerClass);
     }
 
-    public List<MObject> createFileObject($File file) {
+    List<MObject> createFileObject($File file) {
         return typeBuilder.from(file);
+    }
+
+    List<MObject> createFileObjects(List<$File> files) {
+        return typeBuilder.from(files);
     }
 }
