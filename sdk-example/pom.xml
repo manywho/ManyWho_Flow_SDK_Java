@@ -14,7 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-services</artifactId>
+            <artifactId>sdk-services-undertow</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.manywho.sdk</groupId>
+            <artifactId>sdk-services-servlet3</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -24,4 +29,17 @@
             <version>0.10</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

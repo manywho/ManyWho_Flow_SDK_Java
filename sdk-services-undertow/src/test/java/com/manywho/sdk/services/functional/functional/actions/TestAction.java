@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.functional.actions;
+package com.manywho.sdk.services.functional.functional.actions;
 
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.actions.Action;

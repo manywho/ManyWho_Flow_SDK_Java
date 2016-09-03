@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.functional;
+package com.manywho.sdk.services.functional.functional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Guice;
@@ -22,7 +22,7 @@ public abstract class BaseFunctionalTest {
         Injector injector = Guice.createInjector();
 
         TestApplication application = new TestApplication(injector);
-        application.initialize();
+        application.initialize(BaseFunctionalTest.class.getPackage().getName());
 
         objectMapper = new ObjectMapperContextResolver().getContext(null);
 

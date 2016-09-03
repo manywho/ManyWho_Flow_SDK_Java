@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.functional.types;
+package com.manywho.sdk.services.functional.functional.types;
 
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.types.Type;

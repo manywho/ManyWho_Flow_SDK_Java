@@ -76,9 +76,35 @@ This module is _probably_ what you want - it includes the vast majority of the S
 </dependency>
 ```
 
+### sdk-services-servlet3
+
+This module enables support for running services using a Servlet 3 compatible container (e.g. Tomcat) and 
+includes the `sdk-services` module as a dependency.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-services-servlet3</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
+### sdk-services-undertow
+
+This module is _probably_ what you want - it enables support for running services using the high-performance, embedded Undertow server and
+includes the `sdk-services` module as a dependency.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-services-undertow</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
 ## Contributing
 
-Contribution are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for our contribution requirements.
+Contributions are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for our contribution requirements.
 
 ## License
 

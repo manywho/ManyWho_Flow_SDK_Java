@@ -1,10 +1,10 @@
-package com.manywho.sdk.services.functional.actions;
+package com.manywho.sdk.services.functional.functional.actions;
 
 import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.services.actions.ActionCommand;
 import com.manywho.sdk.services.actions.ActionResponse;
-import com.manywho.sdk.services.functional.TestApplicationConfiguration;
+import com.manywho.sdk.services.functional.functional.TestApplicationConfiguration;
 
 public class TestActionCommand implements ActionCommand<TestAction, TestAction, TestAction, TestApplicationConfiguration> {
 

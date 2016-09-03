@@ -1,4 +1,4 @@
-package com.manywho.sdk.services.functional;
+package com.manywho.sdk.services.functional.functional;
 
 import com.manywho.sdk.services.configuration.Configuration;
 
