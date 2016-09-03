@@ -23,7 +23,7 @@ public class ServiceApplication extends Application {
     protected Injector injector;
 
     protected List<Module> modules = Lists.newArrayList();
-    
+
     public void addModule(Module module) {
         this.modules.add(module);
     }

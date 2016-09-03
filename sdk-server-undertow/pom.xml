@@ -10,7 +10,7 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sdk-services-undertow</artifactId>
+    <artifactId>sdk-server-undertow</artifactId>
 
     <dependencies>
         <dependency>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
-            <version>1.3.23.Final</version>
+            <version>${version.undertow}</version>
         </dependency>
 
         <dependency>

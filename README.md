@@ -64,19 +64,7 @@ This module supplies some clients that help you integrate with the various ManyW
 </dependency>
 ```
 
-### sdk-services
-
-This module is _probably_ what you want - it includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being actively written [on the Wiki](https://github.com/manywho/sdk-java/wiki), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
-
-```xml
-<dependency>
-    <groupId>com.manywho.sdk</groupId>
-    <artifactId>sdk-services</artifactId>
-    <version>${version.manywho.sdk}</version>
-</dependency>
-```
-
-### sdk-services-servlet3
+### sdk-server-servlet3
 
 This module enables support for running services using a Servlet 3 compatible container (e.g. Tomcat) and 
 includes the `sdk-services` module as a dependency.
@@ -84,12 +72,12 @@ includes the `sdk-services` module as a dependency.
 ```xml
 <dependency>
     <groupId>com.manywho.sdk</groupId>
-    <artifactId>sdk-services-servlet3</artifactId>
+    <artifactId>sdk-server-servlet3</artifactId>
     <version>${version.manywho.sdk}</version>
 </dependency>
 ```
 
-### sdk-services-undertow
+### sdk-server-undertow
 
 This module is _probably_ what you want - it enables support for running services using the high-performance, embedded Undertow server and
 includes the `sdk-services` module as a dependency.
@@ -97,7 +85,19 @@ includes the `sdk-services` module as a dependency.
 ```xml
 <dependency>
     <groupId>com.manywho.sdk</groupId>
-    <artifactId>sdk-services-undertow</artifactId>
+    <artifactId>sdk-server-undertow</artifactId>
+    <version>${version.manywho.sdk}</version>
+</dependency>
+```
+
+### sdk-services
+
+This module includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being actively written [on the Wiki](https://github.com/manywho/sdk-java/wiki), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
+
+```xml
+<dependency>
+    <groupId>com.manywho.sdk</groupId>
+    <artifactId>sdk-services</artifactId>
     <version>${version.manywho.sdk}</version>
 </dependency>
 ```

@@ -14,8 +14,8 @@
         <module>sdk-bom</module>
         <module>sdk-example</module>
         <module>sdk-services</module>
-        <module>sdk-services-servlet3</module>
-        <module>sdk-services-undertow</module>
+        <module>sdk-server-servlet3</module>
+        <module>sdk-server-undertow</module>
     </modules>
 
     <properties>
@@ -25,6 +25,7 @@
         <version.jersey>2.22.2</version.jersey>
         <version.log4j2>2.5</version.log4j2>
         <version.resteasy>3.0.19.Final</version.resteasy>
+        <version.undertow>1.4.0.Final</version.undertow>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>

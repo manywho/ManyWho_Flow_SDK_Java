@@ -10,7 +10,7 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sdk-services-servlet3</artifactId>
+    <artifactId>sdk-server-servlet3</artifactId>
 
     <dependencies>
         <dependency>
