@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.servers.undertow;
 
+import com.google.inject.Module;
 import com.manywho.sdk.services.ServiceApplication;
 import com.manywho.sdk.services.servers.BaseServer;
 import com.manywho.sdk.services.servers.EmbeddedServer;
@@ -18,6 +19,11 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
      */
     public void start(String path, int port) {
         ServiceApplication serviceApplication = new ServiceApplication();
+
+        for (Module module : modules) {
+            serviceApplication.addModule(module);
+        }
+
         serviceApplication.initialize(application.getPackage().getName());
 
         try {
