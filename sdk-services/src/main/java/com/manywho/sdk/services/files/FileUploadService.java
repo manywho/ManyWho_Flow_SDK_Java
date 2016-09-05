@@ -17,7 +17,7 @@ public class FileUploadService {
         try {
             return part.getBody(FileDataRequest.class, FileDataRequest.class);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Unable to parse the incoming FileDataRequest", e);
         }
     }
 
@@ -25,7 +25,7 @@ public class FileUploadService {
         try {
             return part.getBody(InputStream.class, InputStream.class);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Unable to parse the incoming file content", e);
         }
     }
 
@@ -36,12 +36,13 @@ public class FileUploadService {
             throw new RuntimeException("No Content-Disposition header could be found on the request");
         }
 
+        // Get the name provided for the incoming file
         for (String name : contentDispositionHeader.split(";")) {
             if (name.trim().startsWith("filename")) {
                 return name.split("=")[1].trim().replaceAll("\"", "");
             }
         }
 
-        return "";
+        return "unknown";
     }
 }
