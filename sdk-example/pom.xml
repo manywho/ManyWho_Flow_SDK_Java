@@ -14,12 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-services-undertow</artifactId>
+            <artifactId>sdk-server-undertow</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-services-servlet3</artifactId>
+            <artifactId>sdk-server-servlet3</artifactId>
             <version>${project.version}</version>
         </dependency>
 
