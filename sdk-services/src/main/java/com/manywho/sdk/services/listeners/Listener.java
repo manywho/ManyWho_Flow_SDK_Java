@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface Listener<C extends Configuration, T extends Type> {
 
-    void create(C configuration, T value);
+    void create(C configuration, T value, ListenerData listenerData);
 
-    void createMultiple(C configuration, List<T> values);
+    void createMultiple(C configuration, List<T> values, ListenerData listenerData);
 
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.RUNTIME)
