@@ -23,6 +23,7 @@ public class FileManager {
         this.fileService = fileService;
     }
 
+    @SuppressWarnings("unchecked")
     public ObjectDataResponse loadFiles(FileDataRequest request) {
         // Create the configuration values from the request
         Configuration configuration = configurationParser.from(request);
@@ -34,6 +35,7 @@ public class FileManager {
         return new ObjectDataResponse(fileService.createFileObjects(files));
     }
 
+    @SuppressWarnings("unchecked")
     public ObjectDataResponse uploadFile(MultipartFormDataInput multipartInput) throws IOException {
         // Get the first part that has a content type of "application/json", as it's probably the FileDataRequest
         FileDataRequest request = multipartInput.getParts().stream()
