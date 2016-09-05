@@ -10,5 +10,5 @@ public interface FileHandler<C extends Configuration> {
 
     List<$File> findAll(C configuration, FileListFilter listFilter, String path);
 
-    $File upload(C configuration, String path, FileUploadEntity uploadEntity);
+    $File upload(C configuration, String path, FileUpload upload);
 }

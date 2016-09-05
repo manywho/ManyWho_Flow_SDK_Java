@@ -9,8 +9,8 @@ import java.io.InputStream;
 
 public class FileUploadService {
 
-    public static FileUploadEntity createFileUploadEntity(InputPart part) {
-        return new FileUploadEntity(getFileContent(part), getFilename(part.getHeaders()));
+    public static FileUpload createFileUpload(InputPart part) {
+        return new FileUpload(getFileContent(part), getFilename(part.getHeaders()));
     }
 
     public static FileDataRequest getFileDataRequest(InputPart part) {

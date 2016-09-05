@@ -45,10 +45,10 @@ public class FileManager {
                 .orElseThrow(() -> new RuntimeException("No file metadata was sent in the request"));
 
         // Get the first part that doesn't have a content type of "application/json" as it's probably the file content
-        FileUploadEntity uploadEntity = multipartInput.getParts().stream()
+        FileUpload upload = multipartInput.getParts().stream()
                 .filter(bodyPart -> !bodyPart.getMediaType().toString().contains("application/json"))
                 .findFirst()
-                .map(FileUploadService::createFileUploadEntity)
+                .map(FileUploadService::createFileUpload)
                 .orElseThrow(() -> new RuntimeException("No file was uploaded"));
 
         // Create the configuration values from the request
@@ -56,7 +56,7 @@ public class FileManager {
 
         // Perform the upload process
         $File file = fileService.createFileHandler(fileRepository.getFileHandler())
-                .upload(configuration, request.getResourcePath(), uploadEntity);
+                .upload(configuration, request.getResourcePath(), upload);
 
         return new ObjectDataResponse(fileService.createFileObject(file));
     }
