@@ -19,6 +19,10 @@ public class AuthorizationGroup implements Type {
     public AuthorizationGroup() {
     }
 
+    public AuthorizationGroup(String id) {
+        this.id = id;
+    }
+
     public AuthorizationGroup(String id, String name) {
         this.id = id;
         this.name = name;

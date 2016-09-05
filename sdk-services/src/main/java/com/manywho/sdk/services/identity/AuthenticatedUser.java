@@ -7,6 +7,14 @@ public class AuthenticatedUser {
     private String username;
     private String directory;
 
+    public AuthenticatedUser(String id, String email, String token, String username, String directory) {
+        this.id = id;
+        this.email = email;
+        this.token = token;
+        this.username = username;
+        this.directory = directory;
+    }
+
     public String getId() {
         return id;
     }
