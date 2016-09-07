@@ -95,7 +95,7 @@ includes the `sdk-services` module as a dependency.
 </dependency>
 ```
 
-### sdk-services
+### [sdk-services](sdk-services/src/main/java/com/manywho/sdk/services)
 
 This module includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being actively written [on the Wiki](https://github.com/manywho/sdk-java/wiki), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
 
