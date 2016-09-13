@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.run.EngineInitializationRequest;
 import com.manywho.sdk.entities.run.EngineInitializationResponse;
 import com.manywho.sdk.entities.run.EngineInvokeRequest;
 import com.manywho.sdk.entities.run.EngineInvokeResponse;
+import com.manywho.sdk.entities.security.AuthenticationCredentials;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -47,6 +48,15 @@ public class RawRunClient extends AbstractClient {
         request.setEntity(createEntity(initialization));
 
         return executeWithResponse(request, EngineInitializationResponse.class);
+    }
+
+    public String authenticationCredentials(UUID stateId, UUID tenant, AuthenticationCredentials initializationRequest) {
+        HttpPost request = new HttpPost(String.format("%s/authentication/%s", BASE_URL, stateId));
+        request.addHeader("ManyWhoTenant", tenant.toString());
+        request.addHeader("Content-Type", MediaType.APPLICATION_JSON);
+        request.setEntity(createEntity(initializationRequest));
+
+        return executeWithResponse(request, String.class);
     }
 
     public EngineInvokeResponse join(UUID tenant, UUID state, String authorization) {
