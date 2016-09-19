@@ -12,6 +12,7 @@ import com.manywho.sdk.services.controllers.AbstractListenerController;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.sdk.services.files.FileHandler;
 import com.manywho.sdk.services.listeners.Listener;
+import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -38,7 +39,9 @@ public class DescribeService {
     }
 
     public boolean anyDataControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractDataController.class) || describeRepository.doSubtypesOfExist(Database.class);
+        return describeRepository.doSubtypesOfExist(AbstractDataController.class) ||
+                describeRepository.doSubtypesOfExist(Database.class) ||
+                describeRepository.doSubtypesOfExist(TypeProvider.class);
     }
 
     public boolean anyFileControllersExist() {
