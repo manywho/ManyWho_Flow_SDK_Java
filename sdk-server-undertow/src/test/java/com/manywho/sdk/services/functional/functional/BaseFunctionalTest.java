@@ -1,8 +1,6 @@
 package com.manywho.sdk.services.functional.functional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.manywho.sdk.services.jaxrs.resolvers.ObjectMapperContextResolver;
 import org.jboss.resteasy.core.Dispatcher;
 import org.jboss.resteasy.mock.MockDispatcherFactory;
@@ -19,9 +17,7 @@ public abstract class BaseFunctionalTest {
 
     @BeforeClass
     public static void setUp() {
-        Injector injector = Guice.createInjector();
-
-        TestApplication application = new TestApplication(injector);
+        TestApplication application = new TestApplication();
         application.initialize(BaseFunctionalTest.class.getPackage().getName());
 
         objectMapper = new ObjectMapperContextResolver().getContext(null);
