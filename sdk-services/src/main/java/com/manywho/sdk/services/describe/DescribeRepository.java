@@ -14,7 +14,8 @@ public class DescribeRepository {
     }
 
     public boolean doSubtypesOfExist(Class<?> type) {
-        return !reflections.getSubTypesOf(type).isEmpty();
+        return reflections.getSubTypesOf(type).stream()
+                .anyMatch(subType -> !subType.getPackage().getName().startsWith("com.manywho.sdk.services.controllers"));
     }
 
     public boolean doFieldsAnnotatedWithExist(final Class<? extends Annotation> annotation) {
