@@ -11,6 +11,7 @@ import com.manywho.sdk.services.controllers.AbstractIdentityController;
 import com.manywho.sdk.services.controllers.AbstractListenerController;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.sdk.services.files.FileHandler;
+import com.manywho.sdk.services.listeners.Listener;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -49,7 +50,7 @@ public class DescribeService {
     }
 
     public boolean anyListenerControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractListenerController.class);
+        return describeRepository.doSubtypesOfExist(AbstractListenerController.class) || describeRepository.doSubtypesOfExist(Listener.class);
     }
 
     public boolean anySocialControllersExist() {
