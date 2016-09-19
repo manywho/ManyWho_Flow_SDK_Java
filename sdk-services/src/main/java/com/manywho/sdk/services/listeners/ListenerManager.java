@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.listeners;
 
+import com.google.inject.Provider;
 import com.manywho.sdk.api.run.elements.config.ListenerServiceRequest;
 import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.services.configuration.Configuration;
@@ -13,19 +14,19 @@ public class ListenerManager {
     private final TypeRepository typeRepository;
     private final ConfigurationParser configurationParser;
     private final ListenerService listenerService;
-    private final AuthenticatedWho authenticatedWho;
+    private final Provider<AuthenticatedWho> authenticatedWhoProvider;
 
     @Inject
     public ListenerManager(
             TypeRepository typeRepository,
             ConfigurationParser configurationParser,
             ListenerService listenerService,
-            AuthenticatedWho authenticatedWho
+            Provider<AuthenticatedWho> authenticatedWhoProvider
     ) {
         this.typeRepository = typeRepository;
         this.configurationParser = configurationParser;
         this.listenerService = listenerService;
-        this.authenticatedWho = authenticatedWho;
+        this.authenticatedWhoProvider = authenticatedWhoProvider;
     }
 
     public void create(ListenerServiceRequest request) {
@@ -35,7 +36,7 @@ public class ListenerManager {
         // Create the configuration values from the request
         Configuration configuration = configurationParser.from(request);
 
-        ListenerData listenerData = new ListenerData(authenticatedWho, request);
+        ListenerData listenerData = new ListenerData(authenticatedWhoProvider.get(), request);
 
         switch (request.getValueForListening().getContentType()) {
             case List:

@@ -11,6 +11,7 @@ import org.jboss.resteasy.plugins.guice.RequestScoped;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -23,7 +24,7 @@ public class AuthenticatedWhoProvider implements Provider<AuthenticatedWho> {
     private final ObjectMapper objectMapper;
 
     @Inject
-    public AuthenticatedWhoProvider(HttpHeaders headers, ObjectMapper objectMapper) {
+    public AuthenticatedWhoProvider(@Context HttpHeaders headers, ObjectMapper objectMapper) {
         this.headers = headers;
         this.objectMapper = objectMapper;
     }
