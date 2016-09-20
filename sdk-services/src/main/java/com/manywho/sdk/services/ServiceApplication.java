@@ -9,7 +9,6 @@ import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
 import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.Provider;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@ApplicationPath("/")
 public class ServiceApplication extends Application {
     protected Injector injector;
 
