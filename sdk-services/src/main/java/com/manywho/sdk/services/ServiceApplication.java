@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
+import com.manywho.sdk.services.servers.Server;
 import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
 import org.reflections.Reflections;
 import ru.vyarus.guice.validator.ImplicitValidationModule;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ServiceApplication extends Application {
+public abstract class ServiceApplication extends Application implements Server {
     protected Injector injector;
 
     protected List<Module> modules = Lists.newArrayList();
