@@ -46,17 +46,17 @@ public class ActionManager {
                 .orElseThrow(() -> new RuntimeException("An action could not be found with the URI part " + path));
 
         Class<? extends ActionCommand> command = actionRepository.getActionCommands().stream()
-                .filter(a -> DescribeActionService.getTypeArguments(a)[0].equals(action))
+                .filter(a -> DescribeActionService.getTypeArguments(a)[1].equals(action))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No action command for the action " + action.getName() + " was found"));
 
         Type[] types = DescribeActionService.getTypeArguments(command);
 
         try {
-            Object inputObject = Class.forName(types[1].getTypeName()).newInstance();
+            Object inputObject = Class.forName(types[2].getTypeName()).newInstance();
 
             if (serviceRequest.hasInputs()) {
-                for (Field field : findInputFields(types[1])) {
+                for (Field field : findInputFields(types[2])) {
                     Action.Input annotation = field.getAnnotation(Action.Input.class);
 
                     Optional<EngineValue> optional = serviceRequest.getInputs().stream()
@@ -73,7 +73,7 @@ public class ActionManager {
                     inputObject
             );
 
-            List<Field> outputFields = findOutputFields(types[2]);
+            List<Field> outputFields = findOutputFields(types[3]);
 
             if (!outputFields.isEmpty() && actionResponse.getOutputs() == null) {
                 throw new RuntimeException("The action response must contain one or more outputs");

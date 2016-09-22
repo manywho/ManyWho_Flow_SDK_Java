@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public class DescribeActionService {
     private final ActionRepository actionRepository;
 
-    private static final int ACTION_COMMAND_TYPE_ACTION = 0;
-    private static final int ACTION_COMMAND_TYPE_INPUT = 1;
-    private static final int ACTION_COMMAND_TYPE_OUTPUT = 2;
+    private static final int ACTION_COMMAND_TYPE_ACTION = 1;
+    private static final int ACTION_COMMAND_TYPE_INPUT = 2;
+    private static final int ACTION_COMMAND_TYPE_OUTPUT = 3;
 
     @Inject
     public DescribeActionService(ActionRepository actionRepository) {
