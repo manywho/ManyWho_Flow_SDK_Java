@@ -15,7 +15,7 @@ import com.manywho.sdk.services.types.DummyTypeProvider;
 import com.manywho.sdk.services.types.TypeRepository;
 import com.manywho.sdk.services.unit.entities.TestAction;
 import com.manywho.sdk.services.unit.entities.TestActionCommand;
-import com.manywho.sdk.services.unit.entities.TestConfigurationValues;
+import com.manywho.sdk.services.unit.entities.TestConfigurationSettings;
 import com.manywho.sdk.services.unit.entities.TestDataController;
 import com.manywho.sdk.services.unit.entities.TestFileController;
 import com.manywho.sdk.services.unit.entities.TestIdentityController;
@@ -41,7 +41,7 @@ public class DescribeManagerTest extends BaseTest {
     @Test
     public void testDescribe() throws Exception {
         includeOnly(
-                TestConfigurationValues.class,
+                TestConfigurationSettings.class,
                 TestDataController.class,
                 TestFileController.class,
                 TestIdentityController.class,

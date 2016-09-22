@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public interface Configuration {
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
-    @interface Value {
+    @interface Setting {
         String name();
         ContentType contentType();
         boolean required() default true;

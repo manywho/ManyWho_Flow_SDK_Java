@@ -24,7 +24,7 @@ public class DescribeServiceBuilder {
     private boolean providesViews;
     private boolean providesVoting;
     private Culture culture;
-    private List<DescribeValue> configurationValues = Lists.newArrayList();
+    private List<DescribeValue> configurationSettings = Lists.newArrayList();
     private List<DescribeServiceActionResponse> actions = Lists.newArrayList();
     private List<TypeElement> types = Lists.newArrayList();
 
@@ -93,13 +93,13 @@ public class DescribeServiceBuilder {
         return this;
     }
 
-    public DescribeServiceBuilder addConfigurationValue(DescribeValue configurationValue) {
-        this.configurationValues.add(configurationValue);
+    public DescribeServiceBuilder addConfigurationSetting(DescribeValue configurationSetting) {
+        this.configurationSettings.add(configurationSetting);
         return this;
     }
 
-    public DescribeServiceBuilder setConfigurationValues(List<DescribeValue> configurationValues) {
-        this.configurationValues = configurationValues;
+    public DescribeServiceBuilder setConfigurationSettings(List<DescribeValue> configurationSettings) {
+        this.configurationSettings = configurationSettings;
         return this;
     }
 
@@ -116,7 +116,7 @@ public class DescribeServiceBuilder {
     public DescribeServiceResponse createDescribeServiceResponse() {
         DescribeServiceResponse response = new DescribeServiceResponse();
         response.setActions(actions);
-        response.setConfigurationValues(configurationValues);
+        response.setConfigurationValues(configurationSettings);
         response.setCulture(culture);
         response.setInstall(new DescribeServiceInstall(types));
         response.setProvidesAutoBinding(providesAutoBinding);

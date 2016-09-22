@@ -15,7 +15,7 @@ This contains all the annotations, interfaces, entities and logic specific to cr
 
 #### configuration
 
-This contains the interfaces and logic specific to easily creating and using Configuration Values.
+This contains the interfaces and logic specific to easily creating and using Configuration Settings.
 
 #### controllers
 

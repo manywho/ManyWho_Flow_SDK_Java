@@ -25,7 +25,7 @@ public class FileManager {
 
     @SuppressWarnings("unchecked")
     public ObjectDataResponse loadFiles(FileDataRequest request) {
-        // Create the configuration values from the request
+        // Create the configuration settings from the request
         Configuration configuration = configurationParser.from(request);
 
         // Load the list of files from the service
@@ -51,7 +51,7 @@ public class FileManager {
                 .map(FileUploadService::createFileUpload)
                 .orElseThrow(() -> new RuntimeException("No file was uploaded"));
 
-        // Create the configuration values from the request
+        // Create the configuration settings from the request
         Configuration configuration = configurationParser.from(request);
 
         // Perform the upload process

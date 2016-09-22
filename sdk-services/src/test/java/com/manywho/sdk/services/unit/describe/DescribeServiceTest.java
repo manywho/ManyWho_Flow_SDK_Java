@@ -29,19 +29,19 @@ public class DescribeServiceTest extends BaseTest {
     }
 
     @Test
-    public void testAnyConfigurationValuesExistWithTestClass() {
+    public void testAnyConfigurationSettingsExistWithTestClass() {
         DescribeService describeService = createDescribeService();
 
-        assertTrue(describeService.anyConfigurationValuesExist());
+        assertTrue(describeService.anyConfigurationSettingsExist());
     }
 
     @Test
-    public void testAnyConfigurationValuesExistWithoutTestClass() {
+    public void testAnyConfigurationSettingsExistWithoutTestClass() {
         reflectionsConfiguration.setUrls(Lists.newArrayList());
 
         DescribeService describeService = createDescribeService();
 
-        assertFalse(describeService.anyConfigurationValuesExist());
+        assertFalse(describeService.anyConfigurationSettingsExist());
     }
 
     @Test

@@ -69,8 +69,8 @@ public class DescribeManager {
 
         builder.setTypes(typeElements);
 
-        if (describeService.anyConfigurationValuesExist()) {
-            builder.setConfigurationValues(describeService.createConfigurationValues());
+        if (describeService.anyConfigurationSettingsExist()) {
+            builder.setConfigurationSettings(describeService.createConfigurationSettings());
         }
 
         return builder.createDescribeServiceResponse();

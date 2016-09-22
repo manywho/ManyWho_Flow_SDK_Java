@@ -33,7 +33,7 @@ public class ListenerManager {
         // Find the type that we're creating a listener for
         Class<? extends Type> type = typeRepository.findTypeElement(request.getValueForListening().getTypeElementDeveloperName());
 
-        // Create the configuration values from the request
+        // Create the configuration settings from the request
         Configuration configuration = configurationParser.from(request);
 
         ListenerData listenerData = new ListenerData(authenticatedWhoProvider.get(), request);

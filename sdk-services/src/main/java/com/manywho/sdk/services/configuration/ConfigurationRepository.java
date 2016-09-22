@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class ConfigurationRepository {
     private final Reflections reflections;
 
-    private Set<Field> configurationValues;
+    private Set<Field> configurationSettings;
 
     @Inject
     public ConfigurationRepository(Reflections reflections) {
@@ -31,16 +31,16 @@ public class ConfigurationRepository {
         return configurationClasses.iterator().next();
     }
 
-    public Set<Field> getConfigurationValues() {
-        if (configurationValues == null) {
-            configurationValues = reflections.getFieldsAnnotatedWith(Configuration.Value.class);
+    public Set<Field> getConfigurationSettings() {
+        if (configurationSettings == null) {
+            configurationSettings = reflections.getFieldsAnnotatedWith(Configuration.Setting.class);
         }
 
-        return configurationValues;
+        return configurationSettings;
     }
 
-    public Set<Field> findConfigurationValues(Class<?> configurationClass) {
-        return getConfigurationValues().stream()
+    public Set<Field> findConfigurationSettings(Class<?> configurationClass) {
+        return getConfigurationSettings().stream()
                 .filter(annotation -> annotation.getDeclaringClass().equals(configurationClass))
                 .collect(Collectors.toSet());
     }

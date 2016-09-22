@@ -32,27 +32,27 @@ public class ConfigurationParser {
         // Create an instance of the configuration class using Guice, so we support injections
         C configuration = injector.getInstance(configurationClass);
 
-        // If the incoming object contains any configuration values, then we populate the created instance with them
+        // If the incoming object contains any configuration settings, then we populate the created instance with them
         if (object.hasConfigurationValues()) {
-            Set<Field> configurationValueFields = configurationRepository.findConfigurationValues(configurationClass);
+            Set<Field> configurationSettings = configurationRepository.findConfigurationSettings(configurationClass);
 
-            for (Field field : configurationValueFields) {
-                populateConfigurationValue(configuration, object, field);
+            for (Field field : configurationSettings) {
+                populateConfigurationSetting(configuration, object, field);
             }
         }
 
         return configuration;
     }
 
-    private <C extends Configuration> void populateConfigurationValue(C configuration, ConfigurationValuesAware object, Field field) {
-        Configuration.Value annotation = field.getAnnotation(Configuration.Value.class);
+    private <C extends Configuration> void populateConfigurationSetting(C configuration, ConfigurationValuesAware object, Field field) {
+        Configuration.Setting annotation = field.getAnnotation(Configuration.Setting.class);
 
-        // See if the discovered configuration value field was sent in the request
+        // See if the discovered configuration setting field was sent in the request
         Optional<EngineValue> optional = object.getConfigurationValues().stream()
                 .filter(i -> i.getDeveloperName().equals(annotation.name()))
                 .findFirst();
 
-        // If the configuration value was sent in the request, then we extract it and populate the configuration object
+        // If the configuration setting was sent in the request, then we extract it and populate the configuration object
         if (optional.isPresent()) {
             valueParser.populateObjectField(configuration, field, annotation.contentType(), optional.get());
         }

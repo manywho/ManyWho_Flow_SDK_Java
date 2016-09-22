@@ -34,8 +34,8 @@ public class DescribeService {
         return !actionRepository.getActions().isEmpty();
     }
 
-    public boolean anyConfigurationValuesExist() {
-        return describeRepository.doFieldsAnnotatedWithExist(Configuration.Value.class);
+    public boolean anyConfigurationSettingsExist() {
+        return describeRepository.doFieldsAnnotatedWithExist(Configuration.Setting.class);
     }
 
     public boolean anyDataControllersExist() {
@@ -61,10 +61,10 @@ public class DescribeService {
 //        return describeRepository.doSubtypesOfExist(AbstractSocialController.class);
     }
 
-    public List<DescribeValue> createConfigurationValues() {
-        List<DescribeValue> values = configurationRepository.getConfigurationValues()
+    public List<DescribeValue> createConfigurationSettings() {
+        List<DescribeValue> values = configurationRepository.getConfigurationSettings()
                 .stream()
-                .map(klass -> klass.getAnnotation(Configuration.Value.class))
+                .map(klass -> klass.getAnnotation(Configuration.Setting.class))
                 .map(annotation -> new DescribeValue(annotation.name(), annotation.contentType(), annotation.required()))
                 .collect(Collectors.toList());
 
