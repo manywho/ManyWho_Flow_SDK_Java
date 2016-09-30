@@ -1,9 +1,9 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
-import org.apache.commons.collections4.CollectionUtils;
+import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListFilter extends ListFilterMinimal {
@@ -14,8 +14,8 @@ public class ListFilter extends ListFilterMinimal {
     private Integer limit;
     private Integer offset;
     private String search;
-    private List<SearchCriteria> searchCriteria = new ArrayList<>();
-    private List<OrderBy> orderBy = new ArrayList<>();
+    private List<SearchCriteria> searchCriteria = Lists.newArrayList();
+    private List<OrderBy> orderBy = Lists.newArrayList();
 
     public String getId() {
         return id;
@@ -90,7 +90,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public boolean hasSearchCriteria() {
-        return CollectionUtils.isNotEmpty(searchCriteria);
+        return !searchCriteria.isEmpty();
     }
 
     public ListFilter addSearchCriteria(SearchCriteria searchCriteria) {
@@ -104,7 +104,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public ListFilter setSearchCriteria(List<SearchCriteria> searchCriteria) {
-        this.searchCriteria = searchCriteria;
+        this.searchCriteria = MoreObjects.firstNonNull(searchCriteria, Lists.newArrayList());
         return this;
     }
 
@@ -113,7 +113,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public boolean hasOrderBy() {
-        return CollectionUtils.isNotEmpty(orderBy);
+        return !orderBy.isEmpty();
     }
 
     public ListFilter addOrderBy(OrderBy orderBy) {
@@ -127,7 +127,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public ListFilter setOrderBy(List<OrderBy> orderBy) {
-        this.orderBy = orderBy;
+        this.orderBy = MoreObjects.firstNonNull(orderBy, Lists.newArrayList());
         return this;
     }
 

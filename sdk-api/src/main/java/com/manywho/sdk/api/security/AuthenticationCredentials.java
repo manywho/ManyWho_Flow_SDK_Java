@@ -1,16 +1,17 @@
 package com.manywho.sdk.api.security;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.AuthorizationType;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class AuthenticationCredentials implements ConfigurationValuesAware {
     @NotNull
-    private List<EngineValue> configurationValues;
+    private List<EngineValue> configurationValues = Lists.newArrayList();
     private AuthorizationType authenticationType;
     private String username;
     private String password;
@@ -28,11 +29,11 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
 
     @Override
     public boolean hasConfigurationValues() {
-        return CollectionUtils.isNotEmpty(configurationValues);
+        return !configurationValues.isEmpty();
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = configurationValues;
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
     }
 
     public AuthorizationType getAuthenticationType() {

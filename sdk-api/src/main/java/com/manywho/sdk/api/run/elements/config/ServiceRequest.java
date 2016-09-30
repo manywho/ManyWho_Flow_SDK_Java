@@ -1,9 +1,10 @@
 package com.manywho.sdk.api.run.elements.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.map.OutcomeAvailable;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class ServiceRequest extends AbstractRequest {
     private String joinPlayerUri;
     private String playerUri;
     private String uri;
-    private List<EngineValue> inputs;
-    private List<OutcomeAvailable> outcomes;
+    private List<EngineValue> inputs = Lists.newArrayList();
+    private List<OutcomeAvailable> outcomes = Lists.newArrayList();
 
     public String getJoinPlayerUri() {
         return joinPlayerUri;
@@ -44,11 +45,11 @@ public class ServiceRequest extends AbstractRequest {
     }
 
     public boolean hasInputs() {
-        return CollectionUtils.isNotEmpty(inputs);
+        return !inputs.isEmpty();
     }
 
     public void setInputs(List<EngineValue> inputs) {
-        this.inputs = inputs;
+        this.inputs = MoreObjects.firstNonNull(inputs, Lists.newArrayList());
     }
 
     public List<OutcomeAvailable> getOutcomes() {
@@ -56,6 +57,6 @@ public class ServiceRequest extends AbstractRequest {
     }
 
     public void setOutcomes(List<OutcomeAvailable> outcomes) {
-        this.outcomes = outcomes;
+        this.outcomes = MoreObjects.firstNonNull(outcomes, Lists.newArrayList());
     }
 }

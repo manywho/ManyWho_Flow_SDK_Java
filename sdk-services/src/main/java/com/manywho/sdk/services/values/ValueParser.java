@@ -1,6 +1,6 @@
 package com.manywho.sdk.services.values;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.ContentType;
@@ -11,7 +11,6 @@ import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypePropertyMismatchException;
 import com.manywho.sdk.services.types.TypeRepository;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -19,7 +18,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.time.OffsetDateTime;
 import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
@@ -139,20 +137,18 @@ public class ValueParser {
             return OffsetDateTime.parse(value);
         }
 
-        try {
-            if (Timestamp.class.isAssignableFrom(field.getType())) {
-                return Timestamp.from(new ISO8601DateFormat().parse(value).toInstant());
-            }
+        OffsetDateTime dateTime = OffsetDateTime.parse(value);
 
-            if (Time.class.isAssignableFrom(field.getType())) {
-                return Time.from(new ISO8601DateFormat().parse(value).toInstant());
-            }
+        if (Timestamp.class.isAssignableFrom(field.getType())) {
+            return Timestamp.from(dateTime.toInstant());
+        }
 
-            if (Date.class.isAssignableFrom(field.getType())) {
-                return new ISO8601DateFormat().parse(value);
-            }
-        } catch (ParseException e) {
-            throw new RuntimeException("Unable to parse into " + ContentType.DateTime, e);
+        if (Time.class.isAssignableFrom(field.getType())) {
+            return Time.from(dateTime.toInstant());
+        }
+
+        if (Date.class.isAssignableFrom(field.getType())) {
+            return Date.from(dateTime.toInstant());
         }
 
         throw new TypePropertyMismatchException(field, TemporalAccessor.class.getName() + " or " + Date.class.getName(), ContentType.DateTime);
@@ -249,7 +245,7 @@ public class ValueParser {
                     field.set(object, toContent(field, property.getContentValue()));
                     break;
                 case DateTime:
-                    if (StringUtils.isEmpty(property.getContentValue())) {
+                    if (Strings.isNullOrEmpty(property.getContentValue())) {
                         break;
                     }
 
@@ -262,7 +258,7 @@ public class ValueParser {
                     field.set(object, toList(field, property.getObjectData()));
                     break;
                 case Number:
-                    if (StringUtils.isEmpty(property.getContentValue())) {
+                    if (Strings.isNullOrEmpty(property.getContentValue())) {
                         break;
                     }
 

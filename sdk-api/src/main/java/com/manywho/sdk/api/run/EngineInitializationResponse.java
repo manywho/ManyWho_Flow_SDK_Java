@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.run;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.ui.NavigationElementReference;
 import com.manywho.sdk.api.translate.Culture;
 
@@ -14,7 +16,7 @@ public class EngineInitializationResponse {
     private String currentStreamId;
     private String statusCode;
     private EngineAuthorizationContext authorizationContext;
-    private List<NavigationElementReference> navigationElementReferences;
+    private List<NavigationElementReference> navigationElementReferences = Lists.newArrayList();
 
     public Culture getCulture() {
         return culture;
@@ -77,6 +79,6 @@ public class EngineInitializationResponse {
     }
 
     public void setNavigationElementReferences(List<NavigationElementReference> navigationElementReferences) {
-        this.navigationElementReferences = navigationElementReferences;
+        this.navigationElementReferences = MoreObjects.firstNonNull(navigationElementReferences, Lists.newArrayList());
     }
 }

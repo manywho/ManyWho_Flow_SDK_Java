@@ -1,12 +1,13 @@
 package com.manywho.sdk.api.run;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.api.run.state.Geolocation;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class EngineInvokeRequest {
@@ -18,7 +19,7 @@ public class EngineInvokeRequest {
     private UUID selectedNavigationItemId;
     private UUID selectedMapElementId;
     private InvokeType invokeType;
-    private HashMap<String, String> annotations;
+    private Map<String, String> annotations = Maps.newHashMap();
     private Geolocation geolocation;
     private MapElementInvokeRequest mapElementInvokeRequest;
     private String mode;
@@ -87,16 +88,16 @@ public class EngineInvokeRequest {
         this.invokeType = invokeType;
     }
 
-    public HashMap<String, String> getAnnotations() {
+    public Map<String, String> getAnnotations() {
         return annotations;
     }
 
     public boolean hasAnnotations() {
-        return MapUtils.isNotEmpty(annotations);
+        return !annotations.isEmpty();
     }
 
-    public void setAnnotations(HashMap<String, String> annotations) {
-        this.annotations = annotations;
+    public void setAnnotations(Map<String, String> annotations) {
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 
     public Geolocation getGeolocation() {

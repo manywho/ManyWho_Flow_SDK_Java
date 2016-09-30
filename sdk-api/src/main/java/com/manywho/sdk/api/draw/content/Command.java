@@ -1,10 +1,13 @@
 package com.manywho.sdk.api.draw.content;
 
-import java.util.HashMap;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 public class Command {
     private String commandType;
-    private HashMap<String, String> properties;
+    private Map<String, String> properties = Maps.newHashMap();
 
     public String getCommandType() {
         return commandType;
@@ -14,11 +17,11 @@ public class Command {
         this.commandType = commandType;
     }
 
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return properties;
     }
 
-    public void setProperties(HashMap<String, String> properties) {
-        this.properties = properties;
+    public void setProperties(Map<String, String> properties) {
+        this.properties = MoreObjects.firstNonNull(properties, Maps.newHashMap());
     }
 }

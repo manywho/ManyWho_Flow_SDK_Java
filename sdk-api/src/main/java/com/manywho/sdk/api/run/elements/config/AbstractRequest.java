@@ -1,14 +1,15 @@
 package com.manywho.sdk.api.run.elements.config;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class AbstractRequest implements ConfigurationValuesAware {
@@ -17,21 +18,21 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     protected UUID stateId;
     protected String callbackUri;
     protected Culture culture;
-    protected List<EngineValue> configurationValues;
+    protected List<EngineValue> configurationValues = Lists.newArrayList();
     protected GroupAuthorization authorization;
-    protected HashMap<String, String> annotations;
-    private HashMap<String, String> attributes;
+    protected Map<String, String> annotations = Maps.newHashMap();
+    private Map<String, String> attributes = Maps.newHashMap();
 
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
     public boolean hasAttributes() {
-        return MapUtils.isNotEmpty(attributes);
+        return !attributes.isEmpty();
     }
 
-    public void setAttributes(HashMap<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
     }
 
     public String getToken() {
@@ -79,11 +80,11 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     }
 
     public boolean hasConfigurationValues() {
-        return CollectionUtils.isNotEmpty(configurationValues);
+        return !configurationValues.isEmpty();
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = configurationValues;
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
     }
 
     public GroupAuthorization getAuthorization() {
@@ -94,15 +95,15 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
         this.authorization = authorization;
     }
 
-    public HashMap<String, String> getAnnotations() {
+    public Map<String, String> getAnnotations() {
         return annotations;
     }
 
     public boolean hasAnnotations() {
-        return MapUtils.isNotEmpty(annotations);
+        return !annotations.isEmpty();
     }
 
-    public void setAnnotations(HashMap<String, String> annotations) {
-        this.annotations = annotations;
+    public void setAnnotations(Map<String, String> annotations) {
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 }

@@ -1,8 +1,9 @@
 package com.manywho.sdk.services.values;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
 public class ValueProperty {
     private ContentType contentType;
     private String content;
-    private List<Map<String, ValueProperty>> objects;
+    private List<Map<String, ValueProperty>> objects = Lists.newArrayList();
 
     public ValueProperty(ContentType contentType, String content) {
         this.contentType = contentType;
@@ -19,7 +20,7 @@ public class ValueProperty {
 
     public ValueProperty(ContentType contentType, List<Map<String, ValueProperty>> objects) {
         this.contentType = contentType;
-        this.objects = objects;
+        this.objects = MoreObjects.firstNonNull(objects, Lists.newArrayList());
     }
 
     public String getContent() {
@@ -35,10 +36,10 @@ public class ValueProperty {
     }
 
     public boolean hasContent() {
-        return StringUtils.isNotEmpty(content);
+        return !Strings.isNullOrEmpty(content);
     }
 
     public boolean hasObjects() {
-        return CollectionUtils.isNotEmpty(objects);
+        return !objects.isEmpty();
     }
 }

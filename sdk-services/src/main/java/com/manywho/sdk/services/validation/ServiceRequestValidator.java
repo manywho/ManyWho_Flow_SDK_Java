@@ -1,7 +1,6 @@
 package com.manywho.sdk.services.validation;
 
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidatorContext;
 
@@ -17,7 +16,7 @@ public class ServiceRequestValidator {
 
         boolean valid = true;
 
-        if (StringUtils.isEmpty(serviceRequest.getJoinPlayerUri())) {
+        if (serviceRequest.getJoinPlayerUri() == null || serviceRequest.getJoinPlayerUri().isEmpty()) {
             valid = false;
 
             constraintValidatorContext.buildConstraintViolationWithTemplate("{org.hibernate.validator.constraints.NotBlank.message}")
@@ -33,7 +32,7 @@ public class ServiceRequestValidator {
                     .addConstraintViolation();
         }
 
-        if (StringUtils.isEmpty(serviceRequest.getToken())) {
+        if (serviceRequest.getToken() == null || serviceRequest.getToken().isEmpty()) {
             valid = false;
 
             constraintValidatorContext.buildConstraintViolationWithTemplate("{org.hibernate.validator.constraints.NotBlank.message}")

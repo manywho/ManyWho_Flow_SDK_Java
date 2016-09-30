@@ -1,19 +1,21 @@
 package com.manywho.sdk.api.run.elements.ui;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.EngineValue;
-import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PageResponse {
     private String label;
-    private List<PageContainerResponse> pageContainerResponses;
-    private List<PageComponentResponse> pageComponentResponses;
-    private List<PageComponentDataResponse> pageComponentDataResponses;
-    private List<PageContainerDataResponse> pageContainerDataResponses;
-    private List<EngineValue> tags;
-    private HashMap<String, String> attributes;
+    private List<PageContainerResponse> pageContainerResponses = Lists.newArrayList();
+    private List<PageComponentResponse> pageComponentResponses = Lists.newArrayList();
+    private List<PageComponentDataResponse> pageComponentDataResponses = Lists.newArrayList();
+    private List<PageContainerDataResponse> pageContainerDataResponses = Lists.newArrayList();
+    private List<EngineValue> tags = Lists.newArrayList();
+    private Map<String, String> attributes = Maps.newHashMap();
     private int order;
 
     public String getLabel() {
@@ -29,11 +31,11 @@ public class PageResponse {
     }
 
     public boolean hasPageContainerResponses() {
-        return CollectionUtils.isNotEmpty(pageContainerResponses);
+        return !pageContainerResponses.isEmpty();
     }
 
     public void setPageContainerResponses(List<PageContainerResponse> pageContainerResponses) {
-        this.pageContainerResponses = pageContainerResponses;
+        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, Lists.newArrayList());
     }
 
     public List<PageComponentResponse> getPageComponentResponses() {
@@ -41,11 +43,11 @@ public class PageResponse {
     }
 
     public boolean hasPageComponentResponses() {
-        return CollectionUtils.isNotEmpty(pageComponentResponses);
+        return !pageComponentResponses.isEmpty();
     }
 
     public void setPageComponentResponses(List<PageComponentResponse> pageComponentResponses) {
-        this.pageComponentResponses = pageComponentResponses;
+        this.pageComponentResponses = MoreObjects.firstNonNull(pageComponentResponses, Lists.newArrayList());
     }
 
     public List<PageComponentDataResponse> getPageComponentDataResponses() {
@@ -53,11 +55,11 @@ public class PageResponse {
     }
 
     public boolean hasPageComponentDataResponses() {
-        return CollectionUtils.isNotEmpty(pageComponentDataResponses);
+        return !pageComponentDataResponses.isEmpty();
     }
 
     public void setPageComponentDataResponses(List<PageComponentDataResponse> pageComponentDataResponses) {
-        this.pageComponentDataResponses = pageComponentDataResponses;
+        this.pageComponentDataResponses = MoreObjects.firstNonNull(pageComponentDataResponses, Lists.newArrayList());
     }
 
     public List<PageContainerDataResponse> getPageContainerDataResponses() {
@@ -65,11 +67,11 @@ public class PageResponse {
     }
 
     public boolean hasPageContainerDataResponses() {
-        return CollectionUtils.isNotEmpty(pageContainerDataResponses);
+        return !pageContainerDataResponses.isEmpty();
     }
 
     public void setPageContainerDataResponses(List<PageContainerDataResponse> pageContainerDataResponses) {
-        this.pageContainerDataResponses = pageContainerDataResponses;
+        this.pageContainerDataResponses = MoreObjects.firstNonNull(pageContainerDataResponses, Lists.newArrayList());
     }
 
     public List<EngineValue> getTags() {
@@ -77,15 +79,15 @@ public class PageResponse {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = tags;
+        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
     }
 
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(HashMap<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
     }
 
     public int getOrder() {

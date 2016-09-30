@@ -1,12 +1,13 @@
 package com.manywho.sdk.api.run;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class EngineInitializationRequest {
@@ -15,8 +16,8 @@ public class EngineInitializationRequest {
     private UUID stateId;
     private UUID parentStateId;
     private String externalIdentifier;
-    private HashMap<String, String> annotations;
-    private List<EngineValue> inputs;
+    private Map<String, String> annotations = Maps.newHashMap();
+    private List<EngineValue> inputs = Lists.newArrayList();
     private String playerUrl;
     private String joinPlayerUrl;
     private String mode;
@@ -54,16 +55,16 @@ public class EngineInitializationRequest {
         this.externalIdentifier = externalIdentifier;
     }
 
-    public HashMap<String, String> getAnnotations() {
+    public Map<String, String> getAnnotations() {
         return annotations;
     }
 
     public boolean hasAnnotations() {
-        return MapUtils.isNotEmpty(annotations);
+        return !annotations.isEmpty();
     }
 
-    public void setAnnotations(HashMap<String, String> annotations) {
-        this.annotations = annotations;
+    public void setAnnotations(Map<String, String> annotations) {
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 
     public List<EngineValue> getInputs() {
@@ -71,11 +72,11 @@ public class EngineInitializationRequest {
     }
 
     public boolean hasInputs() {
-        return CollectionUtils.isNotEmpty(inputs);
+        return !inputs.isEmpty();
     }
 
     public void setInputs(List<EngineValue> inputs) {
-        this.inputs = inputs;
+        this.inputs = MoreObjects.firstNonNull(inputs, Lists.newArrayList());
     }
 
     public String getPlayerUrl() {

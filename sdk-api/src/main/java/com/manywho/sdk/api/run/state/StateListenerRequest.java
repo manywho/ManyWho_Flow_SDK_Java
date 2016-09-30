@@ -1,5 +1,8 @@
 package com.manywho.sdk.api.run.state;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
+
 import java.util.Map;
 import java.util.UUID;
 
@@ -7,7 +10,7 @@ public class StateListenerRequest {
     private String listenType;
     private UUID stateId;
     private String callbackUri;
-    private Map<String, String> annotations;
+    private Map<String, String> annotations = Maps.newHashMap();
 
     public String getListenType() {
         return listenType;
@@ -38,6 +41,6 @@ public class StateListenerRequest {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = annotations;
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 }

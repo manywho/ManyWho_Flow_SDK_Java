@@ -1,6 +1,7 @@
 package com.manywho.sdk.api.run;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.elements.type.MObject;
@@ -18,7 +19,7 @@ public class EngineValue implements PropertyAware {
     private String typeElementPropertyDeveloperName;
     private String contentValue;
     private ContentType contentType;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
 
     public EngineValue() {
 
@@ -39,7 +40,7 @@ public class EngineValue implements PropertyAware {
 
     public EngineValue(String developerName, ContentType contentType, List<MObject> objectData) {
         this(developerName, contentType);
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public EngineValue(String developerName, ContentType contentType, String typeElementDeveloperName, MObject object) {
@@ -120,6 +121,6 @@ public class EngineValue implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 }

@@ -1,10 +1,11 @@
 package com.manywho.sdk.api.run.elements.config;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineValue;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -12,10 +13,10 @@ import java.util.UUID;
 public class ServiceResponse extends AbstractResponse {
     private InvokeType invokeType;
     private String waitMessage;
-    private List<EngineValue> outputs;
+    private List<EngineValue> outputs = Lists.newArrayList();
     private UUID selectedOutcomeId;
-    private Map<String, String> rootFaults;
-    private List<ValueFault> valueFaults;
+    private Map<String, String> rootFaults = Maps.newHashMap();
+    private List<ValueFault> valueFaults = Lists.newArrayList();
     private String mode;
 
     public ServiceResponse() {
@@ -24,7 +25,7 @@ public class ServiceResponse extends AbstractResponse {
 
     public ServiceResponse(InvokeType invokeType, List<EngineValue> outputs, String token, String waitMessage) {
         this.invokeType = invokeType;
-        this.outputs = outputs;
+        this.outputs = MoreObjects.firstNonNull(outputs, Lists.newArrayList());
         this.token = token;
         this.waitMessage = waitMessage;
     }
@@ -72,7 +73,7 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void setOutputs(List<EngineValue> outputs) {
-        this.outputs = outputs;
+        this.outputs = MoreObjects.firstNonNull(outputs, Lists.newArrayList());
     }
 
     public UUID getSelectedOutcomeId() {
@@ -88,15 +89,11 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void addRootFault(String key, String value) {
-        if (this.rootFaults == null) {
-            this.rootFaults = new HashMap<>();
-        }
-
         this.rootFaults.put(key, value);
     }
 
     public void setRootFaults(Map<String, String> rootFaults) {
-        this.rootFaults = rootFaults;
+        this.rootFaults = MoreObjects.firstNonNull(rootFaults, Maps.newHashMap());
     }
 
     public List<ValueFault> getValueFaults() {
@@ -104,7 +101,7 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void setValueFaults(List<ValueFault> valueFaults) {
-        this.valueFaults = valueFaults;
+        this.valueFaults = MoreObjects.firstNonNull(valueFaults, Lists.newArrayList());
     }
 
     public String getMode() {

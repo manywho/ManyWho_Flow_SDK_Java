@@ -1,9 +1,11 @@
 package com.manywho.sdk.api.run.state;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 import com.manywho.sdk.api.draw.log.Log;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,10 +27,10 @@ public class State {
     private String externalIdentifier;
     @JsonProperty("manywhoTenantId")
     private UUID manyWhoTenantId;
-    private Map<String, String> annotations;
-    private List<StateEntry> stateEntries;
+    private Map<String, String> annotations = Maps.newHashMap();
+    private List<StateEntry> stateEntries = Lists.newArrayList();
     private StateEntry precommitStateEntry;
-    private List<StateValue> values;
+    private List<StateValue> values = Lists.newArrayList();
     private String authorizationHeader;
     @JsonProperty("isDone")
     private boolean done;
@@ -143,7 +145,7 @@ public class State {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = annotations;
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 
     public List<StateEntry> getStateEntries() {
@@ -151,11 +153,11 @@ public class State {
     }
 
     public boolean hasStateEntries() {
-        return CollectionUtils.isNotEmpty(stateEntries);
+        return !stateEntries.isEmpty();
     }
 
     public void setStateEntries(List<StateEntry> stateEntries) {
-        this.stateEntries = stateEntries;
+        this.stateEntries = MoreObjects.firstNonNull(stateEntries, Lists.newArrayList());
     }
 
     public StateEntry getPrecommitStateEntry() {
@@ -171,11 +173,11 @@ public class State {
     }
 
     public boolean hasValues() {
-        return CollectionUtils.isNotEmpty(values);
+        return !values.isEmpty();
     }
 
     public void setValues(List<StateValue> values) {
-        this.values = values;
+        this.values = MoreObjects.firstNonNull(values, Lists.newArrayList());
     }
 
     public String getAuthorizationHeader() {

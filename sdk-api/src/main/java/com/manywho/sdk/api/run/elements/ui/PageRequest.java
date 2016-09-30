@@ -1,24 +1,22 @@
 package com.manywho.sdk.api.run.elements.ui;
 
-import java.util.ArrayList;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class PageRequest {
-    private List<PageComponentInputResponseRequest> pageComponentInputResponses;
+    private List<PageComponentInputResponseRequest> pageComponentInputResponses = Lists.newArrayList();
 
     public List<PageComponentInputResponseRequest> getPageComponentInputResponses() {
         return pageComponentInputResponses;
     }
 
     public void addPageComponentInputResponse(PageComponentInputResponseRequest pageComponentInputResponseRequest) {
-        if (this.pageComponentInputResponses == null) {
-            this.pageComponentInputResponses = new ArrayList<>();
-        }
-
         this.pageComponentInputResponses.add(pageComponentInputResponseRequest);
     }
 
     public void setPageComponentInputResponses(List<PageComponentInputResponseRequest> pageComponentInputResponses) {
-        this.pageComponentInputResponses = pageComponentInputResponses;
+        this.pageComponentInputResponses = MoreObjects.firstNonNull(pageComponentInputResponses, Lists.newArrayList());
     }
 }

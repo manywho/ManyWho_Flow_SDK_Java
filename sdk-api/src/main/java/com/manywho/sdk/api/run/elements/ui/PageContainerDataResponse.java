@@ -1,6 +1,8 @@
 package com.manywho.sdk.api.run.elements.ui;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public class PageContainerDataResponse {
     private boolean editable;
     @JsonProperty("isVisible")
     private boolean visible;
-    private List<EngineValue> tags;
+    private List<EngineValue> tags = Lists.newArrayList();
 
     public UUID getPageContainerId() {
         return pageContainerId;
@@ -53,6 +55,6 @@ public class PageContainerDataResponse {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = tags;
+        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
     }
 }

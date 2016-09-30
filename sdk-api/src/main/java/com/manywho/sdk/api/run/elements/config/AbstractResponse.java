@@ -1,16 +1,17 @@
 package com.manywho.sdk.api.run.elements.config;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class AbstractResponse {
     protected String token;
     protected UUID tenantId;
     protected Culture culture;
-    protected HashMap<String, String> annotations;
+    protected Map<String, String> annotations = Maps.newHashMap();
 
     public String getToken() {
         return token;
@@ -36,15 +37,15 @@ public abstract class AbstractResponse {
         this.culture = culture;
     }
 
-    public HashMap<String, String> getAnnotations() {
+    public Map<String, String> getAnnotations() {
         return annotations;
     }
 
     public boolean hasAnnotations() {
-        return MapUtils.isNotEmpty(annotations);
+        return !annotations.isEmpty();
     }
 
-    public void setAnnotations(HashMap<String, String> annotations) {
-        this.annotations = annotations;
+    public void setAnnotations(Map<String, String> annotations) {
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 }

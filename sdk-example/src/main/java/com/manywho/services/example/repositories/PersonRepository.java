@@ -2,6 +2,7 @@ package com.manywho.services.example.repositories;
 
 import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
+import com.manywho.services.example.ServiceConfiguration;
 import com.manywho.services.example.types.Group;
 import com.manywho.services.example.types.Person;
 
@@ -20,6 +21,14 @@ public class PersonRepository {
         this.faker = faker;
     }
 
+    public Person create(ServiceConfiguration configuration, Person person) {
+        return null;
+    }
+
+    public void delete(ServiceConfiguration configuration, Person person) {
+
+    }
+
     public Person find(String id) {
         Person person = createPerson();
         person.setManager(createPerson());
@@ -35,6 +44,10 @@ public class PersonRepository {
         });
 
         return people;
+    }
+
+    public Person update(ServiceConfiguration configuration, Person person) {
+        return null;
     }
 
     private Person createPerson() {

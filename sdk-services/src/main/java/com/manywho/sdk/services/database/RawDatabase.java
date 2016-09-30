@@ -7,7 +7,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 
 import java.util.List;
 
-public interface RawDatabase<C extends Configuration, T extends MObject> extends WritableDatabase<C, T> {
-    T find(C configuration, ObjectDataType objectDataType, String id);
-    List<T> findAll(C configuration, ObjectDataType objectDataType, ListFilter filter);
+public interface RawDatabase<C extends Configuration> extends WritableDatabase<C, MObject> {
+    MObject find(C configuration, ObjectDataType objectDataType, String id);
+    List<MObject> findAll(C configuration, ObjectDataType objectDataType, ListFilter filter);
 }

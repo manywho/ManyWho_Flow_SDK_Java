@@ -1,16 +1,17 @@
 package com.manywho.sdk.api.describe;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
 public class DescribeServiceRequest implements ConfigurationValuesAware {
     private Culture culture;
     private String uri;
-    private List<EngineValue> configurationValues;
+    private List<EngineValue> configurationValues = Lists.newArrayList();
 
     public Culture getCulture() {
         return culture;
@@ -34,10 +35,10 @@ public class DescribeServiceRequest implements ConfigurationValuesAware {
 
     @Override
     public boolean hasConfigurationValues() {
-        return CollectionUtils.isNotEmpty(configurationValues);
+        return !configurationValues.isEmpty();
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = configurationValues;
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
     }
 }

@@ -1,6 +1,8 @@
 package com.manywho.sdk.api.run.elements.ui;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
@@ -20,7 +22,7 @@ public class PageComponentDataResponse implements PropertyAware {
     private boolean required;
     @JsonProperty("isVisible")
     private boolean visible;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
     private ObjectDataRequest objectDataRequest;
     private FileDataRequest fileDataRequest;
     private String contentValue;
@@ -29,7 +31,7 @@ public class PageComponentDataResponse implements PropertyAware {
     @JsonProperty("isValid")
     private boolean valid;
     private String validationMessage;
-    private List<EngineValue> tags;
+    private List<EngineValue> tags = Lists.newArrayList();
 
     public UUID getPageComponentId() {
         return pageComponentId;
@@ -76,7 +78,7 @@ public class PageComponentDataResponse implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public ObjectDataRequest getObjectDataRequest() {
@@ -140,6 +142,6 @@ public class PageComponentDataResponse implements PropertyAware {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = tags;
+        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
     }
 }

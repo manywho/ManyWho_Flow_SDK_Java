@@ -7,7 +7,6 @@ import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
 import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
 import com.manywho.sdk.services.types.*;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -72,7 +71,7 @@ public class DescribeTypeService {
 
         // Create the binding list, and add a single binding if we have any bound properties
         List<TypeElementBinding> bindings = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(propertyBindings)) {
+        if (!propertyBindings.isEmpty()) {
             // Check if we have an identifier property on the type
             long identifierCount = typeRepository.getTypeIdentifiers().stream()
                     .filter(field -> field.getDeclaringClass().equals(type))

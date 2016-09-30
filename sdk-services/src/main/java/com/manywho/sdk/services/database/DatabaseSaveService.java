@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.database;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
@@ -8,7 +9,6 @@ import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeBuilder;
 import com.manywho.sdk.services.values.ValueParser;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -35,7 +35,7 @@ public class DatabaseSaveService implements DatabaseService {
         List<MObject> objects = Lists.newArrayList();
 
         List<T> objectsToCreate = request.getObjectData().stream()
-                .filter(object -> StringUtils.isEmpty(object.getExternalId()))
+                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
                 .map(object -> valueParser.asObject(object, type))
                 .collect(Collectors.toList());
 
@@ -58,7 +58,7 @@ public class DatabaseSaveService implements DatabaseService {
         }
 
         List<T> objectsToUpdate = request.getObjectData().stream()
-                .filter(object -> StringUtils.isNotEmpty(object.getExternalId()))
+                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
                 .map(object -> valueParser.asObject(object, type))
                 .collect(Collectors.toList());
 
@@ -84,7 +84,7 @@ public class DatabaseSaveService implements DatabaseService {
     }
 
     @Override
-    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
+    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?> database) {
         if (request.getObjectData() == null) {
             return new ObjectDataResponse();
         }
@@ -92,11 +92,11 @@ public class DatabaseSaveService implements DatabaseService {
         List<MObject> objects = Lists.newArrayList();
 
         List<MObject> objectsToCreate = request.getObjectData().stream()
-                .filter(object -> StringUtils.isEmpty(object.getExternalId()))
+                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
                 .collect(Collectors.toList());
 
         List<MObject> objectsToUpdate = request.getObjectData().stream()
-                .filter(object -> StringUtils.isNotEmpty(object.getExternalId()))
+                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
                 .collect(Collectors.toList());
 
         if (!objectsToCreate.isEmpty()) {

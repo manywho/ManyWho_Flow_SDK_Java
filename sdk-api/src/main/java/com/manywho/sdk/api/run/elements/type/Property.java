@@ -1,5 +1,6 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
@@ -13,7 +14,7 @@ public class Property implements PropertyAware {
     private ContentType contentType;
     private String contentValue;
     private String contentFormat;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
 
     public Property() {
 
@@ -50,7 +51,7 @@ public class Property implements PropertyAware {
 
     public Property(String developerName, List<MObject> objectData) {
         this.developerName = developerName;
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public UUID getTypeElementPropertyId() {
@@ -90,7 +91,7 @@ public class Property implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());;
     }
 
     public String getContentFormat() {

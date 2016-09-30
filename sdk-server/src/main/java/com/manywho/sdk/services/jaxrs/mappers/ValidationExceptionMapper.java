@@ -1,6 +1,6 @@
 package com.manywho.sdk.services.jaxrs.mappers;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Joiner;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.MediaType;
@@ -22,7 +22,9 @@ public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViol
                         error -> error.getMessage()
                 ));
 
-        message += StringUtils.join(validationErrors, ", ");
+        message += Joiner.on(", ")
+                .withKeyValueSeparator(": ")
+                .join(validationErrors);
 
         if (message.length() > 500) {
             message = message.substring(0, 500);

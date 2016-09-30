@@ -1,7 +1,6 @@
 package com.manywho.sdk.services.database;
 
 import com.google.inject.Injector;
-import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.types.Type;
@@ -51,9 +50,9 @@ public class DatabaseManager {
     }
 
     private ObjectDataResponse handleCustomType(DatabaseType databaseType, ObjectDataRequest request) {
-        Class<? extends RawDatabase<?, MObject>> databaseClass = databaseRepository.findRawDatabase();
+        Class<? extends RawDatabase<?>> databaseClass = databaseRepository.findRawDatabase();
 
-        RawDatabase<?, MObject> database = injector.getInstance(databaseClass);
+        RawDatabase<?> database = injector.getInstance(databaseClass);
 
         return databaseServiceFactory.create(databaseType).handleRaw(request, database);
     }

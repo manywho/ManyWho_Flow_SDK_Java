@@ -1,12 +1,13 @@
 package com.manywho.sdk.services.types;
 
-import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
@@ -162,7 +163,9 @@ public class TypeBuilder {
         if (object instanceof TemporalAccessor) {
             return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format((TemporalAccessor) object);
         } else if (object instanceof Date) {
-            return ISO8601Utils.format((Date) object);
+            OffsetDateTime dateTime = OffsetDateTime.ofInstant(((Date) object).toInstant(), ZoneId.of("UTC"));
+
+            return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(dateTime);
         }
 
         throw new TypePropertyInvalidException(property, "DateTime");

@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.run.state;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.draw.flow.FlowId;
 
 import java.time.LocalDateTime;
@@ -13,8 +15,8 @@ public class StateEntry {
     private UUID mapElementId;
     private String mapElementDeveloperName;
     private LocalDateTime dateCommitted;
-    private List<StateValue> values;
-    private List<UserInteraction> userInteractions;
+    private List<StateValue> values = Lists.newArrayList();
+    private List<UserInteraction> userInteractions = Lists.newArrayList();
 
     public UUID getId() {
         return id;
@@ -69,7 +71,7 @@ public class StateEntry {
     }
 
     public void setValues(List<StateValue> values) {
-        this.values = values;
+        this.values = MoreObjects.firstNonNull(values, Lists.newArrayList());
     }
 
     public List<UserInteraction> getUserInteractions() {
@@ -77,6 +79,6 @@ public class StateEntry {
     }
 
     public void setUserInteractions(List<UserInteraction> userInteractions) {
-        this.userInteractions = userInteractions;
+        this.userInteractions = MoreObjects.firstNonNull(userInteractions, Lists.newArrayList());
     }
 }

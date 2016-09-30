@@ -1,6 +1,5 @@
 package com.manywho.services.example.database;
 
-import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.services.example.ServiceConfiguration;
@@ -9,7 +8,6 @@ import com.manywho.services.example.types.Person;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PersonDatabase implements Database<ServiceConfiguration, Person> {
@@ -22,9 +20,7 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
 
     @Override
     public Person create(ServiceConfiguration configuration, Person person) {
-        person.setId(UUID.randomUUID().toString());
-
-        return person;
+        return personRepository.create(configuration, person);
     }
 
     @Override
@@ -34,12 +30,12 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
 
     @Override
     public void delete(ServiceConfiguration configuration, Person person) {
-        int i = 0;
+        personRepository.delete(configuration, person);
     }
 
     @Override
     public void delete(ServiceConfiguration configuration, List<Person> objects) {
-        int i = 0;
+        objects.forEach(object -> delete(configuration, object));
     }
 
     @Override
@@ -54,11 +50,11 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
 
     @Override
     public Person update(ServiceConfiguration configuration, Person person) {
-        return new Person();
+        return personRepository.update(configuration, person);
     }
 
     @Override
     public List<Person> update(ServiceConfiguration configuration, List<Person> people) {
-        return Lists.newArrayList();
+        return people.stream().map(person -> update(configuration, person)).collect(Collectors.toList());
     }
 }

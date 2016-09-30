@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public abstract class AbstractIdentityController {
+public abstract class AbstractIdentityController implements IdentityController {
     /**
      * This endpoint will attempt to authenticate a user, based on the incoming credentials in
      * the {@code authenticationCredentials} parameter.

@@ -1,9 +1,10 @@
 package com.manywho.sdk.api.draw.elements.type;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -11,8 +12,8 @@ import java.util.stream.Collectors;
 public class TypeElement extends Element {
     private UUID id;
     private UUID serviceElementId;
-    protected List<TypeElementProperty> properties = new ArrayList<>();
-    protected List<TypeElementBinding> bindings = new ArrayList<>();
+    protected List<TypeElementProperty> properties = Lists.newArrayList();
+    protected List<TypeElementBinding> bindings = Lists.newArrayList();
     private boolean updateByName;
 
     public TypeElement() {
@@ -25,8 +26,8 @@ public class TypeElement extends Element {
 
     public TypeElement(String developerName, List<TypeElementProperty> properties, List<TypeElementBinding> bindings) {
         this.developerName = developerName;
-        this.properties = properties;
-        this.bindings = bindings;
+        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
+        this.bindings = MoreObjects.firstNonNull(bindings, Lists.newArrayList());
     }
 
     public UUID getId() {
@@ -50,7 +51,7 @@ public class TypeElement extends Element {
     }
 
     public void setProperties(List<TypeElementProperty> properties) {
-        this.properties = properties;
+        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
     }
 
     public List<TypeElementBinding> getBindings() {
@@ -58,7 +59,7 @@ public class TypeElement extends Element {
     }
 
     public void setBindings(List<TypeElementBinding> bindings) {
-        this.bindings = bindings;
+        this.bindings = MoreObjects.firstNonNull(bindings, Lists.newArrayList());
     }
 
     public boolean isUpdateByName() {
@@ -72,7 +73,7 @@ public class TypeElement extends Element {
     public static class SimpleTypeBuilder {
         private String developerName;
         private String tableName;
-        private List<TypeProperty> properties = new ArrayList<>();
+        private List<TypeProperty> properties = Lists.newArrayList();
 
         public SimpleTypeBuilder setDeveloperName(String developerName) {
             this.developerName = developerName;
@@ -109,8 +110,9 @@ public class TypeElement extends Element {
             typeElementBinding.setDatabaseTableName(tableName);
             typeElementBinding.setPropertyBindings(typeElementPropertyBindings);
 
-            List<TypeElementBinding> typeElementBindings = new ArrayList<>();
-            typeElementBindings.add(typeElementBinding);
+            List<TypeElementBinding> typeElementBindings = Lists.newArrayList(
+                    typeElementBinding
+            );
 
             return new TypeElement(developerName, typeElementProperties, typeElementBindings);
         }

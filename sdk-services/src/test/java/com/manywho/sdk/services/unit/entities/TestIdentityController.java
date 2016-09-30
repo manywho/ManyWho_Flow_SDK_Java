@@ -4,9 +4,9 @@ import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.api.security.AuthenticatedWhoResult;
 import com.manywho.sdk.api.security.AuthenticationCredentials;
-import com.manywho.sdk.services.controllers.AbstractIdentityController;
+import com.manywho.sdk.services.controllers.IdentityController;
 
-public class TestIdentityController extends AbstractIdentityController {
+public class TestIdentityController implements IdentityController {
 
     @Override
     public AuthenticatedWhoResult authentication(AuthenticationCredentials authenticationCredentials) throws Exception {

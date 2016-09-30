@@ -1,13 +1,16 @@
 package com.manywho.sdk.api.social;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class NewMessage {
     private String senderId;
     private String messageText;
     private String repliedTo;
-    private List<File> uploadedFiles;
-    private List<MentionedWho> mentionedWhos;
+    private List<File> uploadedFiles = Lists.newArrayList();
+    private List<MentionedWho> mentionedWhos = Lists.newArrayList();
 
     public String getSenderId() {
         return senderId;
@@ -41,7 +44,7 @@ public class NewMessage {
     }
 
     public NewMessage setUploadedFiles(List<File> uploadedFiles) {
-        this.uploadedFiles = uploadedFiles;
+        this.uploadedFiles = MoreObjects.firstNonNull(uploadedFiles, Lists.newArrayList());
         return this;
     }
 
@@ -50,7 +53,7 @@ public class NewMessage {
     }
 
     public NewMessage setMentionedWhos(List<MentionedWho> mentionedWhos) {
-        this.mentionedWhos = mentionedWhos;
+        this.mentionedWhos = MoreObjects.firstNonNull(mentionedWhos, Lists.newArrayList());
         return this;
     }
 }

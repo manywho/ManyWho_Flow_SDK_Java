@@ -1,14 +1,15 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ComparisonType;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
 public class ListFilterMinimal {
     private ComparisonType comparisonType;
-    private List<ListFilterWhere> where;
-    private List<ListFilterMinimal> listFilters;
+    private List<ListFilterWhere> where = Lists.newArrayList();
+    private List<ListFilterMinimal> listFilters = Lists.newArrayList();
 
     public ComparisonType getComparisonType() {
         return comparisonType;
@@ -24,11 +25,11 @@ public class ListFilterMinimal {
     }
 
     public boolean hasWhere() {
-        return CollectionUtils.isNotEmpty(where);
+        return !where.isEmpty();
     }
 
     public ListFilterMinimal setWhere(List<ListFilterWhere> where) {
-        this.where = where;
+        this.where = MoreObjects.firstNonNull(where, Lists.newArrayList());
         return this;
     }
 
@@ -37,11 +38,11 @@ public class ListFilterMinimal {
     }
 
     public boolean hasListFilters() {
-        return CollectionUtils.isNotEmpty(listFilters);
+        return !listFilters.isEmpty();
     }
 
     public ListFilterMinimal setListFilters(List<ListFilterMinimal> listFilters) {
-        this.listFilters = listFilters;
+        this.listFilters = MoreObjects.firstNonNull(listFilters, Lists.newArrayList());
         return this;
     }
 }

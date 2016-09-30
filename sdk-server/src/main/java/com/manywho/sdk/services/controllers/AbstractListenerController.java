@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public abstract class AbstractListenerController {
+public abstract class AbstractListenerController implements ListenerController {
     @Path("/listener")
     @POST
     public abstract void createListener(ListenerServiceRequest listenerServiceRequest) throws Exception;

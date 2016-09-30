@@ -43,7 +43,7 @@ public class DatabaseLoadService implements DatabaseService {
     }
 
     @Override
-    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?, MObject> database) {
+    public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?> database) {
         // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
         int providedLimit = request.getListFilter().getLimit();
         if (request.getListFilter().hasLimit()) {

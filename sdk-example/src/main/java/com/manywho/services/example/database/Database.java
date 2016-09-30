@@ -9,7 +9,7 @@ import com.manywho.services.example.ServiceConfiguration;
 
 import java.util.List;
 
-public class Database implements RawDatabase<ServiceConfiguration, MObject> {
+public class Database implements RawDatabase<ServiceConfiguration> {
     @Override
     public MObject create(ServiceConfiguration configuration, MObject object) {
         return null;

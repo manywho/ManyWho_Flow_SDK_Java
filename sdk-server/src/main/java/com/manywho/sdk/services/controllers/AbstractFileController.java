@@ -2,7 +2,7 @@ package com.manywho.sdk.services.controllers;
 
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -12,8 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public abstract class AbstractFileController{
-
+public abstract class AbstractFileController implements FileController {
     @Path("/file/delete")
     @POST
     public abstract ObjectDataResponse deleteFile(FileDataRequest fileDataRequest) throws Exception;
@@ -25,5 +24,5 @@ public abstract class AbstractFileController{
     @POST
     @Path("/content")
     @Consumes({"multipart/form-data", "application/octet-stream"})
-    public abstract ObjectDataResponse uploadFile(MultipartFormDataInput multipartFormDataInput) throws Exception;
+    public abstract ObjectDataResponse uploadFile(MultipartInput multipartInput) throws Exception;
 }

@@ -1,7 +1,9 @@
 package com.manywho.sdk.api.social;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
@@ -10,9 +12,9 @@ public class Message {
     private String text;
     private OffsetDateTime createdDate;
     private Who sender;
-    private List<Attachment> attachments = new ArrayList<>();
-    private List<Message> comments = new ArrayList<>();
-    private List<String> likerIds = new ArrayList<>();
+    private List<Attachment> attachments = Lists.newArrayList();
+    private List<Message> comments = Lists.newArrayList();
+    private List<String> likerIds = Lists.newArrayList();
     private String myLikeId;
     private int commentCount;
 
@@ -71,7 +73,7 @@ public class Message {
     }
 
     public Message setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
+        this.attachments = MoreObjects.firstNonNull(attachments, Lists.newArrayList());
         return this;
     }
 
@@ -85,7 +87,7 @@ public class Message {
     }
 
     public Message setComments(List<Message> comments) {
-        this.comments = comments;
+        this.comments = MoreObjects.firstNonNull(comments, Lists.newArrayList());
         return this;
     }
 
@@ -94,7 +96,7 @@ public class Message {
     }
 
     public Message setLikerIds(List<String> likerIds) {
-        this.likerIds = likerIds;
+        this.likerIds = MoreObjects.firstNonNull(likerIds, Lists.newArrayList());
         return this;
     }
 

@@ -1,9 +1,9 @@
 package com.manywho.sdk.services.validation.social;
 
+import com.google.common.base.Strings;
 import com.manywho.sdk.api.run.elements.config.SocialServiceRequest;
 import com.manywho.sdk.services.validation.AbstractConstraintValidator;
 import com.manywho.sdk.services.validation.ServiceRequestValidator;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintValidatorContext;
@@ -28,7 +28,7 @@ public class PostNewMessageValidator extends AbstractConstraintValidator<PostNew
             return false;
         }
 
-        if (StringUtils.isEmpty(socialServiceRequest.getNewMessage().getSenderId())) {
+        if (Strings.isNullOrEmpty(socialServiceRequest.getNewMessage().getSenderId())) {
             valid = false;
 
             constraintValidatorContext.buildConstraintViolationWithTemplate("{org.hibernate.validator.constraints.NotBlank.message}")
@@ -36,7 +36,7 @@ public class PostNewMessageValidator extends AbstractConstraintValidator<PostNew
                     .addConstraintViolation();
         }
 
-        if (StringUtils.isEmpty(socialServiceRequest.getNewMessage().getMessageText())) {
+        if (Strings.isNullOrEmpty(socialServiceRequest.getNewMessage().getMessageText())) {
             valid = false;
 
             constraintValidatorContext.buildConstraintViolationWithTemplate("{org.hibernate.validator.constraints.NotBlank.message}")

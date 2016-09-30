@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-services</artifactId>
+            <artifactId>sdk-server</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

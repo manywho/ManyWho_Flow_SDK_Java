@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.run.state;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineInvokeRequest;
 import com.manywho.sdk.api.run.EngineInvokeResponse;
 
@@ -8,7 +10,7 @@ import java.util.List;
 public class StateLogEntry {
     private EngineInvokeRequest engineInvokeRequest;
     private EngineInvokeResponse engineInvokeResponse;
-    private List<StateLogEntryInvokePair> stateLogEntryInvokePairs;
+    private List<StateLogEntryInvokePair> stateLogEntryInvokePairs = Lists.newArrayList();
     private String timeStamp;
     private String isActive;
 
@@ -41,7 +43,7 @@ public class StateLogEntry {
     }
 
     public void setStateLogEntryInvokePairs(List<StateLogEntryInvokePair> stateLogEntryInvokePairs) {
-        this.stateLogEntryInvokePairs = stateLogEntryInvokePairs;
+        this.stateLogEntryInvokePairs = MoreObjects.firstNonNull(stateLogEntryInvokePairs, Lists.newArrayList());
     }
 
     public String getTimeStamp() {

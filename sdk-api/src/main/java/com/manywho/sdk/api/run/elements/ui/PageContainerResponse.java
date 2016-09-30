@@ -1,7 +1,11 @@
 package com.manywho.sdk.api.run.elements.ui;
 
-import java.util.HashMap;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PageContainerResponse {
@@ -9,9 +13,9 @@ public class PageContainerResponse {
     private String containerType;
     private String developerName;
     private String label;
-    private List<PageContainerResponse> pageContainerResponses;
+    private List<PageContainerResponse> pageContainerResponses = Lists.newArrayList();
     private int order;
-    private HashMap<String, String> attributes;
+    private Map<String, String> attributes = Maps.newHashMap();
 
     public UUID getId() {
         return id;
@@ -50,7 +54,7 @@ public class PageContainerResponse {
     }
 
     public void setPageContainerResponses(List<PageContainerResponse> pageContainerResponses) {
-        this.pageContainerResponses = pageContainerResponses;
+        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, Lists.newArrayList());
     }
 
     public int getOrder() {
@@ -61,11 +65,11 @@ public class PageContainerResponse {
         this.order = order;
     }
 
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(HashMap<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
     }
 }

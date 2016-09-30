@@ -1,19 +1,20 @@
 package com.manywho.sdk.api.run.elements.map;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.elements.ui.PageResponse;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class MapElementInvokeResponse {
     private UUID mapElementId;
     private String developerName;
     private PageResponse pageResponse;
-    private List<OutcomeResponse> outcomeResponses;
-    private HashMap<String, String> rootFaults;
+    private List<OutcomeResponse> outcomeResponses = Lists.newArrayList();
+    private Map<String, String> rootFaults = Maps.newHashMap();
 
     public UUID getMapElementId() {
         return mapElementId;
@@ -44,22 +45,22 @@ public class MapElementInvokeResponse {
     }
 
     public boolean hasOutcomeResponses() {
-        return CollectionUtils.isNotEmpty(outcomeResponses);
+        return !outcomeResponses.isEmpty();
     }
 
     public void setOutcomeResponses(List<OutcomeResponse> outcomeResponses) {
-        this.outcomeResponses = outcomeResponses;
+        this.outcomeResponses = MoreObjects.firstNonNull(outcomeResponses, Lists.newArrayList());
     }
 
-    public HashMap<String, String> getRootFaults() {
+    public Map<String, String> getRootFaults() {
         return rootFaults;
     }
 
     public boolean hasRootFaults() {
-        return MapUtils.isNotEmpty(rootFaults);
+        return !rootFaults.isEmpty();
     }
 
-    public void setRootFaults(HashMap<String, String> rootFaults) {
-        this.rootFaults = rootFaults;
+    public void setRootFaults(Map<String, String> rootFaults) {
+        this.rootFaults = MoreObjects.firstNonNull(rootFaults, Maps.newHashMap());
     }
 }

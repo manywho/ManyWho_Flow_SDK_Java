@@ -5,10 +5,10 @@ import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
-import com.manywho.sdk.services.controllers.AbstractDataController;
-import com.manywho.sdk.services.controllers.AbstractFileController;
-import com.manywho.sdk.services.controllers.AbstractIdentityController;
-import com.manywho.sdk.services.controllers.AbstractListenerController;
+import com.manywho.sdk.services.controllers.DataController;
+import com.manywho.sdk.services.controllers.FileController;
+import com.manywho.sdk.services.controllers.IdentityController;
+import com.manywho.sdk.services.controllers.ListenerController;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.sdk.services.files.FileHandler;
 import com.manywho.sdk.services.listeners.Listener;
@@ -39,21 +39,21 @@ public class DescribeService {
     }
 
     public boolean anyDataControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractDataController.class) ||
+        return describeRepository.doSubtypesOfExist(DataController.class) ||
                 describeRepository.doSubtypesOfExist(Database.class) ||
                 describeRepository.doSubtypesOfExist(TypeProvider.class);
     }
 
     public boolean anyFileControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractFileController.class) || describeRepository.doSubtypesOfExist(FileHandler.class);
+        return describeRepository.doSubtypesOfExist(FileController.class) || describeRepository.doSubtypesOfExist(FileHandler.class);
     }
 
     public boolean anyIdentityControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractIdentityController.class);
+        return describeRepository.doSubtypesOfExist(IdentityController.class);
     }
 
     public boolean anyListenerControllersExist() {
-        return describeRepository.doSubtypesOfExist(AbstractListenerController.class) || describeRepository.doSubtypesOfExist(Listener.class);
+        return describeRepository.doSubtypesOfExist(ListenerController.class) || describeRepository.doSubtypesOfExist(Listener.class);
     }
 
     public boolean anySocialControllersExist() {

@@ -1,5 +1,6 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.translate.Culture;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class ObjectDataResponse {
     private Culture culture;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
     private boolean hasMoreResults;
 
     public ObjectDataResponse() {
@@ -18,17 +19,16 @@ public class ObjectDataResponse {
     }
 
     public ObjectDataResponse(List<MObject> objectData) {
-        this.objectData = objectData;
+        this(null, objectData, false);
     }
 
     public ObjectDataResponse(List<MObject> objectData, boolean hasMoreResults) {
-        this.objectData = objectData;
-        this.hasMoreResults = hasMoreResults;
+        this(null, objectData, hasMoreResults);
     }
 
     public ObjectDataResponse(Culture culture, List<MObject> objectData, boolean hasMoreResults) {
         this.culture = culture;
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
         this.hasMoreResults = hasMoreResults;
     }
 
@@ -45,7 +45,7 @@ public class ObjectDataResponse {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public boolean isHasMoreResults() {

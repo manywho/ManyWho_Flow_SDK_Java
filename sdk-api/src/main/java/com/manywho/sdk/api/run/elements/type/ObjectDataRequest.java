@@ -1,11 +1,12 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.run.elements.config.Authorization;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,12 +16,12 @@ public class ObjectDataRequest implements ConfigurationValuesAware {
     private String token;
     private UUID typeElementBindingId;
     private Authorization authorization;
-    private List<EngineValue> configurationValues;
+    private List<EngineValue> configurationValues = Lists.newArrayList();
     private Command command;
     private Culture culture;
     private ListFilter listFilter;
     private ObjectDataType objectDataType;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
 
     public UUID getStateId() {
         return stateId;
@@ -59,11 +60,11 @@ public class ObjectDataRequest implements ConfigurationValuesAware {
     }
 
     public boolean hasConfigurationValues() {
-        return CollectionUtils.isNotEmpty(configurationValues);
+        return !configurationValues.isEmpty();
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = configurationValues;
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
     }
 
     public Command getCommand() {
@@ -103,6 +104,6 @@ public class ObjectDataRequest implements ConfigurationValuesAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 }

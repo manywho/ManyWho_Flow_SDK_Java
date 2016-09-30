@@ -1,22 +1,24 @@
 package com.manywho.sdk.api.run.elements.map;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.run.elements.config.Authorization;
 import com.manywho.sdk.api.run.state.UserVote;
-import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VoteRequest implements ConfigurationValuesAware {
-    private List<EngineValue> configurationValues;
+    private List<EngineValue> configurationValues = Lists.newArrayList();
     private Authorization authorization;
-    private List<UserVote> userVotes;
+    private List<UserVote> userVotes = Lists.newArrayList();
     private String voteType;
     private int minimumCount;
     private int minimumPercent;
-    private HashMap<String, String> attributes;
+    private Map<String, String> attributes = Maps.newHashMap();
     private String selectedOutcomeId;
 
     public List<EngineValue> getConfigurationValues() {
@@ -25,11 +27,11 @@ public class VoteRequest implements ConfigurationValuesAware {
 
     @Override
     public boolean hasConfigurationValues() {
-        return CollectionUtils.isNotEmpty(configurationValues);
+        return !configurationValues.isEmpty();
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = configurationValues;
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
     }
 
     public Authorization getAuthorization() {
@@ -45,7 +47,7 @@ public class VoteRequest implements ConfigurationValuesAware {
     }
 
     public void setUserVotes(List<UserVote> userVotes) {
-        this.userVotes = userVotes;
+        this.userVotes = MoreObjects.firstNonNull(userVotes, Lists.newArrayList());
     }
 
     public String getVoteType() {
@@ -72,12 +74,12 @@ public class VoteRequest implements ConfigurationValuesAware {
         this.minimumPercent = minimumPercent;
     }
 
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(HashMap<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
     }
 
     public String getSelectedOutcomeId() {

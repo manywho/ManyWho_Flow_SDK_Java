@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.draw.log;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.elements.Element;
 
 import java.util.Map;
@@ -9,7 +11,7 @@ public class Log extends Element {
     private UUID stateId;
     private UUID flowId;
     private String flowDeveloperName;
-    private Map<String, LogEntry> entries;
+    private Map<String, LogEntry> entries = Maps.newHashMap();
 
     public UUID getStateId() {
         return stateId;
@@ -40,6 +42,6 @@ public class Log extends Element {
     }
 
     public void setEntries(Map<String, LogEntry> entries) {
-        this.entries = entries;
+        this.entries = MoreObjects.firstNonNull(entries, Maps.newHashMap());
     }
 }

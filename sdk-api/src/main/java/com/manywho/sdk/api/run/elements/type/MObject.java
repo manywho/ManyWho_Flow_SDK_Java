@@ -1,6 +1,8 @@
 package com.manywho.sdk.api.run.elements.type;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +13,7 @@ public class MObject {
     private String developerName;
     private UUID typeElementId;
     private int order;
-    private List<Property> properties;
+    private List<Property> properties = Lists.newArrayList();
     @JsonProperty("isSelected")
     private boolean selected;
 
@@ -26,7 +28,7 @@ public class MObject {
     public MObject(String developerName, String externalId, List<Property> properties) {
         this.developerName = developerName;
         this.externalId = externalId;
-        this.properties = properties;
+        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
     }
 
     public UUID getInternalId() {
@@ -74,7 +76,7 @@ public class MObject {
     }
 
     public void setProperties(List<Property> properties) {
-        this.properties = properties;
+        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
     }
 
     public boolean isSelected() {

@@ -1,10 +1,13 @@
 package com.manywho.sdk.api.run.elements.ui;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.ContentType;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PageComponentResponse {
@@ -15,7 +18,7 @@ public class PageComponentResponse {
     private String componentType;
     private ContentType contentType;
     private String label;
-    private List<PageComponentColumnResponse> columns;
+    private List<PageComponentColumnResponse> columns = Lists.newArrayList();
     private int size;
     private int maxSize;
     private int height;
@@ -28,7 +31,7 @@ public class PageComponentResponse {
     @JsonProperty("isSearchable")
     private boolean searchable;
     private boolean hasEvents;
-    private HashMap<String, String> attributes;
+    private Map<String, String> attributes = Maps.newHashMap();
 
     public String getPageContainerDeveloperName() {
         return pageContainerDeveloperName;
@@ -91,7 +94,7 @@ public class PageComponentResponse {
     }
 
     public void setColumns(List<PageComponentColumnResponse> columns) {
-        this.columns = columns;
+        this.columns = MoreObjects.firstNonNull(columns, Lists.newArrayList());
     }
 
     public int getSize() {
@@ -174,11 +177,11 @@ public class PageComponentResponse {
         this.hasEvents = hasEvents;
     }
 
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(HashMap<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
     }
 }

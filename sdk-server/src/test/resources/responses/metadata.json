@@ -72,7 +72,7 @@
       ],
       "developerName": "Test Action",
       "developerSummary": "Test summary",
-      "serviceActionOutcomes": null,
+      "serviceActionOutcomes": [],
       "isViewMessageAction": false
     }
   ],

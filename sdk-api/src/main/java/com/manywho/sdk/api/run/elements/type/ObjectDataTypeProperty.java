@@ -1,10 +1,13 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class ObjectDataTypeProperty {
     private String developerName;
-    private List<ObjectDataType> list;
+    private List<ObjectDataType> list = Lists.newArrayList();
 
     public String getDeveloperName() {
         return developerName;
@@ -19,6 +22,6 @@ public class ObjectDataTypeProperty {
     }
 
     public void setList(List<ObjectDataType> list) {
-        this.list = list;
+        this.list = MoreObjects.firstNonNull(list, Lists.newArrayList());
     }
 }

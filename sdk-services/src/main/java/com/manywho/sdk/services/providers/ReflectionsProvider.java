@@ -32,7 +32,15 @@ public class ReflectionsProvider implements Provider<Reflections> {
                 .addUrls(forSinglePackage("com.manywho.sdk.services"))
                 .addScanners(new SubTypesScanner(), new FieldAnnotationsScanner());
 
-        return new Reflections(configurationBuilder);
+        Reflections reflections = new Reflections(configurationBuilder);
+
+        ReflectionsHelper.expandSupertypes(reflections, SubTypesScanner.class, new String[][]{
+                { applicationConfiguration.getApplicationPackage() },
+                { this.getClass().getPackage().getName() },
+                { "com.manywho.sdk.services" }
+        });
+
+        return reflections;
     }
 
     private static Collection<URL> forSinglePackage(String name) {

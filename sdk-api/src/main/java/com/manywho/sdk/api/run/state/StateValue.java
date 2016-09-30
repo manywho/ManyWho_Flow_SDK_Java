@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.run.state;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
@@ -10,7 +12,7 @@ import java.util.UUID;
 public class StateValue implements PropertyAware {
     private UUID valueElementId;
     private String valueElementDeveloperName;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
     private String contentValue;
     private ContentType contentType;
 
@@ -35,7 +37,7 @@ public class StateValue implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public String getContentValue() {

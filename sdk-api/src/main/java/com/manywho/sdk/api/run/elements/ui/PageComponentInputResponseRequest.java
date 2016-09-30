@@ -1,5 +1,7 @@
 package com.manywho.sdk.api.run.elements.ui;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
@@ -9,7 +11,7 @@ import java.util.UUID;
 public class PageComponentInputResponseRequest implements PropertyAware {
     private UUID pageComponentId;
     private String contentValue;
-    private List<MObject> objectData;
+    private List<MObject> objectData = Lists.newArrayList();
 
     public PageComponentInputResponseRequest() {
 
@@ -21,7 +23,7 @@ public class PageComponentInputResponseRequest implements PropertyAware {
 
     public PageComponentInputResponseRequest(UUID pageComponentId, List<MObject> objectData) {
         this.pageComponentId = pageComponentId;
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 
     public PageComponentInputResponseRequest(UUID pageComponentId, String contentValue) {
@@ -51,6 +53,6 @@ public class PageComponentInputResponseRequest implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = objectData;
+        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
     }
 }

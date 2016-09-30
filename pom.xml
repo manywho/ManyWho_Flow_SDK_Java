@@ -15,6 +15,7 @@
         <module>sdk-server-servlet3</module>
         <module>sdk-server-undertow</module>
         <module>sdk-example</module>
+        <module>sdk-server</module>
     </modules>
 
     <properties>

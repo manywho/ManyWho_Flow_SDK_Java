@@ -1,12 +1,14 @@
 package com.manywho.sdk.api.run.elements.config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 public class Authorization {
-    private List<User> users;
-    private List<Group> groups;
+    private List<User> users = Lists.newArrayList();
+    private List<Group> groups = Lists.newArrayList();
     private String runningAuthenticationId;
     private AuthenticationType globalAuthenticationType;
 
@@ -15,7 +17,7 @@ public class Authorization {
     }
 
     public void setUsers(List<User> users) {
-        this.users = users;
+        this.users = MoreObjects.firstNonNull(users, Lists.newArrayList());
     }
 
     public List<Group> getGroups() {
@@ -23,7 +25,7 @@ public class Authorization {
     }
 
     public void setGroups(List<Group> groups) {
-        this.groups = groups;
+        this.groups = MoreObjects.firstNonNull(groups, Lists.newArrayList());
     }
 
     public String getRunningAuthenticationId() {

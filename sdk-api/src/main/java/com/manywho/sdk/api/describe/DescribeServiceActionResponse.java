@@ -1,13 +1,15 @@
 package com.manywho.sdk.api.describe;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 public class DescribeServiceActionResponse extends DescribeServiceActionRequest {
     private String developerName;
     private String developerSummary;
-    private List<DescribeUIServiceActionOutcome> serviceActionOutcomes;
+    private List<DescribeUIServiceActionOutcome> serviceActionOutcomes = Lists.newArrayList();
     @JsonProperty("isViewMessageAction")
     private boolean viewMessageAction;
 
@@ -49,7 +51,7 @@ public class DescribeServiceActionResponse extends DescribeServiceActionRequest 
     }
 
     public void setServiceActionOutcomes(List<DescribeUIServiceActionOutcome> serviceActionOutcomes) {
-        this.serviceActionOutcomes = serviceActionOutcomes;
+        this.serviceActionOutcomes = MoreObjects.firstNonNull(serviceActionOutcomes, Lists.newArrayList());
     }
 
     public boolean isViewMessageAction() {

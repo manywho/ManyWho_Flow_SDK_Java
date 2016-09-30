@@ -1,16 +1,17 @@
 package com.manywho.sdk.api.run;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.elements.map.MapElementInvokeResponse;
 import com.manywho.sdk.api.run.elements.map.VoteResponse;
 import com.manywho.sdk.api.run.elements.ui.NavigationElementReference;
 import com.manywho.sdk.api.run.state.StateLog;
 import com.manywho.sdk.api.translate.Culture;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class EngineInvokeResponse {
@@ -24,18 +25,18 @@ public class EngineInvokeResponse {
     private UUID currentMapElementId;
     private String currentStreamId;
     private InvokeType invokeType;
-    private HashMap<String, String> annotations;
-    private List<MapElementInvokeResponse> mapElementInvokeResponses;
+    private Map<String, String> annotations = Maps.newHashMap();
+    private List<MapElementInvokeResponse> mapElementInvokeResponses = Lists.newArrayList();
     private VoteResponse voteResponse;
     private StateLog stateLog;
-    private List<EngineValue> preCommitStateValues;
-    private List<EngineValue> stateValues;
-    private List<EngineValue> outputs;
+    private List<EngineValue> preCommitStateValues = Lists.newArrayList();
+    private List<EngineValue> stateValues = Lists.newArrayList();
+    private List<EngineValue> outputs = Lists.newArrayList();
     private String statusCode;
     private String runFlowUri;
     private String joinFlowUri;
     private EngineAuthorizationContext authorizationContext;
-    private List<NavigationElementReference> navigationElementReferences;
+    private List<NavigationElementReference> navigationElementReferences = Lists.newArrayList();
 
     public Culture getCulture() {
         return culture;
@@ -117,16 +118,16 @@ public class EngineInvokeResponse {
         this.invokeType = invokeType;
     }
 
-    public HashMap<String, String> getAnnotations() {
+    public Map<String, String> getAnnotations() {
         return annotations;
     }
 
     public boolean hasAnnotations() {
-        return MapUtils.isNotEmpty(annotations);
+        return !annotations.isEmpty();
     }
 
-    public void setAnnotations(HashMap<String, String> annotations) {
-        this.annotations = annotations;
+    public void setAnnotations(Map<String, String> annotations) {
+        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
     }
 
     public List<MapElementInvokeResponse> getMapElementInvokeResponses() {
@@ -134,11 +135,11 @@ public class EngineInvokeResponse {
     }
 
     public boolean hasMapElementInvokeResponses() {
-        return CollectionUtils.isNotEmpty(mapElementInvokeResponses);
+        return !mapElementInvokeResponses.isEmpty();
     }
 
     public void setMapElementInvokeResponses(List<MapElementInvokeResponse> mapElementInvokeResponses) {
-        this.mapElementInvokeResponses = mapElementInvokeResponses;
+        this.mapElementInvokeResponses = MoreObjects.firstNonNull(mapElementInvokeResponses, Lists.newArrayList());
     }
 
     public VoteResponse getVoteResponse() {
@@ -162,7 +163,7 @@ public class EngineInvokeResponse {
     }
 
     public void setPreCommitStateValues(List<EngineValue> preCommitStateValues) {
-        this.preCommitStateValues = preCommitStateValues;
+        this.preCommitStateValues = MoreObjects.firstNonNull(preCommitStateValues, Lists.newArrayList());
     }
 
     public List<EngineValue> getStateValues() {
@@ -170,7 +171,7 @@ public class EngineInvokeResponse {
     }
 
     public void setStateValues(List<EngineValue> stateValues) {
-        this.stateValues = stateValues;
+        this.stateValues = MoreObjects.firstNonNull(stateValues, Lists.newArrayList());
     }
 
     public List<EngineValue> getOutputs() {
@@ -178,7 +179,7 @@ public class EngineInvokeResponse {
     }
 
     public void setOutputs(List<EngineValue> outputs) {
-        this.outputs = outputs;
+        this.outputs = MoreObjects.firstNonNull(outputs, Lists.newArrayList());
     }
 
     public String getStatusCode() {
@@ -218,6 +219,6 @@ public class EngineInvokeResponse {
     }
 
     public void setNavigationElementReferences(List<NavigationElementReference> navigationElementReferences) {
-        this.navigationElementReferences = navigationElementReferences;
+        this.navigationElementReferences = MoreObjects.firstNonNull(navigationElementReferences, Lists.newArrayList());
     }
 }
