@@ -57,7 +57,7 @@ public class DatabaseSaveService implements DatabaseService {
         }
 
         List<T> objectsToUpdate = request.getObjectData().stream()
-                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
+                .filter(object -> !Strings.isNullOrEmpty(object.getExternalId()))
                 .map(object -> valueParser.asObject(object, type))
                 .collect(Collectors.toList());
 
@@ -95,7 +95,7 @@ public class DatabaseSaveService implements DatabaseService {
                 .collect(Collectors.toList());
 
         List<MObject> objectsToUpdate = request.getObjectData().stream()
-                .filter(object -> Strings.isNullOrEmpty(object.getExternalId()))
+                .filter(object -> !Strings.isNullOrEmpty(object.getExternalId()))
                 .collect(Collectors.toList());
 
         if (!objectsToCreate.isEmpty()) {
