@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ServiceApplication extends Application {
+    protected String packageName;
     protected Injector injector;
 
     protected List<Module> modules = Lists.newArrayList();
@@ -27,6 +28,8 @@ public class ServiceApplication extends Application {
     }
 
     public void initialize(String packageName) {
+        this.packageName = packageName;
+
         final List<Module> internalModules = Lists.newArrayList();
 
         internalModules.add(new ImplicitValidationModule());
@@ -53,7 +56,7 @@ public class ServiceApplication extends Application {
     }
 
     private Set<Object> createInstances(Set<Class<?>> classes) {
-        String servicePackage = getClass().getPackage().getName();
+        String servicePackage = this.packageName;
 
         // Only create instances of classes that are in the service or in the SDK
         return classes.stream()
