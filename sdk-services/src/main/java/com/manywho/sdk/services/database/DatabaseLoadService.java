@@ -21,8 +21,7 @@ public class DatabaseLoadService implements DatabaseService {
         this.typeBuilder = typeBuilder;
     }
 
-    @Override
-    public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, Class<T> type, Database<?, T> database) {
+    public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, Class<T> type, ReadOnlyDatabase<?, T> database) {
         // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
         int providedLimit = request.getListFilter().getLimit();
         if (request.getListFilter().hasLimit()) {

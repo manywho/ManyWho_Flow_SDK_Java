@@ -26,8 +26,7 @@ public class DatabaseSaveService implements DatabaseService {
         this.valueParser = valueParser;
     }
 
-    @Override
-    public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, Class<T> type, Database<?, T> database) {
+    public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, Class<T> type, WritableDatabase<?, T> database) {
         if (request.getObjectData() == null) {
             return new ObjectDataResponse();
         }

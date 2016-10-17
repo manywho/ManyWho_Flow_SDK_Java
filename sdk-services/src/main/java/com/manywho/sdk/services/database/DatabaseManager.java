@@ -14,7 +14,9 @@ public class DatabaseManager {
     private final TypeProvider typeProvider;
     private final TypeRepository typeRepository;
     private final DatabaseRepository databaseRepository;
-    private final DatabaseServiceFactory databaseServiceFactory;
+    private final DatabaseDeleteService databaseDeleteService;
+    private final DatabaseLoadService databaseLoadService;
+    private final DatabaseSaveService databaseSaveService;
 
     @Inject
     public DatabaseManager(
@@ -22,13 +24,17 @@ public class DatabaseManager {
             TypeProvider typeProvider,
             TypeRepository typeRepository,
             DatabaseRepository databaseRepository,
-            DatabaseServiceFactory databaseServiceFactory
+            DatabaseDeleteService databaseDeleteService,
+            DatabaseLoadService databaseLoadService,
+            DatabaseSaveService databaseSaveService
     ) {
         this.injector = injector;
         this.typeProvider = typeProvider;
         this.typeRepository = typeRepository;
         this.databaseRepository = databaseRepository;
-        this.databaseServiceFactory = databaseServiceFactory;
+        this.databaseDeleteService = databaseDeleteService;
+        this.databaseLoadService = databaseLoadService;
+        this.databaseSaveService = databaseSaveService;
     }
 
     public ObjectDataResponse handle(DatabaseType databaseType, ObjectDataRequest objectDataRequest) {
@@ -42,11 +48,38 @@ public class DatabaseManager {
     }
 
     private <T extends Type> ObjectDataResponse handle(DatabaseType databaseType, ObjectDataRequest request, Class<T> type) {
-        Class<? extends Database<?, T>> databaseClass = databaseRepository.findDatabase(type);
+        switch (databaseType) {
+            case Delete:
+                return handleDelete(request, type);
+            case Load:
+                return handleLoad(request, type);
+            default:
+                return handleWrite(request, type);
+        }
+    }
 
-        Database<?, T> database = injector.getInstance(databaseClass);
+    private <T extends Type> ObjectDataResponse handleDelete(ObjectDataRequest request, Class<T> type) {
+        Class<? extends WritableDatabase<? ,T>> databaseClass = databaseRepository.findWritableDatabase(type);
 
-        return databaseServiceFactory.create(databaseType).handle(request, type, database);
+        WritableDatabase<?, T> database = injector.getInstance(databaseClass);
+
+        return databaseDeleteService.handle(request, type, database);
+    }
+
+    private <T extends Type> ObjectDataResponse handleLoad(ObjectDataRequest request, Class<T> type) {
+        Class<? extends ReadOnlyDatabase<? ,T>> databaseClass = databaseRepository.findReadOnlyDatabase(type);
+
+        ReadOnlyDatabase<?, T> database = injector.getInstance(databaseClass);
+
+        return databaseLoadService.handle(request, type, database);
+    }
+
+    private <T extends Type> ObjectDataResponse handleWrite(ObjectDataRequest request, Class<T> type) {
+        Class<? extends WritableDatabase<? ,T>> databaseClass = databaseRepository.findWritableDatabase(type);
+
+        WritableDatabase<?, T> database = injector.getInstance(databaseClass);
+
+        return databaseSaveService.handle(request, type, database);
     }
 
     private ObjectDataResponse handleCustomType(DatabaseType databaseType, ObjectDataRequest request) {
@@ -54,6 +87,15 @@ public class DatabaseManager {
 
         RawDatabase<?> database = injector.getInstance(databaseClass);
 
-        return databaseServiceFactory.create(databaseType).handleRaw(request, database);
+        switch (databaseType) {
+            case Delete:
+                return databaseDeleteService.handleRaw(request, database);
+            case Load:
+                return databaseLoadService.handleRaw(request, database);
+            case Save:
+                return databaseSaveService.handleRaw(request, database);
+            default:
+                throw new RuntimeException("The database type " + databaseType + " is not supported");
+        }
     }
 }
