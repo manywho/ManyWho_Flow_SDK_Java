@@ -6,6 +6,7 @@ import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.describe.DescribeActionService;
+import com.manywho.sdk.services.values.ValueBuilder;
 import com.manywho.sdk.services.values.ValueParser;
 
 import javax.inject.Inject;
@@ -24,18 +25,20 @@ public class ActionManager {
     private final ActionRepository actionRepository;
     private final ValueParser valueParser;
     private final ConfigurationParser configurationParser;
+    private final ValueBuilder valueBuilder;
 
     @Inject
     public ActionManager(
             Injector injector,
             ActionRepository actionRepository,
             ValueParser valueParser,
-            ConfigurationParser configurationParser
-    ) {
+            ConfigurationParser configurationParser,
+            ValueBuilder valueBuilder) {
         this.injector = injector;
         this.actionRepository = actionRepository;
         this.valueParser = valueParser;
         this.configurationParser = configurationParser;
+        this.valueBuilder = valueBuilder;
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
@@ -101,7 +104,7 @@ public class ActionManager {
                 .collect(Collectors.toList());
     }
 
-    private static EngineValue createOutputValue(Object outputs, Field field) {
+    private EngineValue createOutputValue(Object outputs, Field field) {
         Action.Output property = field.getAnnotation(Action.Output.class);
 
         AccessController.doPrivileged((PrivilegedAction) () -> {
@@ -110,7 +113,7 @@ public class ActionManager {
         });
 
         try {
-            return new EngineValue(property.name(), property.contentType(), field.get(outputs));
+            return valueBuilder.from(property.name(), property.contentType(), field.get(outputs));
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to get the value of the output for the field " + field.getName());
         }
