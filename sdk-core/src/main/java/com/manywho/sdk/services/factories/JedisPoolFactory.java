@@ -16,14 +16,13 @@ public class JedisPoolFactory implements Factory<JedisPool> {
     @Override
     public JedisPool provide() {
         JedisPool pool;
-        int port = 6379;
 
         // If a port has been defined, use that
         if (redisConfiguration.getPort() > 0) {
-            port = redisConfiguration.getPort();
+            pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint(), redisConfiguration.getPort());
+        } else {
+            pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint());
         }
-
-        pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint(), port);
 
         // Initialize the maximum number of idle connections to Redis, instead of connecting lazily
         pool.addObjects(JedisPoolConfig.DEFAULT_MAX_IDLE);
