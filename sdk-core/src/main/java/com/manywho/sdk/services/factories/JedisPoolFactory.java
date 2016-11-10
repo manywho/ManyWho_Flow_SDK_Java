@@ -23,10 +23,17 @@ public class JedisPoolFactory implements Factory<JedisPool> {
         if (redisConfiguration.getPort() > 0) {
             pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint(), redisConfiguration.getPort());
         } else {
+            String endpoint = redisConfiguration.getEndpoint();
+
+            // If the endpoint doesn't have a scheme, then add the redis:// scheme (feels hacky)
+            if (!endpoint.contains("://")) {
+                endpoint = "redis://" + endpoint;
+            }
+
             try {
-                pool = new JedisPool(new JedisPoolConfig(), new URI(redisConfiguration.getEndpoint()));
+                pool = new JedisPool(new JedisPoolConfig(), new URI(endpoint));
             } catch (URISyntaxException e) {
-                pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint());
+                throw new RuntimeException(e);
             }
         }
 
