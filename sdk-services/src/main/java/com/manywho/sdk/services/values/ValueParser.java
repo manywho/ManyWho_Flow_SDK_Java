@@ -123,12 +123,8 @@ public class ValueParser {
         throw new TypePropertyMismatchException(field, boolean.class, ContentType.Boolean);
     }
 
-    public static String toContent(Field field, String value) {
-        if (String.class.isAssignableFrom(field.getType())) {
-            return value;
-        }
-
-        throw new TypePropertyMismatchException(field, String.class, ContentType.Content);
+    public static String toContent(Field field, Object value) {
+        return toString(field, value);
     }
 
     public static Object toDateTime(Field field, String value) {
@@ -154,12 +150,8 @@ public class ValueParser {
         throw new TypePropertyMismatchException(field, TemporalAccessor.class.getName() + " or " + Date.class.getName(), ContentType.DateTime);
     }
 
-    public static String toEncrypted(Field field, String value) {
-        if (String.class.isAssignableFrom(field.getType())) {
-            return value;
-        }
-
-        throw new TypePropertyMismatchException(field, String.class, ContentType.Encrypted);
+    public static String toEncrypted(Field field, Object value) {
+        return toString(field, value);
     }
 
     @SuppressWarnings("unchecked")
@@ -215,19 +207,15 @@ public class ValueParser {
     }
 
     public static String toPassword(Field field, String value) {
-        if (String.class.isAssignableFrom(field.getType())) {
-            return value;
-        }
-
-        throw new TypePropertyMismatchException(field, String.class, ContentType.Password);
+        return toString(field, value);
     }
 
-    public static String toString(Field field, String value) {
+    public static String toString(Field field, Object value) {
         if (String.class.isAssignableFrom(field.getType())) {
-            return value;
+            return (String) value;
         }
 
-        throw new TypePropertyMismatchException(field, String.class, ContentType.String);
+        return value.toString();
     }
 
     public void populateObjectField(Object object, Field field, ContentType contentType, PropertyAware property) {
