@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ValueParser {
@@ -259,7 +260,12 @@ public class ValueParser {
                     field.set(object, toPassword(field, property.getContentValue()));
                     break;
                 case String:
-                    field.set(object, toString(field, property.getContentValue()));
+                    // If the field is a UUID then parse the given value into one, otherwise use a plain String
+                    if (field.getType().equals(UUID.class)) {
+                        field.set(object, UUID.fromString(toString(field, property.getContentValue())));
+                    } else {
+                        field.set(object, toString(field, property.getContentValue()));
+                    }
                     break;
                 default:
                     throw new RuntimeException("The content type " + contentType + " is not supported");
