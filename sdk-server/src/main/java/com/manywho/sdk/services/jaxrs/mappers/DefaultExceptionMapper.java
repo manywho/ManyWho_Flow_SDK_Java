@@ -1,9 +1,8 @@
 package com.manywho.sdk.services.jaxrs.mappers;
 
 import com.manywho.sdk.api.run.ServiceProblem;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -15,7 +14,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class DefaultExceptionMapper implements ExceptionMapper<Throwable> {
-    private static final Logger LOGGER = LogManager.getLogger(new ParameterizedMessageFactory());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionMapper.class);
 
     @Context
     private UriInfo uriInfo;
