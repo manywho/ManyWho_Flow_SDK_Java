@@ -117,7 +117,7 @@ public class ValueParser {
     }
 
     public static boolean toBoolean(Field field, String value) {
-        if (boolean.class.isAssignableFrom(field.getType())) {
+        if (boolean.class.isAssignableFrom(field.getType()) || Boolean.class.isAssignableFrom(field.getType())) {
             return Boolean.valueOf(value);
         }
 
@@ -167,23 +167,23 @@ public class ValueParser {
     }
 
     public static Number toNumber(Field field, String value) {
-        if (field.getType().equals(Double.class)) {
+        if (field.getType().equals(Double.class) || field.getType().equals(double.class)) {
             return Double.valueOf(value);
         }
 
-        if (field.getType().equals(Float.class)) {
+        if (field.getType().equals(Float.class) || field.getType().equals(float.class)) {
             return Float.valueOf(value);
         }
 
-        if (field.getType().equals(Integer.class)) {
+        if (field.getType().equals(Integer.class) || field.getType().equals(int.class)) {
             return Integer.valueOf(value);
         }
 
-        if (field.getType().equals(Long.class)) {
+        if (field.getType().equals(Long.class) || field.getType().equals(long.class)) {
             return Long.valueOf(value);
         }
 
-        if (field.getType().equals(Short.class)) {
+        if (field.getType().equals(Short.class) || field.getType().equals(short.class)) {
             return Short.valueOf(value);
         }
 
