@@ -43,8 +43,29 @@ public class $File implements Type {
         this.name = name;
     }
 
+    public $File(String id, String name, String mimeType, String downloadUri) {
+        this.id = id;
+        this.name = name;
+        this.mimeType = mimeType;
+        this.downloadUri = downloadUri;
+    }
+
     public $File() {
 
+    }
+
+    public $File (String id, String kind, String mimeType, String name, OffsetDateTime dateCreated,
+                  OffsetDateTime dateModified, String description,String downloadUri, String embedUri, String iconUri) {
+        this.id = id;
+        this.kind = kind;
+        this.mimeType = mimeType;
+        this.name = name;
+        this.dateCreated = dateCreated;
+        this.dateModified = dateModified;
+        this.description = description;
+        this.downloadUri = downloadUri;
+        this.embedUri = embedUri;
+        this.iconUri = iconUri;
     }
 
     public OffsetDateTime getDateCreated() {
