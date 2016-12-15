@@ -38,8 +38,8 @@ public class TypeParser {
             throw new RuntimeException("Unable to find the referenced type for " + property);
         }
 
-        /** Return the name defined on the {@link Type.Element.class} annotation on the referenced type */
-        if (referencedType.isAnnotationPresent(Type.Element.class)) {
+        // If the referenced type implements the Type interface and is annotated with @Type.Element then return the name
+        if (Type.class.isAssignableFrom(referencedType) && referencedType.isAnnotationPresent(Type.Element.class)) {
             return referencedType.getAnnotation(Type.Element.class).name();
         }
 
