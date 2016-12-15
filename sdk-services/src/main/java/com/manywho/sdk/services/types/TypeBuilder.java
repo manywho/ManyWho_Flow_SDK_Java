@@ -13,6 +13,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TypeBuilder {
@@ -214,10 +215,10 @@ public class TypeBuilder {
     }
 
     private String convertString(String property, Object object) {
-        if (object instanceof String || object instanceof Enum) {
+        if (object instanceof String || object instanceof Enum || object instanceof UUID) {
             return object.toString();
         }
 
-        throw new TypePropertyInvalidException(property, "String or Enum");
+        throw new TypePropertyInvalidException(property, "String, UUID or an enum");
     }
 }

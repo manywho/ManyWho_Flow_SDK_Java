@@ -94,7 +94,13 @@ public class ValueParser {
                 return null;
             });
 
-            identifierField.set(instance, object.getExternalId());
+            if (object.getExternalId() == null || object.getExternalId().isEmpty()) {
+                identifierField.set(instance, null);
+            } else if (String.class.isAssignableFrom(identifierField.getType())) {
+                identifierField.set(instance, object.getExternalId());
+            } else if (UUID.class.isAssignableFrom(identifierField.getType())) {
+                identifierField.set(instance, UUID.fromString(object.getExternalId()));
+            }
 
             Map<String, Field> typeProperties = typeRepository.findTypeProperties(type);
 
@@ -260,12 +266,17 @@ public class ValueParser {
                     field.set(object, toPassword(field, property.getContentValue()));
                     break;
                 case String:
-                    // If the field is a UUID then parse the given value into one, otherwise use a plain String
-                    if (field.getType().equals(UUID.class)) {
-                        field.set(object, UUID.fromString(toString(field, property.getContentValue())));
-                    } else {
-                        field.set(object, toString(field, property.getContentValue()));
+                    String value = toString(field, property.getContentValue());
+
+                    if (!value.isEmpty()) {
+                        // If the field is a UUID then parse the given value into one, otherwise use a plain String
+                        if (field.getType().equals(UUID.class)) {
+                            field.set(object, UUID.fromString(value));
+                        } else {
+                            field.set(object, toString(field, property.getContentValue()));
+                        }
                     }
+
                     break;
                 default:
                     throw new RuntimeException("The content type " + contentType + " is not supported");

@@ -6,12 +6,17 @@ import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
 import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
-import com.manywho.sdk.services.types.*;
+import com.manywho.sdk.services.types.Type;
+import com.manywho.sdk.services.types.TypeHasNoPropertiesException;
+import com.manywho.sdk.services.types.TypeIdentifierMissingException;
+import com.manywho.sdk.services.types.TypeParser;
+import com.manywho.sdk.services.types.TypeRepository;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class DescribeTypeService {
@@ -75,7 +80,7 @@ public class DescribeTypeService {
             // Check if we have an identifier property on the type
             long identifierCount = typeRepository.getTypeIdentifiers().stream()
                     .filter(field -> field.getDeclaringClass().equals(type))
-                    .filter(field -> String.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
+                    .filter(field -> String.class.isAssignableFrom(field.getType()) || UUID.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
                     .count();
 
             if (identifierCount != 1) {
