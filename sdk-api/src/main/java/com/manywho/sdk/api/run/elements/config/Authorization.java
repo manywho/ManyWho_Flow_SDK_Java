@@ -16,12 +16,20 @@ public class Authorization {
         return users;
     }
 
+    public boolean hasUsers() {
+        return !users.isEmpty();
+    }
+
     public void setUsers(List<User> users) {
         this.users = MoreObjects.firstNonNull(users, Lists.newArrayList());
     }
 
     public List<Group> getGroups() {
         return groups;
+    }
+
+    public boolean hasGroups() {
+        return !groups.isEmpty();
     }
 
     public void setGroups(List<Group> groups) {

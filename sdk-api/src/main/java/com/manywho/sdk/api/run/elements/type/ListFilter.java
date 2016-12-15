@@ -25,10 +25,6 @@ public class ListFilter extends ListFilterMinimal {
         return !Strings.isNullOrEmpty(id);
     }
 
-    public boolean hasLimit() {
-        return !(limit == null || limit == 0);
-    }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -45,12 +41,20 @@ public class ListFilter extends ListFilterMinimal {
         return orderByPropertyDeveloperName;
     }
 
+    public boolean hasOrderByPropertyDeveloperName() {
+        return orderByPropertyDeveloperName != null || !orderBy.isEmpty();
+    }
+
     public void setOrderByPropertyDeveloperName(String orderByPropertyDeveloperName) {
         this.orderByPropertyDeveloperName = orderByPropertyDeveloperName;
     }
 
     public String getOrderByDirectionType() {
         return orderByDirectionType;
+    }
+
+    public boolean hasOrderByDirectionType() {
+        return orderByDirectionType != null || !orderByDirectionType.isEmpty();
     }
 
     public void setOrderByDirectionType(String orderByDirectionType) {
@@ -61,12 +65,28 @@ public class ListFilter extends ListFilterMinimal {
         return limit;
     }
 
+    public boolean hasLimit() {
+        if (limit == null || limit == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void setLimit(int limit) {
         this.limit = limit;
     }
 
     public int getOffset() {
         return offset;
+    }
+
+    public boolean hasOffset() {
+        if (offset == null || offset == 0) {
+            return false;
+        }
+
+        return true;
     }
 
     public void setOffset(int offset) {
