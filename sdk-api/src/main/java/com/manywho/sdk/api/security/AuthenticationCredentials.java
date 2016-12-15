@@ -8,6 +8,7 @@ import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 public class AuthenticationCredentials implements ConfigurationValuesAware {
     @NotNull
@@ -22,6 +23,7 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
     private String loginUrl;
     private String redirectUri;
     private String instanceUrl;
+    private UUID tenantId;
 
     public List<EngineValue> getConfigurationValues() {
         return configurationValues;
@@ -114,5 +116,13 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
 
     public void setInstanceUrl(String instanceUrl) {
         this.instanceUrl = instanceUrl;
+    }
+
+    public UUID getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(UUID tenantId) {
+        this.tenantId = tenantId;
     }
 }
