@@ -208,11 +208,8 @@ public class TypeBuilder {
     }
 
     private String convertPassword(String property, Object object) {
-        if (object instanceof String) {
-            return object.toString();
-        }
-
-        throw new TypePropertyInvalidException(property, "String");
+        // We (probably) never want to return passwords - open an issue if this is a problem!
+        return null;
     }
 
     private String convertString(String property, Object object) {
