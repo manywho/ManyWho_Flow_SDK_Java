@@ -12,6 +12,9 @@ public class AuthorizationAttribute implements Type {
     @Type.Property(name = "Label", contentType = ContentType.String)
     private String label;
 
+    public AuthorizationAttribute() {
+    }
+
     public AuthorizationAttribute(String value, String label) {
         this.value = value;
         this.label = label;
