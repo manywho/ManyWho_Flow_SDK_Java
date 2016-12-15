@@ -79,7 +79,7 @@ public class ActionManager {
             List<Field> outputFields = findOutputFields(types[3]);
 
             if (!outputFields.isEmpty() && actionResponse.getOutputs() == null) {
-                throw new RuntimeException("The action response must contain one or more outputs");
+                throw new RuntimeException("The action response is expecting one or more outputs");
             }
 
             List<EngineValue> outputs = outputFields.stream()
