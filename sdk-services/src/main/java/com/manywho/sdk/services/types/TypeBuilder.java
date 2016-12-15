@@ -96,6 +96,7 @@ public class TypeBuilder {
         Type.Property annotation = field.getAnnotation(Type.Property.class);
 
         Property property = new Property(annotation.name());
+        property.setContentType(annotation.contentType());
 
         try {
             field.setAccessible(true);
