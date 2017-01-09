@@ -58,11 +58,13 @@ public class DescribeActionService {
         List<DescribeValue> inputs = actionRepository.getInputFields().stream()
                 .filter(input -> input.getDeclaringClass().equals(types[ACTION_COMMAND_TYPE_INPUT]))
                 .map(this::createInput)
+                .sorted()
                 .collect(Collectors.toList());
 
         List<DescribeValue> outputs = actionRepository.getOutputFields().stream()
                 .filter(input -> input.getDeclaringClass().equals(types[ACTION_COMMAND_TYPE_OUTPUT]))
                 .map(this::createOutput)
+                .sorted()
                 .collect(Collectors.toList());
 
         Action.Metadata metadata = action.getAnnotation(Action.Metadata.class);
