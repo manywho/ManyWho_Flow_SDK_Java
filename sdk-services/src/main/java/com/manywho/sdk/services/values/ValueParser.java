@@ -268,7 +268,7 @@ public class ValueParser {
                 case String:
                     String value = toString(field, property.getContentValue());
 
-                    if (!value.isEmpty()) {
+                    if (!Strings.isNullOrEmpty(value)) {
                         // If the field is a UUID then parse the given value into one, otherwise use a plain String
                         if (field.getType().equals(UUID.class)) {
                             field.set(object, UUID.fromString(value));
