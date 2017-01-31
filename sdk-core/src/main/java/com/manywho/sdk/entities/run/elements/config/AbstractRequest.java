@@ -5,6 +5,7 @@ import com.manywho.sdk.entities.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.Request;
 import com.manywho.sdk.entities.translate.Culture;
+import com.manywho.sdk.enums.FlowMode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -18,6 +19,7 @@ public abstract class AbstractRequest implements Request, ConfigurationValuesAwa
     protected String stateId;
     protected String callbackUri;
     protected Culture culture;
+    protected FlowMode executionMode;
     protected EngineValueCollection configurationValues;
     protected GroupAuthorization authorization;
     protected HashMap<String, String> annotations;
@@ -73,6 +75,14 @@ public abstract class AbstractRequest implements Request, ConfigurationValuesAwa
 
     public void setCulture(Culture culture) {
         this.culture = culture;
+    }
+
+    public FlowMode getExecutionMode() {
+        return executionMode;
+    }
+
+    public void setExecutionMode(FlowMode executionMode) {
+        this.executionMode = executionMode;
     }
 
     public EngineValueCollection getConfigurationValues() {
