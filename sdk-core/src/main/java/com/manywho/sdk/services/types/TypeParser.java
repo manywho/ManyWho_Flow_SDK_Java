@@ -9,6 +9,7 @@ import com.manywho.sdk.enums.ContentType;
 import com.manywho.sdk.services.annotations.Id;
 import com.manywho.sdk.services.annotations.TypeElement;
 import com.manywho.sdk.services.annotations.TypeProperty;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.reflections.Reflections;
@@ -133,13 +134,19 @@ public class TypeParser {
 
         switch (tuple.getTypeProperty().contentType()) {
             case List:
-                // Find the type of the list's generic
-                Class<?> listType = getListPropertyGenericType(field, tuple.getTypeProperty().name());
+                if (CollectionUtils.isNotEmpty(property.getObjectData())) {
+                    // Find the type of the list's generic
+                    Class<?> listType = getListPropertyGenericType(field, tuple.getTypeProperty().name());
 
-                field.set(typeObject, this.parseList(property.getObjectData(), listType));
+                    field.set(typeObject, this.parseList(property.getObjectData(), listType));
+                }
+
                 break;
             case Object:
-                field.set(typeObject, this.parseObject(property.getObjectData().get(0), field.getType()));
+                if (CollectionUtils.isNotEmpty(property.getObjectData())) {
+                    field.set(typeObject, this.parseObject(property.getObjectData().get(0), field.getType()));
+                }
+
                 break;
             default:
                 field.set(typeObject, convertContentValueToTypedValue(propertyFullName, property.getContentValue(), property.getContentType(), field.getType()));

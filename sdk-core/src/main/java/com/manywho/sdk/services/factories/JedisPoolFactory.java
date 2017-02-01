@@ -7,6 +7,8 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Singleton
 public class JedisPoolFactory implements Factory<JedisPool> {
@@ -16,14 +18,24 @@ public class JedisPoolFactory implements Factory<JedisPool> {
     @Override
     public JedisPool provide() {
         JedisPool pool;
-        int port = 6379;
 
         // If a port has been defined, use that
         if (redisConfiguration.getPort() > 0) {
-            port = redisConfiguration.getPort();
-        }
+            pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint(), redisConfiguration.getPort());
+        } else {
+            String endpoint = redisConfiguration.getEndpoint();
 
-        pool = new JedisPool(new JedisPoolConfig(), redisConfiguration.getEndpoint(), port);
+            // If the endpoint doesn't have a scheme, then add the redis:// scheme (feels hacky)
+            if (!endpoint.contains("://")) {
+                endpoint = "redis://" + endpoint;
+            }
+
+            try {
+                pool = new JedisPool(new JedisPoolConfig(), new URI(endpoint));
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         // Initialize the maximum number of idle connections to Redis, instead of connecting lazily
         pool.addObjects(JedisPoolConfig.DEFAULT_MAX_IDLE);

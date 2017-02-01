@@ -36,6 +36,12 @@ public class ServiceConfigurationDefault implements ServiceConfiguration {
         if (environment.has(environmentFormatKeyDotNotation)) {
             value = environment.get(environmentFormatKeyDotNotation);
         }
+        
+        // Look for any environment variables with the combined formatting conventions from above
+        String combinedFormatKey = convertCombinedNotationKeyToEnvironmentFormat(key);
+        if (environment.has(combinedFormatKey)) {
+            value = environment.get(combinedFormatKey);
+        }
 
         return value;
     }
@@ -45,7 +51,8 @@ public class ServiceConfigurationDefault implements ServiceConfiguration {
         return properties.has(key) ||
                 environment.has(key) ||
                 environment.has(convertCamelcaseKeyToEnvironmentFormat(key)) ||
-                environment.has(convertDotNotationKeyToEnvironmentFormat(key));
+                environment.has(convertDotNotationKeyToEnvironmentFormat(key)) ||
+                environment.has(convertCombinedNotationKeyToEnvironmentFormat(key));
 
     }
 
@@ -59,5 +66,9 @@ public class ServiceConfigurationDefault implements ServiceConfiguration {
         }
 
         return key.replace(".", "_").toUpperCase();
+    }
+    
+    private static String convertCombinedNotationKeyToEnvironmentFormat(String key) {
+        return convertDotNotationKeyToEnvironmentFormat(convertCamelcaseKeyToEnvironmentFormat(key));
     }
 }

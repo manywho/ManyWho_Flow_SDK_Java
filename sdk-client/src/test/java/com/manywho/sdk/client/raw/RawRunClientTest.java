@@ -10,7 +10,6 @@ import com.manywho.sdk.entities.run.EngineInvokeResponse;
 import com.manywho.sdk.entities.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.enums.InvokeType;
 import com.manywho.sdk.exceptions.ManyWhoException;
-import com.manywho.sdk.utils.AuthorizationUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,7 +52,7 @@ public class RawRunClientTest {
     @Test
     public void testInitializeFlowWithIncorrectAuthorization() throws Exception {
         expectedException.expect(ManyWhoException.class);
-        expectedException.expectMessage("Unauthorized");
+        expectedException.expectMessage("AuthenticatedWho");
 
         EngineInitializationRequest initializationRequest = new EngineInitializationRequest();
         initializationRequest.setFlowId(new FlowId("e10e493f-65ff-4a0b-b184-c451453e5c56"));
@@ -62,7 +61,7 @@ public class RawRunClientTest {
 
         rawRunClient.initialize(
                 TestConfig.getTenantId(),
-                AuthorizationUtils.createSerializedPublicUser(TestConfig.getTenantId()),
+                "incorrect",
                 initializationRequest
         );
     }
