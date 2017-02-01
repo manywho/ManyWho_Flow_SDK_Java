@@ -12,7 +12,6 @@ import com.manywho.sdk.entities.run.EngineValue;
 import com.manywho.sdk.entities.run.EngineValueCollection;
 import com.manywho.sdk.entities.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.enums.InvokeType;
-import com.manywho.sdk.utils.AuthorizationUtils;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,7 +35,7 @@ public class FlowClient {
      * @return the current state of the Flow
      */
     public FlowState join(UUID tenant, UUID state) {
-        return join(tenant, state, AuthorizationUtils.createSerializedPublicUser(tenant));
+        return join(tenant, state, null);
     }
 
     /**
