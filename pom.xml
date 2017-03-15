@@ -16,6 +16,7 @@
         <module>sdk-server-undertow</module>
         <module>sdk-example</module>
         <module>sdk-server</module>
+        <module>sdk-client</module>
     </modules>
 
     <properties>
