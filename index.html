@@ -112,9 +112,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="features/configuration.html">
+        <li class="chapter " data-level="1.2.1" data-path="docs/features/configuration.html">
             
-                <a href="features/configuration.html">
+                <a href="docs/features/configuration.html">
             
                     
                     Configuration
@@ -125,9 +125,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="features/database.html">
+        <li class="chapter " data-level="1.2.2" data-path="docs/features/database.html">
             
-                <a href="features/database.html">
+                <a href="docs/features/database.html">
             
                     
                     Database
@@ -138,9 +138,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="features/files.html">
+        <li class="chapter " data-level="1.2.3" data-path="docs/features/files.html">
             
-                <a href="features/files.html">
+                <a href="docs/features/files.html">
             
                     
                     Files
@@ -151,9 +151,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="features/identity.html">
+        <li class="chapter " data-level="1.2.4" data-path="docs/features/identity.html">
             
-                <a href="features/identity.html">
+                <a href="docs/features/identity.html">
             
                     
                     Identity
@@ -177,9 +177,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="features/message-actions.html">
+        <li class="chapter " data-level="1.2.6" data-path="docs/features/message-actions.html">
             
-                <a href="features/message-actions.html">
+                <a href="docs/features/message-actions.html">
             
                     
                     Message Actions
@@ -203,9 +203,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.8" data-path="features/types.html">
+        <li class="chapter " data-level="1.2.8" data-path="docs/features/types.html">
             
-                <a href="features/types.html">
+                <a href="docs/features/types.html">
             
                     
                     Types
@@ -324,7 +324,53 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction">Introduction</h1>
+                                <h1 id="manywho-java-sdk-v2">ManyWho Java SDK (v2)</h1><p><a href="https://travis-ci.org/manywho/sdk-java" target="_blank"><img alt="Build Status" src="https://travis-ci.org/manywho/sdk-java.svg?branch=feature/2.0"></a> <a href="https://oss.sonatype.org/#nexus-search;gav~com.manywho.sdk~~2.0.0-SNAPSHOT~~" target="_blank"><img alt="Maven Central" src="https://img.shields.io/badge/pre--release-2.0.0--SNAPSHOT-orange.svg?style=flat"></a></p><blockquote><p><strong>WARNING:</strong> This version of the SDK is in development, and shouldn&apos;t yet be considered stable. The modules are in flux, and the object structures/names/classes might change at any time!</p></blockquote><p>An open source SDK that allows you to easily build plugins and services that integrate with Flows running on
+the <a href="https://manywho.com" target="_blank">ManyWho</a> platform.</p><h2 id="installation">Installation</h2><p>The SDK is currently available from the Maven Snapshots repository and is automatically published there on each commit, so it&apos;s easy to integrate with your Java application:</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">repositories</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">repository</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>ossrh<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>https://oss.sonatype.org/content/repositories/snapshots<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">snapshots</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">enabled</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">enabled</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">snapshots</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">repository</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">repositories</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-services<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></code></pre>
+<h2 id="usage">Usage</h2><p>Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is available in the <a href="https://github.com/manywho/sdk-java/wiki" target="_blank">Wiki</a>.</p><h2 id="modules">Modules</h2><p><strong>WARNING:</strong> These modules are in flux, and the object structures/names/classes might change at any time!</p><h3 id="sdk-api">sdk-api</h3><p>This module contains the ManyWho API objects, spanning across our <a href="https://manywho.github.io/slate/#draw" target="_blank">Draw</a>, <a href="https://manywho.github.io/slate/#run" target="_blank">Run</a> and <a href="https://manywho.github.io/slate/#translate" target="_blank">Translate</a> APIs. Our APIs aren&apos;t 100% covered (yet!) but the most commonly used objects are available. If there are objects missing that you need in your application, feel free to <a href="https://github.com/manywho/sdk-java/issues/new" target="_blank">open an issue</a> or <a href="https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md" target="_blank">submit a pull request</a> and we&apos;ll include them as soon as possible.</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${version.manywho.sdk}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h3 id="sdk-client">sdk-client</h3><p>This module supplies some clients that help you integrate with the various ManyWho APIs. It currently supports parts of the <a href="https://manywho.github.io/slate/#run" target="_blank">Run API</a> and is actively being improved to cover the other APIs.</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${version.manywho.sdk}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h3 id="sdk-example">sdk-example</h3><p>This module is an example Service written using the SDK. It is meant to be used as a reference for building other 
+services, and should contain examples of each major aspect of the SDK (e.g. Identity, Files, Social, etc.).</p><h3 id="sdk-server-servlet3">sdk-server-servlet3</h3><p>This module enables support for running services using a Servlet 3 compatible container (e.g. Tomcat) and 
+includes the <code>sdk-services</code> module as a dependency.</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-server-servlet3<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${version.manywho.sdk}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h3 id="sdk-server-undertow">sdk-server-undertow</h3><p>This module is <em>probably</em> what you want - it enables support for running services using the high-performance, embedded Undertow server and
+includes the <code>sdk-services</code> module as a dependency.</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-server-undertow<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${version.manywho.sdk}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h3 id="sdk-services"><a href="sdk-services/src/main/java/com/manywho/sdk/services">sdk-services</a></h3><p>This module includes the vast majority of the SDK&apos;s functionality for building services. Basic documentation for using it is being actively written <a href="https://github.com/manywho/sdk-java/wiki" target="_blank">on the Wiki</a>, but if there is anything missing feel free to <a href="https://github.com/manywho/sdk-java/issues/new" target="_blank">open an issue</a> or <a href="https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md" target="_blank">submit a pull request</a> and we&apos;ll update them as soon as possible.</p><pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.manywho.sdk<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sdk-services<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${version.manywho.sdk}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h2 id="contributing">Contributing</h2><p>Contributions are welcome to the project - whether they are feature requests, improvements or bug fixes! Refer to <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for our contribution requirements.</p><h2 id="license">License</h2><p>This SDK is released under the <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>.</p>
                                 
                                 </section>
                             
@@ -359,7 +405,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Features","level":"1.2","depth":1,"ref":"","articles":[{"title":"Configuration","level":"1.2.1","depth":2,"path":"features/configuration.md","ref":"features/configuration.md","articles":[]},{"title":"Database","level":"1.2.2","depth":2,"path":"features/database.md","ref":"features/database.md","articles":[]},{"title":"Files","level":"1.2.3","depth":2,"path":"features/files.md","ref":"features/files.md","articles":[]},{"title":"Identity","level":"1.2.4","depth":2,"path":"features/identity.md","ref":"features/identity.md","articles":[]},{"title":"Listeners","level":"1.2.5","depth":2,"path":"features/listeners.md","ref":"features/listeners.md","articles":[]},{"title":"Message Actions","level":"1.2.6","depth":2,"path":"features/message-actions.md","ref":"features/message-actions.md","articles":[]},{"title":"Social","level":"1.2.7","depth":2,"path":"features/social.md","ref":"features/social.md","articles":[]},{"title":"Types","level":"1.2.8","depth":2,"path":"features/types.md","ref":"features/types.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-03-15T12:47:12.267Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-15T13:10:02.789Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Features","level":"1.2","depth":1,"ref":"","articles":[{"title":"Configuration","level":"1.2.1","depth":2,"path":"docs/features/configuration.md","ref":"docs/features/configuration.md","articles":[]},{"title":"Database","level":"1.2.2","depth":2,"path":"docs/features/database.md","ref":"docs/features/database.md","articles":[]},{"title":"Files","level":"1.2.3","depth":2,"path":"docs/features/files.md","ref":"docs/features/files.md","articles":[]},{"title":"Identity","level":"1.2.4","depth":2,"path":"docs/features/identity.md","ref":"docs/features/identity.md","articles":[]},{"title":"Listeners","level":"1.2.5","depth":2,"path":"features/listeners.md","ref":"features/listeners.md","articles":[]},{"title":"Message Actions","level":"1.2.6","depth":2,"path":"docs/features/message-actions.md","ref":"docs/features/message-actions.md","articles":[]},{"title":"Social","level":"1.2.7","depth":2,"path":"features/social.md","ref":"features/social.md","articles":[]},{"title":"Types","level":"1.2.8","depth":2,"path":"docs/features/types.md","ref":"docs/features/types.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-03-15T13:14:36.022Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-15T13:21:00.979Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
