@@ -1,3 +1,3 @@
 # Introduction
 
-ManyWho Java SDK
+This is the ManyWho Java SDK.
