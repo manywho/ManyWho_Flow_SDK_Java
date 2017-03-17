@@ -107,7 +107,7 @@
                 <span>
             
                     
-                    Features
+                    Servers
             
                 </span>
             
@@ -116,12 +116,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="configuration.html">
+        <li class="chapter " data-level="1.2.1" data-path="../servers/undertow.html">
             
-                <a href="configuration.html">
+                <a href="../servers/undertow.html">
             
                     
-                    Configuration
+                    Undertow
             
                 </a>
             
@@ -129,90 +129,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="database.html">
+        <li class="chapter " data-level="1.2.2" data-path="../servers/servlet3.html">
             
-                <a href="database.html">
-            
-                    
-                    Database
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="files.html">
-            
-                <a href="files.html">
+                <a href="../servers/servlet3.html">
             
                     
-                    Files
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="identity.html">
-            
-                <a href="identity.html">
-            
-                    
-                    Identity
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="../../features/listeners.md">
-            
-                <span>
-            
-                    
-                    Listeners
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.2.6" data-path="message-actions.html">
-            
-                <a href="message-actions.html">
-            
-                    
-                    Message Actions
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="../../features/social.md">
-            
-                <span>
-            
-                    
-                    Social
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.8" data-path="types.html">
-            
-                <a href="types.html">
-            
-                    
-                    Types
+                    Servlet 3
             
                 </a>
             
@@ -230,6 +152,129 @@
                 <span>
             
                     
+                    Features
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="configuration.html">
+            
+                <a href="configuration.html">
+            
+                    
+                    Configuration
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="database.html">
+            
+                <a href="database.html">
+            
+                    
+                    Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="files.html">
+            
+                <a href="files.html">
+            
+                    
+                    Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="identity.html">
+            
+                <a href="identity.html">
+            
+                    
+                    Identity
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../../features/listeners.md">
+            
+                <span>
+            
+                    
+                    Listeners
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6" data-path="message-actions.html">
+            
+                <a href="message-actions.html">
+            
+                    
+                    Message Actions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../../features/social.md">
+            
+                <span>
+            
+                    
+                    Social
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="types.html">
+            
+                <a href="types.html">
+            
+                    
+                    Types
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
                     Tutorial
             
                 </span>
@@ -239,7 +284,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" >
+        <li class="chapter " data-level="1.4.1" >
             
                 <span>
             
@@ -252,7 +297,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" >
+        <li class="chapter " data-level="1.4.2" >
             
                 <span>
             
@@ -265,7 +310,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" >
+        <li class="chapter " data-level="1.4.3" >
             
                 <span>
             
@@ -352,7 +397,7 @@
 </li>
 <li><strong>required</strong> - used to determine whether an Output is required when using an Action in a Flow
 </li></ul>
-<h2 id="interface">Interface</h2><p>The interface to define the command for an action is <code>ActionCommand&lt;C, A, I, O&gt;</code>. It has 4 generic type parameters, and defines an <code>execute</code> method to run your action and return an appropriate response.</p><h3 id="actioncommand">ActionCommand\<c, a,="" i,="" o=""></c,></h3><p>This interface is used to create a command to execute your previously-defined Action.</p><h4 id="generic-type-parameters">Generic Type Parameters</h4><ul><li><strong>C</strong> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class
+<h2 id="interface">Interface</h2><p>The interface to define the command for an action is <code>ActionCommand&lt;C, A, I, O&gt;</code>. It has 4 generic type parameters, and defines an <code>execute</code> method to run your action and return an appropriate response.</p><h3 id="actioncommandc-a-i-o">ActionCommand&lt;C, A, I, O&gt;</h3><p>This interface is used to create a command to execute your previously-defined Action.</p><h4 id="generic-type-parameters">Generic Type Parameters</h4><ul><li><strong>C</strong> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class
 </li>
 <li><strong>A</strong> - this parameter must be the previously-defined class annotated with <code>@Action.Metadata</code>
 </li>
@@ -360,7 +405,7 @@
 </li>
 <li><strong>O</strong> - if any ouputs are required, this parameter must be the previously-defined class that has one or more fields annotated with <code>@Action.Output</code>, but if no outputs are required, this can be <code>Void</code>
 </li></ul>
-<h4 id="methods">Methods</h4><ul><li><strong>ActionResponse\<o> execute(C configuration, ServiceRequest request, I input)</o></strong> - this method has three parameters:
+<h4 id="methods">Methods</h4><ul><li><strong>ActionResponse&lt;O&gt; execute(C configuration, ServiceRequest request, I input)</strong> - this method has three parameters:
 <ul><li><strong>configuration</strong> - an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request
 </li>
 <li><strong>request</strong> - the raw ManyWho request object
@@ -489,7 +534,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Message Actions","level":"1.2.6","depth":2,"next":{"title":"Social","level":"1.2.7","depth":2,"path":"features/social.md","ref":"features/social.md","articles":[]},"previous":{"title":"Listeners","level":"1.2.5","depth":2,"path":"features/listeners.md","ref":"features/listeners.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/message-actions.md","mtime":"2017-03-15T13:14:36.022Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-15T13:21:00.979Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Message Actions","level":"1.3.6","depth":2,"next":{"title":"Social","level":"1.3.7","depth":2,"path":"features/social.md","ref":"features/social.md","articles":[]},"previous":{"title":"Listeners","level":"1.3.5","depth":2,"path":"features/listeners.md","ref":"features/listeners.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/message-actions.md","mtime":"2017-03-17T10:47:48.118Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-17T10:50:15.251Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
