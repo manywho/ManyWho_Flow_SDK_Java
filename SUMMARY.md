@@ -10,5 +10,5 @@
   * [Identity](docs/features/identity.md)
   * [Listeners](docs/features/listeners.md)
   * [Message Actions](docs/features/message-actions.md)
-  * [Social](features/social.md)
+  * [Social](docs/features/social.md)
   * [Types](docs/features/types.md)
