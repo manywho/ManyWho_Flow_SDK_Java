@@ -1,0 +1,7 @@
+# Gitbook
+/.idea
+/_book
+/sdk-*
+
+*.iml
+pom.xml
