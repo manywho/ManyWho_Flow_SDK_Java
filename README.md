@@ -34,7 +34,7 @@ The SDK is currently available from the Maven Snapshots repository and is automa
 
 ## Usage
 
-Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is available in the [Wiki](https://github.com/manywho/sdk-java/wiki).
+Some initial basic information on how to build a plugin that integrates with ManyWho using this SDK is [available here](https://manywho.github.io/sdk-java).
 
 ## Modules
 
@@ -97,7 +97,7 @@ includes the `sdk-services` module as a dependency.
 
 ### [sdk-services](sdk-services/src/main/java/com/manywho/sdk/services)
 
-This module includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being actively written [on the Wiki](https://github.com/manywho/sdk-java/wiki), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
+This module includes the vast majority of the SDK's functionality for building services. Basic documentation for using it is being [actively written here](https://manywho.github.io/sdk-java), but if there is anything missing feel free to [open an issue](https://github.com/manywho/sdk-java/issues/new) or [submit a pull request](https://github.com/manywho/sdk-java/blob/master/CONTRIBUTING.md) and we'll update them as soon as possible.
 
 ```xml
 <dependency>
