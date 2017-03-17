@@ -12,8 +12,3 @@
   * [Message Actions](docs/features/message-actions.md)
   * [Social](features/social.md)
   * [Types](docs/features/types.md)
-* Tutorial
-  * Step 1
-  * Step 2
-  * Step 3
-
