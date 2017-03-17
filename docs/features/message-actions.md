@@ -47,7 +47,7 @@ The `@Action.Output` annotation is used to define the Outputs for an action, and
 
 The interface to define the command for an action is `ActionCommand<C, A, I, O>`. It has 4 generic type parameters, and defines an `execute` method to run your action and return an appropriate response.
 
-### ActionCommand\<C, A, I, O>
+### ActionCommand&lt;C, A, I, O>
 
 This interface is used to create a command to execute your previously-defined Action.
 
@@ -60,7 +60,7 @@ This interface is used to create a command to execute your previously-defined Ac
 
 #### Methods
 
-* **ActionResponse\<O> execute(C configuration, ServiceRequest request, I input)** - this method has three parameters:
+* **ActionResponse&lt;O> execute(C configuration, ServiceRequest request, I input)** - this method has three parameters:
   * **configuration** - an instance of the Service's [Configuration Settings](configuration.md) class, populated with the appropriate values from the request
   * **request** - the raw ManyWho request object
   * **input** - the class containing the populated `@Action.Input` fields

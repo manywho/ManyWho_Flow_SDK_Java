@@ -9,7 +9,7 @@ The Java SDK provides a way to easily create Databases in your Service. The foll
 
 There are 2 interfaces to choose from when defining a Database, depending on how your Types are defined.
 
-### Database\<C extends Configuration, T extends Type>
+### Database&lt;C extends Configuration, T extends Type>
 
 This interface should be used if your Service contains statically-defined Types (using the `Type` interface).
 
@@ -52,7 +52,7 @@ This method will take the object passed in, update the existing record in the ap
 	
 This method will take the list of objects passed in, update the existing records in the appropriate store, then return the updated list of objects again.
 
-### RawDatabase\<C extends Configuration>
+### RawDatabase&lt;C extends Configuration>
 
 This interface should be used if your Service contains dynamically-defined Types (probably through the `TypeProvider` interface).
 
