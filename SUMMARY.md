@@ -1,5 +1,8 @@
 # Summary
 
+* Servers
+  * [Undertow](docs/servers/undertow.md)
+  * [Servlet 3](docs/servers/servlet3.md)
 * Features
   * [Configuration](docs/features/configuration.md)
   * [Database](docs/features/database.md)
