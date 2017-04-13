@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
+import com.manywho.sdk.services.configuration.Configuration;
+import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
@@ -14,13 +16,21 @@ public class DescribeManager {
     private final DescribeTypeService describeTypeService;
     private final DescribeActionService describeActionService;
     private final TypeProvider typeProvider;
+    private final ConfigurationParser configurationParser;
 
     @Inject
-    public DescribeManager(DescribeService describeService, DescribeTypeService describeTypeService, DescribeActionService describeActionService, TypeProvider typeProvider) {
+    public DescribeManager(
+            DescribeService describeService,
+            DescribeTypeService describeTypeService,
+            DescribeActionService describeActionService,
+            TypeProvider typeProvider,
+            ConfigurationParser configurationParser
+    ) {
         this.describeService = describeService;
         this.describeTypeService = describeTypeService;
         this.describeActionService = describeActionService;
         this.typeProvider = typeProvider;
+        this.configurationParser = configurationParser;
     }
 
     public DescribeServiceResponse describe(DescribeServiceRequest request) {
@@ -60,7 +70,9 @@ public class DescribeManager {
         List<TypeElement> typeElements = Lists.newArrayList();
         typeElements.addAll(describeTypeService.createTypes());
 
-        List<TypeElement> customTypes = typeProvider.describeTypes(request);
+        Configuration configuration = configurationParser.from(request);
+
+        List<TypeElement> customTypes = typeProvider.describeTypes(configuration, request);
         if (customTypes == null) {
             throw new RuntimeException("The configured implementation of " + TypeProvider.class.getCanonicalName() + " must return a valid List<TypeElement>");
         } else {

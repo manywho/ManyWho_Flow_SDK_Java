@@ -7,18 +7,19 @@ import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
 import com.manywho.sdk.api.draw.elements.type.TypeElementPropertyBinding;
+import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.types.TypeProvider;
 
 import java.util.List;
 
 public class RawTypeProvider implements TypeProvider {
     @Override
-    public boolean doesTypeExist(String name) {
+    public boolean doesTypeExist(Configuration configuration, String name) {
         return name.equals("custom-type-one");
     }
 
     @Override
-    public List<TypeElement> describeTypes(DescribeServiceRequest request) {
+    public List<TypeElement> describeTypes(Configuration configuration, DescribeServiceRequest request) {
         List<TypeElementProperty> properties = Lists.newArrayList();
         properties.add(new TypeElementProperty("Property One", ContentType.String));
         properties.add(new TypeElementProperty("Property Two", ContentType.String));

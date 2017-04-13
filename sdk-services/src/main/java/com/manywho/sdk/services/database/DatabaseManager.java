@@ -3,6 +3,8 @@ package com.manywho.sdk.services.database;
 import com.google.inject.Injector;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
+import com.manywho.sdk.services.configuration.Configuration;
+import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeProvider;
 import com.manywho.sdk.services.types.TypeRepository;
@@ -17,6 +19,7 @@ public class DatabaseManager {
     private final DatabaseDeleteService databaseDeleteService;
     private final DatabaseLoadService databaseLoadService;
     private final DatabaseSaveService databaseSaveService;
+    private final ConfigurationParser configurationParser;
 
     @Inject
     public DatabaseManager(
@@ -26,7 +29,8 @@ public class DatabaseManager {
             DatabaseRepository databaseRepository,
             DatabaseDeleteService databaseDeleteService,
             DatabaseLoadService databaseLoadService,
-            DatabaseSaveService databaseSaveService
+            DatabaseSaveService databaseSaveService,
+            ConfigurationParser configurationParser
     ) {
         this.injector = injector;
         this.typeProvider = typeProvider;
@@ -35,10 +39,13 @@ public class DatabaseManager {
         this.databaseDeleteService = databaseDeleteService;
         this.databaseLoadService = databaseLoadService;
         this.databaseSaveService = databaseSaveService;
+        this.configurationParser = configurationParser;
     }
 
     public ObjectDataResponse handle(DatabaseType databaseType, ObjectDataRequest objectDataRequest) {
-        if (typeProvider.doesTypeExist(objectDataRequest.getObjectDataType().getDeveloperName())) {
+        Configuration configuration = configurationParser.from(objectDataRequest);
+
+        if (typeProvider.doesTypeExist(configuration, objectDataRequest.getObjectDataType().getDeveloperName())) {
             return handleCustomType(databaseType, objectDataRequest);
         } else {
             Class<? extends Type> type = typeRepository.findTypeElement(objectDataRequest.getObjectDataType().getDeveloperName());
