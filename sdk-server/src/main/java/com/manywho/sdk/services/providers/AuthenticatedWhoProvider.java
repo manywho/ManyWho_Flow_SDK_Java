@@ -1,32 +1,24 @@
 package com.manywho.sdk.services.providers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Charsets;
 import com.google.inject.Provider;
 import com.manywho.sdk.api.security.AuthenticatedWho;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
+import com.manywho.sdk.services.identity.AuthorizationEncoder;
 import org.jboss.resteasy.plugins.guice.RequestScoped;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequestScoped
 public class AuthenticatedWhoProvider implements Provider<AuthenticatedWho> {
     private final HttpHeaders headers;
-    private final ObjectMapper objectMapper;
+    private final AuthorizationEncoder authorizationEncoder;
 
     @Inject
-    public AuthenticatedWhoProvider(@Context HttpHeaders headers, ObjectMapper objectMapper) {
+    public AuthenticatedWhoProvider(@Context HttpHeaders headers, AuthorizationEncoder authorizationEncoder) {
         this.headers = headers;
-        this.objectMapper = objectMapper;
+        this.authorizationEncoder = authorizationEncoder;
     }
 
     @Override
@@ -36,20 +28,6 @@ public class AuthenticatedWhoProvider implements Provider<AuthenticatedWho> {
             throw new NotAuthorizedException("You are not authorized to access this endpoint");
         }
 
-        try {
-            String decodedHeader = URLDecoder.decode(authorizationHeader, "UTF-8");
-
-            Map<String, String> pairs = URLEncodedUtils.parse(decodedHeader, Charsets.UTF_8)
-                    .stream()
-                    .map(pair -> new BasicNameValuePair(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, pair.getName()), pair.getValue()))
-                    .collect(Collectors.toMap(
-                            entry -> CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, entry.getName()),
-                            entry -> entry.getValue()
-                    ));
-
-            return objectMapper.convertValue(pairs, AuthenticatedWho.class);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Unable to deserialize the incoming AuthenticatedWho", e);
-        }
+        return authorizationEncoder.decode(authorizationHeader);
     }
 }
