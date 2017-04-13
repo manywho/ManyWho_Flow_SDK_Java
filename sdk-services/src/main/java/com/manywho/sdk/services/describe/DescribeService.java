@@ -5,6 +5,8 @@ import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
+import com.manywho.sdk.services.controllers.AuthenticationController;
+import com.manywho.sdk.services.controllers.AuthorizationController;
 import com.manywho.sdk.services.controllers.DataController;
 import com.manywho.sdk.services.controllers.FileController;
 import com.manywho.sdk.services.controllers.IdentityController;
@@ -49,7 +51,9 @@ public class DescribeService {
     }
 
     public boolean anyIdentityControllersExist() {
-        return describeRepository.doSubtypesOfExist(IdentityController.class);
+        return describeRepository.doSubtypesOfExist(AuthenticationController.class) ||
+                describeRepository.doSubtypesOfExist(AuthorizationController.class) ||
+                describeRepository.doSubtypesOfExist(IdentityController.class);
     }
 
     public boolean anyListenerControllersExist() {
