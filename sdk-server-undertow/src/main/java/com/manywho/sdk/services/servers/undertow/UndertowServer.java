@@ -6,11 +6,11 @@ import com.manywho.sdk.services.servers.BaseServer;
 import com.manywho.sdk.services.servers.EmbeddedServer;
 import io.undertow.Undertow;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UndertowServer extends BaseServer implements EmbeddedServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UndertowServer.class);
 
     /**
      * Start the service using the built-in Jetty container on a specified port
@@ -34,10 +34,10 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
-            System.out.println(String.format("Service started on 0.0.0.0:%d.", port));
-            System.out.println("Stop the service using CTRL+C");
+            LOGGER.info("Service started on 0.0.0.0:%d.", port);
+            LOGGER.info("Stop the service using CTRL+C");
         } catch (Exception ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error("Unable to start the server", ex);
         }
     }
 
