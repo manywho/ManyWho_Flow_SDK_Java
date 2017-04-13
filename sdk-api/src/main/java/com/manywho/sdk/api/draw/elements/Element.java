@@ -1,6 +1,6 @@
 package com.manywho.sdk.api.draw.elements;
 
-public class Element {
+public class Element implements Comparable<Element> {
     protected String elementType = "TYPE";
     protected String developerName;
     protected String developerSummary;
@@ -27,5 +27,10 @@ public class Element {
 
     public void setDeveloperSummary(String developerSummary) {
         this.developerSummary = developerSummary;
+    }
+
+    @Override
+    public int compareTo(Element element) {
+        return developerName.compareTo(element.getDeveloperName());
     }
 }
