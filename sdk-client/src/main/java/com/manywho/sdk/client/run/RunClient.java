@@ -1,9 +1,11 @@
 package com.manywho.sdk.client.run;
 
+import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineInitializationRequest;
 import com.manywho.sdk.api.run.EngineInitializationResponse;
 import com.manywho.sdk.api.run.EngineInvokeRequest;
 import com.manywho.sdk.api.run.EngineInvokeResponse;
+import com.manywho.sdk.api.run.elements.config.ServiceResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -47,5 +49,12 @@ public interface RunClient {
             @Header("Authorization") String authorization,
             @Header("ManyWhoTenant") UUID tenant,
             @Body EngineInitializationRequest initialization
+    );
+
+    @POST("api/run/1/response")
+    Call<InvokeType> callback(
+            @Header("Authorization") String authorization,
+            @Header("ManyWhoTenant") UUID tenant,
+            @Body ServiceResponse response
     );
 }
