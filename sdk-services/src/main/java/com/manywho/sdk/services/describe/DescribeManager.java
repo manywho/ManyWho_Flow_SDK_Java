@@ -1,13 +1,14 @@
 package com.manywho.sdk.services.describe;
 
 import com.google.common.collect.Lists;
+import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
+import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.types.TypeProvider;
-
 import javax.inject.Inject;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class DescribeManager {
     private final DescribeActionService describeActionService;
     private final TypeProvider typeProvider;
     private final ConfigurationParser configurationParser;
+    private final ActionProvider actionProvider;
 
     @Inject
     public DescribeManager(
@@ -24,13 +26,15 @@ public class DescribeManager {
             DescribeTypeService describeTypeService,
             DescribeActionService describeActionService,
             TypeProvider typeProvider,
-            ConfigurationParser configurationParser
+            ConfigurationParser configurationParser,
+            ActionProvider actionProvider
     ) {
         this.describeService = describeService;
         this.describeTypeService = describeTypeService;
         this.describeActionService = describeActionService;
         this.typeProvider = typeProvider;
         this.configurationParser = configurationParser;
+        this.actionProvider = actionProvider;
     }
 
     public DescribeServiceResponse describe(DescribeServiceRequest request) {
@@ -60,17 +64,27 @@ public class DescribeManager {
         if (describeService.anySocialControllersExist()) {
             builder.setProvidesSocial(true);
         }
+        Configuration configuration = configurationParser.from(request);
 
-        if (describeService.anyActionsDefined()) {
+        List<DescribeServiceActionResponse> actionsElements = Lists.newArrayList();
+        actionsElements.addAll(describeActionService.createActions());
+
+        List<DescribeServiceActionResponse> customActions = actionProvider.describeAction(configuration, request);
+        if (customActions == null) {
+            throw new RuntimeException("The configured implementation of " + ActionProvider.class.getCanonicalName() + " must return a valid List<DescribeServiceActionResponse>");
+        } else {
+            actionsElements.addAll(customActions);
+        }
+
+        builder.setActions(actionsElements);
+
+        if(actionsElements.size()>0) {
             builder.setProvidesLogic(true);
-
-            builder.setActions(describeActionService.createActions());
         }
 
         List<TypeElement> typeElements = Lists.newArrayList();
         typeElements.addAll(describeTypeService.createTypes());
 
-        Configuration configuration = configurationParser.from(request);
 
         List<TypeElement> customTypes = typeProvider.describeTypes(configuration, request);
         if (customTypes == null) {
