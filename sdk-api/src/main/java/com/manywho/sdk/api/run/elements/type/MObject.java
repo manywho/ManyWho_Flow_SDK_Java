@@ -3,6 +3,7 @@ package com.manywho.sdk.api.run.elements.type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import com.manywho.sdk.api.ContentType;
 
 import java.util.List;
 import java.util.UUID;
@@ -85,5 +86,50 @@ public class MObject {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public static class SimpleMObjectBuilder {
+        private String developerName;
+        private String externalId;
+        private List<Property> properties = Lists.newArrayList();
+
+        public SimpleMObjectBuilder setDeveloperName(String developerName) {
+            this.developerName = developerName;
+            return this;
+        }
+
+        public SimpleMObjectBuilder setExternalId(String externalId) {
+            this.externalId = externalId;
+            return this;
+        }
+
+        public SimpleMObjectBuilder addProperty(String developerName, String contentValue) {
+            properties.add(new Property(developerName, contentValue));
+            return this;
+        }
+
+        public SimpleMObjectBuilder addProperty(String developerName, Number contentValue) {
+            properties.add(new Property(developerName, contentValue));
+            return this;
+        }
+
+        public SimpleMObjectBuilder addProperty(String developerName, Object contentValue) {
+            properties.add(new Property(developerName, contentValue));
+            return this;
+        }
+
+        public SimpleMObjectBuilder addProperty(String developerName, String contentValue, ContentType contentType) {
+            properties.add(new Property(developerName, contentValue, contentType));
+            return this;
+        }
+
+        public SimpleMObjectBuilder addProperty(String developerName, List<MObject> mObjects) {
+            properties.add(new Property(developerName, mObjects));
+            return this;
+        }
+
+        public MObject build() {
+            return new MObject(developerName, externalId, properties);
+        }
     }
 }
