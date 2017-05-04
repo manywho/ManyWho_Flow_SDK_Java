@@ -26,7 +26,7 @@ public class ConfigurationParser {
         this.valueParser = valueParser;
     }
 
-    public <C extends Configuration> C from(ConfigurationValuesAware object) {
+    public <C extends Configuration> C from(ConfigurationValuesAware object, boolean checkRequired) {
         Class<C> configurationClass = getConfigurationClass();
 
         // Create an instance of the configuration class using Guice, so we support injections
@@ -37,14 +37,18 @@ public class ConfigurationParser {
             Set<Field> configurationSettings = configurationRepository.findConfigurationSettings(configurationClass);
 
             for (Field field : configurationSettings) {
-                populateConfigurationSetting(configuration, object, field);
+                populateConfigurationSetting(configuration, object, field, checkRequired);
             }
         }
 
         return configuration;
     }
 
-    private <C extends Configuration> void populateConfigurationSetting(C configuration, ConfigurationValuesAware object, Field field) {
+    public <C extends Configuration> C from(ConfigurationValuesAware object) {
+        return from(object, true);
+    }
+
+    private <C extends Configuration> void populateConfigurationSetting(C configuration, ConfigurationValuesAware object, Field field, boolean checkRequired) {
         Configuration.Setting annotation = field.getAnnotation(Configuration.Setting.class);
 
         // See if the discovered configuration setting field was sent in the request
@@ -57,7 +61,7 @@ public class ConfigurationParser {
             valueParser.populateObjectField(configuration, field, annotation.contentType(), optional.get());
         } else {
             // If the setting is marked as required, but was not sent in then we error
-            if (annotation.required()) {
+            if (checkRequired && annotation.required()) {
                 throw new RuntimeException("The configuration setting " + annotation.name() + " is required");
             }
         }

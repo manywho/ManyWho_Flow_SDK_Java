@@ -5,9 +5,9 @@ import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
+import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
-import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
@@ -65,7 +65,8 @@ public class DescribeManager {
         if (describeService.anySocialControllersExist()) {
             builder.setProvidesSocial(true);
         }
-        Configuration configuration = configurationParser.from(request);
+
+        Configuration configuration = configurationParser.from(request, false);
 
         List<DescribeServiceActionResponse> actionsElements = Lists.newArrayList();
         actionsElements.addAll(describeActionService.createActions());
