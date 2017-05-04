@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.actions.ActionRepository;
+import com.manywho.sdk.services.actions.DummyActionProvider;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
 import com.manywho.sdk.services.describe.DescribeActionService;
@@ -55,7 +56,8 @@ public class DescribeManagerTest extends BaseTest {
                 new DescribeTypeService(typeRepository),
                 new DescribeActionService(actionRepository),
                 new DummyTypeProvider(),
-                new ConfigurationParser(injector, configurationRepository, new ValueParser(typeRepository)));
+                new ConfigurationParser(injector, configurationRepository, new ValueParser(typeRepository)),
+                new DummyActionProvider());
 
         DescribeServiceResponse response = manager.describe(new DescribeServiceRequest());
 

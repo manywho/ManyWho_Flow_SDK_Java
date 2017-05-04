@@ -3,6 +3,8 @@ package com.manywho.sdk.services;
 import com.google.inject.AbstractModule;
 import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.client.run.RunClient;
+import com.manywho.sdk.services.actions.ActionProvider;
+import com.manywho.sdk.services.actions.DummyActionProvider;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
 import com.manywho.sdk.services.providers.AuthenticatedWhoProvider;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
@@ -26,6 +28,7 @@ public class ServiceApplicationModule extends AbstractModule {
         bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class).in(RequestScoped.class);
 
         bind(TypeProvider.class).to(DummyTypeProvider.class);
+        bind(ActionProvider.class).to(DummyActionProvider.class);
         bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
     }
 }
