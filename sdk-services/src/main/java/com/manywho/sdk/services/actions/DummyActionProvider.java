@@ -9,12 +9,12 @@ import java.util.List;
 
 public class DummyActionProvider implements ActionProvider {
     @Override
-    public boolean doesActionExist(Configuration configuration, String name) {
+    public boolean doesActionExist(Configuration configuration, String uriPart) {
         return false;
     }
 
     @Override
-    public List<DescribeServiceActionResponse> describeAction(Configuration configuration, DescribeServiceRequest request) {
+    public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeServiceRequest request) {
         return Lists.newArrayList();
     }
 }

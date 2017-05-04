@@ -17,7 +17,7 @@ public class RawActionProvider implements ActionProvider{
     }
 
     @Override
-    public List<DescribeServiceActionResponse> describeAction(Configuration configuration, DescribeServiceRequest request) {
+    public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeServiceRequest request) {
         List<DescribeServiceActionResponse> customActions = Lists.newArrayList();
         customActions.add(createAction());
 

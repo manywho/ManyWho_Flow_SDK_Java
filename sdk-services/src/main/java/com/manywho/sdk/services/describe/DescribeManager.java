@@ -69,7 +69,7 @@ public class DescribeManager {
         List<DescribeServiceActionResponse> actionsElements = Lists.newArrayList();
         actionsElements.addAll(describeActionService.createActions());
 
-        List<DescribeServiceActionResponse> customActions = actionProvider.describeAction(configuration, request);
+        List<DescribeServiceActionResponse> customActions = actionProvider.describeActions(configuration, request);
         if (customActions == null) {
             throw new RuntimeException("The configured implementation of " + ActionProvider.class.getCanonicalName() + " must return a valid List<DescribeServiceActionResponse>");
         } else {
@@ -78,7 +78,7 @@ public class DescribeManager {
 
         builder.setActions(actionsElements);
 
-        if(actionsElements.size()>0) {
+        if (actionsElements.size() > 0) {
             builder.setProvidesLogic(true);
         }
 

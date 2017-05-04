@@ -26,6 +26,7 @@ public class ActionManager {
     private final ValueParser valueParser;
     private final ConfigurationParser configurationParser;
     private final ValueBuilder valueBuilder;
+    private final ActionHandler actionHandler;
 
     @Inject
     public ActionManager(
@@ -33,15 +34,21 @@ public class ActionManager {
             ActionRepository actionRepository,
             ValueParser valueParser,
             ConfigurationParser configurationParser,
-            ValueBuilder valueBuilder) {
+            ValueBuilder valueBuilder,
+            ActionHandler actionHandler) {
         this.injector = injector;
         this.actionRepository = actionRepository;
         this.valueParser = valueParser;
         this.configurationParser = configurationParser;
         this.valueBuilder = valueBuilder;
+        this.actionHandler = actionHandler;
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
+        if(this.actionHandler.canHandleAction(path, configurationParser.from(serviceRequest), serviceRequest)) {
+            return this.actionHandler.handleRaw(path, configurationParser.from(serviceRequest), serviceRequest);
+        }
+
         Class<?> action = actionRepository.getActions().stream()
                 .filter(type -> type.isAnnotationPresent(Action.Metadata.class))
                 .filter(type -> type.getAnnotation(Action.Metadata.class).uri().equals(path))

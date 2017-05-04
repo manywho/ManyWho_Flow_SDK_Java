@@ -6,8 +6,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 
 import java.util.List;
 
-public interface ActionProvider <C extends Configuration>{
-    boolean doesActionExist(C configuration, String name);
-    List<DescribeServiceActionResponse> describeAction(C configuration, DescribeServiceRequest request);
+public interface ActionProvider<C extends Configuration> {
+    boolean doesActionExist(C configuration, String uriPart);
+    List<DescribeServiceActionResponse> describeActions(C configuration, DescribeServiceRequest request);
 }
-
