@@ -47,8 +47,8 @@ public class ActionManager {
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
-        if(this.actionHandler.canHandleAction(path, configurationParser.from(serviceRequest), serviceRequest)) {
-            return this.actionHandler.handleRaw(path, configurationParser.from(serviceRequest), serviceRequest);
+        if (actionHandler.canHandleAction(path, configurationParser.from(serviceRequest), serviceRequest)) {
+            return actionHandler.handleRaw(path, configurationParser.from(serviceRequest), serviceRequest);
         }
 
         Class<?> action = actionRepository.getActions().stream()

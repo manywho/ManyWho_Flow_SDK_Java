@@ -5,6 +5,6 @@ import com.manywho.sdk.api.run.elements.config.ServiceResponse;
 import com.manywho.sdk.services.configuration.Configuration;
 
 public interface ActionHandler<C extends Configuration> {
-    Boolean canHandleAction(String path, C configuration, ServiceRequest serviceRequest);
+    boolean canHandleAction(String path, C configuration, ServiceRequest serviceRequest);
     ServiceResponse handleRaw(String path, C configuration, ServiceRequest serviceRequest);
 }

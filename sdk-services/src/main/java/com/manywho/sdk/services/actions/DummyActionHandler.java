@@ -6,7 +6,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 
 public class DummyActionHandler implements ActionHandler {
     @Override
-    public Boolean canHandleAction(String path, Configuration configuration, ServiceRequest serviceRequest) {
+    public boolean canHandleAction(String path, Configuration configuration, ServiceRequest serviceRequest) {
         return false;
     }
 

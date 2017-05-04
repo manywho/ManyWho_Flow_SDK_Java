@@ -10,12 +10,11 @@ import com.manywho.sdk.services.actions.ActionHandler;
 import com.manywho.sdk.services.configuration.Configuration;
 
 import java.util.List;
-import java.util.Objects;
 
 public class RawActionHandler implements ActionHandler {
     @Override
-    public Boolean canHandleAction(String uriPath, Configuration configuration, ServiceRequest serviceRequest) {
-        return Objects.equals(uriPath, "custom-action");
+    public boolean canHandleAction(String uriPath, Configuration configuration, ServiceRequest serviceRequest) {
+        return uriPath == "custom-action";
     }
 
     @Override

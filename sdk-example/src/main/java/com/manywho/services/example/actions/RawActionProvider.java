@@ -10,11 +10,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 
 import java.util.List;
 
-public class RawActionProvider implements ActionProvider{
-    @Override
-    public boolean doesActionExist(Configuration configuration, String name) {
-        return false;
-    }
+public class RawActionProvider implements ActionProvider {
 
     @Override
     public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeServiceRequest request) {
