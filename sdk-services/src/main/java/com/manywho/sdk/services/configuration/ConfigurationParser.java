@@ -55,6 +55,11 @@ public class ConfigurationParser {
         // If the configuration setting was sent in the request, then we extract it and populate the configuration object
         if (optional.isPresent()) {
             valueParser.populateObjectField(configuration, field, annotation.contentType(), optional.get());
+        } else {
+            // If the setting is marked as required, but was not sent in then we error
+            if (annotation.required()) {
+                throw new RuntimeException("The configuration setting " + annotation.name() + " is required");
+            }
         }
     }
 
