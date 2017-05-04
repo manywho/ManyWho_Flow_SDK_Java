@@ -30,6 +30,11 @@ public class ServiceResponse extends AbstractResponse {
         this.waitMessage = waitMessage;
     }
 
+    public ServiceResponse(UUID tenant, InvokeType invokeType, List<EngineValue> outputs, String token, String waitMessage) {
+        this(invokeType, outputs, token, waitMessage);
+        this.tenantId = tenant;
+    }
+
     public ServiceResponse(InvokeType invokeType, List<EngineValue> outputs, String token) {
         this(invokeType, outputs, token, null);
     }
