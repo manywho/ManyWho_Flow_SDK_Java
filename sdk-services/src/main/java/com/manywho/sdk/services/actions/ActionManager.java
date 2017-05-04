@@ -1,6 +1,8 @@
 package com.manywho.sdk.services.actions;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Injector;
+import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
@@ -85,15 +87,25 @@ public class ActionManager {
 
             List<Field> outputFields = findOutputFields(types[3]);
 
-            if (!outputFields.isEmpty() && actionResponse.getOutputs() == null) {
+            if (!outputFields.isEmpty() && actionResponse.getOutputs() == null && !actionResponse.getInvokeType().equals(InvokeType.Wait)) {
                 throw new RuntimeException("The action response is expecting one or more outputs");
             }
 
-            List<EngineValue> outputs = outputFields.stream()
-                    .map(output -> createOutputValue(actionResponse.getOutputs(), output))
-                    .collect(Collectors.toList());
+            List<EngineValue> outputs = Lists.newArrayList();
 
-            return new ServiceResponse(actionResponse.getInvokeType(), outputs, serviceRequest.getToken(), actionResponse.getWaitMessage());
+            if (actionResponse.getOutputs() != null) {
+                outputs = outputFields.stream()
+                        .map(output -> createOutputValue(actionResponse.getOutputs(), output))
+                        .collect(Collectors.toList());
+            }
+
+            return new ServiceResponse(
+                    serviceRequest.getTenantId(),
+                    actionResponse.getInvokeType(),
+                    outputs,
+                    serviceRequest.getToken(),
+                    actionResponse.getWaitMessage()
+            );
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             throw new RuntimeException("Unable to execute the message action for the path " + path, e);
         }
@@ -111,7 +123,7 @@ public class ActionManager {
                 .collect(Collectors.toList());
     }
 
-    private EngineValue createOutputValue(Object outputs, Field field) {
+    public EngineValue createOutputValue(Object outputs, Field field) {
         Action.Output property = field.getAnnotation(Action.Output.class);
 
         AccessController.doPrivileged((PrivilegedAction) () -> {
