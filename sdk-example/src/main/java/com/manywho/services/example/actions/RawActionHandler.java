@@ -14,7 +14,7 @@ import java.util.List;
 public class RawActionHandler implements ActionHandler {
     @Override
     public boolean canHandleAction(String uriPath, Configuration configuration, ServiceRequest serviceRequest) {
-        return uriPath == "custom-action";
+        return uriPath.equals("custom-action");
     }
 
     @Override

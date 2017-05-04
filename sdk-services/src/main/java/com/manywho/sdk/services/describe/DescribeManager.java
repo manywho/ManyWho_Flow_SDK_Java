@@ -9,6 +9,7 @@ import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.types.TypeProvider;
+
 import javax.inject.Inject;
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class DescribeManager {
         if (customActions == null) {
             throw new RuntimeException("The configured implementation of " + ActionProvider.class.getCanonicalName() + " must return a valid List<DescribeServiceActionResponse>");
         } else {
+            customActions.forEach(action -> action.setUriPart(String.format("actions/%s", action.getUriPart())));
             actionsElements.addAll(customActions);
         }
 
