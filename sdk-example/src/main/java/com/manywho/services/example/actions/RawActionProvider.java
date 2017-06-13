@@ -2,8 +2,8 @@ package com.manywho.services.example.actions;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
+import com.manywho.sdk.api.describe.DescribeInstallRequest;
 import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
-import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.configuration.Configuration;
@@ -13,7 +13,7 @@ import java.util.List;
 public class RawActionProvider implements ActionProvider {
 
     @Override
-    public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeServiceRequest request) {
+    public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeInstallRequest request) {
         List<DescribeServiceActionResponse> customActions = Lists.newArrayList();
         customActions.add(createAction());
 

@@ -2,13 +2,10 @@ package com.manywho.sdk.api.describe;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
-import com.manywho.sdk.api.translate.Culture;
 
 import java.util.List;
 
 public class DescribeServiceResponse {
-    private Culture culture;
-    private String uri;
     private List<DescribeValue> configurationValues = Lists.newArrayList();
     private boolean providesAutoBinding;
     private boolean providesDatabase;
@@ -22,24 +19,7 @@ public class DescribeServiceResponse {
     private boolean providesSharing;
     private boolean providesViews;
     private boolean providesVoting;
-    private List<DescribeServiceActionResponse> actions = Lists.newArrayList();
-    private DescribeServiceInstall install;
-
-    public Culture getCulture() {
-        return culture;
-    }
-
-    public void setCulture(Culture culture) {
-        this.culture = culture;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
+    private String version;
 
     public List<DescribeValue> getConfigurationValues() {
         return configurationValues;
@@ -146,19 +126,11 @@ public class DescribeServiceResponse {
         this.providesVoting = providesVoting;
     }
 
-    public List<DescribeServiceActionResponse> getActions() {
-        return actions;
+    public String getVersion() {
+        return version;
     }
 
-    public void setActions(List<DescribeServiceActionResponse> actions) {
-        this.actions = MoreObjects.firstNonNull(actions, Lists.newArrayList());
-    }
-
-    public DescribeServiceInstall getInstall() {
-        return install;
-    }
-
-    public void setInstall(DescribeServiceInstall install) {
-        this.install = install;
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
