@@ -9,6 +9,7 @@ import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,7 +79,7 @@ public class PageComponentDataResponse implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public ObjectDataRequest getObjectDataRequest() {
@@ -142,6 +143,6 @@ public class PageComponentDataResponse implements PropertyAware {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
+        this.tags = MoreObjects.firstNonNull(tags, new ArrayList<EngineValue>());
     }
 }

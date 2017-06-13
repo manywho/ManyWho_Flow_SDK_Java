@@ -5,6 +5,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,6 +56,6 @@ public class PageContainerDataResponse {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
+        this.tags = MoreObjects.firstNonNull(tags, new ArrayList<EngineValue>());
     }
 }

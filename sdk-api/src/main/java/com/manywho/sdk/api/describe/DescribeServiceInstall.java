@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DescribeServiceInstall {
@@ -13,7 +14,7 @@ public class DescribeServiceInstall {
     }
 
     public DescribeServiceInstall(List<TypeElement> typeElements) {
-        this.typeElements = MoreObjects.firstNonNull(typeElements, Lists.newArrayList());
+        this.typeElements = MoreObjects.firstNonNull(typeElements, new ArrayList<TypeElement>());
     }
 
     public List<TypeElement> getTypeElements() {
@@ -21,6 +22,6 @@ public class DescribeServiceInstall {
     }
 
     public void setTypeElements(List<TypeElement> typeElements) {
-        this.typeElements = MoreObjects.firstNonNull(typeElements, Lists.newArrayList());
+        this.typeElements = MoreObjects.firstNonNull(typeElements, new ArrayList<TypeElement>());
     }
 }

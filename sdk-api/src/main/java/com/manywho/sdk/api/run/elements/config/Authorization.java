@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Authorization {
@@ -21,7 +22,7 @@ public class Authorization {
     }
 
     public void setUsers(List<User> users) {
-        this.users = MoreObjects.firstNonNull(users, Lists.newArrayList());
+        this.users = MoreObjects.firstNonNull(users, new ArrayList<User>());
     }
 
     public List<Group> getGroups() {
@@ -33,7 +34,7 @@ public class Authorization {
     }
 
     public void setGroups(List<Group> groups) {
-        this.groups = MoreObjects.firstNonNull(groups, Lists.newArrayList());
+        this.groups = MoreObjects.firstNonNull(groups, new ArrayList<Group>());
     }
 
     public String getRunningAuthenticationId() {

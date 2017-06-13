@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ComparisonType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListFilterMinimal {
@@ -29,7 +30,7 @@ public class ListFilterMinimal {
     }
 
     public ListFilterMinimal setWhere(List<ListFilterWhere> where) {
-        this.where = MoreObjects.firstNonNull(where, Lists.newArrayList());
+        this.where = MoreObjects.firstNonNull(where, new ArrayList<ListFilterWhere>());
         return this;
     }
 
@@ -42,7 +43,7 @@ public class ListFilterMinimal {
     }
 
     public ListFilterMinimal setListFilters(List<ListFilterMinimal> listFilters) {
-        this.listFilters = MoreObjects.firstNonNull(listFilters, Lists.newArrayList());
+        this.listFilters = MoreObjects.firstNonNull(listFilters, new ArrayList<ListFilterMinimal>());
         return this;
     }
 }

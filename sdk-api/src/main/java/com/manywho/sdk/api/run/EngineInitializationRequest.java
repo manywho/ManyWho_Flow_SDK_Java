@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -64,7 +66,7 @@ public class EngineInitializationRequest {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
+        this.annotations = MoreObjects.firstNonNull(annotations, new HashMap<String, String>());
     }
 
     public List<EngineValue> getInputs() {
@@ -76,7 +78,7 @@ public class EngineInitializationRequest {
     }
 
     public void setInputs(List<EngineValue> inputs) {
-        this.inputs = MoreObjects.firstNonNull(inputs, Lists.newArrayList());
+        this.inputs = MoreObjects.firstNonNull(inputs, new ArrayList<EngineValue>());
     }
 
     public String getPlayerUrl() {

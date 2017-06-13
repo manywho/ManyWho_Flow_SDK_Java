@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListFilter extends ListFilterMinimal {
@@ -124,7 +125,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public ListFilter setSearchCriteria(List<SearchCriteria> searchCriteria) {
-        this.searchCriteria = MoreObjects.firstNonNull(searchCriteria, Lists.newArrayList());
+        this.searchCriteria = MoreObjects.firstNonNull(searchCriteria, new ArrayList<SearchCriteria>());
         return this;
     }
 
@@ -147,7 +148,7 @@ public class ListFilter extends ListFilterMinimal {
     }
 
     public ListFilter setOrderBy(List<OrderBy> orderBy) {
-        this.orderBy = MoreObjects.firstNonNull(orderBy, Lists.newArrayList());
+        this.orderBy = MoreObjects.firstNonNull(orderBy, new ArrayList<OrderBy>());
         return this;
     }
 

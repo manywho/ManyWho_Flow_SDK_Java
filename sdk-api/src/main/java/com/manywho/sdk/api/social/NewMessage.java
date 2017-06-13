@@ -3,6 +3,7 @@ package com.manywho.sdk.api.social;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewMessage {
@@ -44,7 +45,7 @@ public class NewMessage {
     }
 
     public NewMessage setUploadedFiles(List<File> uploadedFiles) {
-        this.uploadedFiles = MoreObjects.firstNonNull(uploadedFiles, Lists.newArrayList());
+        this.uploadedFiles = MoreObjects.firstNonNull(uploadedFiles, new ArrayList<File>());
         return this;
     }
 
@@ -53,7 +54,7 @@ public class NewMessage {
     }
 
     public NewMessage setMentionedWhos(List<MentionedWho> mentionedWhos) {
-        this.mentionedWhos = MoreObjects.firstNonNull(mentionedWhos, Lists.newArrayList());
+        this.mentionedWhos = MoreObjects.firstNonNull(mentionedWhos, new ArrayList<MentionedWho>());
         return this;
     }
 }

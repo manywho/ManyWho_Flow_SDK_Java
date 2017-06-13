@@ -3,6 +3,7 @@ package com.manywho.sdk.api.run.state;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StateLog {
@@ -13,6 +14,6 @@ public class StateLog {
     }
 
     public void setStateLogEntries(List<StateLogEntry> stateLogEntries) {
-        this.stateLogEntries = MoreObjects.firstNonNull(stateLogEntries, Lists.newArrayList());
+        this.stateLogEntries = MoreObjects.firstNonNull(stateLogEntries, new ArrayList<StateLogEntry>());
     }
 }

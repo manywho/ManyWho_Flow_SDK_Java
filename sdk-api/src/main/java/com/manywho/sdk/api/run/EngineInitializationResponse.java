@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.ui.NavigationElementReference;
 import com.manywho.sdk.api.translate.Culture;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,6 +80,6 @@ public class EngineInitializationResponse {
     }
 
     public void setNavigationElementReferences(List<NavigationElementReference> navigationElementReferences) {
-        this.navigationElementReferences = MoreObjects.firstNonNull(navigationElementReferences, Lists.newArrayList());
+        this.navigationElementReferences = MoreObjects.firstNonNull(navigationElementReferences, new ArrayList<NavigationElementReference>());
     }
 }

@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.map.OutcomeAvailable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -49,7 +50,7 @@ public class ServiceRequest extends AbstractRequest {
     }
 
     public void setInputs(List<EngineValue> inputs) {
-        this.inputs = MoreObjects.firstNonNull(inputs, Lists.newArrayList());
+        this.inputs = MoreObjects.firstNonNull(inputs, new ArrayList<EngineValue>());
     }
 
     public List<OutcomeAvailable> getOutcomes() {
@@ -57,6 +58,6 @@ public class ServiceRequest extends AbstractRequest {
     }
 
     public void setOutcomes(List<OutcomeAvailable> outcomes) {
-        this.outcomes = MoreObjects.firstNonNull(outcomes, Lists.newArrayList());
+        this.outcomes = MoreObjects.firstNonNull(outcomes, new ArrayList<OutcomeAvailable>());
     }
 }

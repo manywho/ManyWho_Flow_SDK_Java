@@ -3,6 +3,7 @@ package com.manywho.sdk.api.describe;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DescribeServiceActionRequest {
@@ -23,7 +24,7 @@ public class DescribeServiceActionRequest {
     }
 
     public void setServiceInputs(List<DescribeValue> serviceInputs) {
-        this.serviceInputs = MoreObjects.firstNonNull(serviceInputs, Lists.newArrayList());
+        this.serviceInputs = MoreObjects.firstNonNull(serviceInputs, new ArrayList<DescribeValue>());
     }
 
     public List<DescribeValue> getServiceOutputs() {
@@ -31,6 +32,6 @@ public class DescribeServiceActionRequest {
     }
 
     public void setServiceOutputs(List<DescribeValue> serviceOutputs) {
-        this.serviceOutputs = MoreObjects.firstNonNull(serviceOutputs, Lists.newArrayList());
+        this.serviceOutputs = MoreObjects.firstNonNull(serviceOutputs, new ArrayList<DescribeValue>());
     }
 }

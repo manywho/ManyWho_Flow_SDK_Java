@@ -8,6 +8,8 @@ import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.translate.Culture;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,7 +34,7 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     }
 
     public void setAttributes(Map<String, String> attributes) {
-        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
+        this.attributes = MoreObjects.firstNonNull(attributes, new HashMap<String, String>());
     }
 
     public String getToken() {
@@ -84,7 +86,7 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, new ArrayList<EngineValue>());
     }
 
     public GroupAuthorization getAuthorization() {
@@ -104,6 +106,6 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
+        this.annotations = MoreObjects.firstNonNull(annotations, new HashMap<String, String>());
     }
 }

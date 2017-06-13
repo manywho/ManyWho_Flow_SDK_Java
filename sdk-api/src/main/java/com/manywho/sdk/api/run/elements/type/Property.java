@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +52,7 @@ public class Property implements PropertyAware {
 
     public Property(String developerName, List<MObject> objectData) {
         this.developerName = developerName;
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public UUID getTypeElementPropertyId() {
@@ -91,7 +92,7 @@ public class Property implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());;
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public String getContentFormat() {

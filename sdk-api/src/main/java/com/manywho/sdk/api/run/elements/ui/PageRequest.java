@@ -3,6 +3,7 @@ package com.manywho.sdk.api.run.elements.ui;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PageRequest {
@@ -17,6 +18,6 @@ public class PageRequest {
     }
 
     public void setPageComponentInputResponses(List<PageComponentInputResponseRequest> pageComponentInputResponses) {
-        this.pageComponentInputResponses = MoreObjects.firstNonNull(pageComponentInputResponses, Lists.newArrayList());
+        this.pageComponentInputResponses = MoreObjects.firstNonNull(pageComponentInputResponses, new ArrayList<PageComponentInputResponseRequest>());
     }
 }

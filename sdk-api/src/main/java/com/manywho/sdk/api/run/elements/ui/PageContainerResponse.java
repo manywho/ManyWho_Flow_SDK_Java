@@ -4,6 +4,8 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -54,7 +56,7 @@ public class PageContainerResponse {
     }
 
     public void setPageContainerResponses(List<PageContainerResponse> pageContainerResponses) {
-        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, Lists.newArrayList());
+        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, new ArrayList<PageContainerResponse>());
     }
 
     public int getOrder() {
@@ -70,6 +72,6 @@ public class PageContainerResponse {
     }
 
     public void setAttributes(Map<String, String> attributes) {
-        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
+        this.attributes = MoreObjects.firstNonNull(attributes, new HashMap<String, String>());
     }
 }

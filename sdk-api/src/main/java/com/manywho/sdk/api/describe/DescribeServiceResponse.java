@@ -3,6 +3,7 @@ package com.manywho.sdk.api.describe;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DescribeServiceResponse {
@@ -26,7 +27,7 @@ public class DescribeServiceResponse {
     }
 
     public void setConfigurationValues(List<DescribeValue> configurationValues) {
-        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, new ArrayList<DescribeValue>());
     }
 
     public boolean isProvidesAutoBinding() {

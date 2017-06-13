@@ -6,6 +6,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.ContentType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -94,7 +96,7 @@ public class PageComponentResponse {
     }
 
     public void setColumns(List<PageComponentColumnResponse> columns) {
-        this.columns = MoreObjects.firstNonNull(columns, Lists.newArrayList());
+        this.columns = MoreObjects.firstNonNull(columns, new ArrayList<PageComponentColumnResponse>());
     }
 
     public int getSize() {
@@ -182,6 +184,6 @@ public class PageComponentResponse {
     }
 
     public void setAttributes(Map<String, String> attributes) {
-        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
+        this.attributes = MoreObjects.firstNonNull(attributes, new HashMap<String, String>());
     }
 }

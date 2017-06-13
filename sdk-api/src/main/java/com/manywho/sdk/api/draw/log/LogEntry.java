@@ -1,19 +1,18 @@
 package com.manywho.sdk.api.draw.log;
 
 import com.manywho.sdk.api.draw.elements.Element;
-
-import java.time.LocalDateTime;
+import org.joda.time.DateTime;
 
 public class LogEntry extends Element {
-    private LocalDateTime timestamp;
+    private DateTime timestamp;
     private String message;
     private String data;
 
-    public LocalDateTime getTimestamp() {
+    public DateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(DateTime timestamp) {
         this.timestamp = timestamp;
     }
 

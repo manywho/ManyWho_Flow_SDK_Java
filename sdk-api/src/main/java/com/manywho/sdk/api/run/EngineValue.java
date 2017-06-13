@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ public class EngineValue implements PropertyAware {
 
     public EngineValue(String developerName, ContentType contentType, List<MObject> objectData) {
         this(developerName, contentType);
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public EngineValue(String developerName, ContentType contentType, String typeElementDeveloperName, MObject object) {
@@ -121,6 +122,6 @@ public class EngineValue implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 }

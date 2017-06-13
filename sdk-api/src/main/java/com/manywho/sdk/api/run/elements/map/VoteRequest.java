@@ -8,6 +8,8 @@ import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.run.elements.config.Authorization;
 import com.manywho.sdk.api.run.state.UserVote;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,7 @@ public class VoteRequest implements ConfigurationValuesAware {
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, new ArrayList<EngineValue>());
     }
 
     public Authorization getAuthorization() {
@@ -47,7 +49,7 @@ public class VoteRequest implements ConfigurationValuesAware {
     }
 
     public void setUserVotes(List<UserVote> userVotes) {
-        this.userVotes = MoreObjects.firstNonNull(userVotes, Lists.newArrayList());
+        this.userVotes = MoreObjects.firstNonNull(userVotes, new ArrayList<UserVote>());
     }
 
     public String getVoteType() {
@@ -79,7 +81,7 @@ public class VoteRequest implements ConfigurationValuesAware {
     }
 
     public void setAttributes(Map<String, String> attributes) {
-        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
+        this.attributes = MoreObjects.firstNonNull(attributes, new HashMap<String, String>());
     }
 
     public String getSelectedOutcomeId() {

@@ -6,6 +6,7 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class StateValue implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public String getContentValue() {

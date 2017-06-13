@@ -5,9 +5,9 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class TypeElement extends Element {
     private UUID id;
@@ -26,8 +26,8 @@ public class TypeElement extends Element {
 
     public TypeElement(String developerName, List<TypeElementProperty> properties, List<TypeElementBinding> bindings) {
         this.developerName = developerName;
-        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
-        this.bindings = MoreObjects.firstNonNull(bindings, Lists.newArrayList());
+        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<TypeElementProperty>());
+        this.bindings = MoreObjects.firstNonNull(bindings, new ArrayList<TypeElementBinding>());
     }
 
     public UUID getId() {
@@ -51,7 +51,7 @@ public class TypeElement extends Element {
     }
 
     public void setProperties(List<TypeElementProperty> properties) {
-        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
+        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<TypeElementProperty>());
     }
 
     public List<TypeElementBinding> getBindings() {
@@ -59,7 +59,7 @@ public class TypeElement extends Element {
     }
 
     public void setBindings(List<TypeElementBinding> bindings) {
-        this.bindings = MoreObjects.firstNonNull(bindings, Lists.newArrayList());
+        this.bindings = MoreObjects.firstNonNull(bindings, new ArrayList<TypeElementBinding>());
     }
 
     public boolean isUpdateByName() {
@@ -96,13 +96,13 @@ public class TypeElement extends Element {
         }
 
         public TypeElement build() {
-            List<TypeElementProperty> typeElementProperties = properties.stream()
-                    .map(property -> new TypeElementProperty(property.getDeveloperName(), property.getContentType(), property.getTypeName()))
-                    .collect(Collectors.toList());
+            List<TypeElementProperty> typeElementProperties = new ArrayList<>();
+            List<TypeElementPropertyBinding> typeElementPropertyBindings = new ArrayList<>();
 
-            List<TypeElementPropertyBinding> typeElementPropertyBindings = properties.stream()
-                    .map(property -> new TypeElementPropertyBinding(property.getDeveloperName(), property.getFieldName()))
-                    .collect(Collectors.toList());
+            for (TypeProperty property : properties) {
+                typeElementProperties.add(new TypeElementProperty(property.getDeveloperName(), property.getContentType(), property.getTypeName()));
+                typeElementPropertyBindings.add(new TypeElementPropertyBinding(property.getDeveloperName(), property.getFieldName()));
+            }
 
             TypeElementBinding typeElementBinding = new TypeElementBinding();
             typeElementBinding.setDeveloperName(developerName);

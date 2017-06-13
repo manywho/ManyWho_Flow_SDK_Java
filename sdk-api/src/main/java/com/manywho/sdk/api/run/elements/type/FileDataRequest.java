@@ -7,6 +7,7 @@ import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.run.elements.config.Authorization;
 import com.manywho.sdk.api.translate.Culture;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class FileDataRequest implements ConfigurationValuesAware {
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, new ArrayList<EngineValue>());
     }
 
     public Culture getCulture() {

@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.elements.Element;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,6 +43,6 @@ public class Log extends Element {
     }
 
     public void setEntries(Map<String, LogEntry> entries) {
-        this.entries = MoreObjects.firstNonNull(entries, Maps.newHashMap());
+        this.entries = MoreObjects.firstNonNull(entries, new HashMap<String, LogEntry>());
     }
 }

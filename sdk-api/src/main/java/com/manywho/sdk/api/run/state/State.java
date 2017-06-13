@@ -6,8 +6,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 import com.manywho.sdk.api.draw.log.Log;
+import org.joda.time.DateTime;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -15,8 +17,8 @@ import java.util.UUID;
 public class State {
     private UUID id;
     private UUID parentId;
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateModified;
+    private DateTime dateCreated;
+    private DateTime dateModified;
     private FlowId currentFlowId;
     private String currentFlowDeveloperName;
     private UUID currentMapElementId;
@@ -52,19 +54,19 @@ public class State {
         this.parentId = parentId;
     }
 
-    public LocalDateTime getDateCreated() {
+    public DateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(DateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public LocalDateTime getDateModified() {
+    public DateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(LocalDateTime dateModified) {
+    public void setDateModified(DateTime dateModified) {
         this.dateModified = dateModified;
     }
 
@@ -145,7 +147,7 @@ public class State {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
+        this.annotations = MoreObjects.firstNonNull(annotations, new HashMap<String, String>());
     }
 
     public List<StateEntry> getStateEntries() {
@@ -157,7 +159,7 @@ public class State {
     }
 
     public void setStateEntries(List<StateEntry> stateEntries) {
-        this.stateEntries = MoreObjects.firstNonNull(stateEntries, Lists.newArrayList());
+        this.stateEntries = MoreObjects.firstNonNull(stateEntries, new ArrayList<StateEntry>());
     }
 
     public StateEntry getPrecommitStateEntry() {
@@ -177,7 +179,7 @@ public class State {
     }
 
     public void setValues(List<StateValue> values) {
-        this.values = MoreObjects.firstNonNull(values, Lists.newArrayList());
+        this.values = MoreObjects.firstNonNull(values, new ArrayList<StateValue>());
     }
 
     public String getAuthorizationHeader() {

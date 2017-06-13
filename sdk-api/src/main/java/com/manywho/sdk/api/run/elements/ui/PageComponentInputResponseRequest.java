@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class PageComponentInputResponseRequest implements PropertyAware {
 
     public PageComponentInputResponseRequest(UUID pageComponentId, List<MObject> objectData) {
         this.pageComponentId = pageComponentId;
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 
     public PageComponentInputResponseRequest(UUID pageComponentId, String contentValue) {
@@ -53,6 +54,6 @@ public class PageComponentInputResponseRequest implements PropertyAware {
     }
 
     public void setObjectData(List<MObject> objectData) {
-        this.objectData = MoreObjects.firstNonNull(objectData, Lists.newArrayList());
+        this.objectData = MoreObjects.firstNonNull(objectData, new ArrayList<MObject>());
     }
 }

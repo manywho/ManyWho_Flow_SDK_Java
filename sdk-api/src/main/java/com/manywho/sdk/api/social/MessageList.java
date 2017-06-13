@@ -3,6 +3,7 @@ package com.manywho.sdk.api.social;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageList {
@@ -14,7 +15,7 @@ public class MessageList {
     }
 
     public MessageList setMessages(List<Message> messages) {
-        this.messages = MoreObjects.firstNonNull(messages, Lists.newArrayList());
+        this.messages = MoreObjects.firstNonNull(messages, new ArrayList<Message>());
         return this;
     }
 

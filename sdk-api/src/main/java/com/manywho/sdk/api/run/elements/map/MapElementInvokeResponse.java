@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.elements.ui.PageResponse;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -49,7 +51,7 @@ public class MapElementInvokeResponse {
     }
 
     public void setOutcomeResponses(List<OutcomeResponse> outcomeResponses) {
-        this.outcomeResponses = MoreObjects.firstNonNull(outcomeResponses, Lists.newArrayList());
+        this.outcomeResponses = MoreObjects.firstNonNull(outcomeResponses, new ArrayList<OutcomeResponse>());
     }
 
     public Map<String, String> getRootFaults() {
@@ -61,6 +63,6 @@ public class MapElementInvokeResponse {
     }
 
     public void setRootFaults(Map<String, String> rootFaults) {
-        this.rootFaults = MoreObjects.firstNonNull(rootFaults, Maps.newHashMap());
+        this.rootFaults = MoreObjects.firstNonNull(rootFaults, new HashMap<String, String>());
     }
 }

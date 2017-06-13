@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineInvokeRequest;
 import com.manywho.sdk.api.run.EngineInvokeResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StateLogEntry {
@@ -43,7 +44,7 @@ public class StateLogEntry {
     }
 
     public void setStateLogEntryInvokePairs(List<StateLogEntryInvokePair> stateLogEntryInvokePairs) {
-        this.stateLogEntryInvokePairs = MoreObjects.firstNonNull(stateLogEntryInvokePairs, Lists.newArrayList());
+        this.stateLogEntryInvokePairs = MoreObjects.firstNonNull(stateLogEntryInvokePairs, new ArrayList<StateLogEntryInvokePair>());
     }
 
     public String getTimeStamp() {

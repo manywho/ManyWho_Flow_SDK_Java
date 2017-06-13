@@ -3,6 +3,7 @@ package com.manywho.sdk.api.draw.content;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Maps;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Command {
@@ -22,6 +23,6 @@ public class Command {
     }
 
     public void setProperties(Map<String, String> properties) {
-        this.properties = MoreObjects.firstNonNull(properties, Maps.newHashMap());
+        this.properties = MoreObjects.firstNonNull(properties, new HashMap<String, String>());
     }
 }

@@ -7,6 +7,7 @@ import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
     }
 
     public void setConfigurationValues(List<EngineValue> configurationValues) {
-        this.configurationValues = MoreObjects.firstNonNull(configurationValues, Lists.newArrayList());
+        this.configurationValues = MoreObjects.firstNonNull(configurationValues, new ArrayList<EngineValue>());
     }
 
     public AuthorizationType getAuthenticationType() {

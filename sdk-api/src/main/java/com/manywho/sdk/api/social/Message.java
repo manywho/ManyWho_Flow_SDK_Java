@@ -2,15 +2,16 @@ package com.manywho.sdk.api.social;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import org.joda.time.DateTime;
 
-import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
     private String id;
     private String repliedToId;
     private String text;
-    private OffsetDateTime createdDate;
+    private DateTime createdDate;
     private Who sender;
     private List<Attachment> attachments = Lists.newArrayList();
     private List<Message> comments = Lists.newArrayList();
@@ -45,11 +46,11 @@ public class Message {
         return this;
     }
 
-    public OffsetDateTime getCreatedDate() {
+    public DateTime getCreatedDate() {
         return createdDate;
     }
 
-    public Message setCreatedDate(OffsetDateTime createdDate) {
+    public Message setCreatedDate(DateTime createdDate) {
         this.createdDate = createdDate;
         return this;
     }
@@ -73,7 +74,7 @@ public class Message {
     }
 
     public Message setAttachments(List<Attachment> attachments) {
-        this.attachments = MoreObjects.firstNonNull(attachments, Lists.newArrayList());
+        this.attachments = MoreObjects.firstNonNull(attachments, new ArrayList<Attachment>());
         return this;
     }
 
@@ -87,7 +88,7 @@ public class Message {
     }
 
     public Message setComments(List<Message> comments) {
-        this.comments = MoreObjects.firstNonNull(comments, Lists.newArrayList());
+        this.comments = MoreObjects.firstNonNull(comments, new ArrayList<Message>());
         return this;
     }
 
@@ -96,7 +97,7 @@ public class Message {
     }
 
     public Message setLikerIds(List<String> likerIds) {
-        this.likerIds = MoreObjects.firstNonNull(likerIds, Lists.newArrayList());
+        this.likerIds = MoreObjects.firstNonNull(likerIds, new ArrayList<String>());
         return this;
     }
 

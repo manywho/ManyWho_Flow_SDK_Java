@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineValue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,7 +27,7 @@ public class ServiceResponse extends AbstractResponse {
 
     public ServiceResponse(InvokeType invokeType, List<EngineValue> outputs, String token, String waitMessage) {
         this.invokeType = invokeType;
-        this.outputs = MoreObjects.firstNonNull(outputs, Lists.newArrayList());
+        this.outputs = MoreObjects.firstNonNull(outputs, new ArrayList<EngineValue>());
         this.token = token;
         this.waitMessage = waitMessage;
     }
@@ -78,7 +80,7 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void setOutputs(List<EngineValue> outputs) {
-        this.outputs = MoreObjects.firstNonNull(outputs, Lists.newArrayList());
+        this.outputs = MoreObjects.firstNonNull(outputs, new ArrayList<EngineValue>());
     }
 
     public UUID getSelectedOutcomeId() {
@@ -98,7 +100,7 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void setRootFaults(Map<String, String> rootFaults) {
-        this.rootFaults = MoreObjects.firstNonNull(rootFaults, Maps.newHashMap());
+        this.rootFaults = MoreObjects.firstNonNull(rootFaults, new HashMap<String, String>());
     }
 
     public List<ValueFault> getValueFaults() {
@@ -106,7 +108,7 @@ public class ServiceResponse extends AbstractResponse {
     }
 
     public void setValueFaults(List<ValueFault> valueFaults) {
-        this.valueFaults = MoreObjects.firstNonNull(valueFaults, Lists.newArrayList());
+        this.valueFaults = MoreObjects.firstNonNull(valueFaults, new ArrayList<ValueFault>());
     }
 
     public String getMode() {

@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.EngineValue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public class PageResponse {
     }
 
     public void setPageContainerResponses(List<PageContainerResponse> pageContainerResponses) {
-        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, Lists.newArrayList());
+        this.pageContainerResponses = MoreObjects.firstNonNull(pageContainerResponses, new ArrayList<PageContainerResponse>());
     }
 
     public List<PageComponentResponse> getPageComponentResponses() {
@@ -47,7 +49,7 @@ public class PageResponse {
     }
 
     public void setPageComponentResponses(List<PageComponentResponse> pageComponentResponses) {
-        this.pageComponentResponses = MoreObjects.firstNonNull(pageComponentResponses, Lists.newArrayList());
+        this.pageComponentResponses = MoreObjects.firstNonNull(pageComponentResponses, new ArrayList<PageComponentResponse>());
     }
 
     public List<PageComponentDataResponse> getPageComponentDataResponses() {
@@ -59,7 +61,7 @@ public class PageResponse {
     }
 
     public void setPageComponentDataResponses(List<PageComponentDataResponse> pageComponentDataResponses) {
-        this.pageComponentDataResponses = MoreObjects.firstNonNull(pageComponentDataResponses, Lists.newArrayList());
+        this.pageComponentDataResponses = MoreObjects.firstNonNull(pageComponentDataResponses, new ArrayList<PageComponentDataResponse>());
     }
 
     public List<PageContainerDataResponse> getPageContainerDataResponses() {
@@ -71,7 +73,7 @@ public class PageResponse {
     }
 
     public void setPageContainerDataResponses(List<PageContainerDataResponse> pageContainerDataResponses) {
-        this.pageContainerDataResponses = MoreObjects.firstNonNull(pageContainerDataResponses, Lists.newArrayList());
+        this.pageContainerDataResponses = MoreObjects.firstNonNull(pageContainerDataResponses, new ArrayList<PageContainerDataResponse>());
     }
 
     public List<EngineValue> getTags() {
@@ -79,7 +81,7 @@ public class PageResponse {
     }
 
     public void setTags(List<EngineValue> tags) {
-        this.tags = MoreObjects.firstNonNull(tags, Lists.newArrayList());
+        this.tags = MoreObjects.firstNonNull(tags, new ArrayList<EngineValue>());
     }
 
     public Map<String, String> getAttributes() {
@@ -87,7 +89,7 @@ public class PageResponse {
     }
 
     public void setAttributes(Map<String, String> attributes) {
-        this.attributes = MoreObjects.firstNonNull(attributes, Maps.newHashMap());
+        this.attributes = MoreObjects.firstNonNull(attributes, new HashMap<String, String>());
     }
 
     public int getOrder() {

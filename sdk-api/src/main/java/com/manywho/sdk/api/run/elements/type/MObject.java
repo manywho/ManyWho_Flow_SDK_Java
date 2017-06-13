@@ -5,6 +5,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public class MObject {
     public MObject(String developerName, String externalId, List<Property> properties) {
         this.developerName = developerName;
         this.externalId = externalId;
-        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
+        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<Property>());
     }
 
     public UUID getInternalId() {
@@ -77,7 +78,7 @@ public class MObject {
     }
 
     public void setProperties(List<Property> properties) {
-        this.properties = MoreObjects.firstNonNull(properties, Lists.newArrayList());
+        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<Property>());
     }
 
     public boolean isSelected() {

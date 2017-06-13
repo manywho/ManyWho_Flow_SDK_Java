@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DescribeServiceActionResponse extends DescribeServiceActionRequest {
@@ -51,7 +52,7 @@ public class DescribeServiceActionResponse extends DescribeServiceActionRequest 
     }
 
     public void setServiceActionOutcomes(List<DescribeUIServiceActionOutcome> serviceActionOutcomes) {
-        this.serviceActionOutcomes = MoreObjects.firstNonNull(serviceActionOutcomes, Lists.newArrayList());
+        this.serviceActionOutcomes = MoreObjects.firstNonNull(serviceActionOutcomes, new ArrayList<DescribeUIServiceActionOutcome>());
     }
 
     public boolean isViewMessageAction() {

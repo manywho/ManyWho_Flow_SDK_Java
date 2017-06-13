@@ -7,6 +7,7 @@ import com.manywho.sdk.api.run.elements.map.MapElementInvokeRequest;
 import com.manywho.sdk.api.run.state.Geolocation;
 import com.manywho.sdk.api.translate.Culture;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -97,7 +98,7 @@ public class EngineInvokeRequest {
     }
 
     public void setAnnotations(Map<String, String> annotations) {
-        this.annotations = MoreObjects.firstNonNull(annotations, Maps.newHashMap());
+        this.annotations = MoreObjects.firstNonNull(annotations, new HashMap<String, String>());
     }
 
     public Geolocation getGeolocation() {
