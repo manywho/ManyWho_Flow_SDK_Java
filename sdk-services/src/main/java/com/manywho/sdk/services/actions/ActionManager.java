@@ -6,6 +6,7 @@ import com.manywho.sdk.api.InvokeType;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ServiceResponse;
+import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.describe.DescribeActionService;
 import com.manywho.sdk.services.values.ValueBuilder;
@@ -47,8 +48,10 @@ public class ActionManager {
     }
 
     public ServiceResponse executeAction(String path, ServiceRequest serviceRequest) {
-        if (actionHandler.canHandleAction(path, configurationParser.from(serviceRequest), serviceRequest)) {
-            return actionHandler.handleRaw(path, configurationParser.from(serviceRequest), serviceRequest);
+        Configuration configuration = configurationParser.from(serviceRequest);
+
+        if (actionHandler.canHandleAction(path, configuration, serviceRequest)) {
+            return actionHandler.handleRaw(path, configuration, serviceRequest);
         }
 
         Class<?> action = actionRepository.getActions().stream()
@@ -80,7 +83,7 @@ public class ActionManager {
             }
 
             ActionResponse actionResponse = injector.getInstance(command).execute(
-                    configurationParser.from(serviceRequest),
+                    configuration,
                     serviceRequest,
                     inputObject
             );
