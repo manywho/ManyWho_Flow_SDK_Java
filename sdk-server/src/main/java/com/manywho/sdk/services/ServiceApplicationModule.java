@@ -18,19 +18,24 @@ import org.reflections.Reflections;
 
 public class ServiceApplicationModule extends AbstractModule {
     private final String applicationPackage;
+    private final boolean isHttp;
 
-    public ServiceApplicationModule(String applicationPackage) {
+    public ServiceApplicationModule(String applicationPackage, boolean isHttp) {
         this.applicationPackage = applicationPackage;
+        this.isHttp = isHttp;
     }
 
     @Override
     protected void configure() {
         bind(Reflections.class).toProvider(ReflectionsProvider.class).asEagerSingleton();
-        bind(RunClient.class).toProvider(RunClientProvider.class);
-        bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class).in(RequestScoped.class);
+
         bind(TypeProvider.class).to(DummyTypeProvider.class);
         bind(ActionProvider.class).to(DummyActionProvider.class);
         bind(ActionHandler.class).to(DummyActionHandler.class);
         bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
+
+        if (isHttp) {
+            bind(AuthenticatedWho.class).toProvider(AuthenticatedWhoProvider.class).in(RequestScoped.class);
+        }
     }
 }

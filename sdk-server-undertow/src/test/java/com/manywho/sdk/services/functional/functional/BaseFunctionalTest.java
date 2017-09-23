@@ -18,7 +18,7 @@ public abstract class BaseFunctionalTest {
     @BeforeClass
     public static void setUp() {
         TestApplication application = new TestApplication();
-        application.initialize(BaseFunctionalTest.class.getPackage().getName());
+        application.initialize(BaseFunctionalTest.class.getPackage().getName(), true);
 
         objectMapper = new ObjectMapperContextResolver().getContext(null);
 
