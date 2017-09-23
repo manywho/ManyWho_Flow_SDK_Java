@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Database · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Database · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.2">
         
         
         
@@ -102,7 +102,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" >
+        <li class="chapter " data-level="1.2" data-path="../getting-started.html">
+            
+                <a href="../getting-started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
             
                 <span>
             
@@ -116,7 +129,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="../servers/undertow.html">
+        <li class="chapter " data-level="1.3.1" data-path="../servers/undertow.html">
             
                 <a href="../servers/undertow.html">
             
@@ -129,7 +142,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="../servers/servlet3.html">
+        <li class="chapter " data-level="1.3.2" data-path="../servers/servlet3.html">
             
                 <a href="../servers/servlet3.html">
             
@@ -147,7 +160,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" >
+        <li class="chapter " data-level="1.4" >
             
                 <span>
             
@@ -161,7 +174,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="configuration.html">
+        <li class="chapter " data-level="1.4.1" data-path="configuration.html">
             
                 <a href="configuration.html">
             
@@ -174,7 +187,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.2" data-path="database.html">
+        <li class="chapter active" data-level="1.4.2" data-path="database.html">
             
                 <a href="database.html">
             
@@ -187,7 +200,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="files.html">
+        <li class="chapter " data-level="1.4.3" data-path="files.html">
             
                 <a href="files.html">
             
@@ -200,7 +213,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="identity.html">
+        <li class="chapter " data-level="1.4.4" data-path="identity.html">
             
                 <a href="identity.html">
             
@@ -213,7 +226,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="listeners.html">
+        <li class="chapter " data-level="1.4.5" data-path="listeners.html">
             
                 <a href="listeners.html">
             
@@ -226,7 +239,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="message-actions.html">
+        <li class="chapter " data-level="1.4.6" data-path="message-actions.html">
             
                 <a href="message-actions.html">
             
@@ -239,7 +252,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="social.html">
+        <li class="chapter " data-level="1.4.7" data-path="social.html">
             
                 <a href="social.html">
             
@@ -252,7 +265,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="types.html">
+        <li class="chapter " data-level="1.4.8" data-path="types.html">
             
                 <a href="types.html">
             
@@ -315,61 +328,115 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="database">Database</h1><p>A <strong>Database</strong> is a way for Services to handle Database actions in a managed way, using previously-defined <a href="types.html">Types</a>.</p><p>The Java SDK provides a way to easily create Databases in your Service. The following documentation should give you a nice overview of how to define and use them.</p><h2 id="interfaces">Interfaces</h2><p>There are 2 interfaces to choose from when defining a Database, depending on how your Types are defined.</p><h3 id="databasec-extends-configuration-t-extends-type">Database&lt;C extends Configuration, T extends Type&gt;</h3><p>This interface should be used if your Service contains statically-defined Types (using the <code>Type</code> interface).</p><h4 id="generic-type-parameters">Generic Type Parameters</h4><ul><li><code>C</code> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class
+                                <h1 id="database">Database</h1>
+<p>A <strong>Database</strong> is a way for Services to handle Database actions in a managed way, using previously-defined <a href="types.html">Types</a>.</p>
+<p>The Java SDK provides a way to easily create Databases in your Service. The following documentation should give you a nice overview of how to define and use them.</p>
+<h2 id="interfaces">Interfaces</h2>
+<p>There are 2 interfaces to choose from when defining a Database, depending on how your Types are defined.</p>
+<h3 id="databasec-extends-configuration-t-extends-type">Database&lt;C extends Configuration, T extends Type&gt;</h3>
+<p>This interface should be used if your Service contains statically-defined Types (using the <code>Type</code> interface).</p>
+<h4 id="generic-type-parameters">Generic Type Parameters</h4>
+<ul>
+<li><code>C</code> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class</li>
+<li><code>T</code> - this parameter must be the previously-defined <a href="types.html">Type</a></li>
+</ul>
+<h4 id="methods">Methods</h4>
+<p>All methods have <code>C configuration</code> as their first parameter, which is an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request.</p>
+<ul>
+<li><code>T create(C configuration, T object)</code>:<ul>
+<li><code>object</code> - the object to be created/saved by the Service</li>
+</ul>
 </li>
-<li><code>T</code> - this parameter must be the previously-defined <a href="types.html">Type</a>
-</li></ul>
-<h4 id="methods">Methods</h4><p>All methods have <code>C configuration</code> as their first parameter, which is an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request.</p><ul><li><code>T create(C configuration, T object)</code>:
-<ul><li><code>object</code> - the object to be created/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the object passed in, assign an ID to it, save it in the appropriate store then return the object again (with the created ID).</p><ul><li><code>List&lt;T&gt; create(C configuration, List&lt;T&gt; objects)</code>:
-<ul><li><code>objects</code> - a list of objects to be created/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take a list of objects passed in, assign IDs to each item, save them in the appropriate store then return the list of objects again (with the created IDs).</p><ul><li><code>void delete(C configuration, T object)</code>:
-<ul><li><code>object</code> - the object to be deleted by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the passed in object and delete it from the appropriate store.</p><ul><li><code>void delete(C configuration, List&lt;T&gt; objects)</code>:
-<ul><li><code>objects</code> - the list of objects to be deleted by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the passed in objects and delete them from the appropriate store.</p><ul><li><code>T update(C configuration, T object)</code>:
-<ul><li><code>object</code> - the object to be updated/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the object passed in, update the existing record in the appropriate store, then return the updated object again.</p><ul><li><code>List&lt;T&gt; update(C configuration, List&lt;T&gt; objects)</code>:
-<ul><li><code>objects</code> - the list of objects to be updated/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the list of objects passed in, update the existing records in the appropriate store, then return the updated list of objects again.</p><h3 id="rawdatabasec-extends-configuration">RawDatabase&lt;C extends Configuration&gt;</h3><p>This interface should be used if your Service contains dynamically-defined Types (probably through the <code>TypeProvider</code> interface).</p><h4 id="generic-type-parameters">Generic Type Parameters</h4><ul><li><code>C</code> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class
-</li></ul>
-<h4 id="methods">Methods</h4><p>All methods have <code>C configuration</code> as their first parameter, which is an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request.</p><ul><li><code>MObject create(C configuration, MObject object)</code>:
-<ul><li><code>object</code> - the object to be created/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the object passed in, assign an External ID to it, extract the Properties, save them in the appropriate store then return the object again (with the created External ID).</p><ul><li><code>List&lt;MObject&gt; create(C configuration, List&lt;MObject&gt; objects)</code>:
-<ul><li><code>objects</code> - a list of objects to be created/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take a list of objects passed in, assign External IDs to each item, extract the Properties, save them in the appropriate store then return the list of objects again (with the created External IDs).</p><ul><li><code>void delete(C configuration, MObject object)</code>:
-<ul><li><code>object</code> - the object to be deleted by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the passed in object and delete it from the appropriate store.</p><ul><li><code>void delete(C configuration, List&lt;MObject&gt; objects)</code>:
-<ul><li><code>objects</code> - the list of objects to be deleted by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the passed in objects and delete them from the appropriate store.</p><ul><li><code>MObject update(C configuration, MObject object)</code>:
-<ul><li><code>object</code> - the object to be updated/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the object passed in, update the existing record in the appropriate store, then return the updated object again.</p><ul><li><code>List&lt;MObject&gt; update(C configuration, List&lt;MObject&gt; objects)</code>:
-<ul><li><code>objects</code> - the list of objects to be updated/saved by the Service
-</li></ul>
-</li></ul>
-<p>This method will take the list of objects passed in, update the existing records in the appropriate store, then return the updated list of objects again.</p><h2 id="example">Example</h2><p>This example shows a Database implementation to handle a Type called <code>Person</code>:</p><pre><code class="lang-java"><span class="hljs-keyword">import</span> com.manywho.sdk.api.run.elements.type.ListFilter;
+</ul>
+<p>This method will take the object passed in, assign an ID to it, save it in the appropriate store then return the object again (with the created ID).</p>
+<ul>
+<li><code>List&lt;T&gt; create(C configuration, List&lt;T&gt; objects)</code>:<ul>
+<li><code>objects</code> - a list of objects to be created/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take a list of objects passed in, assign IDs to each item, save them in the appropriate store then return the list of objects again (with the created IDs).</p>
+<ul>
+<li><code>void delete(C configuration, T object)</code>:<ul>
+<li><code>object</code> - the object to be deleted by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the passed in object and delete it from the appropriate store.</p>
+<ul>
+<li><code>void delete(C configuration, List&lt;T&gt; objects)</code>:<ul>
+<li><code>objects</code> - the list of objects to be deleted by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the passed in objects and delete them from the appropriate store.</p>
+<ul>
+<li><code>T update(C configuration, T object)</code>:<ul>
+<li><code>object</code> - the object to be updated/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the object passed in, update the existing record in the appropriate store, then return the updated object again.</p>
+<ul>
+<li><code>List&lt;T&gt; update(C configuration, List&lt;T&gt; objects)</code>:<ul>
+<li><code>objects</code> - the list of objects to be updated/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the list of objects passed in, update the existing records in the appropriate store, then return the updated list of objects again.</p>
+<h3 id="rawdatabasec-extends-configuration">RawDatabase&lt;C extends Configuration&gt;</h3>
+<p>This interface should be used if your Service contains dynamically-defined Types (probably through the <code>TypeProvider</code> interface).</p>
+<h4 id="generic-type-parameters">Generic Type Parameters</h4>
+<ul>
+<li><code>C</code> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class</li>
+</ul>
+<h4 id="methods">Methods</h4>
+<p>All methods have <code>C configuration</code> as their first parameter, which is an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request.</p>
+<ul>
+<li><code>MObject create(C configuration, MObject object)</code>:<ul>
+<li><code>object</code> - the object to be created/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the object passed in, assign an External ID to it, extract the Properties, save them in the appropriate store then return the object again (with the created External ID).</p>
+<ul>
+<li><code>List&lt;MObject&gt; create(C configuration, List&lt;MObject&gt; objects)</code>:<ul>
+<li><code>objects</code> - a list of objects to be created/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take a list of objects passed in, assign External IDs to each item, extract the Properties, save them in the appropriate store then return the list of objects again (with the created External IDs).</p>
+<ul>
+<li><code>void delete(C configuration, MObject object)</code>:<ul>
+<li><code>object</code> - the object to be deleted by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the passed in object and delete it from the appropriate store.</p>
+<ul>
+<li><code>void delete(C configuration, List&lt;MObject&gt; objects)</code>:<ul>
+<li><code>objects</code> - the list of objects to be deleted by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the passed in objects and delete them from the appropriate store.</p>
+<ul>
+<li><code>MObject update(C configuration, MObject object)</code>:<ul>
+<li><code>object</code> - the object to be updated/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the object passed in, update the existing record in the appropriate store, then return the updated object again.</p>
+<ul>
+<li><code>List&lt;MObject&gt; update(C configuration, List&lt;MObject&gt; objects)</code>:<ul>
+<li><code>objects</code> - the list of objects to be updated/saved by the Service</li>
+</ul>
+</li>
+</ul>
+<p>This method will take the list of objects passed in, update the existing records in the appropriate store, then return the updated list of objects again.</p>
+<h2 id="example">Example</h2>
+<p>This example shows a Database implementation to handle a Type called <code>Person</code>:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> com.manywho.sdk.api.run.elements.type.ListFilter;
 <span class="hljs-keyword">import</span> com.manywho.sdk.services.database.Database;
 <span class="hljs-keyword">import</span> com.manywho.services.example.ServiceConfiguration;
 <span class="hljs-keyword">import</span> com.manywho.services.example.repositories.PersonRepository;
@@ -430,7 +497,8 @@
                      .map(person -&gt; update(configuration, person))
                      .collect(Collectors.toList());
     }
-}</code></pre>
+}
+</code></pre>
 
                                 
                                 </section>
@@ -474,7 +542,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Database","level":"1.3.2","depth":2,"next":{"title":"Files","level":"1.3.3","depth":2,"path":"docs/features/files.md","ref":"docs/features/files.md","articles":[]},"previous":{"title":"Configuration","level":"1.3.1","depth":2,"path":"docs/features/configuration.md","ref":"docs/features/configuration.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/database.md","mtime":"2017-03-17T15:41:53.168Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-17T15:55:16.497Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Database","level":"1.4.2","depth":2,"next":{"title":"Files","level":"1.4.3","depth":2,"path":"docs/features/files.md","ref":"docs/features/files.md","articles":[]},"previous":{"title":"Configuration","level":"1.4.1","depth":2,"path":"docs/features/configuration.md","ref":"docs/features/configuration.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/database.md","mtime":"2017-09-23T18:15:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-23T18:15:51.139Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

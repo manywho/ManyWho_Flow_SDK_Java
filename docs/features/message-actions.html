@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Message Actions · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Message Actions · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="generator" content="GitBook 3.2.2">
         
         
         
@@ -102,7 +102,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" >
+        <li class="chapter " data-level="1.2" data-path="../getting-started.html">
+            
+                <a href="../getting-started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
             
                 <span>
             
@@ -116,7 +129,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="../servers/undertow.html">
+        <li class="chapter " data-level="1.3.1" data-path="../servers/undertow.html">
             
                 <a href="../servers/undertow.html">
             
@@ -129,7 +142,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="../servers/servlet3.html">
+        <li class="chapter " data-level="1.3.2" data-path="../servers/servlet3.html">
             
                 <a href="../servers/servlet3.html">
             
@@ -147,7 +160,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" >
+        <li class="chapter " data-level="1.4" >
             
                 <span>
             
@@ -161,7 +174,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="configuration.html">
+        <li class="chapter " data-level="1.4.1" data-path="configuration.html">
             
                 <a href="configuration.html">
             
@@ -174,7 +187,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="database.html">
+        <li class="chapter " data-level="1.4.2" data-path="database.html">
             
                 <a href="database.html">
             
@@ -187,7 +200,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="files.html">
+        <li class="chapter " data-level="1.4.3" data-path="files.html">
             
                 <a href="files.html">
             
@@ -200,7 +213,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="identity.html">
+        <li class="chapter " data-level="1.4.4" data-path="identity.html">
             
                 <a href="identity.html">
             
@@ -213,7 +226,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="listeners.html">
+        <li class="chapter " data-level="1.4.5" data-path="listeners.html">
             
                 <a href="listeners.html">
             
@@ -226,7 +239,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.6" data-path="message-actions.html">
+        <li class="chapter active" data-level="1.4.6" data-path="message-actions.html">
             
                 <a href="message-actions.html">
             
@@ -239,7 +252,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="social.html">
+        <li class="chapter " data-level="1.4.7" data-path="social.html">
             
                 <a href="social.html">
             
@@ -252,7 +265,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="types.html">
+        <li class="chapter " data-level="1.4.8" data-path="types.html">
             
                 <a href="types.html">
             
@@ -315,47 +328,66 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="message-actions">Message Actions</h1><p>A <strong>Message Action</strong> is a method on a Service that allows a Flow to perform a task, like &quot;Send an Email&quot; or &quot;Mark as Completed&quot;.</p><p>The Java SDK provides a way to easily create a Message Action in your service using annotations. Follow these instructions and you should have a working Message Action in no time!</p><h2 id="annotations">Annotations</h2><p>There are 3 annotations in the Java SDK that you use to create a Message Action:</p><ul><li><code>@Action.Metadata</code>
+                                <h1 id="message-actions">Message Actions</h1>
+<p>A <strong>Message Action</strong> is a method on a Service that allows a Flow to perform a task, like &quot;Send an Email&quot; or &quot;Mark as Completed&quot;.</p>
+<p>The Java SDK provides a way to easily create a Message Action in your service using annotations. Follow these instructions and you should have a working Message Action in no time!</p>
+<h2 id="annotations">Annotations</h2>
+<p>There are 3 annotations in the Java SDK that you use to create a Message Action:</p>
+<ul>
+<li><code>@Action.Metadata</code></li>
+<li><code>@Action.Input</code></li>
+<li><code>@Action.Output</code></li>
+</ul>
+<h3 id="actionmetadata">@Action.Metadata</h3>
+<p>The <code>@Action.Metadata</code> annotation is used on a class to indicate that the SDK should parse it as an Action. This means that when you add the Service to your Flow using the Draw Tool, this class will be added to the Service Description, allowing you to be able to use it in your Flow.</p>
+<h4 id="annotation-elements">Annotation Elements</h4>
+<ul>
+<li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Action, as seen by builders in ManyWho</li>
+<li><strong>summary</strong> - this is used to provide a human-readable description of the Action to builders</li>
+<li><strong>uri</strong> - the URI that will be used to expose the action as a REST endpoint on the service (automatically prefixed with <code>/actions</code> in the SDK)</li>
+</ul>
+<h3 id="actioninput">@Action.Input</h3>
+<p>The <code>@Action.Input</code> annotation is used to define the Inputs for an action, and fields annotated with it are automatically included in the Action metadata in the Service Description.</p>
+<h4 id="annotation-elements">Annotation Elements</h4>
+<ul>
+<li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Input, as seen by builders in ManyWho</li>
+<li><strong>contentType</strong> <em>(required)</em> - used by ManyWho to determine the kind of value this Input can hold. Must be a value from the <code>ContentType</code> enum</li>
+<li><strong>required</strong> - used to determine whether an Input is required when using an Action in a Flow</li>
+</ul>
+<h3 id="actionoutput">@Action.Output</h3>
+<p>The <code>@Action.Output</code> annotation is used to define the Outputs for an action, and fields annotated with it are automatically included in the Action metadata in the Service Description.</p>
+<h4 id="annotation-elements">Annotation Elements</h4>
+<ul>
+<li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Output, as seen by builders in ManyWho</li>
+<li><strong>contentType</strong> <em>(required)</em> - used by ManyWho to determine the kind of value this Output can hold. Must be a value from the <code>ContentType</code> enum</li>
+<li><strong>required</strong> - used to determine whether an Output is required when using an Action in a Flow</li>
+</ul>
+<h2 id="interface">Interface</h2>
+<p>The interface to define the command for an action is <code>ActionCommand&lt;C, A, I, O&gt;</code>. It has 4 generic type parameters, and defines an <code>execute</code> method to run your action and return an appropriate response.</p>
+<h3 id="actioncommandc-a-i-o">ActionCommand&lt;C, A, I, O&gt;</h3>
+<p>This interface is used to create a command to execute your previously-defined Action.</p>
+<h4 id="generic-type-parameters">Generic Type Parameters</h4>
+<ul>
+<li><strong>C</strong> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class</li>
+<li><strong>A</strong> - this parameter must be the previously-defined class annotated with <code>@Action.Metadata</code></li>
+<li><strong>I</strong> - this parameter must be the previously-defined class that has one or more fields annotated with <code>@Action.Input</code></li>
+<li><strong>O</strong> - if any ouputs are required, this parameter must be the previously-defined class that has one or more fields annotated with <code>@Action.Output</code>, but if no outputs are required, this can be <code>Void</code></li>
+</ul>
+<h4 id="methods">Methods</h4>
+<ul>
+<li><strong>ActionResponse&lt;O&gt; execute(C configuration, ServiceRequest request, I input)</strong> - this method has three parameters:<ul>
+<li><strong>configuration</strong> - an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request</li>
+<li><strong>request</strong> - the raw ManyWho request object</li>
+<li><strong>input</strong> - the class containing the populated <code>@Action.Input</code> fields</li>
+</ul>
 </li>
-<li><code>@Action.Input</code>
-</li>
-<li><code>@Action.Output</code>
-</li></ul>
-<h3 id="actionmetadata">@Action.Metadata</h3><p>The <code>@Action.Metadata</code> annotation is used on a class to indicate that the SDK should parse it as an Action. This means that when you add the Service to your Flow using the Draw Tool, this class will be added to the Service Description, allowing you to be able to use it in your Flow.</p><h4 id="annotation-elements">Annotation Elements</h4><ul><li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Action, as seen by builders in ManyWho
-</li>
-<li><strong>summary</strong> - this is used to provide a human-readable description of the Action to builders
-</li>
-<li><strong>uri</strong> - the URI that will be used to expose the action as a REST endpoint on the service (automatically prefixed with <code>/actions</code> in the SDK)
-</li></ul>
-<h3 id="actioninput">@Action.Input</h3><p>The <code>@Action.Input</code> annotation is used to define the Inputs for an action, and fields annotated with it are automatically included in the Action metadata in the Service Description.</p><h4 id="annotation-elements">Annotation Elements</h4><ul><li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Input, as seen by builders in ManyWho
-</li>
-<li><strong>contentType</strong> <em>(required)</em> - used by ManyWho to determine the kind of value this Input can hold. Must be a value from the <code>ContentType</code> enum
-</li>
-<li><strong>required</strong> - used to determine whether an Input is required when using an Action in a Flow
-</li></ul>
-<h3 id="actionoutput">@Action.Output</h3><p>The <code>@Action.Output</code> annotation is used to define the Outputs for an action, and fields annotated with it are automatically included in the Action metadata in the Service Description.</p><h4 id="annotation-elements">Annotation Elements</h4><ul><li><strong>name</strong> <em>(required)</em> - this is used to define the name of the Output, as seen by builders in ManyWho
-</li>
-<li><strong>contentType</strong> <em>(required)</em> - used by ManyWho to determine the kind of value this Output can hold. Must be a value from the <code>ContentType</code> enum
-</li>
-<li><strong>required</strong> - used to determine whether an Output is required when using an Action in a Flow
-</li></ul>
-<h2 id="interface">Interface</h2><p>The interface to define the command for an action is <code>ActionCommand&lt;C, A, I, O&gt;</code>. It has 4 generic type parameters, and defines an <code>execute</code> method to run your action and return an appropriate response.</p><h3 id="actioncommandc-a-i-o">ActionCommand&lt;C, A, I, O&gt;</h3><p>This interface is used to create a command to execute your previously-defined Action.</p><h4 id="generic-type-parameters">Generic Type Parameters</h4><ul><li><strong>C</strong> - this parameter must be the previously-defined <a href="configuration.html">Configuration Settings</a> class
-</li>
-<li><strong>A</strong> - this parameter must be the previously-defined class annotated with <code>@Action.Metadata</code>
-</li>
-<li><strong>I</strong> - this parameter must be the previously-defined class that has one or more fields annotated with <code>@Action.Input</code>
-</li>
-<li><strong>O</strong> - if any ouputs are required, this parameter must be the previously-defined class that has one or more fields annotated with <code>@Action.Output</code>, but if no outputs are required, this can be <code>Void</code>
-</li></ul>
-<h4 id="methods">Methods</h4><ul><li><strong>ActionResponse&lt;O&gt; execute(C configuration, ServiceRequest request, I input)</strong> - this method has three parameters:
-<ul><li><strong>configuration</strong> - an instance of the Service&apos;s <a href="configuration.html">Configuration Settings</a> class, populated with the appropriate values from the request
-</li>
-<li><strong>request</strong> - the raw ManyWho request object
-</li>
-<li><strong>input</strong> - the class containing the populated <code>@Action.Input</code> fields
-</li></ul>
-</li></ul>
-<p>The method should then perform the required message logic, and return an <code>ActionResponse</code> object with the generic type of the desired output class, along with the appropriate <code>InvokeType</code>.</p><h2 id="example">Example</h2><p>The following example will create an Action called <strong>Send an Email</strong>, which will be automatically included in your Service Description:</p><h3 id="sendanemailjava">SendAnEmail.java</h3><p>This is the class that defines the Action, along with any Inputs and Outputs.</p><pre><code class="lang-java"><span class="hljs-keyword">package</span> com.manywho.services.example.actions;
+</ul>
+<p>The method should then perform the required message logic, and return an <code>ActionResponse</code> object with the generic type of the desired output class, along with the appropriate <code>InvokeType</code>.</p>
+<h2 id="example">Example</h2>
+<p>The following example will create an Action called <strong>Send an Email</strong>, which will be automatically included in your Service Description:</p>
+<h3 id="sendanemailjava">SendAnEmail.java</h3>
+<p>This is the class that defines the Action, along with any Inputs and Outputs.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> com.manywho.services.example.actions;
 
 <span class="hljs-keyword">import</span> com.manywho.sdk.api.ContentType;
 <span class="hljs-keyword">import</span> com.manywho.sdk.services.actions.Action;
@@ -399,7 +431,9 @@
     }
 }
 </code></pre>
-<h3 id="sendanemailcommandjava">SendAnEmailCommand.java</h3><p>This is the class that actually runs the Action, given the incoming Inputs, and returns the appropriate Outputs back to ManyWho.</p><pre><code class="lang-java"><span class="hljs-keyword">package</span> com.manywho.services.example.actions;
+<h3 id="sendanemailcommandjava">SendAnEmailCommand.java</h3>
+<p>This is the class that actually runs the Action, given the incoming Inputs, and returns the appropriate Outputs back to ManyWho.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> com.manywho.services.example.actions;
 
 <span class="hljs-keyword">import</span> com.manywho.sdk.api.InvokeType;
 <span class="hljs-keyword">import</span> com.manywho.sdk.api.run.elements.config.ServiceRequest;
@@ -432,7 +466,8 @@
         <span class="hljs-comment">// Return the action response, telling the Flow to go forward</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ActionResponse&lt;&gt;(output, InvokeType.Forward);
     }
-}</code></pre>
+}
+</code></pre>
 
                                 
                                 </section>
@@ -476,7 +511,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Message Actions","level":"1.3.6","depth":2,"next":{"title":"Social","level":"1.3.7","depth":2,"path":"docs/features/social.md","ref":"docs/features/social.md","articles":[]},"previous":{"title":"Listeners","level":"1.3.5","depth":2,"path":"docs/features/listeners.md","ref":"docs/features/listeners.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/message-actions.md","mtime":"2017-03-17T15:41:53.168Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2017-03-17T15:55:16.497Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Message Actions","level":"1.4.6","depth":2,"next":{"title":"Social","level":"1.4.7","depth":2,"path":"docs/features/social.md","ref":"docs/features/social.md","articles":[]},"previous":{"title":"Listeners","level":"1.4.5","depth":2,"path":"docs/features/listeners.md","ref":"docs/features/listeners.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/features/message-actions.md","mtime":"2017-09-23T18:15:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-23T18:15:51.139Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
