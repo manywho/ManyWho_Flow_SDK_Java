@@ -15,7 +15,9 @@ public class DescribeRepository {
 
     public boolean doSubtypesOfExist(Class<?> type) {
         return reflections.getSubTypesOf(type).stream()
-                .anyMatch(subType -> !subType.getPackage().getName().startsWith("com.manywho.sdk.services.controllers"));
+                .anyMatch(subType -> subType.getPackage().getName().startsWith("com.manywho.sdk.services.controllers") == false ||
+                        subType.getPackage().getName().startsWith("com.manywho.sdk.services.database") == false ||
+                        subType.getPackage().getName().startsWith("com.manywho.sdk.services.types") == false);
     }
 
     public boolean doSubtypesOfExistExcludingSdk(Class<?> type) {
