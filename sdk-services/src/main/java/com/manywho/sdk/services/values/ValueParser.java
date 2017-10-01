@@ -87,19 +87,27 @@ public class ValueParser {
         try {
             T instance = type.newInstance();
 
-            Field identifierField = typeRepository.findTypeIdentifier(type);
+            // Get the identifier field, if one exists
+            boolean boundPropertiesExist = typeRepository.getTypeProperties().stream()
+                    .filter(field -> field.getDeclaringClass().equals(type.getClass()))
+                    .map(field -> field.getAnnotation(Type.Property.class))
+                    .anyMatch(Type.Property::bound);
 
-            AccessController.doPrivileged((PrivilegedAction) () -> {
-                identifierField.setAccessible(true);
-                return null;
-            });
+            if (boundPropertiesExist) {
+                Field identifierField = typeRepository.findTypeIdentifier(type);
 
-            if (object.getExternalId() == null || object.getExternalId().isEmpty()) {
-                identifierField.set(instance, null);
-            } else if (String.class.isAssignableFrom(identifierField.getType())) {
-                identifierField.set(instance, object.getExternalId());
-            } else if (UUID.class.isAssignableFrom(identifierField.getType())) {
-                identifierField.set(instance, UUID.fromString(object.getExternalId()));
+                AccessController.doPrivileged((PrivilegedAction) () -> {
+                    identifierField.setAccessible(true);
+                    return null;
+                });
+
+                if (object.getExternalId() == null || object.getExternalId().isEmpty()) {
+                    identifierField.set(instance, null);
+                } else if (String.class.isAssignableFrom(identifierField.getType())) {
+                    identifierField.set(instance, object.getExternalId());
+                } else if (UUID.class.isAssignableFrom(identifierField.getType())) {
+                    identifierField.set(instance, UUID.fromString(object.getExternalId()));
+                }
             }
 
             Map<String, Field> typeProperties = typeRepository.findTypeProperties(type);
