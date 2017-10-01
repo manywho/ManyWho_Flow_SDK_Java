@@ -1,5 +1,6 @@
 # Summary
 
+* [Getting Started](docs/getting-started.md)
 * Servers
   * [Undertow](docs/servers/undertow.md)
   * [Servlet 3](docs/servers/servlet3.md)

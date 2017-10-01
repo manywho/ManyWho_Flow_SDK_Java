@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.elements.group.GroupAuthorization;
 import com.manywho.sdk.api.run.EngineValue;
+import com.manywho.sdk.api.run.FlowMode;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 import com.manywho.sdk.api.translate.Culture;
 
@@ -20,6 +21,7 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     protected UUID stateId;
     protected String callbackUri;
     protected Culture culture;
+    protected FlowMode executionMode;
     protected List<EngineValue> configurationValues = Lists.newArrayList();
     protected GroupAuthorization authorization;
     protected Map<String, String> annotations = Maps.newHashMap();
@@ -75,6 +77,14 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
 
     public void setCulture(Culture culture) {
         this.culture = culture;
+    }
+
+    public FlowMode getExecutionMode() {
+        return executionMode;
+    }
+
+    public void setExecutionMode(FlowMode executionMode) {
+        this.executionMode = executionMode;
     }
 
     public List<EngineValue> getConfigurationValues() {

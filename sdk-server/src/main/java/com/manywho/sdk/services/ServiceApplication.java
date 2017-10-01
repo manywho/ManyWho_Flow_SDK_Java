@@ -27,14 +27,17 @@ public class ServiceApplication extends Application {
         this.modules.add(module);
     }
 
-    public void initialize(String packageName) {
+    public void initialize(String packageName, boolean isHttp) {
         this.packageName = packageName;
 
         final List<Module> internalModules = Lists.newArrayList();
 
         internalModules.add(new ImplicitValidationModule());
-        internalModules.add(new RequestScopeModule());
-        internalModules.add(new ServiceApplicationModule(packageName));
+        internalModules.add(new ServiceApplicationModule(packageName, isHttp));
+
+        if (isHttp) {
+            internalModules.add(new RequestScopeModule());
+        }
 
         if (this.modules == null) {
             injector = Guice.createInjector(internalModules);

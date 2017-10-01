@@ -6,14 +6,14 @@ import com.manywho.sdk.api.describe.DescribeInstallRequest;
 import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionProvider;
-import com.manywho.sdk.services.configuration.Configuration;
+import com.manywho.services.example.ServiceConfiguration;
 
 import java.util.List;
 
-public class RawActionProvider implements ActionProvider {
+public class RawActionProvider implements ActionProvider<ServiceConfiguration> {
 
     @Override
-    public List<DescribeServiceActionResponse> describeActions(Configuration configuration, DescribeInstallRequest request) {
+    public List<DescribeServiceActionResponse> describeActions(ServiceConfiguration configuration, DescribeInstallRequest request) {
         List<DescribeServiceActionResponse> customActions = Lists.newArrayList();
         customActions.add(createAction());
 

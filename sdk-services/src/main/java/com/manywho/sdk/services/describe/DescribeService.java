@@ -1,6 +1,7 @@
 package com.manywho.sdk.services.describe;
 
 import com.google.common.collect.Lists;
+import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.describe.DescribeValue;
 import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.actions.ActionRepository;
@@ -15,6 +16,7 @@ import com.manywho.sdk.services.controllers.ListenerController;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.sdk.services.files.FileHandler;
 import com.manywho.sdk.services.listeners.Listener;
+import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
@@ -73,8 +75,18 @@ public class DescribeService {
     public List<DescribeValue> createConfigurationSettings() {
         List<DescribeValue> values = configurationRepository.getConfigurationSettings()
                 .stream()
-                .map(klass -> klass.getAnnotation(Configuration.Setting.class))
-                .map(annotation -> new DescribeValue(annotation.name(), annotation.contentType(), annotation.required()))
+                .map(field -> {
+                    Configuration.Setting annotation = field.getAnnotation(Configuration.Setting.class);
+
+                    String referencedTypeName = null;
+
+                    // If the type property annotation is of type Object or List, then we need to find the typeElementName of the referenced type
+                    if (annotation.contentType().equals(ContentType.Object) || annotation.contentType().equals(ContentType.List)) {
+                        referencedTypeName = TypeParser.getReferencedTypeName(field, annotation.contentType());
+                    }
+
+                    return new DescribeValue(annotation.name(), annotation.contentType(), annotation.required(), referencedTypeName);
+                })
                 .collect(Collectors.toList());
 
         if (values.isEmpty()) {
