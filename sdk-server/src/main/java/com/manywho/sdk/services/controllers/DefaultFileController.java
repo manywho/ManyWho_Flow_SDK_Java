@@ -8,9 +8,15 @@ import com.manywho.sdk.services.files.FileUploadService;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Path("/file")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class DefaultFileController extends AbstractFileController {
     private final FileManager fileManager;
 
@@ -19,16 +25,22 @@ public class DefaultFileController extends AbstractFileController {
         this.fileManager = fileManager;
     }
 
+    @POST
+    @Path("/delete")
     @Override
     public ObjectDataResponse deleteFile(FileDataRequest fileDataRequest) throws Exception {
         throw new UnsupportedOperationException("Deleting files is not yet supported in the SDK");
     }
 
+    @POST
     @Override
     public ObjectDataResponse loadFiles(FileDataRequest fileDataRequest) throws Exception {
         return fileManager.loadFiles(fileDataRequest);
     }
 
+    @POST
+    @Path("/content")
+    @Consumes({"multipart/form-data", "application/octet-stream"})
     @Override
     public ObjectDataResponse uploadFile(MultipartInput multipartInput) throws Exception {
         // Get the first part that has a content type of "application/json", as it's probably the FileDataRequest
