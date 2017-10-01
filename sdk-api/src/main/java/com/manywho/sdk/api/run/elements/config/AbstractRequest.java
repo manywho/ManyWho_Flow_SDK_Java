@@ -21,7 +21,7 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
     protected UUID stateId;
     protected String callbackUri;
     protected Culture culture;
-    protected FlowMode executionMode;
+    protected FlowMode executionMode = FlowMode.Default;
     protected List<EngineValue> configurationValues = Lists.newArrayList();
     protected GroupAuthorization authorization;
     protected Map<String, String> annotations = Maps.newHashMap();
@@ -85,6 +85,14 @@ public abstract class AbstractRequest implements ConfigurationValuesAware {
 
     public void setExecutionMode(FlowMode executionMode) {
         this.executionMode = executionMode;
+    }
+
+    public boolean isDebugMode() {
+        if (executionMode == null) {
+            return false;
+        }
+
+        return executionMode.equals(FlowMode.Debug) || executionMode.equals(FlowMode.DebugStepthrough);
     }
 
     public List<EngineValue> getConfigurationValues() {
