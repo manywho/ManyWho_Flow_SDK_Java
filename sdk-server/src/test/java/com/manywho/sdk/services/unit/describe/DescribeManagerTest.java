@@ -53,7 +53,7 @@ public class DescribeManagerTest extends BaseTest {
         Assert.assertTrue(response.isProvidesLogic());
 
         // TODO: Fix this to be an actual unit test, not a functional test
-        JSONAssert.assertEquals(readResourceAsString("responses/metadata.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
+        JSONAssert.assertEquals(readResourceAsString("responses/describe-install.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class DescribeManagerTest extends BaseTest {
         Assert.assertThat(response.getActions(), Matchers.hasItem(Matchers.hasProperty("uriPart", Matchers.containsString(TestAction.URI))));
 
         // TODO: Fix this to be an actual unit test, not a functional test
-        JSONAssert.assertEquals(readResourceAsString("responses/metadata.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
+        JSONAssert.assertEquals(readResourceAsString("responses/describe-describe.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
     }
 
     String readResourceAsString(String name) throws Exception {
