@@ -3,7 +3,6 @@ package com.manywho.sdk.services.describe;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.describe.DescribeValue;
-import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.configuration.ConfigurationRepository;
@@ -33,10 +32,6 @@ public class DescribeService {
         this.actionRepository = actionRepository;
         this.configurationRepository = configurationRepository;
         this.describeRepository = describeRepository;
-    }
-
-    public boolean anyActionProviderDefined() {
-        return describeRepository.doSubtypesOfExistExcludingSdk(ActionProvider.class);
     }
 
     public boolean anyActionsDefined() {

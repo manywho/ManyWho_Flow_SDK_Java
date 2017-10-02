@@ -1,9 +1,9 @@
 package com.manywho.sdk.services.functional.functional;
 
 import com.manywho.sdk.api.ContentType;
-import com.manywho.sdk.api.describe.DescribeInstallRequest;
-import com.manywho.sdk.api.describe.DescribeInstallResponse;
 import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
+import com.manywho.sdk.api.describe.DescribeServiceRequest;
+import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import org.hamcrest.Matchers;
@@ -16,16 +16,15 @@ import java.util.List;
 
 public class DescribeFunctionalTest extends BaseFunctionalTest {
     @Test
-    public void testInstall() throws Exception {
-        MockHttpRequest request = MockHttpRequest.post("/metadata/install")
+    public void testDescribe() throws Exception {
+        MockHttpRequest request = MockHttpRequest.post("/metadata")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(new DescribeInstallRequest()));
+                .content(objectMapper.writeValueAsBytes(new DescribeServiceRequest()));
 
-        DescribeInstallResponse response = getResponseContent(request, DescribeInstallResponse.class);
+        DescribeServiceResponse response = getResponseContent(request, DescribeServiceResponse.class);
 
         Assert.assertNotNull(response);
-        Assert.assertNotNull(response.getActions());
-        Assert.assertNotNull(response.getTypes());
+        Assert.assertNotNull(response.getInstall());
 
         List<DescribeServiceActionResponse> actions = response.getActions();
         Assert.assertNotNull(actions);
@@ -40,7 +39,7 @@ public class DescribeFunctionalTest extends BaseFunctionalTest {
         Assert.assertThat(actions, Matchers.hasItem(Matchers.hasProperty("serviceOutputs", Matchers.hasItem(Matchers.hasProperty("contentType", Matchers.equalTo(ContentType.DateTime))))));
         Assert.assertThat(actions, Matchers.hasItem(Matchers.hasProperty("serviceOutputs", Matchers.hasItem(Matchers.hasProperty("required", Matchers.equalTo(false))))));
 
-        List<TypeElement> types = response.getTypes();
+        List<TypeElement> types = response.getInstall().getTypeElements();
         Assert.assertNotNull(types);
         Assert.assertEquals(2, types.size());
         Assert.assertThat(types, Matchers.hasItem(Matchers.hasProperty("developerName", Matchers.equalTo("Test Type"))));

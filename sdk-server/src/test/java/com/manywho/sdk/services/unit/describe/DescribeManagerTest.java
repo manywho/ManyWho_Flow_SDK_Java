@@ -3,8 +3,7 @@ package com.manywho.sdk.services.unit.describe;
 import com.google.common.io.Resources;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.manywho.sdk.api.describe.DescribeInstallRequest;
-import com.manywho.sdk.api.describe.DescribeInstallResponse;
+import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.services.actions.ActionRepository;
 import com.manywho.sdk.services.actions.DummyActionProvider;
@@ -48,41 +47,12 @@ public class DescribeManagerTest extends BaseTest {
                 new ConfigurationParser(injector, configurationRepository, new ValueParser(typeRepository)),
                 new DummyActionProvider());
 
-        DescribeServiceResponse response = manager.describe();
+        DescribeServiceResponse response = manager.describe(new DescribeServiceRequest());
 
         Assert.assertTrue(response.isProvidesLogic());
 
         // TODO: Fix this to be an actual unit test, not a functional test
-        JSONAssert.assertEquals(readResourceAsString("responses/describe-describe.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
-    }
-
-    @Test
-    public void testInstall() throws Exception {
-        Reflections reflections = createReflections();
-
-        Injector injector = Guice.createInjector();
-
-        ActionRepository actionRepository = new ActionRepository(reflections);
-        ConfigurationRepository configurationRepository = new ConfigurationRepository(reflections);
-        TypeRepository typeRepository = new TypeRepository(reflections);
-
-        DescribeManager manager = new DescribeManager(
-                new DescribeService(actionRepository, configurationRepository, new DescribeRepository(reflections)),
-                new DescribeTypeService(typeRepository),
-                new DescribeActionService(actionRepository),
-                new DummyTypeProvider(),
-                new ConfigurationParser(injector, configurationRepository, new ValueParser(typeRepository)),
-                new DummyActionProvider());
-
-        DescribeInstallResponse response = manager.install(new DescribeInstallRequest());
-
-        Assert.assertNotNull(response.getActions());
-        Assert.assertEquals(1, response.getActions().size());
-        Assert.assertThat(response.getActions(), Matchers.hasItem(Matchers.hasProperty("developerName", Matchers.equalTo(TestAction.NAME))));
-        Assert.assertThat(response.getActions(), Matchers.hasItem(Matchers.hasProperty("uriPart", Matchers.containsString(TestAction.URI))));
-
-        // TODO: Fix this to be an actual unit test, not a functional test
-        JSONAssert.assertEquals(readResourceAsString("responses/describe-install.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
+        JSONAssert.assertEquals(readResourceAsString("responses/metadata.json"), new ObjectMapperContextResolver().getContext(null).writeValueAsString(response), false);
     }
 
     String readResourceAsString(String name) throws Exception {

@@ -1,7 +1,7 @@
 package com.manywho.sdk.services.types;
 
 import com.google.common.collect.Lists;
-import com.manywho.sdk.api.describe.DescribeInstallRequest;
+import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.services.configuration.Configuration;
 
@@ -14,7 +14,7 @@ public class DummyTypeProvider implements TypeProvider {
     }
 
     @Override
-    public List<TypeElement> describeTypes(Configuration configuration, DescribeInstallRequest request) {
+    public List<TypeElement> describeTypes(Configuration configuration, DescribeServiceRequest request) {
         return Lists.newArrayList();
     }
 }

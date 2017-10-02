@@ -2,7 +2,7 @@ package com.manywho.services.example.types;
 
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
-import com.manywho.sdk.api.describe.DescribeInstallRequest;
+import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.api.draw.elements.type.TypeElementBinding;
 import com.manywho.sdk.api.draw.elements.type.TypeElementProperty;
@@ -19,7 +19,7 @@ public class RawTypeProvider implements TypeProvider {
     }
 
     @Override
-    public List<TypeElement> describeTypes(Configuration configuration, DescribeInstallRequest request) {
+    public List<TypeElement> describeTypes(Configuration configuration, DescribeServiceRequest request) {
         List<TypeElementProperty> properties = Lists.newArrayList();
         properties.add(new TypeElementProperty("Property One", ContentType.String));
         properties.add(new TypeElementProperty("Property Two", ContentType.String));

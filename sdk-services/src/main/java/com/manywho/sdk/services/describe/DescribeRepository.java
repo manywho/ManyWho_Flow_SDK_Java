@@ -21,11 +21,6 @@ public class DescribeRepository {
                 .count() > 0;
     }
 
-    public boolean doSubtypesOfExistExcludingSdk(Class<?> type) {
-        return reflections.getSubTypesOf(type).stream()
-                .anyMatch(subType -> !subType.getPackage().getName().startsWith("com.manywho.sdk"));
-    }
-
     public boolean doFieldsAnnotatedWithExist(final Class<? extends Annotation> annotation) {
         return !reflections.getFieldsAnnotatedWith(annotation).isEmpty();
     }

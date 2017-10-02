@@ -1,8 +1,8 @@
 package com.manywho.sdk.services.describe;
 
-import com.manywho.sdk.api.describe.DescribeInstallRequest;
-import com.manywho.sdk.api.describe.DescribeInstallResponse;
+import com.google.common.collect.Lists;
 import com.manywho.sdk.api.describe.DescribeServiceActionResponse;
+import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.describe.DescribeServiceResponse;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
 import com.manywho.sdk.services.actions.ActionProvider;
@@ -38,69 +38,56 @@ public class DescribeManager {
         this.actionProvider = actionProvider;
     }
 
-    public DescribeServiceResponse describe() {
-        DescribeServiceResponse describeServiceResponse = new DescribeServiceResponse();
-        describeServiceResponse.setVersion("2");
+    public DescribeServiceResponse describe(DescribeServiceRequest request) {
+        DescribeServiceBuilder builder = new DescribeServiceBuilder();
 
         // If the service contains any controllers that extend AbstractDataController, then we support Database calls
         if (describeService.anyDataControllersExist()) {
-            describeServiceResponse.setProvidesDatabase(true);
+            builder.setProvidesDatabase(true);
         }
 
         // If the service contains any controllers that extend AbstractFileController, then we support Files
         if (describeService.anyFileControllersExist()) {
-            describeServiceResponse.setProvidesFiles(true);
+            builder.setProvidesFiles(true);
         }
 
         // If the service contains any controllers that extend AbstractIdentityController, then we support Identity
         if (describeService.anyIdentityControllersExist()) {
-            describeServiceResponse.setProvidesIdentity(true);
+            builder.setProvidesIdentity(true);
         }
 
         // If the service contains any controllers that extend AbstractListenerController, then we support Listening
         if (describeService.anyListenerControllersExist()) {
-            describeServiceResponse.setProvidesListening(true);
-        }
-
-        // If the service contains any actions, or has an action provider then we support Logic
-        if (describeService.anyActionsDefined() || describeService.anyActionProviderDefined()) {
-            describeServiceResponse.setProvidesLogic(true);
+            builder.setProvidesListening(true);
         }
 
         // If the service contains any controllers that extend AbstractSocialController, then we support Social
         if (describeService.anySocialControllersExist()) {
-            describeServiceResponse.setProvidesSocial(true);
+            builder.setProvidesSocial(true);
         }
-
-        if (describeService.anyConfigurationSettingsExist()) {
-            describeServiceResponse.setConfigurationValues(describeService.createConfigurationSettings());
-        }
-
-        return describeServiceResponse;
-    }
-
-    public DescribeInstallResponse install(DescribeInstallRequest request) {
-        DescribeInstallResponse response = new DescribeInstallResponse();
 
         Configuration configuration = configurationParser.from(request, false);
 
-        // Create the list of actions, both static and dynamic ones
-        List<DescribeServiceActionResponse> actionsElements = describeActionService.createActions();
+        List<DescribeServiceActionResponse> actionsElements = Lists.newArrayList();
+        actionsElements.addAll(describeActionService.createActions());
 
         List<DescribeServiceActionResponse> customActions = actionProvider.describeActions(configuration, request);
         if (customActions == null) {
             throw new RuntimeException("The configured implementation of " + ActionProvider.class.getCanonicalName() + " must return a valid List<DescribeServiceActionResponse>");
         } else {
-            // We want to append "actions/" to the beginning of any custom action URIs
-            customActions.forEach(action -> action.setUriPart("actions/" + action.getUriPart()));
-
+            customActions.forEach(action -> action.setUriPart(String.format("actions/%s", action.getUriPart())));
             actionsElements.addAll(customActions);
         }
 
-        response.setActions(actionsElements);
+        builder.setActions(actionsElements);
 
-        // Create the list of types, both static and dynamic ones
-        List<TypeElement> typeElements = describeTypeService.createTypes();
+        if (actionsElements.size() > 0) {
+            builder.setProvidesLogic(true);
+        }
+
+        List<TypeElement> typeElements = Lists.newArrayList();
+        typeElements.addAll(describeTypeService.createTypes());
+
 
         List<TypeElement> customTypes = typeProvider.describeTypes(configuration, request);
         if (customTypes == null) {
@@ -109,8 +96,12 @@ public class DescribeManager {
             typeElements.addAll(customTypes);
         }
 
-        response.setTypes(typeElements);
+        builder.setTypes(typeElements);
 
-        return response;
+        if (describeService.anyConfigurationSettingsExist()) {
+            builder.setConfigurationSettings(describeService.createConfigurationSettings());
+        }
+
+        return builder.createDescribeServiceResponse();
     }
 }
