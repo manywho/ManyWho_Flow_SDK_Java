@@ -40,6 +40,7 @@ public class DescribeManager {
 
     public DescribeServiceResponse describe(DescribeServiceRequest request) {
         DescribeServiceBuilder builder = new DescribeServiceBuilder();
+        builder.setCulture(request.getCulture());
 
         // If the service contains any controllers that extend AbstractDataController, then we support Database calls
         if (describeService.anyDataControllersExist()) {
