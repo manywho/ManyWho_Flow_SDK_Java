@@ -34,7 +34,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
-            LOGGER.info("Service started on 0.0.0.0:%d.", port);
+            LOGGER.info("Service started on 0.0.0.0:{}", port);
             LOGGER.info("Stop the service using CTRL+C");
         } catch (Exception ex) {
             LOGGER.error("Unable to start the server", ex);
