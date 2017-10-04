@@ -14,6 +14,8 @@ import com.manywho.sdk.services.types.TypeRepository;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.sql.Time;
@@ -169,6 +171,18 @@ public class ValueParser {
         return toString(field, value);
     }
 
+    public static <T> T toEnum(Field field, String value, Class type) {
+        try {
+            Method method = type.getMethod("forValue", String.class);
+
+            return (T) method.invoke(null, value);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("The enum \"" + type.getName() + "\" requires a method with the signature \"public static T forValue(String value)\"", e);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException("Unable to set the enum value: " + e.getMessage(), e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private <T extends Type> Collection<T> toList(Field field, List<MObject> list) {
         Class<?> genericType = TypeParser.findGenericType(field.getGenericType(), 0);
@@ -280,6 +294,8 @@ public class ValueParser {
                         // If the field is a UUID then parse the given value into one, otherwise use a plain String
                         if (field.getType().equals(UUID.class)) {
                             field.set(object, UUID.fromString(value));
+                        } else if (field.getType().isEnum()) {
+                            field.set(object, toEnum(field, value, field.getType()));
                         } else {
                             field.set(object, toString(field, property.getContentValue()));
                         }
