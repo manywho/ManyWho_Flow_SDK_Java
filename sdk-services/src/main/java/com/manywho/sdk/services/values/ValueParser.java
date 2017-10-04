@@ -7,6 +7,7 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
+import com.manywho.sdk.services.actions.Action;
 import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypePropertyMismatchException;
@@ -226,7 +227,19 @@ public class ValueParser {
             }
 
             if (objects.isEmpty()) {
-                throw new RuntimeException("Unable to find an object to parse into " + field.getAnnotation(Type.Property.class).name());
+                if (field.isAnnotationPresent(Type.Property.class)) {
+                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Type.Property.class).name() + " type property");
+                }
+
+                if (field.isAnnotationPresent(Action.Input.class)) {
+                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Action.Input.class).name() + " action input");
+                }
+
+                if (field.isAnnotationPresent(Action.Output.class)) {
+                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Action.Output.class).name() + " action output");
+                }
+
+                throw new RuntimeException("No object was given for the field " + field.getName());
             }
 
             return asObject(objects.get(0), (Class<T>) field.getType());
