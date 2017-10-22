@@ -21,6 +21,49 @@ public class FlowClient {
     }
 
     /**
+     * Execute an invoke request for a flow with the given Tenant ID, State ID and invoke request.
+     *
+     * @param tenant    the ID of the Tenant that owns the Flow
+     * @param id        the ID of the State
+     * @param request   the invoke request to send
+     * @return the current state of the Flow
+     */
+    public FlowState execute(UUID tenant, UUID id, EngineInvokeRequest request) {
+        try {
+            // Execute the request and join the flow
+            EngineInvokeResponse invokeResponse = runClient
+                    .execute(tenant, id, request)
+                    .execute()
+                    .body();
+
+            return new FlowState(runClient, tenant, invokeResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Join a flow with the given Tenant ID and State ID.
+     *
+     * @param tenant    the ID of the Tenant that owns the Flow
+     * @param id        the ID of the State
+     * @return the current state of the Flow
+     */
+    public FlowState join(UUID tenant, UUID id) {
+        try {
+            // Join the flow
+            EngineInvokeResponse invokeResponse = runClient
+                    .join(tenant, id)
+                    .execute()
+                    .body();
+
+            return new FlowState(runClient, tenant, invokeResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Start a flow with the given Tenant ID and Flow ID, using the default initialization options
      *
      * @param tenant    the ID of the Tenant that owns the Flow
