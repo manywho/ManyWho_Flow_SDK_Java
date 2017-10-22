@@ -136,15 +136,15 @@ public class FlowState {
     /**
      * Select a specific outcome in the current Flow's state, send any inputs, then progress
      *
-     * @param outcome the outcome to select in the Flow
+     * @param outcome     the outcome to select in the Flow
      * @param pageRequest an object that contains the inputs that you wish to send to the Flow
      * @return the updated state of the Flow, after selecting the outcome and sending any inputs
      */
-    public FlowState selectOutcome(Outcome outcome, PageRequest pageRequest) {
+    public FlowState selectOutcome(UUID outcome, PageRequest pageRequest) {
         EngineInvokeRequest invokeRequest = new EngineInvokeRequest();
         invokeRequest.setCurrentMapElementId(invokeResponse.getCurrentMapElementId());
         invokeRequest.setInvokeType(InvokeType.Forward);
-        invokeRequest.setMapElementInvokeRequest(new MapElementInvokeRequest(outcome.getId(), pageRequest));
+        invokeRequest.setMapElementInvokeRequest(new MapElementInvokeRequest(outcome, pageRequest));
         invokeRequest.setStateId(invokeResponse.getStateId());
         invokeRequest.setStateToken(invokeResponse.getStateToken());
 
@@ -167,7 +167,17 @@ public class FlowState {
      * @return the updated state of the flow, after selecting the outcome
      */
     public FlowState selectOutcome(Outcome outcome) {
-        return this.selectOutcome(outcome, null);
+        return this.selectOutcome(outcome.getId(), null);
+    }
+
+    /**
+     * Select a specific outcome in the current Flow's state, and progress
+     *
+     * @param id the outcome to select in the Flow
+     * @return the updated state of the flow, after selecting the outcome
+     */
+    public FlowState selectOutcome(UUID id) {
+        return this.selectOutcome(id, null);
     }
 
     /**
