@@ -266,6 +266,18 @@ public class ValueParser {
             return null;
         });
 
+        // If we're being given an object or a list, skip population if the object data is null
+        if (contentType.equals(ContentType.Object) || contentType.equals(ContentType.List)) {
+           if (property.getObjectData() == null) {
+               return;
+           }
+        }
+
+        // If we're being given scalar, skip population if the value is null
+        if (property.getContentValue() == null) {
+            return;
+        }
+
         try {
             switch (contentType) {
                 case Boolean:
