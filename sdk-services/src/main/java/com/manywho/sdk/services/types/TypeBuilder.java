@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
 import com.manywho.sdk.services.utils.Fields;
+import org.apache.commons.beanutils.PropertyUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -106,6 +108,18 @@ public class TypeBuilder {
 
             Object object = field.get(type);
 
+            // If no value was found for the field, we fallback to a bean getter
+            if (object == null) {
+                try {
+                    object = PropertyUtils.getProperty(type, field.getName());
+                } catch (NoSuchMethodException e) {
+
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException("Unable to invoke the getter for " + field.getName());
+                }
+            }
+
+            // If no value was found for either the field or from the getter, we just return the property as-is
             if (object == null) {
                 return property;
             }
