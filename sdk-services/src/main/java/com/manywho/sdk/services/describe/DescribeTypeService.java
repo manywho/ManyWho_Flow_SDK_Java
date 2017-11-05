@@ -11,12 +11,11 @@ import com.manywho.sdk.services.types.TypeHasNoPropertiesException;
 import com.manywho.sdk.services.types.TypeIdentifierMissingException;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypeRepository;
+import com.manywho.sdk.services.utils.Fields;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DescribeTypeService {
@@ -47,10 +46,12 @@ public class DescribeTypeService {
         }
 
         Type.Element annotation = type.getAnnotation(Type.Element.class);
+
+        List<Field> typeFields = Fields.fromType(type);
         
         // Build the list of properties from the annotated type
         List<TypeElementProperty> properties = typeRepository.getTypeProperties().stream()
-                .filter(field -> field.getDeclaringClass().equals(type))
+                .filter(typeFields::contains)
                 .map(this::createTypeElementProperty)
                 .sorted()
                 .collect(Collectors.toList());
@@ -61,7 +62,7 @@ public class DescribeTypeService {
 
         // Build the property bindings
         List<TypeElementPropertyBinding> propertyBindings = typeRepository.getTypeProperties().stream()
-                .filter(field -> field.getDeclaringClass().equals(type))
+                .filter(typeFields::contains)
                 .map(field -> field.getAnnotation(Type.Property.class))
                 .filter(Type.Property::bound)
                 .map(this::createTypeElementPropertyBinding)
@@ -79,7 +80,7 @@ public class DescribeTypeService {
         if (!propertyBindings.isEmpty()) {
             // Check if we have an identifier property on the type
             long identifierCount = typeRepository.getTypeIdentifiers().stream()
-                    .filter(field -> field.getDeclaringClass().equals(type))
+                    .filter(typeFields::contains)
                     .filter(field -> String.class.isAssignableFrom(field.getType()) || UUID.class.isAssignableFrom(field.getType()) || Type.Identifier.Custom.class.isAssignableFrom(field.getType()))
                     .count();
 

@@ -3,6 +3,7 @@ package com.manywho.sdk.services.types;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
+import com.manywho.sdk.services.utils.Fields;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -49,8 +50,10 @@ public class TypeBuilder {
 
         Type.Element annotation = type.getClass().getAnnotation(Type.Element.class);
 
+        List<Field> typeFields = Fields.fromType(type.getClass());
+
         List<Field> typeProperties = typeRepository.getTypeProperties().stream()
-                .filter(field -> field.getDeclaringClass().equals(type.getClass()))
+                .filter(typeFields::contains)
                 .collect(Collectors.toList());
 
         if (typeProperties.isEmpty()) {
@@ -61,7 +64,7 @@ public class TypeBuilder {
 
         // Get the identifier field, if one exists
         boolean boundPropertiesExist = typeRepository.getTypeProperties().stream()
-                .filter(field -> field.getDeclaringClass().equals(type.getClass()))
+                .filter(typeFields::contains)
                 .map(field -> field.getAnnotation(Type.Property.class))
                 .anyMatch(Type.Property::bound);
 

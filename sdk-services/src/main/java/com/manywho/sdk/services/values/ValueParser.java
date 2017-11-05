@@ -12,6 +12,7 @@ import com.manywho.sdk.services.types.Type;
 import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypePropertyMismatchException;
 import com.manywho.sdk.services.types.TypeRepository;
+import com.manywho.sdk.services.utils.Fields;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -90,9 +91,11 @@ public class ValueParser {
         try {
             T instance = type.newInstance();
 
+            List<Field> typeFields = Fields.fromType(type.getClass());
+
             // Get the identifier field, if one exists
             boolean boundPropertiesExist = typeRepository.getTypeProperties().stream()
-                    .filter(field -> field.getDeclaringClass().equals(type.getClass()))
+                    .filter(typeFields::contains)
                     .map(field -> field.getAnnotation(Type.Property.class))
                     .anyMatch(Type.Property::bound);
 
