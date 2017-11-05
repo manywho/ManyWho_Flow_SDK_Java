@@ -274,10 +274,8 @@ public class ValueParser {
            if (property.getObjectData() == null) {
                return;
            }
-        }
-
-        // If we're being given scalar, skip population if the value is null
-        if (property.getContentValue() == null) {
+        } else if (property.getContentValue() == null) {
+            // If we're being given scalar, skip population if the value is null
             return;
         }
 
