@@ -67,6 +67,11 @@ public class DescribeManager {
             builder.setProvidesSocial(true);
         }
 
+        // If the service contains any controllers that implement ViewController, then we support Views
+        if (describeService.anyViewControllersExist()) {
+            builder.setProvidesViews(true);
+        }
+
         Configuration configuration = configurationParser.from(request, false);
 
         List<DescribeServiceActionResponse> actionsElements = Lists.newArrayList();

@@ -12,6 +12,7 @@ import com.manywho.sdk.services.controllers.DataController;
 import com.manywho.sdk.services.controllers.FileController;
 import com.manywho.sdk.services.controllers.IdentityController;
 import com.manywho.sdk.services.controllers.ListenerController;
+import com.manywho.sdk.services.controllers.ViewController;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.sdk.services.files.FileHandler;
 import com.manywho.sdk.services.listeners.Listener;
@@ -65,6 +66,10 @@ public class DescribeService {
     public boolean anySocialControllersExist() {
         return false;
 //        return describeRepository.doSubtypesOfExist(AbstractSocialController.class);
+    }
+
+    public boolean anyViewControllersExist() {
+        return describeRepository.doSubtypesOfExist(ViewController.class);
     }
 
     public List<DescribeValue> createConfigurationSettings() {
