@@ -9,62 +9,62 @@ import java.util.UUID;
 @Type.Element(name = "$State")
 public class $State implements Type {
     @Type.Property(name = "Current Map Element Developer Name", contentType = ContentType.String)
-    private String currentMapElementDeveloperName;
+    protected String currentMapElementDeveloperName;
 
     @Type.Property(name = "Current Map Element ID", contentType = ContentType.String)
-    private UUID currentMapElementId;
+    protected UUID currentMapElementId;
 
     @Type.Property(name = "Date Created", contentType = ContentType.DateTime)
-    private OffsetDateTime dateCreated;
+    protected OffsetDateTime dateCreated;
 
     @Type.Property(name = "Date Modified", contentType = ContentType.DateTime)
-    private OffsetDateTime dateModified;
+    protected OffsetDateTime dateModified;
 
     @Type.Property(name = "External ID", contentType = ContentType.String)
-    private String externalId;
+    protected String externalId;
 
     @Type.Property(name = "Flow Developer Name", contentType = ContentType.String)
-    private String flowDeveloperName;
+    protected String flowDeveloperName;
 
     @Type.Property(name = "Flow ID", contentType = ContentType.String)
-    private UUID flowId;
+    protected UUID flowId;
 
     @Type.Property(name = "Flow Version ID", contentType = ContentType.String)
-    private UUID flowVersionId;
+    protected UUID flowVersionId;
 
     @Type.Identifier
     @Type.Property(name = "ID", contentType = ContentType.String)
-    private UUID id;
+    protected UUID id;
 
-    @Type.Property(name = "Is Done?", contentType = ContentType.String)
-    private int done;
+    @Type.Property(name = "Is Done?", contentType = ContentType.Boolean)
+    protected boolean done;
 
     @Type.Property(name = "Join URI", contentType = ContentType.String)
-    private String joinUri;
+    protected String joinUri;
 
     @Type.Property(name = "Owner Email", contentType = ContentType.String)
-    private String ownerEmail;
+    protected String ownerEmail;
 
     @Type.Property(name = "Owner First Name", contentType = ContentType.String)
-    private String ownerFirstName;
+    protected String ownerFirstName;
 
     @Type.Property(name = "Owner ID", contentType = ContentType.String)
-    private String ownerId;
+    protected String ownerId;
 
     @Type.Property(name = "Owner Last Name", contentType = ContentType.String)
-    private String ownerLastName;
+    protected String ownerLastName;
 
     @Type.Property(name = "Owner Name", contentType = ContentType.String)
-    private String ownerName;
+    protected String ownerName;
 
     @Type.Property(name = "Owner User ID", contentType = ContentType.String)
-    private String ownerUserId;
+    protected String ownerUserId;
 
     @Type.Property(name = "Owner Username", contentType = ContentType.String)
-    private String ownerUsername;
+    protected String ownerUsername;
 
     @Type.Property(name = "Parent ID", contentType = ContentType.String)
-    private UUID parentId;
+    protected UUID parentId;
 
     public String getCurrentMapElementDeveloperName() {
         return currentMapElementDeveloperName;
@@ -102,7 +102,7 @@ public class $State implements Type {
         return id;
     }
 
-    public int isDone() {
+    public boolean isDone() {
         return done;
     }
 
