@@ -1,5 +1,6 @@
 package com.manywho.sdk.api.run.elements.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -11,7 +12,7 @@ public class ListFilter extends ListFilterMinimal {
     private String id;
     private boolean filterByProvidedObjects;
     private String orderByPropertyDeveloperName;
-    private String orderByDirectionType;
+    private OrderByDirectionType orderByDirectionType;
     private Integer limit;
     private Integer offset;
     private String search;
@@ -50,15 +51,15 @@ public class ListFilter extends ListFilterMinimal {
         this.orderByPropertyDeveloperName = orderByPropertyDeveloperName;
     }
 
-    public String getOrderByDirectionType() {
+    public OrderByDirectionType getOrderByDirectionType() {
         return orderByDirectionType;
     }
 
     public boolean hasOrderByDirectionType() {
-        return orderByDirectionType != null || !orderByDirectionType.isEmpty();
+        return orderByDirectionType.equals(OrderByDirectionType.None) == false;
     }
 
-    public void setOrderByDirectionType(String orderByDirectionType) {
+    public void setOrderByDirectionType(OrderByDirectionType orderByDirectionType) {
         this.orderByDirectionType = orderByDirectionType;
     }
 
@@ -184,6 +185,34 @@ public class ListFilter extends ListFilterMinimal {
 
         public String getColumnName() {
             return columnName;
+        }
+    }
+
+    public enum OrderByDirectionType {
+        None(""),
+        Ascending("ASC"),
+        Descending("DESC");
+
+        private final String text;
+
+        OrderByDirectionType(final String text) {
+            this.text = text;
+        }
+
+        @JsonCreator
+        public static OrderByDirectionType forValue(String value) {
+            for (OrderByDirectionType type : OrderByDirectionType.values()) {
+                if (value.equalsIgnoreCase(type.text)) {
+                    return type;
+                }
+            }
+
+            throw new IllegalArgumentException("No order by direction type with the text " + value + " was found");
+        }
+
+        @Override
+        public String toString() {
+            return text;
         }
     }
 }
