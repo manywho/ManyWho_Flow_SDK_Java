@@ -37,6 +37,11 @@ public class ServiceResponse extends AbstractResponse {
         this.tenantId = tenant;
     }
 
+    public ServiceResponse(UUID tenant, InvokeType invokeType, String token) {
+        this(invokeType, token);
+        this.tenantId = tenant;
+    }
+
     public ServiceResponse(InvokeType invokeType, List<EngineValue> outputs, String token) {
         this(invokeType, outputs, token, null);
     }
