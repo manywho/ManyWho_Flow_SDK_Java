@@ -30,6 +30,8 @@ public interface Type {
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     @interface Property {
+        String columnName() default "";
+
         ContentType contentType();
 
         String name();

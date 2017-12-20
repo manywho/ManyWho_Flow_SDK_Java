@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.describe;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.api.draw.elements.type.TypeElement;
@@ -108,6 +109,10 @@ public class DescribeTypeService {
     }
 
     private TypeElementPropertyBinding createTypeElementPropertyBinding(Type.Property property) {
-        return new TypeElementPropertyBinding(property.name(), property.name());
+        if (Strings.isNullOrEmpty(property.columnName())) {
+            return new TypeElementPropertyBinding(property.name(), property.name());
+        }
+
+        return new TypeElementPropertyBinding(property.name(), property.columnName());
     }
 }

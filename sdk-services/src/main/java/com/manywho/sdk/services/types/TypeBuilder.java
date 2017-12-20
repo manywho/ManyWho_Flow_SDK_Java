@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.types;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
@@ -100,7 +101,14 @@ public class TypeBuilder {
     private Property createProperty(Type type, Field field) {
         Type.Property annotation = field.getAnnotation(Type.Property.class);
 
-        Property property = new Property(annotation.name());
+        String propertyDeveloperName = annotation.columnName();
+
+        // If we're not given a column name for the property, use the developer name
+        if (Strings.isNullOrEmpty(annotation.columnName())) {
+            propertyDeveloperName = annotation.name();
+        }
+
+        Property property = new Property(propertyDeveloperName);
         property.setContentType(annotation.contentType());
 
         try {
