@@ -19,6 +19,7 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
     private String password;
     private String token;
     private String code;
+    private String verifier;
     private String sessionToken;
     private String sessionUrl;
     private String loginUrl;
@@ -77,6 +78,14 @@ public class AuthenticationCredentials implements ConfigurationValuesAware {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getVerifier() {
+        return verifier;
+    }
+
+    public void setVerifier(String verifier) {
+        this.verifier = verifier;
     }
 
     public String getSessionToken() {
