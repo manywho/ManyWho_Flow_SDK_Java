@@ -78,7 +78,7 @@ public class DatabaseManager {
 
         ReadOnlyDatabase<?, T> database = injector.getInstance(databaseClass);
 
-        return databaseLoadService.handle(request, type, database);
+        return databaseLoadService.handle(request, database);
     }
 
     private <T extends Type> ObjectDataResponse handleWrite(ObjectDataRequest request, Class<T> type) {

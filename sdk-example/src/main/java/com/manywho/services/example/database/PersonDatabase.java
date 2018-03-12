@@ -1,5 +1,6 @@
 package com.manywho.services.example.database;
 
+import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.services.example.ServiceConfiguration;
@@ -39,12 +40,12 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
     }
 
     @Override
-    public Person find(ServiceConfiguration configuration, String id) {
+    public Person find(ServiceConfiguration configuration, Command command, String id) {
         return personRepository.find(id);
     }
 
     @Override
-    public List<Person> findAll(ServiceConfiguration configuration, ListFilter filter) {
+    public List<Person> findAll(ServiceConfiguration configuration, Command command, ListFilter filter) {
         return personRepository.findAll(filter.getLimit(), filter.getOffset());
     }
 

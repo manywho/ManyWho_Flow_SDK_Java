@@ -1,6 +1,7 @@
 package com.manywho.services.example.database;
 
 import com.google.common.collect.Lists;
+import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
@@ -31,12 +32,12 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public MObject find(ServiceConfiguration configuration, ObjectDataType objectDataType, String id) {
+    public MObject find(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, String id) {
         return new MObject();
     }
 
     @Override
-    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, ListFilter filter) {
+    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter) {
         return Lists.newArrayList();
     }
 

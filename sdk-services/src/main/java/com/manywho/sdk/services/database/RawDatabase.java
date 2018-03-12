@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.database;
 
+import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
@@ -20,10 +21,11 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      *
      * @param configuration  the populated Configuration object
      * @param objectDataType information about the type of object that is expected to be returned by the Service
+     * @param command        the command to execute when querying, if any
      * @param id             the object's external ID
      * @return a single ManyWho object
      */
-    MObject find(C configuration, ObjectDataType objectDataType, String id);
+    MObject find(C configuration, ObjectDataType objectDataType, Command command, String id);
 
     /**
      * Implementations of this method should look up items in the appropriate store using the given filter, and return
@@ -31,8 +33,9 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      *
      * @param configuration  the populated Configuration object
      * @param objectDataType information about the type of objects that are expected to be returned by the Service
+     * @param command        the command to execute when querying, if any
      * @param filter         the filtering options to be used when querying for objects
      * @return a list of ManyWho objects
      */
-    List<MObject> findAll(C configuration, ObjectDataType objectDataType, ListFilter filter);
+    List<MObject> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter);
 }
