@@ -47,6 +47,10 @@ public class TypeBuilder {
     }
 
     private MObject createSingle(Type type) {
+        if (type == null) {
+            return null;
+        }
+
         if (!type.getClass().isAnnotationPresent(Type.Element.class)) {
             throw new RuntimeException("The type " + type.getClass().getName() + " is not annotated with " + Type.Element.class.getName());
         }
