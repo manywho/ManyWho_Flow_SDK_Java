@@ -1,6 +1,7 @@
 package com.manywho.sdk.api.draw.content;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import java.util.HashMap;
@@ -12,6 +13,10 @@ public class Command {
 
     public String getCommandType() {
         return commandType;
+    }
+
+    public boolean hasCommandType() {
+        return Strings.isNullOrEmpty(commandType) == false;
     }
 
     public void setCommandType(String commandType) {
