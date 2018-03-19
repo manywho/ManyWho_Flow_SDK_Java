@@ -2,7 +2,6 @@ package com.manywho.sdk.services;
 
 import com.google.inject.AbstractModule;
 import com.manywho.sdk.api.security.AuthenticatedWho;
-import com.manywho.sdk.client.run.RunClient;
 import com.manywho.sdk.services.actions.ActionHandler;
 import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.actions.DummyActionProvider;
@@ -10,7 +9,6 @@ import com.manywho.sdk.services.actions.DummyActionHandler;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
 import com.manywho.sdk.services.providers.AuthenticatedWhoProvider;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
-import com.manywho.sdk.services.providers.RunClientProvider;
 import com.manywho.sdk.services.types.DummyTypeProvider;
 import com.manywho.sdk.services.types.TypeProvider;
 import org.jboss.resteasy.plugins.guice.RequestScoped;
