@@ -11,6 +11,7 @@ public class ObjectMapperFactory {
         return new ObjectMapper()
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES)
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
                 .enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
