@@ -10,6 +10,13 @@ public class ObjectDataTypeProperty {
     private String developerName;
     private List<ObjectDataType> list = Lists.newArrayList();
 
+    public ObjectDataTypeProperty() {
+    }
+
+    public ObjectDataTypeProperty(String developerName) {
+        this.developerName = developerName;
+    }
+
     public String getDeveloperName() {
         return developerName;
     }
