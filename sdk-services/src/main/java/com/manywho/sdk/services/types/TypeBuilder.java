@@ -10,8 +10,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
@@ -191,15 +190,21 @@ public class TypeBuilder {
     }
 
     private String convertDateTime(String property, Object object) {
-        if (object instanceof TemporalAccessor) {
-            return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format((TemporalAccessor) object);
-        } else if (object instanceof Date) {
-            OffsetDateTime dateTime = OffsetDateTime.ofInstant(((Date) object).toInstant(), ZoneId.of("UTC"));
+        TemporalAccessor temporalAccessor = null;
 
-            return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(dateTime);
+        if (object instanceof LocalDateTime) {
+            temporalAccessor = OffsetDateTime.of((LocalDateTime) object, ZoneOffset.UTC);
+        } else if (object instanceof TemporalAccessor) {
+            temporalAccessor = (TemporalAccessor) object;
+        } else if (object instanceof Date) {
+            temporalAccessor = OffsetDateTime.ofInstant(((Date) object).toInstant(), ZoneOffset.UTC);
         }
 
-        throw new TypePropertyInvalidException(property, "DateTime");
+        if (temporalAccessor == null) {
+            throw new TypePropertyInvalidException(property, "DateTime");
+        }
+
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(temporalAccessor);
     }
 
     private String convertEncrypted(String property, Object object) {
