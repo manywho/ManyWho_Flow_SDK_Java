@@ -68,7 +68,13 @@ public class ActionManager {
         Type[] types = DescribeActionService.getTypeArguments(command);
 
         try {
-            Object inputObject = Class.forName(types[2].getTypeName()).newInstance();
+            Class<?> inputClass = Class.forName(types[2].getTypeName());
+
+            // If the input class inherit from Void then we don't want to instantiate it (because we can't)
+            Object inputObject = null;
+            if (Void.class.isAssignableFrom(inputClass) == false) {
+                inputObject = inputClass.newInstance();
+            }
 
             if (serviceRequest.hasInputs()) {
                 for (Field field : findInputFields(types[2])) {
@@ -78,7 +84,9 @@ public class ActionManager {
                             .filter(i -> i.getDeveloperName().equals(annotation.name()))
                             .findFirst();
 
-                    optional.ifPresent(input -> valueParser.populateObjectField(inputObject, field, annotation.contentType(), input));
+                    Object finalInputObject = inputObject;
+
+                    optional.ifPresent(input -> valueParser.populateObjectField(finalInputObject, field, annotation.contentType(), input));
                 }
             }
 
