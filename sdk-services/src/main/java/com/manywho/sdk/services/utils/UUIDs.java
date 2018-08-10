@@ -7,7 +7,7 @@ public class UUIDs {
         return value != null && value.trim().matches("[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}");
     }
 
-    public static UUID uuidFromNullableString(String value) {
+    public static UUID fromNullableString(String value) {
         if (value == null) {
             return null;
         }
