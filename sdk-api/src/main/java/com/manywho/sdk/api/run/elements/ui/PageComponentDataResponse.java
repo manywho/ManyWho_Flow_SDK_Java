@@ -7,14 +7,18 @@ import com.manywho.sdk.api.run.PropertyAware;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageComponentDataResponse implements PropertyAware {
     private UUID pageComponentId;
     @JsonProperty("isEnabled")

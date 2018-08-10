@@ -4,15 +4,18 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.run.EngineValue;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageResponse {
     private String label;
     @Builder.Default
