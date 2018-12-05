@@ -9,3 +9,9 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+  sonarcloud:
+    organization: "manywho"
+    token:
+      secure: $SONAR_TOKEN
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
