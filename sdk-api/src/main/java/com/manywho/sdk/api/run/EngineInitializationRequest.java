@@ -5,15 +5,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EngineInitializationRequest {
-    @NotNull
     private FlowId flowId;
     private UUID stateId;
     private UUID parentStateId;

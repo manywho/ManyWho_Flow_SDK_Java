@@ -2,12 +2,10 @@ package com.manywho.sdk.api.security;
 
 import com.manywho.sdk.api.run.state.Geolocation;
 
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class AuthenticatedWho {
     private UUID manyWhoUserId;
-    @NotNull
     private UUID manyWhoTenantId;
     private String manyWhoToken;
     private Geolocation geolocation;

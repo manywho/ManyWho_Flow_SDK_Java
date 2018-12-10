@@ -6,13 +6,11 @@ import com.manywho.sdk.api.AuthorizationType;
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.ConfigurationValuesAware;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class AuthenticationCredentials implements ConfigurationValuesAware {
-    @NotNull
     private List<EngineValue> configurationValues = Lists.newArrayList();
     private AuthorizationType authenticationType;
     private String username;

@@ -1,10 +1,8 @@
 package com.manywho.sdk.api.draw.flow;
 
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class FlowId {
-    @NotNull
     private UUID id;
     private UUID versionId;
 
