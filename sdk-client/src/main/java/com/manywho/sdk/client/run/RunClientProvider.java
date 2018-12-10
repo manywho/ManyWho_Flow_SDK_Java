@@ -1,10 +1,10 @@
-package com.manywho.sdk.services.providers;
+package com.manywho.sdk.client.run;
 
-import com.google.inject.Provider;
 import com.manywho.sdk.api.jackson.ObjectMapperFactory;
-import com.manywho.sdk.client.run.RunClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import javax.inject.Provider;
 
 public class RunClientProvider implements Provider<RunClient> {
     @Override

@@ -5,19 +5,21 @@ import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.Property;
 import com.manywho.sdk.services.utils.Fields;
-import org.apache.commons.beanutils.PropertyUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.time.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.reflections.ReflectionUtils.*;
 
 public class TypeBuilder {
     private final TypeRepository typeRepository;
@@ -121,12 +123,21 @@ public class TypeBuilder {
 
             // If no value was found for the field, we fallback to a bean getter
             if (object == null) {
-                try {
-                    object = PropertyUtils.getProperty(type, field.getName());
-                } catch (NoSuchMethodException e) {
+                Set<Method> methods = getAllMethods(type.getClass(),
+                        withModifier(Modifier.PUBLIC), withPrefix("get"), withAnnotation(annotation));
 
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException("Unable to invoke the getter for " + field.getName());
+                if (methods.iterator().hasNext()) {
+                    Method method = methods.iterator().next();
+
+                    if (method == null) {
+                        throw new RuntimeException("No getter could be found for " + field.getName());
+                    }
+
+                    try {
+                        object = method.invoke(null);
+                    } catch (InvocationTargetException e) {
+                        throw new RuntimeException("Unable to invoke the getter for " + field.getName());
+                    }
                 }
             }
 

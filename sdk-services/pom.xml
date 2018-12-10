@@ -31,11 +31,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.10</version>
@@ -45,11 +40,6 @@
                     <artifactId>annotations</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
