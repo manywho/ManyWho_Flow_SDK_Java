@@ -1,6 +1,6 @@
 package com.manywho.services.example;
 
-import com.manywho.sdk.services.servers.EmbeddedServer;
+import com.manywho.sdk.services.servers.Server;
 import com.manywho.sdk.services.servers.Servlet3Server;
 import com.manywho.sdk.services.servers.undertow.UndertowServer;
 
@@ -15,7 +15,7 @@ public class Application extends Servlet3Server {
     }
 
     public static void main(String[] args) throws Exception {
-        EmbeddedServer server = new UndertowServer();
+        Server server = new UndertowServer();
         server.addModule(new ApplicationModule());
         server.setApplication(Application.class);
         server.start();
