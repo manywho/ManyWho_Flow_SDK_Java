@@ -24,7 +24,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <version.jackson>2.8.7</version.jackson>
+        <version.jackson>2.9.7</version.jackson>
         <version.resteasy>3.5.1.Final</version.resteasy>
     </properties>
 
