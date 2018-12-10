@@ -12,6 +12,7 @@
     <modules>
         <module>sdk-api</module>
         <module>sdk-services</module>
+        <module>sdk-server-lambda</module>
         <module>sdk-server-servlet3</module>
         <module>sdk-server-undertow</module>
         <module>sdk-example</module>
