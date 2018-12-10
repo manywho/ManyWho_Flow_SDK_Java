@@ -1,49 +1,24 @@
 package com.manywho.sdk.services;
 
-import com.google.common.collect.Lists;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.util.Modules;
 import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
 import org.reflections.Reflections;
-import ru.vyarus.guice.validator.ImplicitValidationModule;
 
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.Provider;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ServiceApplication extends Application {
-    protected String packageName;
-    protected Injector injector;
-
-    protected List<Module> modules = Lists.newArrayList();
-
-    public void addModule(Module module) {
-        this.modules.add(module);
-    }
+public class ServiceApplication extends ServerApplication {
 
     public void initialize(String packageName, boolean isHttp) {
-        this.packageName = packageName;
-
-        final List<Module> internalModules = Lists.newArrayList();
-
-        internalModules.add(new ImplicitValidationModule());
-        internalModules.add(new ServiceApplicationModule(packageName, isHttp));
+        modules.add(new ServiceApplicationModule(isHttp));
 
         if (isHttp) {
-            internalModules.add(new RequestScopeModule());
+            modules.add(new RequestScopeModule());
         }
 
-        if (this.modules == null) {
-            injector = Guice.createInjector(internalModules);
-        } else {
-            injector = Guice.createInjector(Modules.override(internalModules).with(this.modules));
-        }
+        super.initialize(packageName, isHttp);
     }
 
     @Override

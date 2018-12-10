@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 public class UndertowServer extends BaseServer implements EmbeddedServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(UndertowServer.class);
 
+    private UndertowJaxrsServer server;
+
     /**
      * Start the service using the built-in Jetty container on a specified port
      *
@@ -27,10 +29,10 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
         serviceApplication.initialize(application.getPackage().getName(), true);
 
         try {
-            UndertowJaxrsServer server = new UndertowJaxrsServer();
             Undertow.Builder serverBuilder = Undertow.builder()
                     .addHttpListener(port, "0.0.0.0");
 
+            server = new UndertowJaxrsServer();
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
@@ -59,5 +61,10 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
      */
     public void start() throws Exception {
         start("/");
+    }
+
+    @Override
+    public void stop() {
+        server.stop();
     }
 }

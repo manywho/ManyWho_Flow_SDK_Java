@@ -17,6 +17,7 @@
         <module>sdk-example</module>
         <module>sdk-server</module>
         <module>sdk-client</module>
+        <module>sdk-server-resteasy</module>
     </modules>
 
     <properties>

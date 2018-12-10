@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
-            <artifactId>sdk-server</artifactId>
+            <artifactId>sdk-server-resteasy</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
