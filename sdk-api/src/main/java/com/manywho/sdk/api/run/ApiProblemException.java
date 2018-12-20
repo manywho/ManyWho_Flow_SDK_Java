@@ -25,6 +25,10 @@ public class ApiProblemException extends RuntimeException {
         this(uri, statusCode, null, message);
     }
 
+    public ApiProblemException(int statusCode, String message) {
+        this(null, statusCode, message);
+    }
+
     public String getUri() {
         return uri;
     }

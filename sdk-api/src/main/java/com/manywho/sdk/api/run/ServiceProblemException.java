@@ -33,6 +33,10 @@ public class ServiceProblemException extends ApiProblemException {
         this(uri, statusCode, responseBody, null, message, null, endpointType.toString());
     }
 
+    public ServiceProblemException(int statusCode, String message) {
+        super(statusCode, message);
+    }
+
     public InvokeType getInvokeType() {
         return invokeType;
     }
