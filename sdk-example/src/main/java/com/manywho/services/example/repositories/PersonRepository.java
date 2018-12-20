@@ -8,9 +8,10 @@ import com.manywho.services.example.types.Person;
 
 import javax.inject.Inject;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class PersonRepository {
@@ -22,7 +23,9 @@ public class PersonRepository {
     }
 
     public Person create(ServiceConfiguration configuration, Person person) {
-        return null;
+        person.setId(UUID.randomUUID().toString());
+
+        return person;
     }
 
     public void delete(ServiceConfiguration configuration, Person person) {
@@ -36,10 +39,10 @@ public class PersonRepository {
         return person;
     }
 
-    public List<Person> findAll(int limit, int offset) {
+    public List<Person> findAll(Integer limit, Integer offset) {
         List<Person> people = Lists.newArrayList();
 
-        IntStream.range(0, faker.number().numberBetween(3, 8)).forEachOrdered(i -> {
+        IntStream.range(0, limit).forEachOrdered(i -> {
             people.add(find(faker.idNumber().valid()));
         });
 
@@ -47,7 +50,7 @@ public class PersonRepository {
     }
 
     public Person update(ServiceConfiguration configuration, Person person) {
-        return null;
+        return person;
     }
 
     private Person createPerson() {
@@ -59,7 +62,7 @@ public class PersonRepository {
         person.setActive(faker.bool().bool());
         person.setAge(faker.number().numberBetween(1, 80));
         person.setBiography(faker.chuckNorris().fact());
-        person.setCreatedAt(OffsetDateTime.ofInstant(faker.date().between(new Date(123456), new Date()).toInstant(), ZoneId.systemDefault()));
+        person.setCreatedAt(OffsetDateTime.ofInstant(faker.date().between(new Date(123456), new Date()).toInstant(), ZoneOffset.UTC));
         person.setGroups(groups);
         person.setId(faker.idNumber().valid());
         person.setName(faker.name().fullName());
