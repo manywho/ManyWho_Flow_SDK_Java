@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.files;
 
+import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.configuration.Configuration;
@@ -7,7 +8,6 @@ import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.types.system.$File;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 
 public class FileManager {
@@ -35,7 +35,15 @@ public class FileManager {
     }
 
     @SuppressWarnings("unchecked")
-    public ObjectDataResponse uploadFile(FileDataRequest request, FileUpload upload) throws IOException {
+    public ObjectDataResponse uploadFile(FileDataRequest request, FileUpload upload) throws Exception {
+        if (request == null) {
+            throw new ServiceProblemException(400, "No file data request was given");
+        }
+
+        if (upload == null || upload.getContent() == null) {
+            throw new ServiceProblemException(400, "No file was uploaded");
+        }
+
         // Create the configuration settings from the request
         Configuration configuration = configurationParser.from(request);
 

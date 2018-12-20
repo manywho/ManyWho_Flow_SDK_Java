@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.controllers;
 
+import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.files.FileManager;
@@ -29,7 +30,7 @@ public class DefaultFileController extends AbstractFileController {
     @Path("/delete")
     @Override
     public ObjectDataResponse deleteFile(FileDataRequest fileDataRequest) throws Exception {
-        throw new UnsupportedOperationException("Deleting files is not yet supported in the SDK");
+        throw new ServiceProblemException(500, "Deleting files is not yet supported in the SDK");
     }
 
     @POST
@@ -48,14 +49,14 @@ public class DefaultFileController extends AbstractFileController {
                 .filter(bodyPart -> bodyPart.getMediaType().toString().contains("application/json"))
                 .findFirst()
                 .map(FileUploadService::getFileDataRequest)
-                .orElseThrow(() -> new RuntimeException("No file metadata was sent in the request"));
+                .orElse(null);
 
         // Get the first part that doesn't have a content type of "application/json" as it's probably the file content
         FileUpload upload = multipartInput.getParts().stream()
                 .filter(bodyPart -> !bodyPart.getMediaType().toString().contains("application/json"))
                 .findFirst()
                 .map(FileUploadService::createFileUpload)
-                .orElseThrow(() -> new RuntimeException("No file was uploaded"));
+                .orElse(null);
 
         return fileManager.uploadFile(request, upload);
     }
