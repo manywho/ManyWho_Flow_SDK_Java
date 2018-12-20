@@ -1,6 +1,6 @@
 package com.manywho.services.example;
 
-import com.manywho.sdk.server.lambda.LambdaServer;
+import com.manywho.sdk.services.servers.lambda.LambdaServer;
 
 import javax.ws.rs.ApplicationPath;
 

@@ -1,4 +1,4 @@
-package com.manywho.sdk.server.lambda.model;
+package com.manywho.sdk.services.servers.lambda.model;
 
 import java.util.Map;
 

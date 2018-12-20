@@ -1,4 +1,4 @@
-package com.manywho.sdk.server.lambda;
+package com.manywho.sdk.services.servers.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
@@ -7,8 +7,6 @@ import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.run.elements.config.ListenerServiceRequest;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
-import com.manywho.sdk.server.lambda.model.HttpRequest;
-import com.manywho.sdk.server.lambda.model.HttpResponse;
 import com.manywho.sdk.services.ServerApplication;
 import com.manywho.sdk.services.database.DatabaseManager;
 import com.manywho.sdk.services.database.DatabaseType;
@@ -16,6 +14,8 @@ import com.manywho.sdk.services.describe.DescribeManager;
 import com.manywho.sdk.services.files.FileManager;
 import com.manywho.sdk.services.listeners.ListenerManager;
 import com.manywho.sdk.services.servers.Server;
+import com.manywho.sdk.services.servers.lambda.model.HttpRequest;
+import com.manywho.sdk.services.servers.lambda.model.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
