@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Property implements PropertyAware {
+public class Property implements Comparable<Property>, PropertyAware {
     private UUID typeElementPropertyId;
     private String developerName;
     private ContentType contentType;
@@ -101,5 +101,10 @@ public class Property implements PropertyAware {
 
     public void setContentFormat(String contentFormat) {
         this.contentFormat = contentFormat;
+    }
+
+    @Override
+    public int compareTo(Property other) {
+        return developerName.compareToIgnoreCase(other.developerName);
     }
 }
