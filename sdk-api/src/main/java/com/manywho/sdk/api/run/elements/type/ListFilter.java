@@ -63,7 +63,7 @@ public class ListFilter extends ListFilterMinimal {
         this.orderByDirectionType = orderByDirectionType;
     }
 
-    public int getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
@@ -79,7 +79,7 @@ public class ListFilter extends ListFilterMinimal {
         this.limit = limit;
     }
 
-    public int getOffset() {
+    public Integer getOffset() {
         return offset;
     }
 
