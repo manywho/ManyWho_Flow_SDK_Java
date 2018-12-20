@@ -1,5 +1,6 @@
 package com.manywho.sdk.services.jaxrs.mappers;
 
+import com.manywho.sdk.api.run.ApiProblemException;
 import com.manywho.sdk.api.run.ServiceProblem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,10 @@ public class DefaultExceptionMapper implements ExceptionMapper<Throwable> {
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
         if (e instanceof WebApplicationException) {
             status = Response.Status.fromStatusCode(((WebApplicationException) e).getResponse().getStatus());
+        }
+
+        if (e instanceof ApiProblemException) {
+            status = Response.Status.fromStatusCode(((ApiProblemException) e).getStatusCode());
         }
 
         String message = e.getMessage();
