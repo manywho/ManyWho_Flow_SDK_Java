@@ -11,6 +11,7 @@ import com.manywho.sdk.services.configuration.ConfigurationParser;
 import com.manywho.sdk.services.types.TypeProvider;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 public class DescribeManager {
@@ -85,6 +86,9 @@ public class DescribeManager {
             actionsElements.addAll(customActions);
         }
 
+        // Sort the actions alphabetically
+        Collections.sort(actionsElements);
+
         builder.setActions(actionsElements);
 
         if (actionsElements.size() > 0) {
@@ -94,13 +98,15 @@ public class DescribeManager {
         List<TypeElement> typeElements = Lists.newArrayList();
         typeElements.addAll(describeTypeService.createTypes());
 
-
         List<TypeElement> customTypes = typeProvider.describeTypes(configuration, request);
         if (customTypes == null) {
             throw new RuntimeException("The configured implementation of " + TypeProvider.class.getCanonicalName() + " must return a valid List<TypeElement>");
         } else {
             typeElements.addAll(customTypes);
         }
+
+        // Sort the types alphabetically
+        Collections.sort(typeElements);
 
         builder.setTypes(typeElements);
 

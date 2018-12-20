@@ -87,6 +87,7 @@ public class DescribeService {
 
                     return new DescribeValue(annotation.name(), annotation.contentType(), annotation.required(), referencedTypeName);
                 })
+                .sorted()
                 .collect(Collectors.toList());
 
         if (values.isEmpty()) {
