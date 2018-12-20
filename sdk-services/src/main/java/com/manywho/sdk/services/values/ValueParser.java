@@ -91,7 +91,7 @@ public class ValueParser {
         try {
             T instance = type.newInstance();
 
-            List<Field> typeFields = Fields.fromType(type.getClass());
+            List<Field> typeFields = Fields.fromType(type);
 
             // Get the identifier field, if one exists
             boolean boundPropertiesExist = typeRepository.getTypeProperties().stream()
