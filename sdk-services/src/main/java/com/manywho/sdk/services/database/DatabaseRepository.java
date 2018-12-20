@@ -34,7 +34,8 @@ public class DatabaseRepository {
 
     public <T extends Type> Class<? extends ReadOnlyDatabase<?, T>> findReadOnlyDatabase(Class<T> type) {
         return (Class<? extends ReadOnlyDatabase<?, T>>) getReadOnlyDatabases().stream()
-                .filter(database -> !database.isAssignableFrom(Database.class))
+                .filter(database -> !database.isInterface())
+                .filter(database -> !RawDatabase.class.isAssignableFrom(database))
                 .filter(database -> TypeParser.findGenericType(database.getGenericInterfaces()[0], 1).equals(type))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Unable to find an implementation of ReadOnlyDatabase<T> for the type " + type.getCanonicalName()));
@@ -42,7 +43,8 @@ public class DatabaseRepository {
 
     public <T extends Type> Class<? extends WritableDatabase<?, T>> findWritableDatabase(Class<T> type) {
         return (Class<? extends WritableDatabase<?, T>>) getWritableDatabases().stream()
-                .filter(database -> !database.isAssignableFrom(Database.class))
+                .filter(database -> !database.isInterface())
+                .filter(database -> !RawDatabase.class.isAssignableFrom(database))
                 .filter(database -> TypeParser.findGenericType(database.getGenericInterfaces()[0], 1).equals(type))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Unable to find an implementation of WritableDatabase<T> for the type " + type.getCanonicalName()));
