@@ -26,7 +26,9 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
 
     @Override
     public List<Person> create(ServiceConfiguration configuration, List<Person> objects) {
-        return objects.stream().map(object -> create(configuration, object)).collect(Collectors.toList());
+        return objects.stream()
+                .map(object -> create(configuration, object))
+                .collect(Collectors.toList());
     }
 
     @Override
