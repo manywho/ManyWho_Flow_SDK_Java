@@ -8,4 +8,6 @@ public interface Server {
     void setApplication(Class<?> application);
 
     void start() throws Exception;
+
+    void stop();
 }
