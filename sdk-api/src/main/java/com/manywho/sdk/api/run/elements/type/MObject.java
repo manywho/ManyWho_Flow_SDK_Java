@@ -27,6 +27,10 @@ public class MObject {
         this.developerName = developerName;
     }
 
+    public MObject(String developerName, List<Property> properties) {
+        this(developerName, null, properties);
+    }
+
     public MObject(String developerName, String externalId, List<Property> properties) {
         this.developerName = developerName;
         this.externalId = externalId;
