@@ -2,7 +2,7 @@ package com.manywho.sdk.api.run;
 
 import com.google.common.collect.HashMultimap;
 
-public class ApiProblemException extends Exception {
+public class ApiProblemException extends RuntimeException {
     private String uri;
     private int statusCode;
     private String responseBody;
