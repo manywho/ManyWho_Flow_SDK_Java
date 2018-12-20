@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DescribeServiceActionResponse extends DescribeServiceActionRequest {
+public class DescribeServiceActionResponse extends DescribeServiceActionRequest implements Comparable<DescribeServiceActionResponse> {
     private String developerName;
     private String developerSummary;
     private List<DescribeUIServiceActionOutcome> serviceActionOutcomes = Lists.newArrayList();
@@ -61,5 +61,10 @@ public class DescribeServiceActionResponse extends DescribeServiceActionRequest 
 
     public void setViewMessageAction(boolean viewMessageAction) {
         this.viewMessageAction = viewMessageAction;
+    }
+
+    @Override
+    public int compareTo(DescribeServiceActionResponse other) {
+        return developerName.compareToIgnoreCase(other.developerName);
     }
 }
