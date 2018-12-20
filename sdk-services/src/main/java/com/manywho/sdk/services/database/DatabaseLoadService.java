@@ -1,6 +1,7 @@
 package com.manywho.sdk.services.database;
 
 import com.google.common.collect.Lists;
+import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
@@ -22,72 +23,90 @@ public class DatabaseLoadService implements DatabaseService {
     }
 
     public <T extends Type> ObjectDataResponse handle(ObjectDataRequest request, ReadOnlyDatabase<?, T> database) {
-        // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
-        int providedLimit = request.getListFilter().getLimit();
-        if (request.getListFilter().hasLimit()) {
-            request.getListFilter().setLimit(providedLimit + 1);
-        }
+        ListFilter listFilter = getListFilter(request);
 
         List<MObject> result;
 
-        if (request.getListFilter().hasId()) {
+        // Check if the request is to find a single item, otherwise default to finding multiple items using the provided list filter
+        if (listFilter.hasId()) {
             // If the request is to find a single item
             result = typeBuilder.from(database.find(
                     configurationParser.from(request),
                     request.getCommand(),
-                    request.getListFilter().getId()
+                    listFilter.getId()
             ));
+
+            return createResponse(database.getClass(), result, 1);
         } else {
-            // Otherwise we default to finding multiple items using the provided list filter
+            // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
+            int providedLimit = listFilter.getLimit();
+            if (listFilter.hasLimit()) {
+                listFilter.setLimit(providedLimit + 1);
+            }
+
             result = typeBuilder.from(database.findAll(
                     configurationParser.from(request),
                     request.getCommand(),
-                    request.getListFilter()
+                    listFilter
             ));
-        }
 
-        return createResponse(result, providedLimit);
+            return createResponse(database.getClass(), result, providedLimit);
+        }
     }
 
     @Override
     public ObjectDataResponse handleRaw(ObjectDataRequest request, RawDatabase<?> database) {
-        // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
-        int providedLimit = request.getListFilter().getLimit();
-        if (request.getListFilter().hasLimit()) {
-            request.getListFilter().setLimit(providedLimit + 1);
-        }
+        ListFilter listFilter = getListFilter(request);
 
         List<MObject> result;
 
-        if (request.getListFilter().hasId()) {
-            // If the request is to find a single item
+        // Check if the request is to find a single item, otherwise default to finding multiple items using the provided list filter
+        if (listFilter.hasId()) {
             result = Lists.newArrayList(database.find(
                     configurationParser.from(request),
                     request.getObjectDataType(),
                     request.getCommand(),
-                    request.getListFilter().getId()
+                    listFilter.getId()
             ));
+
+            return createResponse(database.getClass(), result, 1);
         } else {
-            // Otherwise we default to finding multiple items using the provided list filter
+            // If a limit is provided, increment it by 1 so we can set the hasMoreResults flag
+            int providedLimit = listFilter.getLimit();
+            if (listFilter.hasLimit()) {
+                listFilter.setLimit(providedLimit + 1);
+            }
+
             result = database.findAll(
                     configurationParser.from(request),
                     request.getObjectDataType(),
                     request.getCommand(),
-                    request.getListFilter()
+                    listFilter
             );
-        }
 
-        if (result == null) {
-            throw new RuntimeException("The result from " + database.getClass().getCanonicalName() + "::findAll() cannot be null");
+            return createResponse(database.getClass(), result, providedLimit);
         }
-
-        return createResponse(result, providedLimit);
     }
 
-    private ObjectDataResponse createResponse(List<MObject> result, int providedLimit) {
+    private ListFilter getListFilter(ObjectDataRequest request) {
+        ListFilter listFilter = request.getListFilter();
+        if (listFilter == null) {
+            listFilter = new ListFilter();
+            listFilter.setLimit(20);
+            listFilter.setOffset(0);
+        }
+
+        return listFilter;
+    }
+
+    private ObjectDataResponse createResponse(Class<?> database, List<MObject> result, Integer providedLimit) {
+        if (result == null) {
+            throw new RuntimeException("The result from " + database.getCanonicalName() + "::findAll() cannot be null");
+        }
+
         ObjectDataResponse response = new ObjectDataResponse();
 
-        if (providedLimit != 0 && result.size() > providedLimit) {
+        if (providedLimit != null && providedLimit != 0 && result.size() > providedLimit) {
             response.setHasMoreResults(true);
             response.setObjectData(result.subList(0, providedLimit));
         } else {
