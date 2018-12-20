@@ -94,6 +94,7 @@ public class TypeBuilder {
 
         List<Property> properties = typeProperties.stream()
                 .map(property -> createProperty(type, property))
+                .sorted()
                 .collect(Collectors.toList());
 
         object.setProperties(properties);
