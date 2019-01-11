@@ -1,6 +1,8 @@
 package com.manywho.sdk.services.database;
 
+import com.google.common.base.Strings;
 import com.google.inject.Injector;
+import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.configuration.Configuration;
@@ -43,6 +45,18 @@ public class DatabaseManager {
     }
 
     public ObjectDataResponse handle(DatabaseType databaseType, ObjectDataRequest objectDataRequest) {
+        if (objectDataRequest == null) {
+            throw new ServiceProblemException(400, "No incoming object data request was given");
+        }
+
+        if (objectDataRequest.getObjectDataType() == null) {
+            throw new ServiceProblemException(400, "No object data type was given in the request");
+        }
+
+        if (Strings.isNullOrEmpty(objectDataRequest.getObjectDataType().getDeveloperName())) {
+            throw new ServiceProblemException(400, "No object data type developer name was given in the request");
+        }
+
         Configuration configuration = configurationParser.from(objectDataRequest);
 
         if (typeProvider.doesTypeExist(configuration, objectDataRequest.getObjectDataType().getDeveloperName())) {
