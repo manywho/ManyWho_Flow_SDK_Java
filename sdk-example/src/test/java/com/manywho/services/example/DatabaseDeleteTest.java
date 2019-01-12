@@ -1,6 +1,9 @@
 package com.manywho.services.example;
 
-import com.manywho.sdk.api.run.elements.type.*;
+import com.manywho.sdk.api.run.elements.type.MObject;
+import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
+import com.manywho.sdk.api.run.elements.type.ObjectDataType;
+import com.manywho.sdk.api.run.elements.type.Property;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 
@@ -12,7 +15,7 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class DatabaseDeleteTest extends FunctionalTest {
+public class DatabaseDeleteTest {
     @Test
     public void testDelete() {
         ObjectDataType objectDataType = new ObjectDataType();

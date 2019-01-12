@@ -7,7 +7,7 @@ import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class DescribeTest extends FunctionalTest {
+public class DescribeTest {
     @Test
     public void testDescribe() {
         DescribeServiceRequest request = new DescribeServiceRequest();

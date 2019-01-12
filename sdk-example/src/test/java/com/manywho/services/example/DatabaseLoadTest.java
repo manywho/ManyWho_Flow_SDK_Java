@@ -11,7 +11,7 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class DatabaseLoadTest extends FunctionalTest {
+public class DatabaseLoadTest {
     @Test
     public void testFindAll() {
         ObjectDataType objectDataType = new ObjectDataType();

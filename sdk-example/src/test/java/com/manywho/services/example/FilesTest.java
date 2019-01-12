@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 
-public class FilesTest extends FunctionalTest {
+public class FilesTest {
     @Test
     public void testDeleteFile() {
         given()
