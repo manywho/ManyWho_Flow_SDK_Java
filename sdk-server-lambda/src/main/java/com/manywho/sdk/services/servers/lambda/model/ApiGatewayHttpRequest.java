@@ -1,13 +1,14 @@
 package com.manywho.sdk.services.servers.lambda.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class HttpRequest {
+public class ApiGatewayHttpRequest {
     private String httpMethod;
     private String body;
     private String path;
     private boolean isBase64Encoded;
-    private Map<String, String> headers;
+    private Map<String, String> headers = new HashMap<>();
 
     public String getHttpMethod() {
         return httpMethod;

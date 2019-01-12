@@ -4,6 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
+import com.manywho.sdk.api.run.ServiceProblem;
+import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.config.ListenerServiceRequest;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
@@ -14,8 +16,8 @@ import com.manywho.sdk.services.describe.DescribeManager;
 import com.manywho.sdk.services.files.FileManager;
 import com.manywho.sdk.services.listeners.ListenerManager;
 import com.manywho.sdk.services.servers.Server;
-import com.manywho.sdk.services.servers.lambda.model.HttpRequest;
-import com.manywho.sdk.services.servers.lambda.model.HttpResponse;
+import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpRequest;
+import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,14 +51,30 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+        ApiGatewayHttpRequest httpRequest = objectMapper
+                .readValue(inputStream, ApiGatewayHttpRequest.class);
+
+        ApiGatewayHttpResponse httpResponse = handleRequest(httpRequest, context);
+
+        objectMapper.writeValue(outputStream, httpResponse);
+    }
+
+    public ApiGatewayHttpResponse handleRequest(ApiGatewayHttpRequest httpRequest, Context context) throws IOException {
         LOGGER.info("Handling request at the top: {}", context.getAwsRequestId());
 
-        HttpRequest httpRequest = objectMapper
-                .readValue(inputStream, HttpRequest.class);
-
         Object response;
+        int status;
+
         try {
             response = routeRequest(httpRequest);
+
+            status = response == null
+                    ? 204
+                    : 200;
+        } catch (ServiceProblemException e) {
+            // TODO
+            response = objectMapper.writeValueAsString(new ServiceProblem(e));
+            status = e.getStatusCode();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -66,20 +84,16 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
 
         // TODO: Handle errors
 
-        int status = response == null
-                ? 204
-                : 200;
-
-        HttpResponse httpResponse = new HttpResponse();
+        ApiGatewayHttpResponse httpResponse = new ApiGatewayHttpResponse();
         httpResponse.setBody(objectMapper.writeValueAsString(response));
         httpResponse.setHeaders(headers);
         httpResponse.setStatusCode(status);
 
-        objectMapper.writeValue(outputStream, httpResponse);
+        return httpResponse;
     }
 
-    // TODO: Extract
-    Object routeRequest(HttpRequest httpRequest) throws Exception {
+        // TODO: Extract
+    private Object routeRequest(ApiGatewayHttpRequest httpRequest) throws Exception {
         Object response;
 
         switch (httpRequest.getHttpMethod()) {
@@ -174,7 +188,7 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
         return response;
     }
 
-    DescribeServiceRequest parseDescribeRequest(String body) {
+    private DescribeServiceRequest parseDescribeRequest(String body) {
         try {
             return objectMapper.readValue(body, DescribeServiceRequest.class);
         } catch (IOException e) {
@@ -182,7 +196,7 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
         }
     }
 
-    FileDataRequest parseFileDataRequest(String body) {
+    private FileDataRequest parseFileDataRequest(String body) {
         try {
             return objectMapper.readValue(body, FileDataRequest.class);
         } catch (IOException e) {
@@ -190,7 +204,7 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
         }
     }
 
-    ListenerServiceRequest parseListenerRequest(String body) {
+    private ListenerServiceRequest parseListenerRequest(String body) {
         try {
             return objectMapper.readValue(body, ListenerServiceRequest.class);
         } catch (IOException e) {
@@ -198,7 +212,7 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
         }
     }
 
-    ObjectDataRequest parseObjectDataRequest(String body) {
+    private ObjectDataRequest parseObjectDataRequest(String body) {
         try {
             return objectMapper.readValue(body, ObjectDataRequest.class);
         } catch (IOException e) {

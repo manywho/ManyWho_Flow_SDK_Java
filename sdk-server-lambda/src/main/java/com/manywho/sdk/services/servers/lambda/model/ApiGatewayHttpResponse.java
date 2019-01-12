@@ -2,7 +2,7 @@ package com.manywho.sdk.services.servers.lambda.model;
 
 import java.util.Map;
 
-public class HttpResponse {
+public class ApiGatewayHttpResponse {
     private String body;
     private int statusCode;
     private String isBase64Encoded;
