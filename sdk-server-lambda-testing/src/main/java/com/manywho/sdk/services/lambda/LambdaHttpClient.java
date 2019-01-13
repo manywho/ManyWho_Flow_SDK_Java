@@ -1,4 +1,4 @@
-package com.manywho.services.example.suites;
+package com.manywho.sdk.services.lambda;
 
 import com.manywho.sdk.services.servers.lambda.LambdaDispatcher;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpRequest;

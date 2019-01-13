@@ -1,4 +1,4 @@
-package com.manywho.services.example.suites;
+package com.manywho.sdk.services.lambda;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;

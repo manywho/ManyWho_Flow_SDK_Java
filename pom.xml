@@ -11,14 +11,15 @@
 
     <modules>
         <module>sdk-api</module>
+        <module>sdk-client</module>
+        <module>sdk-example</module>
         <module>sdk-services</module>
+        <module>sdk-server</module>
         <module>sdk-server-lambda</module>
+        <module>sdk-server-lambda-testing</module>
+        <module>sdk-server-resteasy</module>
         <module>sdk-server-servlet3</module>
         <module>sdk-server-undertow</module>
-        <module>sdk-example</module>
-        <module>sdk-server</module>
-        <module>sdk-client</module>
-        <module>sdk-server-resteasy</module>
     </modules>
 
     <properties>

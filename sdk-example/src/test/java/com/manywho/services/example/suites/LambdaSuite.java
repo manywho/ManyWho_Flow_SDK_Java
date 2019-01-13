@@ -1,5 +1,6 @@
 package com.manywho.services.example.suites;
 
+import com.manywho.sdk.services.lambda.LambdaHttpClient;
 import com.manywho.sdk.services.servers.lambda.LambdaServer;
 import com.manywho.services.example.Application;
 import com.manywho.services.example.ApplicationModule;
