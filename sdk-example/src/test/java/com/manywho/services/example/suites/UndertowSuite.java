@@ -4,6 +4,7 @@ import com.manywho.sdk.services.servers.undertow.UndertowServer;
 import com.manywho.services.example.Application;
 import com.manywho.services.example.ApplicationModule;
 import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.extensions.cpsuite.ClasspathSuite;
@@ -22,6 +23,7 @@ public class UndertowSuite {
         server.setApplication(Application.class);
         server.start("/", PORT);
 
+        RestAssured.config = RestAssuredConfig.newConfig();
         RestAssured.port = PORT;
     }
 

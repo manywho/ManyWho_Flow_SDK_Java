@@ -37,7 +37,7 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
         if (authenticatedWho == null) {
             throw new ServiceProblemException(401, "No authenticated who was given");
         }
-        
+
         return objects.stream()
                 .map(object -> create(configuration, object))
                 .collect(Collectors.toList());
