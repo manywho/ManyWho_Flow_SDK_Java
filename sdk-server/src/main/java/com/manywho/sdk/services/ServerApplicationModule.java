@@ -8,9 +8,11 @@ import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.actions.DummyActionHandler;
 import com.manywho.sdk.services.actions.DummyActionProvider;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
+import com.manywho.sdk.services.providers.FileUploadProvider;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
 import com.manywho.sdk.services.types.DummyTypeProvider;
 import com.manywho.sdk.services.types.TypeProvider;
+import org.apache.commons.fileupload.FileUpload;
 import org.reflections.Reflections;
 
 public class ServerApplicationModule extends AbstractModule {
@@ -22,6 +24,7 @@ public class ServerApplicationModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(FileUpload.class).toProvider(FileUploadProvider.class).asEagerSingleton();
         bind(Reflections.class).toProvider(ReflectionsProvider.class).asEagerSingleton();
 
         bind(TypeProvider.class).to(DummyTypeProvider.class);

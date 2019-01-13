@@ -2,8 +2,8 @@ package com.manywho.sdk.services.controllers;
 
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,5 +24,5 @@ public abstract class AbstractFileController implements FileController {
     @POST
     @Path("/content")
     @Consumes({"multipart/form-data", "application/octet-stream"})
-    public abstract ObjectDataResponse uploadFile(MultipartInput multipartInput) throws Exception;
+    public abstract ObjectDataResponse uploadFile(HttpServletRequest multipartInput) throws Exception;
 }
