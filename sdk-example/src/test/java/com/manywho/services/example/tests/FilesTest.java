@@ -1,4 +1,4 @@
-package com.manywho.services.example;
+package com.manywho.services.example.tests;
 
 import com.google.common.io.Files;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;

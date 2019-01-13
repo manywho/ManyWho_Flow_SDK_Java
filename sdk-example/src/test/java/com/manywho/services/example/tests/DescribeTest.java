@@ -1,4 +1,4 @@
-package com.manywho.services.example;
+package com.manywho.services.example.tests;
 
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import io.restassured.http.ContentType;

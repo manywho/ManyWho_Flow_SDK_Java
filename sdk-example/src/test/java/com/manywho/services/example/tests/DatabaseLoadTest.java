@@ -1,8 +1,9 @@
-package com.manywho.services.example;
+package com.manywho.services.example.tests;
 
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
+import com.manywho.services.example.TestConstants;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 
