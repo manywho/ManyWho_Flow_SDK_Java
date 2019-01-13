@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.api.describe.DescribeServiceRequest;
 import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.config.ListenerServiceRequest;
+import com.manywho.sdk.api.run.elements.config.ServiceRequest;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
+import com.manywho.sdk.services.actions.ActionManager;
 import com.manywho.sdk.services.database.DatabaseManager;
 import com.manywho.sdk.services.database.DatabaseType;
 import com.manywho.sdk.services.describe.DescribeManager;
@@ -29,6 +31,7 @@ public class LambdaRouter {
     private final static Logger LOGGER = LoggerFactory.getLogger(LambdaRouter.class);
 
     private final ObjectMapper objectMapper;
+    private final ActionManager actionManager;
     private final DatabaseManager databaseManager;
     private final DescribeManager describeManager;
     private final FileManager fileManager;
@@ -36,8 +39,9 @@ public class LambdaRouter {
     private final ListenerManager listenerManager;
 
     @Inject
-    public LambdaRouter(ObjectMapper objectMapper, DatabaseManager databaseManager, DescribeManager describeManager, FileManager fileManager, FileUpload fileUpload, ListenerManager listenerManager) {
+    public LambdaRouter(ObjectMapper objectMapper, ActionManager actionManager, DatabaseManager databaseManager, DescribeManager describeManager, FileManager fileManager, FileUpload fileUpload, ListenerManager listenerManager) {
         this.objectMapper = objectMapper;
+        this.actionManager = actionManager;
         this.databaseManager = databaseManager;
         this.describeManager = describeManager;
         this.fileManager = fileManager;
@@ -46,42 +50,33 @@ public class LambdaRouter {
     }
 
     public Object routeRequest(ApiGatewayHttpRequest httpRequest) {
+        LOGGER.info("Routing a {} request to the path {}", httpRequest.getHttpMethod(), httpRequest.getPath());
+
         switch (httpRequest.getHttpMethod()) {
             case "PUT":
                 return routePut(httpRequest.getPath(), httpRequest.getBody());
             case "POST":
                 return routePost(httpRequest.getPath(), httpRequest.getBody(), httpRequest.getHeaders());
             default:
-                // TODO
-                throw new RuntimeException();
+                throw new ServiceProblemException(400, "No action could be found at the given location");
         }
     }
 
     private Object routePost(String path, String body, Map<String, String> headers) {
         if (path.startsWith("/actions")) {
-            // TODO
-            return null;
+            String actionPath = path.substring(9);
+
+            return actionManager.executeAction(actionPath, parseServiceRequest(body));
         }
 
         switch (path) {
             case "/authentication":
-                // TODO
-                return null;
             case "/authorization":
-                // TODO
-                return null;
             case "/authorization/group":
-                // TODO
-                return null;
             case "/authorization/group/attribute":
-                // TODO
-                return null;
             case "/authorization/user":
-                // TODO
-                return null;
             case "/authorization/user/attribute":
-                // TODO
-                return null;
+                throw new ServiceProblemException(500, "Identity is not yet supported using the SDK lambda handler");
             case "/data":
                 return databaseManager.handle(DatabaseType.Load, parseObjectDataRequest(body));
             case "/data/delete":
@@ -111,8 +106,7 @@ public class LambdaRouter {
             case "/metadata":
                 return describeManager.describe(parseDescribeRequest(body));
             default:
-                // TODO
-                throw new RuntimeException();
+                throw new ServiceProblemException(400, "No action could be found at the given location");
         }
     }
 
@@ -155,6 +149,14 @@ public class LambdaRouter {
             return objectMapper.readValue(body, ObjectDataRequest.class);
         } catch (IOException e) {
             throw new RuntimeException("Unable to parse the incoming request as an object data request", e);
+        }
+    }
+
+    private ServiceRequest parseServiceRequest(String body) {
+        try {
+            return objectMapper.readValue(body, ServiceRequest.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to parse the incoming request as a service request", e);
         }
     }
 }
