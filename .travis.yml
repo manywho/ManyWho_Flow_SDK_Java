@@ -1,7 +1,10 @@
 language: java
 jdk:
   - oraclejdk8
-dist: trusty
+  - oraclejdk11
+  - openjdk10
+  - openjdk11
+dist: xenial
 cache:
   directories:
   - $HOME/.m2
