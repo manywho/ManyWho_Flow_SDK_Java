@@ -1,6 +1,6 @@
 package com.manywho.services.example.suites;
 
-import com.manywho.sdk.services.servers.lambda.LambdaServer;
+import com.manywho.sdk.services.servers.lambda.LambdaDispatcher;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpRequest;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpResponse;
 import org.apache.http.*;
@@ -23,13 +23,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Map;
 
+/**
+ * This class is used to "mock" the HTTP communication to and from a Lambda handler, which is useful for running API
+ * tests using something like Rest Assured without having to spin up an actual Lambda function and API Gateway instance.
+ */
 public class LambdaHttpClient extends AbstractHttpClient {
-    private final LambdaServer server;
+    private final LambdaDispatcher dispatcher;
 
-    public LambdaHttpClient(LambdaServer server) {
+    public LambdaHttpClient(LambdaDispatcher dispatcher) {
         super(null, null);
 
-        this.server = server;
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -93,11 +97,14 @@ public class LambdaHttpClient extends AbstractHttpClient {
     private CloseableHttpResponse doExecute(HttpRequest request) throws IOException {
         ApiGatewayHttpRequest gatewayRequest = new ApiGatewayHttpRequest();
 
+        // If we're given a request with a body, then let's try and extract it to send through to the handler
         if (request instanceof HttpEntityEnclosingRequest) {
             HttpEntityEnclosingRequest entityRequest = (HttpEntityEnclosingRequest) request;
 
             if (entityRequest.getEntity() != null) {
                 String contentType = entityRequest.getEntity().getContentType().getValue();
+
+                gatewayRequest.getHeaders().put("Content-Type", contentType);
 
                 // The body content needs to be serialized into a content-specific format, before sending to the handler
                 if (contentType.startsWith("application/json")) {
@@ -119,7 +126,7 @@ public class LambdaHttpClient extends AbstractHttpClient {
             gatewayRequest.getHeaders().put(header.getName(), header.getValue());
         }
 
-        ApiGatewayHttpResponse gatewayResponse = server.handleRequest(gatewayRequest, new LambdaFakeContext());
+        ApiGatewayHttpResponse gatewayResponse = dispatcher.dispatch(gatewayRequest, new LambdaFakeContext());
 
         HttpResponse response = new BasicHttpResponse(request.getProtocolVersion(), gatewayResponse.getStatusCode(), "");
         response.setEntity(new StringEntity(gatewayResponse.getBody(), StandardCharsets.UTF_8));

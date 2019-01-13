@@ -25,7 +25,7 @@ public class LambdaSuite {
                 .httpClient(
                         RestAssured.config()
                                 .getHttpClientConfig()
-                                .httpClientFactory(() -> new LambdaHttpClient(server))
+                                .httpClientFactory(() -> new LambdaHttpClient(server.getDispatcher()))
                 );
     }
 
