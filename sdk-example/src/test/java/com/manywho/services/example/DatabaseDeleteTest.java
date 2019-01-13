@@ -41,6 +41,7 @@ public class DatabaseDeleteTest {
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data/delete")
@@ -71,6 +72,7 @@ public class DatabaseDeleteTest {
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data/delete")

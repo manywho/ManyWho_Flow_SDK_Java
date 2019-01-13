@@ -27,6 +27,7 @@ public class LambdaServer extends ServerApplication implements RequestStreamHand
     }
 
     public void start() {
+        this.addModule(new LambdaModule());
         this.initialize(application.getPackage().getName(), true);
 
         objectMapper = injector.getInstance(ObjectMapper.class);

@@ -26,6 +26,7 @@ public class DatabaseLoadTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data")
@@ -102,6 +103,7 @@ public class DatabaseLoadTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data")
@@ -178,6 +180,7 @@ public class DatabaseLoadTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data")
@@ -221,6 +224,7 @@ public class DatabaseLoadTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .post("/data")

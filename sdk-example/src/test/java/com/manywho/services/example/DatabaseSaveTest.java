@@ -40,6 +40,7 @@ public class DatabaseSaveTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .put("/data")
@@ -115,6 +116,7 @@ public class DatabaseSaveTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .put("/data")
@@ -191,6 +193,7 @@ public class DatabaseSaveTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .put("/data")
@@ -269,6 +272,7 @@ public class DatabaseSaveTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
                 .put("/data")

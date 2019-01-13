@@ -4,6 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.api.run.ServiceProblem;
 import com.manywho.sdk.api.run.ServiceProblemException;
+import com.manywho.sdk.api.security.AuthenticatedWho;
+import com.manywho.sdk.services.identity.AuthorizationEncoder;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpRequest;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpResponse;
 import org.slf4j.Logger;
@@ -19,15 +21,24 @@ public class LambdaDispatcher {
 
     private final ObjectMapper objectMapper;
     private final LambdaRouter router;
+    private final AuthorizationEncoder authorizationEncoder;
 
     @Inject
-    public LambdaDispatcher(ObjectMapper objectMapper, LambdaRouter router) {
+    public LambdaDispatcher(ObjectMapper objectMapper, LambdaRouter router, AuthorizationEncoder authorizationEncoder) {
         this.objectMapper = objectMapper;
         this.router = router;
+        this.authorizationEncoder = authorizationEncoder;
     }
 
     public ApiGatewayHttpResponse dispatch(ApiGatewayHttpRequest httpRequest, Context context) throws IOException {
         LOGGER.info("Handling request at the top: {}", context.getAwsRequestId());
+
+        // Set the current authenticated who in the current context
+        if (httpRequest.getHeaders().containsKey("Authorization")) {
+            AuthenticatedWho user = authorizationEncoder.decode(httpRequest.getHeaders().get("Authorization"));
+
+            LambdaContext.setUser(user);
+        }
 
         Object response;
         int status;

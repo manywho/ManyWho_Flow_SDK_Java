@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ServiceApplication extends ServerApplication {
 
     public void initialize(String packageName, boolean isHttp) {
-        modules.add(new ServiceApplicationModule(isHttp));
+        modules.add(new ServiceApplicationModule());
 
         if (isHttp) {
             modules.add(new RequestScopeModule());
