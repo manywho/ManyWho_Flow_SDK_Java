@@ -74,10 +74,10 @@ public class DescribeTest {
                 .body("configurationValues", hasSize(2))
                 .body("configurationValues[0].contentType", equalTo("ContentPassword"))
                 .body("configurationValues[0].developerName", equalTo("Password"))
-                .body("configurationValues[0].required", equalTo(true))
+                .body("configurationValues[0].required", equalTo(false))
                 .body("configurationValues[1].contentType", equalTo("ContentString"))
                 .body("configurationValues[1].developerName", equalTo("Username"))
-                .body("configurationValues[1].required", equalTo(true))
+                .body("configurationValues[1].required", equalTo(false))
 
                 .body("install.typeElements", hasSize(3))
                 .body("install.typeElements[0].bindings", hasSize(1))
