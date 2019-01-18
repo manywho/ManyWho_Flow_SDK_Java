@@ -7,6 +7,8 @@ import com.manywho.sdk.services.values.ValueParser;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,13 +34,16 @@ public class ConfigurationParser {
         // Create an instance of the configuration class using Guice, so we support injections
         C configuration = injector.getInstance(configurationClass);
 
-        // If the incoming object contains any configuration settings, then we populate the created instance with them
-        if (object.hasConfigurationValues()) {
-            Set<Field> configurationSettings = configurationRepository.findConfigurationSettings(configurationClass);
+        // We always want at least an empty list of values, so we can check for existence even if no values were passed
+        List<EngineValue> configurationValues = object.hasConfigurationValues()
+                ? object.getConfigurationValues()
+                : new ArrayList<>();
 
-            for (Field field : configurationSettings) {
-                populateConfigurationSetting(configuration, object, field, checkRequired);
-            }
+        // Check and populate the created instance with any provided configuration values
+        Set<Field> configurationSettings = configurationRepository.findConfigurationSettings(configurationClass);
+
+        for (Field field : configurationSettings) {
+            populateConfigurationSetting(configuration, configurationValues, field, checkRequired);
         }
 
         return configuration;
@@ -48,11 +53,11 @@ public class ConfigurationParser {
         return from(object, true);
     }
 
-    private <C extends Configuration> void populateConfigurationSetting(C configuration, ConfigurationValuesAware object, Field field, boolean checkRequired) {
+    private <C extends Configuration> void populateConfigurationSetting(C configuration, List<EngineValue> configurationValues, Field field, boolean checkRequired) {
         Configuration.Setting annotation = field.getAnnotation(Configuration.Setting.class);
 
         // See if the discovered configuration setting field was sent in the request
-        Optional<EngineValue> optional = object.getConfigurationValues().stream()
+        Optional<EngineValue> optional = configurationValues.stream()
                 .filter(i -> i.getDeveloperName().equals(annotation.name()))
                 .findFirst();
 
