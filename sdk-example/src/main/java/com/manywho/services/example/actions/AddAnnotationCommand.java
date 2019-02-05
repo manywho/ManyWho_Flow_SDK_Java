@@ -13,6 +13,6 @@ public class AddAnnotationCommand implements ActionCommand<ServiceConfiguration,
 
     @Override
     public ActionResponse<Output> execute(ServiceConfiguration configuration, ServiceRequest request, Input input) {
-        return new ActionResponse<>(new Output(OffsetDateTime.now()));
+        return new ActionResponse<>(new Output(input.getPerson(), input.getAnnotation(), OffsetDateTime.now()));
     }
 }

@@ -25,11 +25,27 @@ public class AddAnnotation {
     }
 
     public static class Output {
+        @Action.Output(name = "Person", contentType = ContentType.Object)
+        private Person person;
+
+        @Action.Output(name = "Annotation", contentType = ContentType.String)
+        private String annotation;
+
         @Action.Output(name = "Created At", contentType = ContentType.DateTime)
         private OffsetDateTime createdAt;
 
-        public Output(OffsetDateTime createdAt) {
+        public Output(Person person, String annotation, OffsetDateTime createdAt) {
+            this.person = person;
+            this.annotation = annotation;
             this.createdAt = createdAt;
+        }
+
+        public void setPerson(Person person) {
+            this.person = person;
+        }
+
+        public void setAnnotation(String annotation) {
+            this.annotation = annotation;
         }
 
         public void setCreatedAt(OffsetDateTime createdAt) {
