@@ -75,6 +75,14 @@ public interface RunClient {
             @Body ServiceResponse response
     );
 
+    @POST
+    Call<InvokeType> callback(
+            @Header("Authorization") String authorization,
+            @Header("ManyWhoTenant") UUID tenant,
+            @Url String callbackUri,
+            @Body ServiceResponse response
+    );
+
     @POST("api/run/1/authentication/{state}")
     Call<String> authentication(
             @Header("ManyWhoTenant") UUID tenant,
