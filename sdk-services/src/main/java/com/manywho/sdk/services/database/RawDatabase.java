@@ -20,7 +20,7 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      * return a ManyWho object that includes the properties given in the <code>objectDataType</code> parameter.
      *
      * @param configuration  the populated Configuration object
-     * @param objectDataType information about the type of object that is expected to be returned by the Service
+     * @param objectDataType information about the type of object that is expected to be returned by the service
      * @param command        the command to execute when querying, if any
      * @param id             the object's external ID
      * @return a single ManyWho object
@@ -32,7 +32,7 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      * a list of ManyWho objects that include the properties given in the <code>objectDataType</code> parameter.
      *
      * @param configuration  the populated Configuration object
-     * @param objectDataType information about the type of objects that are expected to be returned by the Service
+     * @param objectDataType information about the type of objects that are expected to be returned by the service
      * @param command        the command to execute when querying, if any
      * @param filter         the filtering options to be used when querying for objects
      * @return a list of ManyWho objects

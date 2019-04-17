@@ -40,14 +40,14 @@ public class DatabaseSaveService implements DatabaseService {
 
         if (!objectsToCreate.isEmpty()) {
             if (objectsToCreate.size() == 1) {
-                T createdObject = database.create(configurationParser.from(request), objectsToCreate.get(0));
+                T createdObject = database.create(configurationParser.from(request), request.getObjectDataType(), objectsToCreate.get(0));
                 if (createdObject == null) {
                     throw new RuntimeException("Creating a new object must return the created object with a populated identifier field");
                 }
 
                 objects.addAll(typeBuilder.from(createdObject));
             } else {
-                List<T> createdObjects = database.create(configurationParser.from(request), objectsToCreate);
+                List<T> createdObjects = database.create(configurationParser.from(request), request.getObjectDataType(), objectsToCreate);
                 if (createdObjects == null) {
                     throw new RuntimeException("Creating a list of objects must return a list of the newly-created objects, including any populated identifier fields");
                 }
@@ -63,14 +63,14 @@ public class DatabaseSaveService implements DatabaseService {
 
         if (!objectsToUpdate.isEmpty()) {
             if (objectsToUpdate.size() == 1) {
-                T updatedObject = database.update(configurationParser.from(request), objectsToUpdate.get(0));
+                T updatedObject = database.update(configurationParser.from(request), request.getObjectDataType(), objectsToUpdate.get(0));
                 if (updatedObject == null) {
                     throw new RuntimeException("Updating an object must return the same object along with any newly-updated fields");
                 }
 
                 objects.addAll(typeBuilder.from(updatedObject));
             } else {
-                List<T> updatedObjects = database.update(configurationParser.from(request), objectsToUpdate);
+                List<T> updatedObjects = database.update(configurationParser.from(request), request.getObjectDataType(), objectsToUpdate);
                 if (updatedObjects == null) {
                     throw new RuntimeException("Updating a list must return a list containing all of the newly-updated objects");
                 }
@@ -100,17 +100,17 @@ public class DatabaseSaveService implements DatabaseService {
 
         if (!objectsToCreate.isEmpty()) {
             if (objectsToCreate.size() == 1) {
-                objects.add(database.create(configurationParser.from(request), objectsToCreate.get(0)));
+                objects.add(database.create(configurationParser.from(request), request.getObjectDataType(), objectsToCreate.get(0)));
             } else {
-                objects.addAll(database.create(configurationParser.from(request), objectsToCreate));
+                objects.addAll(database.create(configurationParser.from(request), request.getObjectDataType(), objectsToCreate));
             }
         }
 
         if (!objectsToUpdate.isEmpty()) {
             if (objectsToUpdate.size() == 1) {
-                objects.add(database.update(configurationParser.from(request), objectsToUpdate.get(0)));
+                objects.add(database.update(configurationParser.from(request), request.getObjectDataType(), objectsToUpdate.get(0)));
             } else {
-                objects.addAll(database.update(configurationParser.from(request), objectsToUpdate));
+                objects.addAll(database.update(configurationParser.from(request), request.getObjectDataType(), objectsToUpdate));
             }
         }
 

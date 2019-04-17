@@ -25,22 +25,22 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public MObject create(ServiceConfiguration configuration, MObject object) {
+    public MObject create(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
         return null;
     }
 
     @Override
-    public List<MObject> create(ServiceConfiguration configuration, List<MObject> objects) {
+    public List<MObject> create(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
         return null;
     }
 
     @Override
-    public void delete(ServiceConfiguration configuration, MObject object) {
+    public void delete(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
 
     }
 
     @Override
-    public void delete(ServiceConfiguration configuration, List<MObject> objects) {
+    public void delete(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
 
     }
 
@@ -74,12 +74,12 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public MObject update(ServiceConfiguration configuration, MObject object) {
+    public MObject update(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
         return null;
     }
 
     @Override
-    public List<MObject> update(ServiceConfiguration configuration, List<MObject> objects) {
+    public List<MObject> update(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
         return null;
     }
 }
