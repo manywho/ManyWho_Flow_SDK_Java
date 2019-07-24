@@ -1,6 +1,7 @@
 package com.manywho.services.example;
 
 import com.google.common.io.Files;
+import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.FileDataRequest;
 import io.restassured.http.ContentType;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -34,8 +37,13 @@ public class FilesTest extends FunctionalTest {
 
     @Test
     public void testLoadFiles() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         FileDataRequest fileDataRequest = new FileDataRequest();
         fileDataRequest.setResourcePath("a-real-path");
+        fileDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -108,9 +116,13 @@ public class FilesTest extends FunctionalTest {
 
     @Test
     public void testUploadFile() throws IOException {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         FileDataRequest fileDataRequest = new FileDataRequest();
         fileDataRequest.setResourcePath("/tmp/" + UUID.randomUUID().toString());
-
+        fileDataRequest.setConfigurationValues(configurationValues);
         UUID content = UUID.randomUUID();
 
         given()

@@ -1,11 +1,14 @@
 package com.manywho.services.example;
 
+import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -14,6 +17,10 @@ import static org.hamcrest.Matchers.*;
 public class DatabaseLoadTest extends FunctionalTest {
     @Test
     public void testFindAll() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -23,6 +30,7 @@ public class DatabaseLoadTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setListFilter(listFilter);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -90,6 +98,10 @@ public class DatabaseLoadTest extends FunctionalTest {
 
     @Test
     public void testFind() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -99,6 +111,7 @@ public class DatabaseLoadTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setListFilter(listFilter);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -166,6 +179,10 @@ public class DatabaseLoadTest extends FunctionalTest {
 
     @Test
     public void testFindAllRaw() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("custom-type-one");
 
@@ -175,6 +192,7 @@ public class DatabaseLoadTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setListFilter(listFilter);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -209,6 +227,10 @@ public class DatabaseLoadTest extends FunctionalTest {
 
     @Test
     public void testFindRaw() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("custom-type-one");
 
@@ -218,6 +240,7 @@ public class DatabaseLoadTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setListFilter(listFilter);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)

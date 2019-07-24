@@ -1,7 +1,8 @@
 package com.manywho.services.example;
 
+import com.manywho.sdk.api.ContentType;
+import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.*;
-import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
@@ -15,6 +16,10 @@ import static org.hamcrest.Matchers.*;
 public class DatabaseDeleteTest extends FunctionalTest {
     @Test
     public void testDelete() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -34,10 +39,10 @@ public class DatabaseDeleteTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
-
+        objectDataRequest.setConfigurationValues(configurationValues);
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
-                .contentType(ContentType.JSON)
+                .contentType(io.restassured.http.ContentType.JSON)
                 .body(objectDataRequest)
                 .when()
                 .post("/data/delete")
@@ -51,6 +56,11 @@ public class DatabaseDeleteTest extends FunctionalTest {
 
     @Test
     public void testDeleteRaw() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  ContentType.String, "password-test"));
+
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("custom-type-one");
 
@@ -64,10 +74,11 @@ public class DatabaseDeleteTest extends FunctionalTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
-                .contentType(ContentType.JSON)
+                .contentType(io.restassured.http.ContentType.JSON)
                 .body(objectDataRequest)
                 .when()
                 .post("/data/delete")

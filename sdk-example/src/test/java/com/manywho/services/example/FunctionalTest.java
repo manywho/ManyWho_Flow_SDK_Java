@@ -1,7 +1,10 @@
 package com.manywho.services.example;
 
+import com.manywho.sdk.api.jackson.ObjectMapperFactory;
 import com.manywho.sdk.services.servers.undertow.UndertowServer;
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
+import io.restassured.config.RestAssuredConfig;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -18,6 +21,10 @@ public abstract class FunctionalTest {
         server.start("/", PORT);
 
         RestAssured.port = PORT;
+        ObjectMapperConfig config = new ObjectMapperConfig()
+                .jackson2ObjectMapperFactory((type, s) -> ObjectMapperFactory.create());
+
+        RestAssured.config = RestAssuredConfig.config().objectMapperConfig(config);
     }
 
     @AfterClass
