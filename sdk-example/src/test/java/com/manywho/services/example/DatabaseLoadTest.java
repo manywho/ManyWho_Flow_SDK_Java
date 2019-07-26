@@ -2,6 +2,7 @@ package com.manywho.services.example;
 
 import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
+import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
 import io.restassured.http.ContentType;
@@ -23,14 +24,16 @@ public class DatabaseLoadTest extends FunctionalTest {
 
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
-
         ListFilter listFilter = new ListFilter();
         listFilter.setLimit(2);
+        List<MObject> objects = new ArrayList<>();
+        objects.add(new MObject("person1"));
 
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setListFilter(listFilter);
         objectDataRequest.setConfigurationValues(configurationValues);
+        objectDataRequest.setObjectData(objects);
 
         given()
                 .contentType(ContentType.JSON)
@@ -94,6 +97,7 @@ public class DatabaseLoadTest extends FunctionalTest {
                 .body("objectData[0].properties[8].contentType", equalTo("ContentEncrypted"))
                 .body("objectData[0].properties[8].contentValue", not(isEmptyOrNullString()))
                 .body("objectData[0].properties[8].developerName", equalTo("Social Security Number"));
+
     }
 
     @Test

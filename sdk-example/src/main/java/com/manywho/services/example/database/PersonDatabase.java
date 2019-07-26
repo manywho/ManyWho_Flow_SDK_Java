@@ -2,6 +2,7 @@ package com.manywho.services.example.database;
 
 import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
+import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.services.example.ServiceConfiguration;
@@ -48,7 +49,7 @@ public class PersonDatabase implements Database<ServiceConfiguration, Person> {
     }
 
     @Override
-    public List<Person> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter) {
+    public List<Person> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects) {
         return personRepository.findAll(filter.getLimit(), filter.getOffset());
     }
 

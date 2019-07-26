@@ -49,7 +49,8 @@ public class DatabaseLoadService implements DatabaseService {
                     configurationParser.from(request),
                     request.getObjectDataType(),
                     request.getCommand(),
-                    listFilter
+                    listFilter,
+                    request.getObjectData()
             ));
 
             return createResponse(database.getClass(), result, providedLimit);
@@ -83,7 +84,8 @@ public class DatabaseLoadService implements DatabaseService {
                     configurationParser.from(request),
                     request.getObjectDataType(),
                     request.getCommand(),
-                    listFilter
+                    listFilter,
+                    request.getObjectData()
             );
 
             return createResponse(database.getClass(), result, providedLimit);

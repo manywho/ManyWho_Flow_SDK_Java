@@ -37,5 +37,5 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      * @param filter         the filtering options to be used when querying for objects
      * @return a list of ManyWho objects
      */
-    List<MObject> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter);
+    List<MObject> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects);
 }

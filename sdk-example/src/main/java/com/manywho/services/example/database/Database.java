@@ -63,14 +63,14 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter) {
-        List<MObject> objects = Lists.newArrayList();
+    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects) {
+        List<MObject> objectsList = Lists.newArrayList();
 
         IntStream.range(0, filter.getLimit()).forEachOrdered(i -> {
-            objects.add(find(configuration, objectDataType, command, String.valueOf(i)));
+            objectsList.add(find(configuration, objectDataType, command, String.valueOf(i)));
         });
 
-        return objects;
+        return objectsList;
     }
 
     @Override

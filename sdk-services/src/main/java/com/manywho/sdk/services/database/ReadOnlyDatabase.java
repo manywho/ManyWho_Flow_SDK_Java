@@ -2,6 +2,7 @@ package com.manywho.sdk.services.database;
 
 import com.manywho.sdk.api.draw.content.Command;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
+import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
 import com.manywho.sdk.services.configuration.Configuration;
 import com.manywho.sdk.services.types.Type;
@@ -36,5 +37,5 @@ public interface ReadOnlyDatabase<C extends Configuration, T extends Type> {
      * @param filter        the filtering options to be used when querying for objects
      * @return a list of objects of the defined ManyWho type
      */
-    List<T> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter);
+    List<T> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects);
 }
