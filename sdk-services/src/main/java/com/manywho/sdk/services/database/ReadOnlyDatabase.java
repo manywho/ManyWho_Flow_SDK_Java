@@ -35,6 +35,7 @@ public interface ReadOnlyDatabase<C extends Configuration, T extends Type> {
      * @param objectDataType information about the type of object that is expected to be returned by the service
      * @param command       the command to execute when querying, if any
      * @param filter        the filtering options to be used when querying for objects
+     * @param objects        the list of objects sent in the request, if any
      * @return a list of objects of the defined ManyWho type
      */
     List<T> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects);

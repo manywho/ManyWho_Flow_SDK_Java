@@ -35,6 +35,7 @@ public interface RawDatabase<C extends Configuration> extends WritableDatabase<C
      * @param objectDataType information about the type of objects that are expected to be returned by the service
      * @param command        the command to execute when querying, if any
      * @param filter         the filtering options to be used when querying for objects
+     * @param objects        the list of objects sent in the request, if any
      * @return a list of ManyWho objects
      */
     List<MObject> findAll(C configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects);
