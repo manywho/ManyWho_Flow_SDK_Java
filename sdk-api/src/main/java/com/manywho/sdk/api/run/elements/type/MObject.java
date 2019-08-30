@@ -16,6 +16,7 @@ public class MObject {
     private UUID typeElementId;
     private int order;
     private List<Property> properties = Lists.newArrayList();
+    private String typeElementBindingDeveloperName;
     @JsonProperty("isSelected")
     private boolean selected;
 
@@ -91,6 +92,14 @@ public class MObject {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public String getTypeElementBindingDeveloperName() {
+        return typeElementBindingDeveloperName;
+    }
+
+    public void setTypeElementBindingDeveloperName(String typeElementBindingDeveloperName) {
+        this.typeElementBindingDeveloperName = typeElementBindingDeveloperName;
     }
 
     public static class SimpleMObjectBuilder {
