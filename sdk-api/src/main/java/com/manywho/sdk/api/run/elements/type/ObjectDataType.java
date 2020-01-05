@@ -16,23 +16,26 @@ public class ObjectDataType {
         return typeElementId;
     }
 
-    public void setTypeElementId(UUID typeElementId) {
+    public ObjectDataType setTypeElementId(UUID typeElementId) {
         this.typeElementId = typeElementId;
+        return this;
     }
 
     public String getDeveloperName() {
         return developerName;
     }
 
-    public void setDeveloperName(String developerName) {
+    public ObjectDataType setDeveloperName(String developerName) {
         this.developerName = developerName;
+        return this;
     }
 
     public List<ObjectDataTypeProperty> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<ObjectDataTypeProperty> properties) {
+    public ObjectDataType setProperties(List<ObjectDataTypeProperty> properties) {
         this.properties = MoreObjects.firstNonNull(properties, new ArrayList<ObjectDataTypeProperty>());
+        return this;
     }
 }

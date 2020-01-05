@@ -24,9 +24,9 @@ public class DatabaseDeleteService implements DatabaseService {
         }
 
         if (request.getObjectData().size() == 1) {
-            database.delete(configurationParser.from(request), valueParser.asObject(request.getObjectData(), type));
+            database.delete(configurationParser.from(request), request.getObjectDataType(), valueParser.asObject(request.getObjectData(), type));
         } else {
-            database.delete(configurationParser.from(request), valueParser.asList(request.getObjectData(), type));
+            database.delete(configurationParser.from(request), request.getObjectDataType(), valueParser.asList(request.getObjectData(), type));
         }
 
         return new ObjectDataResponse();
@@ -39,9 +39,9 @@ public class DatabaseDeleteService implements DatabaseService {
         }
 
         if (request.getObjectData().size() == 1) {
-            database.delete(configurationParser.from(request), request.getObjectData().get(0));
+            database.delete(configurationParser.from(request), request.getObjectDataType(), request.getObjectData().get(0));
         } else {
-            database.delete(configurationParser.from(request), request.getObjectData());
+            database.delete(configurationParser.from(request), request.getObjectDataType(), request.getObjectData());
         }
 
         return new ObjectDataResponse();

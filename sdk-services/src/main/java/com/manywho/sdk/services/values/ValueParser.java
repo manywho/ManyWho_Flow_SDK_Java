@@ -13,6 +13,8 @@ import com.manywho.sdk.services.types.TypeParser;
 import com.manywho.sdk.services.types.TypePropertyMismatchException;
 import com.manywho.sdk.services.types.TypeRepository;
 import com.manywho.sdk.services.utils.Fields;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -32,6 +34,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ValueParser {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ValueParser.class);
+
     private final TypeRepository typeRepository;
 
     @Inject
@@ -231,18 +235,16 @@ public class ValueParser {
 
             if (objects.isEmpty()) {
                 if (field.isAnnotationPresent(Type.Property.class)) {
-                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Type.Property.class).name() + " type property");
+                    LOGGER.warn("No object was given for the {} type property", field.getAnnotation(Type.Property.class).name());
+                } else if (field.isAnnotationPresent(Action.Input.class)) {
+                    LOGGER.warn("No object was given for the {} action input", field.getAnnotation(Action.Input.class).name());
+                } else if (field.isAnnotationPresent(Action.Output.class)) {
+                    LOGGER.warn("No object was given for the {} action output", field.getAnnotation(Action.Output.class).name());
+                } else {
+                    LOGGER.warn("No object was given for the field {}", field.getName());
                 }
 
-                if (field.isAnnotationPresent(Action.Input.class)) {
-                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Action.Input.class).name() + " action input");
-                }
-
-                if (field.isAnnotationPresent(Action.Output.class)) {
-                    throw new RuntimeException("No object was given for the " + field.getAnnotation(Action.Output.class).name() + " action output");
-                }
-
-                throw new RuntimeException("No object was given for the field " + field.getName());
+                return null;
             }
 
             return asObject(objects.get(0), (Class<T>) field.getType());

@@ -32,6 +32,7 @@ public class DatabaseLoadService implements DatabaseService {
             // If the request is to find a single item
             result = typeBuilder.from(database.find(
                     configurationParser.from(request),
+                    request.getObjectDataType(),
                     request.getCommand(),
                     listFilter.getId()
             ));
@@ -46,8 +47,10 @@ public class DatabaseLoadService implements DatabaseService {
 
             result = typeBuilder.from(database.findAll(
                     configurationParser.from(request),
+                    request.getObjectDataType(),
                     request.getCommand(),
-                    listFilter
+                    listFilter,
+                    request.getObjectData()
             ));
 
             return createResponse(database.getClass(), result, providedLimit);
@@ -81,7 +84,8 @@ public class DatabaseLoadService implements DatabaseService {
                     configurationParser.from(request),
                     request.getObjectDataType(),
                     request.getCommand(),
-                    listFilter
+                    listFilter,
+                    request.getObjectData()
             );
 
             return createResponse(database.getClass(), result, providedLimit);

@@ -25,22 +25,22 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public MObject create(ServiceConfiguration configuration, MObject object) {
+    public MObject create(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
         return null;
     }
 
     @Override
-    public List<MObject> create(ServiceConfiguration configuration, List<MObject> objects) {
+    public List<MObject> create(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
         return null;
     }
 
     @Override
-    public void delete(ServiceConfiguration configuration, MObject object) {
+    public void delete(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
 
     }
 
     @Override
-    public void delete(ServiceConfiguration configuration, List<MObject> objects) {
+    public void delete(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
 
     }
 
@@ -63,23 +63,23 @@ public class Database implements RawDatabase<ServiceConfiguration> {
     }
 
     @Override
-    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter) {
-        List<MObject> objects = Lists.newArrayList();
+    public List<MObject> findAll(ServiceConfiguration configuration, ObjectDataType objectDataType, Command command, ListFilter filter, List<MObject> objects) {
+        List<MObject> objectsList = Lists.newArrayList();
 
         IntStream.range(0, filter.getLimit()).forEachOrdered(i -> {
-            objects.add(find(configuration, objectDataType, command, String.valueOf(i)));
+            objectsList.add(find(configuration, objectDataType, command, String.valueOf(i)));
         });
 
-        return objects;
+        return objectsList;
     }
 
     @Override
-    public MObject update(ServiceConfiguration configuration, MObject object) {
+    public MObject update(ServiceConfiguration configuration, ObjectDataType objectDataType, MObject object) {
         return null;
     }
 
     @Override
-    public List<MObject> update(ServiceConfiguration configuration, List<MObject> objects) {
+    public List<MObject> update(ServiceConfiguration configuration, ObjectDataType objectDataType, List<MObject> objects) {
         return null;
     }
 }

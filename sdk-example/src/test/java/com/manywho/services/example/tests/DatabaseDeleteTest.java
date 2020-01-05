@@ -1,11 +1,12 @@
 package com.manywho.services.example.tests;
 
+import com.manywho.sdk.api.ContentType;
+import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
 import com.manywho.sdk.api.run.elements.type.Property;
 import com.manywho.services.example.TestConstants;
-import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
@@ -19,6 +20,10 @@ import static org.hamcrest.Matchers.*;
 public class DatabaseDeleteTest {
     @Test
     public void testDelete() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username", ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password", ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -38,10 +43,10 @@ public class DatabaseDeleteTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
-
+        objectDataRequest.setConfigurationValues(configurationValues);
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
-                .contentType(ContentType.JSON)
+                .contentType(io.restassured.http.ContentType.JSON)
                 .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()
@@ -56,6 +61,11 @@ public class DatabaseDeleteTest {
 
     @Test
     public void testDeleteRaw() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username", ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password", ContentType.String, "password-test"));
+
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("custom-type-one");
 
@@ -69,10 +79,11 @@ public class DatabaseDeleteTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
-                .contentType(ContentType.JSON)
+                .contentType(io.restassured.http.ContentType.JSON)
                 .header("Authorization", TestConstants.TOKEN)
                 .body(objectDataRequest)
                 .when()

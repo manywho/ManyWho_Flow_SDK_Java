@@ -65,6 +65,8 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
 
     @Override
     public void stop() {
-        server.stop();
+        if (server != null) {
+            server.stop();
+        }
     }
 }

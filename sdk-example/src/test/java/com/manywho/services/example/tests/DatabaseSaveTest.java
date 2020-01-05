@@ -1,5 +1,6 @@
 package com.manywho.services.example.tests;
 
+import com.manywho.sdk.api.run.EngineValue;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
@@ -19,6 +20,10 @@ import static org.hamcrest.Matchers.*;
 public class DatabaseSaveTest {
     @Test
     public void testCreate() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -38,6 +43,7 @@ public class DatabaseSaveTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -94,6 +100,10 @@ public class DatabaseSaveTest {
 
     @Test
     public void testCreateMultiple() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -114,6 +124,7 @@ public class DatabaseSaveTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -170,6 +181,10 @@ public class DatabaseSaveTest {
 
     @Test
     public void testUpdate() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -191,6 +206,7 @@ public class DatabaseSaveTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)
@@ -247,6 +263,10 @@ public class DatabaseSaveTest {
 
     @Test
     public void testUpdateMultiple() {
+        List<EngineValue> configurationValues = new ArrayList<>();
+        configurationValues.add(new EngineValue("Username",  com.manywho.sdk.api.ContentType.String, "username-test"));
+        configurationValues.add(new EngineValue("Password",  com.manywho.sdk.api.ContentType.String, "password-test"));
+
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("Person");
 
@@ -270,6 +290,7 @@ public class DatabaseSaveTest {
         ObjectDataRequest objectDataRequest = new ObjectDataRequest();
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
+        objectDataRequest.setConfigurationValues(configurationValues);
 
         given()
                 .contentType(ContentType.JSON)

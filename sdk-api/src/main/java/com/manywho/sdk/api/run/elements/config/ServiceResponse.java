@@ -32,8 +32,17 @@ public class ServiceResponse extends AbstractResponse {
         this.waitMessage = waitMessage;
     }
 
+    public ServiceResponse(UUID tenant, InvokeType invokeType, EngineValue output, String token, String waitMessage) {
+        this(tenant, invokeType, Lists.newArrayList(output), token, waitMessage);
+    }
+
     public ServiceResponse(UUID tenant, InvokeType invokeType, List<EngineValue> outputs, String token, String waitMessage) {
         this(invokeType, outputs, token, waitMessage);
+        this.tenantId = tenant;
+    }
+
+    public ServiceResponse(UUID tenant, InvokeType invokeType, EngineValue output, String token) {
+        this(invokeType, Lists.newArrayList(output), token);
         this.tenantId = tenant;
     }
 
