@@ -44,6 +44,7 @@ public class DatabaseDeleteTest {
         objectDataRequest.setObjectDataType(objectDataType);
         objectDataRequest.setObjectData(objects);
         objectDataRequest.setConfigurationValues(configurationValues);
+        
         // TODO: This only really tests that the path doesn't error, not that it actually calls "delete"
         given()
                 .contentType(io.restassured.http.ContentType.JSON)
@@ -64,7 +65,6 @@ public class DatabaseDeleteTest {
         List<EngineValue> configurationValues = new ArrayList<>();
         configurationValues.add(new EngineValue("Username", ContentType.String, "username-test"));
         configurationValues.add(new EngineValue("Password", ContentType.String, "password-test"));
-
 
         ObjectDataType objectDataType = new ObjectDataType();
         objectDataType.setDeveloperName("custom-type-one");

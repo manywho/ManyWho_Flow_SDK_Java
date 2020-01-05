@@ -25,12 +25,15 @@ public class UndertowSuite {
         server.setApplication(Application.class);
         server.start("/", PORT);
 
-        RestAssured.config = RestAssuredConfig.newConfig();
         RestAssured.port = PORT;
+
         ObjectMapperConfig config = new ObjectMapperConfig()
                 .jackson2ObjectMapperFactory((type, s) -> ObjectMapperFactory.create());
 
-        RestAssured.config = RestAssuredConfig.config().objectMapperConfig(config);
+        RestAssured.config = RestAssuredConfig.config()
+                .objectMapperConfig(config);
+
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
     @AfterClass
