@@ -6,19 +6,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 import com.manywho.sdk.api.draw.log.Log;
-import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class State {
     private UUID id;
     private UUID parentId;
-    private DateTime dateCreated;
-    private DateTime dateModified;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateModified;
     private FlowId currentFlowId;
     private String currentFlowDeveloperName;
     private UUID currentMapElementId;
@@ -54,19 +50,19 @@ public class State {
         this.parentId = parentId;
     }
 
-    public DateTime getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(DateTime dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public DateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(DateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

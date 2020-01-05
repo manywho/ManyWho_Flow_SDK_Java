@@ -2,11 +2,12 @@ package com.manywho.sdk.api.draw.flow;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manywho.sdk.api.security.BuilderWho;
-import org.joda.time.DateTime;
+
+import java.time.LocalDateTime;
 
 public class FlowResponse extends FlowRequest {
-    private DateTime dateCreated;
-    private DateTime dateModified;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateModified;
     private BuilderWho whoCreated;
     private BuilderWho whoModified;
     private BuilderWho whoOwner;
@@ -17,19 +18,19 @@ public class FlowResponse extends FlowRequest {
     private boolean isDefault;
     private String comment;
 
-    public DateTime getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(DateTime dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public DateTime getDateModified() {
+    public LocalDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(DateTime dateModified) {
+    public void setDateModified(LocalDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

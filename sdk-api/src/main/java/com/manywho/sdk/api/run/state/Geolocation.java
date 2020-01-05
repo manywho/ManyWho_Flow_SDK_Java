@@ -1,8 +1,7 @@
 package com.manywho.sdk.api.run.state;
 
-import org.joda.time.DateTime;
-
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Geolocation {
     private BigDecimal latitude;
@@ -12,7 +11,7 @@ public class Geolocation {
     private BigDecimal altitudeAccuracy;
     private BigDecimal heading;
     private BigDecimal speed;
-    private DateTime time;
+    private LocalDateTime time;
 
     public BigDecimal getAccuracy() {
         return accuracy;
@@ -70,11 +69,11 @@ public class Geolocation {
         this.speed = speed;
     }
 
-    public DateTime getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return time;
     }
 
-    public void setTimestamp(DateTime time) {
+    public void setTimestamp(LocalDateTime time) {
         this.time = time;
     }
 }
