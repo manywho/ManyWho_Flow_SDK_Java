@@ -65,6 +65,18 @@ public class $User implements Type {
     @Type.Property(name = "LoginUrl", contentType = ContentType.String)
     private String loginUrl;
 
+    @Type.Property(name = "Primary Group Id", contentType = ContentType.String)
+    private String primaryGroupId;
+
+    @Type.Property(name = "Primary Group Name", contentType = ContentType.String)
+    private String primaryGroupName;
+
+    @Type.Property(name = "Role Id", contentType = ContentType.String)
+    private String roleId;
+
+    @Type.Property(name = "Role Name", contentType = ContentType.String)
+    private String roleName;
+
     @Type.Property(name = "Status", contentType = ContentType.String)
     private String status;
 
@@ -82,183 +94,242 @@ public class $User implements Type {
         return altitudeAccuracy;
     }
 
-    public void setAltitudeAccuracy(int altitudeAccuracy) {
+    public $User setAltitudeAccuracy(Integer altitudeAccuracy) {
         this.altitudeAccuracy = altitudeAccuracy;
+        return this;
     }
 
     public AuthorizationType getAuthenticationType() {
         return authenticationType;
     }
 
-    public void setAuthenticationType(AuthorizationType authenticationType) {
+    public $User setAuthenticationType(AuthorizationType authenticationType) {
         this.authenticationType = authenticationType;
+        return this;
     }
 
     public String getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public $User setBrand(String brand) {
         this.brand = brand;
+        return this;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public $User setCountry(String country) {
         this.country = country;
+        return this;
     }
 
     public Float getCurrentAltitude() {
         return currentAltitude;
     }
 
-    public void setCurrentAltitude(float currentAltitude) {
+    public $User setCurrentAltitude(Float currentAltitude) {
         this.currentAltitude = currentAltitude;
+        return this;
     }
 
     public Float getCurrentHeading() {
         return currentHeading;
     }
 
-    public void setCurrentHeading(float currentHeading) {
+    public $User setCurrentHeading(Float currentHeading) {
         this.currentHeading = currentHeading;
+        return this;
     }
 
     public Float getCurrentLatitude() {
         return currentLatitude;
     }
 
-    public void setCurrentLatitude(float currentLatitude) {
+    public $User setCurrentLatitude(Float currentLatitude) {
         this.currentLatitude = currentLatitude;
+        return this;
     }
 
     public Float getCurrentLongitude() {
         return currentLongitude;
     }
 
-    public void setCurrentLongitude(float currentLongitude) {
+    public $User setCurrentLongitude(Float currentLongitude) {
         this.currentLongitude = currentLongitude;
+        return this;
     }
 
     public Float getCurrentSpeed() {
         return currentSpeed;
     }
 
-    public void setCurrentSpeed(float currentSpeed) {
+    public $User setCurrentSpeed(Float currentSpeed) {
         this.currentSpeed = currentSpeed;
+        return this;
     }
 
     public String getDirectoryId() {
         return directoryId;
     }
 
-    public void setDirectoryId(String directoryId) {
+    public $User setDirectoryId(String directoryId) {
         this.directoryId = directoryId;
+        return this;
     }
 
     public String getDirectoryName() {
         return directoryName;
     }
 
-    public void setDirectoryName(String directoryName) {
+    public $User setDirectoryName(String directoryName) {
         this.directoryName = directoryName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public $User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public $User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public $User setLanguage(String language) {
         this.language = language;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public $User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public $Location getLocation() {
         return location;
     }
 
-    public void setLocation($Location location) {
+    public $User setLocation($Location location) {
         this.location = location;
+        return this;
     }
 
     public Float getLocationAccuracy() {
         return locationAccuracy;
     }
 
-    public void setLocationAccuracy(float locationAccuracy) {
+    public $User setLocationAccuracy(Float locationAccuracy) {
         this.locationAccuracy = locationAccuracy;
+        return this;
     }
 
     public OffsetDateTime getLocationTimestamp() {
         return locationTimestamp;
     }
 
-    public void setLocationTimestamp(OffsetDateTime locationTimestamp) {
+    public $User setLocationTimestamp(OffsetDateTime locationTimestamp) {
         this.locationTimestamp = locationTimestamp;
+        return this;
     }
 
     public String getLoginUrl() {
         return loginUrl;
     }
 
-    public void setLoginUrl(String loginUrl) {
+    public $User setLoginUrl(String loginUrl) {
         this.loginUrl = loginUrl;
+        return this;
+    }
+
+    public String getPrimaryGroupId() {
+        return primaryGroupId;
+    }
+
+    public $User setPrimaryGroupId(String primaryGroupId) {
+        this.primaryGroupId = primaryGroupId;
+        return this;
+    }
+
+    public String getPrimaryGroupName() {
+        return primaryGroupName;
+    }
+
+    public $User setPrimaryGroupName(String primaryGroupName) {
+        this.primaryGroupName = primaryGroupName;
+        return this;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public $User setRoleId(String roleId) {
+        this.roleId = roleId;
+        return this;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public $User setRoleName(String roleName) {
+        this.roleName = roleName;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public $User setStatus(String status) {
         this.status = status;
+        return this;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public $User setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public $User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getVariant() {
         return variant;
     }
 
-    public void setVariant(String variant) {
+    public $User setVariant(String variant) {
         this.variant = variant;
+        return this;
     }
 }
