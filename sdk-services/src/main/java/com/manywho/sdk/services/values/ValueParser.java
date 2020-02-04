@@ -186,8 +186,10 @@ public class ValueParser {
             return (T) method.invoke(null, value);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("The enum \"" + type.getName() + "\" requires a method with the signature \"public static T forValue(String value)\"", e);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to set the enum value: " + e.getMessage(), e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Unable to set the enum value: " + e.getTargetException().getMessage(), e);
         }
     }
 
