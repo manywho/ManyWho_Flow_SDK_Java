@@ -7,14 +7,18 @@ import com.google.common.collect.Maps;
 import com.manywho.sdk.api.draw.flow.FlowId;
 import com.manywho.sdk.api.draw.log.Log;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class State {
     private UUID id;
     private UUID parentId;
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateModified;
+    private OffsetDateTime dateCreated;
+    private OffsetDateTime dateModified;
     private FlowId currentFlowId;
     private String currentFlowDeveloperName;
     private UUID currentMapElementId;
@@ -50,19 +54,19 @@ public class State {
         this.parentId = parentId;
     }
 
-    public LocalDateTime getDateCreated() {
+    public OffsetDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(OffsetDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public LocalDateTime getDateModified() {
+    public OffsetDateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(LocalDateTime dateModified) {
+    public void setDateModified(OffsetDateTime dateModified) {
         this.dateModified = dateModified;
     }
 

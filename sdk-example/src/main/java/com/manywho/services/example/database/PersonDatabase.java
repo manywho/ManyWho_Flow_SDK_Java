@@ -1,9 +1,11 @@
 package com.manywho.services.example.database;
 
 import com.manywho.sdk.api.draw.content.Command;
+import com.manywho.sdk.api.run.ServiceProblemException;
 import com.manywho.sdk.api.run.elements.type.ListFilter;
 import com.manywho.sdk.api.run.elements.type.MObject;
 import com.manywho.sdk.api.run.elements.type.ObjectDataType;
+import com.manywho.sdk.api.security.AuthenticatedWho;
 import com.manywho.sdk.services.database.Database;
 import com.manywho.services.example.ServiceConfiguration;
 import com.manywho.services.example.repositories.PersonRepository;
@@ -15,19 +17,29 @@ import java.util.stream.Collectors;
 
 public class PersonDatabase implements Database<ServiceConfiguration, Person> {
     private final PersonRepository personRepository;
+    private final AuthenticatedWho authenticatedWho;
 
     @Inject
-    public PersonDatabase(PersonRepository personRepository) {
+    public PersonDatabase(PersonRepository personRepository, AuthenticatedWho authenticatedWho) {
         this.personRepository = personRepository;
+        this.authenticatedWho = authenticatedWho;
     }
 
     @Override
     public Person create(ServiceConfiguration configuration, ObjectDataType objectDataType, Person person) {
+        if (authenticatedWho == null) {
+            throw new ServiceProblemException(401, "No authenticated who was given");
+        }
+
         return personRepository.create(configuration, person);
     }
 
     @Override
     public List<Person> create(ServiceConfiguration configuration, ObjectDataType objectDataType, List<Person> objects) {
+        if (authenticatedWho == null) {
+            throw new ServiceProblemException(401, "No authenticated who was given");
+        }
+
         return objects.stream()
                 .map(object -> create(configuration, objectDataType, object))
                 .collect(Collectors.toList());

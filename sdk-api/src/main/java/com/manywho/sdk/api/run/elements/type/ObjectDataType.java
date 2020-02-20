@@ -35,7 +35,7 @@ public class ObjectDataType {
     }
 
     public ObjectDataType setProperties(List<ObjectDataTypeProperty> properties) {
-        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<ObjectDataTypeProperty>());
+        this.properties = MoreObjects.firstNonNull(properties, new ArrayList<>());
         return this;
     }
 }

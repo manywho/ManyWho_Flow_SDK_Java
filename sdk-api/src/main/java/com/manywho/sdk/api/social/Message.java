@@ -3,7 +3,7 @@ package com.manywho.sdk.api.social;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Message {
     private String id;
     private String repliedToId;
     private String text;
-    private LocalDateTime createdDate;
+    private OffsetDateTime createdDate;
     private Who sender;
     private List<Attachment> attachments = Lists.newArrayList();
     private List<Message> comments = Lists.newArrayList();
@@ -46,11 +46,11 @@ public class Message {
         return this;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public OffsetDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public Message setCreatedDate(LocalDateTime createdDate) {
+    public Message setCreatedDate(OffsetDateTime createdDate) {
         this.createdDate = createdDate;
         return this;
     }

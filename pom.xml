@@ -11,18 +11,21 @@
 
     <modules>
         <module>sdk-api</module>
+        <module>sdk-client</module>
+        <module>sdk-example</module>
         <module>sdk-services</module>
+        <module>sdk-server</module>
+        <module>sdk-server-lambda</module>
+        <module>sdk-server-lambda-testing</module>
+        <module>sdk-server-resteasy</module>
         <module>sdk-server-servlet3</module>
         <module>sdk-server-undertow</module>
-        <module>sdk-example</module>
-        <module>sdk-server</module>
-        <module>sdk-client</module>
     </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <version.jackson>2.8.7</version.jackson>
+        <version.jackson>2.9.7</version.jackson>
         <version.resteasy>3.5.1.Final</version.resteasy>
     </properties>
 

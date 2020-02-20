@@ -2,18 +2,18 @@ package com.manywho.sdk.api.draw.log;
 
 import com.manywho.sdk.api.draw.elements.Element;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class LogEntry extends Element {
-    private LocalDateTime timestamp;
+    private OffsetDateTime timestamp;
     private String message;
     private String data;
 
-    public LocalDateTime getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(OffsetDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
