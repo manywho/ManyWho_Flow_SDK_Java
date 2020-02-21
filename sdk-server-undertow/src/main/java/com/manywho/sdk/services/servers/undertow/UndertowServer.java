@@ -3,6 +3,7 @@ package com.manywho.sdk.services.servers.undertow;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -32,6 +33,35 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
 
     private UndertowJaxrsServer server;
 
+    public void start(String path, int httpsPort, InputStream keyStore, InputStream trustStore, String keyStorePassword, String trustStorePassword, Boolean requireClientAuthentication) {
+
+        ServiceApplication serviceApplication = new ServiceApplication();
+
+        for (Module module : modules) {
+            serviceApplication.addModule(module);
+        }
+
+        serviceApplication.initialize(application.getPackage().getName(), true);
+
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(buildKeyManagerFromStream(keyStore, keyStorePassword), buildTrustManagerFromStream(trustStore, trustStorePassword), null);
+
+            Undertow.Builder serverBuilder = Undertow.builder()
+                .addHttpsListener(httpsPort, "0.0.0.0", sslContext)
+                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, requireClientAuthentication ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
+
+            server = new UndertowJaxrsServer();
+            server.start(serverBuilder);
+            server.deploy(serviceApplication, path);
+
+            LOGGER.info("Service started on https://0.0.0.0:{}", httpsPort);
+            LOGGER.info("Stop the service using CTRL+C");
+        } catch (Exception ex) {
+            LOGGER.error("Unable to start the server", ex);
+        }        
+    }
+
     /**
      * Start the service using the built-in Jetty container on a specified port
      *
@@ -47,56 +77,44 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
         serviceApplication.initialize(application.getPackage().getName(), true);
 
         try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(buildKeyManager(), buildTrustManager(), null);
-
             Undertow.Builder serverBuilder = Undertow.builder()
-                    
-                    .addHttpListener(port, "0.0.0.0")
-                    .addHttpsListener(port+1, "0.0.0.0", sslContext)
-                    .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, SslClientAuthMode.REQUIRED);
+                .addHttpListener(port, "0.0.0.0");
 
             server = new UndertowJaxrsServer();
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
-            LOGGER.info("Http Service started on 0.0.0.0:{}", port);
+            LOGGER.info("Service started on http://0.0.0.0:{}", port);
             LOGGER.info("Stop the service using CTRL+C");
         } catch (Exception ex) {
             LOGGER.error("Unable to start the server", ex);
         }
     }
 
-    private KeyManager[] buildKeyManager() throws KeyStoreException, IOException, NoSuchAlgorithmException,
-            CertificateException, FileNotFoundException, UnrecoverableKeyException {
-                System.out.println(FileSystems.getDefault().getPath(".").toAbsolutePath().toString());
-                char [] keyStorePassword = "secret".toCharArray();
-        String keyStoreFilename = "src/main/resources/server_keystore.jks";
-
+    private KeyManager[] buildKeyManagerFromStream(InputStream storeStream, String storePassword)
+            throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException,
+            UnrecoverableKeyException {
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-        keystore.load(new FileInputStream(keyStoreFilename), keyStorePassword);
+        keystore.load(storeStream, storePassword.toCharArray());
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        keyManagerFactory.init(keystore, keyStorePassword);
+        keyManagerFactory.init(keystore, storePassword.toCharArray());
 
         KeyManager[] keyManager = keyManagerFactory.getKeyManagers();
         return keyManager;
     }
 
-    private TrustManager[] buildTrustManager() throws KeyStoreException, IOException, NoSuchAlgorithmException,
-            CertificateException, FileNotFoundException, UnrecoverableKeyException {
-        char [] trustStorePassword = "secret".toCharArray();
-        String trustStoreFilename = "src/main/resources/server_truststore.jks";
-
+    private TrustManager[] buildTrustManagerFromStream(InputStream storeStream, String storePassword)
+            throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException {
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-        keystore.load(new FileInputStream(trustStoreFilename), trustStorePassword);
+        keystore.load(storeStream, storePassword.toCharArray());
 
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(keystore);
 
         TrustManager[] trustManager = trustManagerFactory.getTrustManagers();
         return trustManager;
-        }
+    }
 
     /**
      * Start the service using the build-in Jetty container from a specified path
