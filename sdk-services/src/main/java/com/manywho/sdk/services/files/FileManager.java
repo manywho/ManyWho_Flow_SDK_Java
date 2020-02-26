@@ -50,7 +50,7 @@ public class FileManager {
 
         // Get the first part that doesn't have a content type of "application/json" as it's probably the file content
         FileUpload upload = files.stream()
-                .filter(item -> item.getContentType().contains("application/json") == false)
+                .filter(item -> item.getContentType() == null || item.getContentType().contains("application/json") == false)
                 .findFirst()
                 .map(item -> new FileUpload(getFileItemStream(item), item.getName()))
                 .orElse(null);
