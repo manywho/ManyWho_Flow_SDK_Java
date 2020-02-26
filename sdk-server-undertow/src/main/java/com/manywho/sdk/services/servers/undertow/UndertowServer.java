@@ -33,7 +33,17 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
 
     private UndertowJaxrsServer server;
 
-    public void start(String path, int httpsPort, InputStream keyStore, InputStream trustStore, String keyStorePassword, String trustStorePassword, Boolean requireClientAuthentication) {
+    /**
+     * Start a V2 instance of the service using the built-in Jetty container on a specified https port with client certificate authentication
+     * 
+     * @param path the path to run the service from
+     * @param httpsPort the port to run the https service on
+     * @param keyStore the keystore containing the server certificate
+     * @param trustStore the truststore containing trusted certificates
+     * @param keyStorePassword the password for the keystore
+     * @param trustStorePassword the password for the truststore
+     */
+    public void start(String path, int httpsPort, InputStream keyStore, InputStream trustStore, String keyStorePassword, String trustStorePassword) {
 
         ServiceApplication serviceApplication = new ServiceApplication();
 
@@ -41,7 +51,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             serviceApplication.addModule(module);
         }
 
-        serviceApplication.initialize(application.getPackage().getName(), true);
+        serviceApplication.initialize(application.getPackage().getName(), true, true);
 
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -49,13 +59,13 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
 
             Undertow.Builder serverBuilder = Undertow.builder()
                 .addHttpsListener(httpsPort, "0.0.0.0", sslContext)
-                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, requireClientAuthentication ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
+                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, SslClientAuthMode.REQUIRED);
 
             server = new UndertowJaxrsServer();
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
-            LOGGER.info("Service started on https://0.0.0.0:{}", httpsPort);
+            LOGGER.info("Service started on https://0.0.0.0:{} - Client auth enabled", httpsPort);
             LOGGER.info("Stop the service using CTRL+C");
         } catch (Exception ex) {
             LOGGER.error("Unable to start the server", ex);
@@ -63,7 +73,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
     }
 
     /**
-     * Start the service using the built-in Jetty container on a specified port
+     * Start a V1 instance of the service using the built-in Jetty container on a specified port
      *
      * @param port the port to run the service on
      */
@@ -74,7 +84,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             serviceApplication.addModule(module);
         }
 
-        serviceApplication.initialize(application.getPackage().getName(), true);
+        serviceApplication.initialize(application.getPackage().getName(), true, false);
 
         try {
             Undertow.Builder serverBuilder = Undertow.builder()

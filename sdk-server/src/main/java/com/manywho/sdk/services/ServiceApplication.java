@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class ServiceApplication extends Application {
     protected String packageName;
     protected Injector injector;
+    protected boolean isV2;
 
     protected List<Module> modules = Lists.newArrayList();
 
@@ -27,8 +28,9 @@ public class ServiceApplication extends Application {
         this.modules.add(module);
     }
 
-    public void initialize(String packageName, boolean isHttp) {
+    public void initialize(String packageName, boolean isHttp, boolean isV2) {
         this.packageName = packageName;
+        this.isV2 = isV2;
 
         final List<Module> internalModules = Lists.newArrayList();
 
@@ -51,8 +53,13 @@ public class ServiceApplication extends Application {
         final Set<Object> objects = new HashSet<>();
 
         Reflections reflections = injector.getInstance(Reflections.class);
+        
+        // Filter the appropriate version specific controllers
+        Set<Class<?>> controllers = 
+            reflections.getTypesAnnotatedWith(Path.class).stream()
+            .filter(c -> c.getName().endsWith(this.isV2 ? "V1" : "V2") == false).collect(Collectors.toSet());
 
-        objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Path.class)));
+        objects.addAll(createInstances(controllers));
         objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Provider.class)));
 
         return objects;
