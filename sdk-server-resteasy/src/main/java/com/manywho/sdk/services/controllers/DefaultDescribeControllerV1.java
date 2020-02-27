@@ -16,11 +16,11 @@ import javax.ws.rs.core.MediaType;
 @Path("/metadata")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class DefaultDescribeController {
+public class DefaultDescribeControllerV1 {
     private final DescribeManager describeManager;
 
     @Inject
-    public DefaultDescribeController(DescribeManager describeManager) {
+    public DefaultDescribeControllerV1(DescribeManager describeManager) {
         this.describeManager = describeManager;
     }
 
