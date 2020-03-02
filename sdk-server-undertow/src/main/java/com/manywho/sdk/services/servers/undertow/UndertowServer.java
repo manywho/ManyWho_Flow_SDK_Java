@@ -80,12 +80,12 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
     }
 
     /**
-     * Start a V2 instance of the service using the built-in Jetty container on a specified https port with client certificate authentication
+     * Start a V2 instance of the service using the built-in Jetty container on a specified https port
      * 
      * @param path the path to run the service from
      * @param httpsPort the port to run the https service on
      * @param keyStore the keystore containing the server certificate
-     * @param trustStore the truststore containing trusted certificates
+     * @param trustStore the truststore containing trusted certificates. If null, client certificate authentication will not be requested from clients
      * @param keyStorePassword the password for the keystore
      * @param trustStorePassword the password for the truststore
      */
@@ -105,7 +105,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
 
             Undertow.Builder serverBuilder = Undertow.builder()
                 .addHttpsListener(httpsPort, "0.0.0.0", sslContext)
-                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, SslClientAuthMode.REQUIRED);
+                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, trustStore != null ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
 
             server = new UndertowJaxrsServer();
             server.start(serverBuilder);
