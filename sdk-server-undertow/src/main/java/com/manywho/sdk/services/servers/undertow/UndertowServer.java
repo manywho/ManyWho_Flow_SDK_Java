@@ -103,15 +103,17 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(buildKeyManagerFromStream(keyStore, keyStorePassword), buildTrustManagerFromStream(trustStore, trustStorePassword), null);
 
+            boolean clientAuthEnabled = trustStore != null;
+
             Undertow.Builder serverBuilder = Undertow.builder()
                 .addHttpsListener(httpsPort, "0.0.0.0", sslContext)
-                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, trustStore != null ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
+                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, clientAuthEnabled ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
 
             server = new UndertowJaxrsServer();
             server.start(serverBuilder);
             server.deploy(serviceApplication, path);
 
-            LOGGER.info("Service started on https://0.0.0.0:{} - Client auth enabled", httpsPort);
+            LOGGER.info("Service started on https://0.0.0.0:{} - Client auth enabled: {}", httpsPort, clientAuthEnabled);
             LOGGER.info("Stop the service using CTRL+C");
         } catch (Exception ex) {
             LOGGER.error("Unable to start the server", ex);
