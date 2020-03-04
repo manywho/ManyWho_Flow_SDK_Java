@@ -141,12 +141,11 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
     }
 
     private TrustManager[] buildTrustManagerFromStream(InputStream storeStream, String storePassword) throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException {
-        KeyStore keystore = KeyStore.getInstance("JKS");
-
-        if(storeStream != null) {
-            keystore.load(storeStream, storePassword.toCharArray());
+        if(storeStream == null){
+            return null;
         }
-        
+        KeyStore keystore = KeyStore.getInstance("JKS");
+        keystore.load(storeStream, storePassword.toCharArray());
         System.out.println("Truststore loaded with keys: " + keystore.size());
 
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
