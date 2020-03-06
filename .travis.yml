@@ -1,8 +1,22 @@
 language: java
 jdk:
   - oraclejdk8
+  - oraclejdk11
+  - openjdk10
+  - openjdk11
 dist: trusty
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.sonar
 addons:
   apt:
     packages:
       - oracle-java8-installer
+  sonarcloud:
+    organization: "manywho"
+    token:
+      secure: $SONAR_TOKEN
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
+  - mvn sonar:sonar -Dsonar.projectKey=sdk-java -Dsonar.login=$SONAR_TOKEN
