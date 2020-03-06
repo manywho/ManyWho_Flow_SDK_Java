@@ -134,7 +134,6 @@ public class AuthenticatedWhoResult {
         this.culture = culture;
     }
 
-<<<<<<< HEAD:sdk-core/src/main/java/com/manywho/sdk/entities/security/AuthenticatedWhoResult.java
     public String getPrimaryGroupId() {
         return primaryGroupId;
     }
@@ -154,12 +153,6 @@ public class AuthenticatedWhoResult {
     public static AuthenticatedWhoResult createDeniedResult(String username) {
         AuthenticatedWhoResult result = createDeniedResult();
         result.setStatusMessage("The user with the username " + username + " could not be authenticated");
-=======
-    public static AuthenticatedWhoResult createDeniedResult(String message) {
-        AuthenticatedWhoResult result = new AuthenticatedWhoResult();
-        result.setStatus(AuthenticationStatus.AccessDenied);
-        result.setStatusMessage(message);
->>>>>>> ea0c3a10912ad2dd544768312d0353c006f44900:sdk-api/src/main/java/com/manywho/sdk/api/security/AuthenticatedWhoResult.java
 
         return result;
     }
