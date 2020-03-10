@@ -42,7 +42,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             serviceApplication.addModule(module);
         }
 
-        serviceApplication.initialize(application.getPackage().getName(), true);
+        serviceApplication.initialize(application.getPackage().getName(), true, false);
 
         try {
             Undertow.Builder serverBuilder = Undertow.builder()
