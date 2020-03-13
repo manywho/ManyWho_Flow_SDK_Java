@@ -19,6 +19,8 @@ public class AuthenticatedWhoResult {
     private AuthenticationStatus status;
     private String statusMessage;
     private Culture culture;
+    private String primaryGroupId;
+    private String primaryGroupName;
 
     public String getUserId() {
         return userId;
@@ -130,6 +132,22 @@ public class AuthenticatedWhoResult {
 
     public void setCulture(Culture culture) {
         this.culture = culture;
+    }
+
+    public String getPrimaryGroupId() {
+        return primaryGroupId;
+    }
+
+    public void setPrimaryGroupId(String primaryGroupId) {
+        this.primaryGroupId = primaryGroupId;
+    }
+
+    public String getPrimaryGroupName() {
+        return primaryGroupName;
+    }
+
+    public void setPrimaryGroupName(String primaryGroupName) {
+        this.primaryGroupName = primaryGroupName;
     }
 
     public static AuthenticatedWhoResult createDeniedResult(String message) {
