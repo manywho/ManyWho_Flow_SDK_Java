@@ -12,6 +12,7 @@ import com.manywho.sdk.services.database.DatabaseManager;
 import com.manywho.sdk.services.database.DatabaseType;
 import com.manywho.sdk.services.describe.DescribeManager;
 import com.manywho.sdk.services.files.FileManager;
+import com.manywho.sdk.services.health.HealthManager;
 import com.manywho.sdk.services.listeners.ListenerManager;
 import com.manywho.sdk.services.servers.lambda.model.ApiGatewayHttpRequest;
 import org.apache.commons.fileupload.FileItem;
@@ -36,16 +37,18 @@ public class LambdaRouter {
     private final DescribeManager describeManager;
     private final FileManager fileManager;
     private final FileUpload fileUpload;
+    private final HealthManager healthManager;
     private final ListenerManager listenerManager;
 
     @Inject
-    public LambdaRouter(ObjectMapper objectMapper, ActionManager actionManager, DatabaseManager databaseManager, DescribeManager describeManager, FileManager fileManager, FileUpload fileUpload, ListenerManager listenerManager) {
+    public LambdaRouter(ObjectMapper objectMapper, ActionManager actionManager, DatabaseManager databaseManager, DescribeManager describeManager, FileManager fileManager, FileUpload fileUpload, HealthManager healthManager, ListenerManager listenerManager) {
         this.objectMapper = objectMapper;
         this.actionManager = actionManager;
         this.databaseManager = databaseManager;
         this.describeManager = describeManager;
         this.fileManager = fileManager;
         this.fileUpload = fileUpload;
+        this.healthManager = healthManager;
         this.listenerManager = listenerManager;
     }
 
@@ -53,10 +56,25 @@ public class LambdaRouter {
         LOGGER.info("Routing a {} request to the path {}", httpRequest.getHttpMethod(), httpRequest.getPath());
 
         switch (httpRequest.getHttpMethod()) {
+            case "GET":
+                return routeGet(httpRequest.getPath());
             case "PUT":
                 return routePut(httpRequest.getPath(), httpRequest.getBody());
             case "POST":
                 return routePost(httpRequest.getPath(), httpRequest.getBody(), httpRequest.getHeaders());
+            default:
+                throw new ServiceProblemException(400, "No action could be found at the given location");
+        }
+    }
+
+    private Object routeGet(String path) {
+        switch (path) {
+            case "/health":
+                if (healthManager.isHealthy()) {
+                    return "OK";
+                }
+
+                throw new ServiceProblemException(500, "The service is not healthy");
             default:
                 throw new ServiceProblemException(400, "No action could be found at the given location");
         }

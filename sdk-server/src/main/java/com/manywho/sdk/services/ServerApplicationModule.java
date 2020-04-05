@@ -8,6 +8,8 @@ import com.manywho.sdk.services.actions.ActionProvider;
 import com.manywho.sdk.services.actions.DummyActionHandler;
 import com.manywho.sdk.services.actions.DummyActionProvider;
 import com.manywho.sdk.services.configuration.ApplicationConfiguration;
+import com.manywho.sdk.services.health.DummyHealthHandler;
+import com.manywho.sdk.services.health.HealthHandler;
 import com.manywho.sdk.services.providers.FileUploadProvider;
 import com.manywho.sdk.services.providers.ReflectionsProvider;
 import com.manywho.sdk.services.types.DummyTypeProvider;
@@ -31,6 +33,7 @@ public class ServerApplicationModule extends AbstractModule {
         bind(ActionProvider.class).to(DummyActionProvider.class);
         bind(ActionHandler.class).to(DummyActionHandler.class);
         bind(ApplicationConfiguration.class).toInstance(new ApplicationConfiguration(applicationPackage));
+        bind(HealthHandler.class).to(DummyHealthHandler.class);
         bind(ObjectMapper.class).toInstance(ObjectMapperFactory.create());
     }
 }
