@@ -4,6 +4,7 @@ import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HealthRepository {
     private final Reflections reflections;
@@ -14,10 +15,13 @@ public class HealthRepository {
     }
 
     public Class<? extends HealthHandler> getHealthHandler() {
-        Set<Class<? extends HealthHandler>> handlers = reflections.getSubTypesOf(HealthHandler.class);
+        Set<Class<? extends HealthHandler>> handlers = reflections.getSubTypesOf(HealthHandler.class)
+                .stream()
+                .filter(subType -> subType.getPackage().getName().startsWith("com.manywho.sdk.services") == false)
+                .collect(Collectors.toSet());
 
         if (handlers.isEmpty()) {
-            throw new RuntimeException("No health handler implementation was found in your service");
+            return DummyHealthHandler.class;
         }
 
         if (handlers.size() > 1) {
