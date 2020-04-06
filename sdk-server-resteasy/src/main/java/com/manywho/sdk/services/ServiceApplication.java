@@ -29,7 +29,7 @@ public class ServiceApplication extends ServerApplication {
 
         Reflections reflections = injector.getInstance(Reflections.class);
 
-        // Filter the appropriate version specific controllers
+        // Filter the appropriate version specific controllers, e.g a V2 service excludes any classes with a V1 suffix
         Set<Class<?>> controllers = 
             reflections.getTypesAnnotatedWith(Path.class).stream()
             .filter(c -> c.getName().endsWith(this.isV2 ? "V1" : "V2") == false).collect(Collectors.toSet());

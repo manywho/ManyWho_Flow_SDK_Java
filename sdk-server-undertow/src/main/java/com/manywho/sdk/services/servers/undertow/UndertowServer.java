@@ -130,7 +130,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
     private KeyManager[] buildKeyManagerFromStream(InputStream storeStream, String storePassword) throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException, UnrecoverableKeyException {
         KeyStore keystore = KeyStore.getInstance("JKS");
         keystore.load(storeStream, storePassword.toCharArray());
-        System.out.println("Keystore loaded with keys: " + keystore.size());
+        LOGGER.info("Keystore loaded with keys: " + keystore.size());
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(keystore, storePassword.toCharArray());
@@ -146,7 +146,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
         }
         KeyStore keystore = KeyStore.getInstance("JKS");
         keystore.load(storeStream, storePassword.toCharArray());
-        System.out.println("Truststore loaded with keys: " + keystore.size());
+        LOGGER.info("Truststore loaded with keys: " + keystore.size());
 
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(keystore);
