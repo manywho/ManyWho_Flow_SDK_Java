@@ -1,5 +1,19 @@
 package com.manywho.sdk.services.servers.undertow;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+
 import com.google.inject.Module;
 import com.manywho.sdk.services.ServiceApplication;
 import com.manywho.sdk.services.servers.BaseServer;
@@ -8,6 +22,8 @@ import io.undertow.Undertow;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xnio.Options;
+import org.xnio.SslClientAuthMode;
 
 public class UndertowServer extends BaseServer implements EmbeddedServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(UndertowServer.class);
@@ -26,7 +42,7 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
             serviceApplication.addModule(module);
         }
 
-        serviceApplication.initialize(application.getPackage().getName(), true);
+        serviceApplication.initialize(application.getPackage().getName(), true, false);
 
         try {
             Undertow.Builder serverBuilder = Undertow.builder()
@@ -63,10 +79,80 @@ public class UndertowServer extends BaseServer implements EmbeddedServer {
         start("/");
     }
 
+    /**
+     * Start a V2 instance of the service using the built-in Jetty container on a specified https port
+     * 
+     * @param path the path to run the service from
+     * @param httpsPort the port to run the https service on
+     * @param keyStore the keystore containing the server certificate
+     * @param trustStore the truststore containing trusted certificates. If null, client certificate authentication will not be requested from clients
+     * @param keyStorePassword the password for the keystore
+     * @param trustStorePassword the password for the truststore
+     */
+    public void start(String path, int httpsPort, InputStream keyStore, InputStream trustStore, String keyStorePassword, String trustStorePassword) {
+
+        ServiceApplication serviceApplication = new ServiceApplication();
+
+        for (Module module : modules) {
+            serviceApplication.addModule(module);
+        }
+
+        serviceApplication.initialize(application.getPackage().getName(), true, true);
+
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(buildKeyManagerFromStream(keyStore, keyStorePassword), buildTrustManagerFromStream(trustStore, trustStorePassword), null);
+
+            boolean clientAuthEnabled = trustStore != null;
+
+            Undertow.Builder serverBuilder = Undertow.builder()
+                .addHttpsListener(httpsPort, "0.0.0.0", sslContext)
+                .setSocketOption(Options.SSL_CLIENT_AUTH_MODE, clientAuthEnabled ? SslClientAuthMode.REQUIRED : SslClientAuthMode.NOT_REQUESTED);
+
+            server = new UndertowJaxrsServer();
+            server.start(serverBuilder);
+            server.deploy(serviceApplication, path);
+
+            LOGGER.info("Service started on https://0.0.0.0:{} - Client auth enabled: {}", httpsPort, clientAuthEnabled);
+            LOGGER.info("Stop the service using CTRL+C");
+        } catch (Exception ex) {
+            LOGGER.error("Unable to start the server", ex);
+        }        
+    }
+
     @Override
     public void stop() {
         if (server != null) {
             server.stop();
         }
+    }
+
+    private KeyManager[] buildKeyManagerFromStream(InputStream storeStream, String storePassword) throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException, UnrecoverableKeyException {
+        KeyStore keystore = KeyStore.getInstance("JKS");
+        keystore.load(storeStream, storePassword.toCharArray());
+        LOGGER.info("Keystore loaded with keys: " + keystore.size());
+
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keystore, storePassword.toCharArray());
+        
+        KeyManager[] keyManager = keyManagerFactory.getKeyManagers();
+        
+        return keyManager;
+    }
+
+    private TrustManager[] buildTrustManagerFromStream(InputStream storeStream, String storePassword) throws NoSuchAlgorithmException, CertificateException, IOException, KeyStoreException {
+        if(storeStream == null){
+            return null;
+        }
+        KeyStore keystore = KeyStore.getInstance("JKS");
+        keystore.load(storeStream, storePassword.toCharArray());
+        LOGGER.info("Truststore loaded with keys: " + keystore.size());
+
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init(keystore);
+
+        TrustManager[] trustManager = trustManagerFactory.getTrustManagers();
+        
+        return trustManager;
     }
 }

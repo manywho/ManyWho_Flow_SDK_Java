@@ -10,7 +10,7 @@ public class Servlet3Server extends ServiceApplication implements Server {
     }
 
     public void start() {
-        this.initialize(application.getPackage().getName(), true);
+        this.initialize(application.getPackage().getName(), true, false);
     }
 
     @Override

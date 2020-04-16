@@ -10,8 +10,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ServiceApplication extends ServerApplication {
+    protected boolean isV2;
 
-    public void initialize(String packageName, boolean isHttp) {
+    public void initialize(String packageName, boolean isHttp, boolean isV2) {
+        this.isV2 = isV2;
         modules.add(new ServiceApplicationModule());
 
         if (isHttp) {
@@ -27,7 +29,12 @@ public class ServiceApplication extends ServerApplication {
 
         Reflections reflections = injector.getInstance(Reflections.class);
 
-        objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Path.class)));
+        // Filter the appropriate version specific controllers, e.g a V2 service excludes any classes with a V1 suffix
+        Set<Class<?>> controllers = 
+            reflections.getTypesAnnotatedWith(Path.class).stream()
+            .filter(c -> c.getName().endsWith(this.isV2 ? "V1" : "V2") == false).collect(Collectors.toSet());
+
+        objects.addAll(createInstances(controllers));
         objects.addAll(createInstances(reflections.getTypesAnnotatedWith(Provider.class)));
 
         return objects;
