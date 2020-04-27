@@ -70,4 +70,12 @@ public class ServiceRequest extends AbstractRequest {
     public void setExecutionMode(FlowMode executionMode) {
         this.executionMode = executionMode;
     }
+
+    public boolean isDebugMode() {
+        if (executionMode == null) {
+            return false;
+        }
+
+        return executionMode.equals(FlowMode.Debug) || executionMode.equals(FlowMode.DebugStepthrough);
+    }
 }
