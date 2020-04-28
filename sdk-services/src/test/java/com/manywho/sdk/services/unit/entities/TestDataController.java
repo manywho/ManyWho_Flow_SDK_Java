@@ -1,0 +1,23 @@
+package com.manywho.sdk.services.unit.entities;
+
+import com.manywho.sdk.api.run.elements.type.ObjectDataRequest;
+import com.manywho.sdk.api.run.elements.type.ObjectDataResponse;
+import com.manywho.sdk.services.controllers.DataController;
+
+public class TestDataController implements DataController {
+
+    @Override
+    public ObjectDataResponse delete(ObjectDataRequest objectDataRequest) throws Exception {
+        return null;
+    }
+
+    @Override
+    public ObjectDataResponse load(ObjectDataRequest objectDataRequest) throws Exception {
+        return null;
+    }
+
+    @Override
+    public ObjectDataResponse save(ObjectDataRequest objectDataRequest) throws Exception {
+        return null;
+    }
+}
