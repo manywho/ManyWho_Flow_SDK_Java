@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 import com.manywho.sdk.api.run.EngineValue;
-import com.manywho.sdk.api.run.FlowMode;
 import com.manywho.sdk.api.run.elements.map.OutcomeResponse;
 
 import java.util.ArrayList;
