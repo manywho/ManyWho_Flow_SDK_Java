@@ -17,7 +17,6 @@ public class ServiceRequest extends AbstractRequest {
     private String uri;
     private List<EngineValue> inputs = Lists.newArrayList();
     private List<OutcomeResponse> outcomes = Lists.newArrayList();
-    private FlowMode executionMode;
 
     public String getJoinPlayerUri() {
         return joinPlayerUri;
@@ -61,21 +60,5 @@ public class ServiceRequest extends AbstractRequest {
 
     public void setOutcomes(List<OutcomeResponse> outcomes) {
         this.outcomes = MoreObjects.firstNonNull(outcomes, new ArrayList<OutcomeResponse>());
-    }
-
-    public FlowMode getExecutionMode() {
-        return executionMode;
-    }
-
-    public void setExecutionMode(FlowMode executionMode) {
-        this.executionMode = executionMode;
-    }
-
-    public boolean isDebugMode() {
-        if (executionMode == null) {
-            return false;
-        }
-
-        return executionMode.equals(FlowMode.Debug) || executionMode.equals(FlowMode.DebugStepthrough);
     }
 }
