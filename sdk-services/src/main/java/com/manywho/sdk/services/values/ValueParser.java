@@ -20,6 +20,8 @@ import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.sql.Time;
@@ -223,6 +225,14 @@ public class ValueParser {
 
         if (field.getType().equals(Short.class) || field.getType().equals(short.class)) {
             return Short.valueOf(value);
+        }
+
+        if (field.getType().equals(BigDecimal.class)) {
+            return new BigDecimal(value);
+        }
+
+        if (field.getType().equals(BigInteger.class)) {
+            return new BigInteger(value);
         }
 
         throw new TypePropertyMismatchException(field, Number.class, ContentType.Number);

@@ -15,6 +15,7 @@ public class ListFilter extends ListFilterMinimal {
     private OrderByDirectionType orderByDirectionType;
     private Integer limit;
     private Integer offset;
+    private String offsetToken;
     private String search;
     private List<SearchCriteria> searchCriteria = Lists.newArrayList();
     private List<OrderBy> orderBy = Lists.newArrayList();
@@ -93,6 +94,14 @@ public class ListFilter extends ListFilterMinimal {
 
     public void setOffset(int offset) {
         this.offset = offset;
+    }
+
+    public String getOffsetToken() {
+        return offsetToken;
+    }
+
+    public void setOffsetToken(String offsetToken) {
+        this.offsetToken = offsetToken;
     }
 
     public String getSearch() {

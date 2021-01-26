@@ -11,6 +11,7 @@ public class ObjectDataResponse {
     private Culture culture;
     private List<MObject> objectData = Lists.newArrayList();
     private boolean hasMoreResults;
+    private String offsetToken;
 
     public ObjectDataResponse() {
     }
@@ -55,5 +56,13 @@ public class ObjectDataResponse {
 
     public void setHasMoreResults(boolean hasMoreResults) {
         this.hasMoreResults = hasMoreResults;
+    }
+
+    public String getOffsetToken() {
+        return offsetToken;
+    }
+
+    public void setOffsetToken(String offsetToken) {
+        this.offsetToken = offsetToken;
     }
 }
