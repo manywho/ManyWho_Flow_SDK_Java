@@ -5,6 +5,8 @@ import com.manywho.sdk.api.ContentType;
 import com.manywho.sdk.services.types.Type;
 
 import java.time.OffsetDateTime;
+import java.util.List;
+
 
 @Type.Element(name = "$User")
 public class $User implements Type {
@@ -70,6 +72,9 @@ public class $User implements Type {
 
     @Type.Property(name = "Primary Group Name", contentType = ContentType.String)
     private String primaryGroupName;
+
+    @Type.Property(name = "Groups", contentType = ContentType.List)
+    private List<$Group> groups;
 
     @Type.Property(name = "Role Id", contentType = ContentType.String)
     private String roleId;
@@ -276,6 +281,15 @@ public class $User implements Type {
 
     public $User setPrimaryGroupName(String primaryGroupName) {
         this.primaryGroupName = primaryGroupName;
+        return this;
+    }
+
+    public List<$Group> getGroups() {
+        return groups;
+    }
+
+    public $User setGroups(List<$Group> groups) {
+        this.groups = groups;
         return this;
     }
 
